@@ -1,33 +1,25 @@
 // import logo from './logo.svg';
 // import Navbar from './components/Navbar'; //no need for .js extension (figure out itselt)
 import Navbar from './components/NavBar';
-import { BrowserRouter as Router} from 'react-router-dom';
-// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter, RouterProvider, Routes, Route, Switch } from 'react-router-dom';
 import './App.css';
+import causeLists from './routes/causeLists';
+import Home from './routes/Root';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
+    <BrowserRouter>
+      <div>
         <Navbar />
         <div className="content">
-          {/* <Switch>
-              <Route exact path = "/">
-                <Home />
-              </Route>
-              <Route path = "/create">
-                <Create />
-              </Route>
-              <Route path = "/blogs/:id">
-                <BlogDetails />
-              </Route>
-              <Route path = "*" >
-                <NotFoundPage />
-              </Route>
-            </Switch> */}
+          <Routes>
+            <Route path="/causeLists" component={causeLists} />
+            <Route path="/" component={Home} />
+          </Routes>
         </div>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 
