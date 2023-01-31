@@ -1,12 +1,31 @@
 import React from 'react';
-import { Container, AppBar, Typography, Grow, Grid } from '@mui/material';
+import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
+
+import courtLogo from './images/courtLogo.png';
+import Posts from './components/Posts/Posts';
+import Form from './components/Form/Form';
+import makeStyles from './styles';
 
 const App = () => {
+    const classes = makeStyles();
     return (
         <Container maxWidth="lg">
-            <AppBar position="static" color="inherit">
-                <Typography variant="h2" align="center">District Judiciary Dir Lower</Typography>
+            <AppBar className={classes.appBar} position="static" color="inherit">
+                <Typography className={classes.heading} variant="h3" align="center">District Judiciary Dir Lower</Typography>
+                <img className={classes.image} src={courtLogo} alt='District Judiciary Logo' height="60" />
             </AppBar>
+            <Grow in>
+                <Container>
+                    <Grid container justify="space-between" alignItems='stretch' spacing={3}>
+                        <Grid item xs={12} sm={7} >
+                            <Posts />
+                        </Grid>
+                        <Grid item xs={12} sm={4} >
+                            <Form />
+                        </Grid>
+                    </Grid>
+                </Container>
+            </Grow>
 
         </Container>
     )
