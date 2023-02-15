@@ -11,7 +11,7 @@ import { deletePost, likePost } from '../../../actions/posts';
 import useStyles from './styles';
 import courtLogo from '../../../images/courtLogo.png'; //'../../../images/courtLogo.png';
 
-function Post({ post, setCurrentId }) {
+const Post = ({ post, setCurrentId }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -45,8 +45,8 @@ function Post({ post, setCurrentId }) {
             <CardActions className={classes.cardActions}>
                 <Button size='small' color='primary' onClick={() => dispatch(likePost(post._id))}>
                     <ThumbUpAltIcon fontSize='small' />
-                    Like
-                    {post.likeCount}
+                    &nbsp;{post.likeCount}&nbsp;
+                    {post.likeCount <= 1 ? 'Like so far' : 'Likes'}
                 </Button>
                 <Button size='small' color='primary' onClick={() => dispatch(deletePost(post._id))}>
                     <DeleteIcon fontSize='small' />
