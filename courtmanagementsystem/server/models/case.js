@@ -1,36 +1,36 @@
 import mongoose from 'mongoose';
 
-const caseSchema = mongoose.Schema({
+const caseSchema = new mongoose.Schema({
     title: String,
-    caseNumber: Number,
+    caseNumber: String,
     caseType: String,
+    caseSubType: String,
     FIR: {
         type: Number,
-        default: 0
+        default: null
     },
     FIRdate: {
         type: Date,
-        default: new Date()
+        default: null
     },
-    UnderSection: {
+    underSection: {
         type: String,
-        default: ''
+        default: null
     },
+    policeStation: String,
     institutionDate: {
         type: Date,
         default: new Date()
     },
-    disposalDate: {
-        type: Date,
-        default: new Date()
-    },
+    disposalDate: Date,
     isTranferedIn: Boolean,
-    transferedInDate: {
-        type: Date,
-        default: new Date()
+    transferedInDate: Date,
+    likeCount: {
+        type: Number,
+        default: 0
     }
 });
 
-const Case = mongoose.model('Case', caseSchema);
+const Case = mongoose.model('Case', caseSchema, 'cases');
 
 export default Case;
