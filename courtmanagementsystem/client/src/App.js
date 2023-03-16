@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 import { getCases } from './actions/cases';
 import courtLogo from './images/courtLogo.png';
 // import Posts from './components/Posts/Posts';
-import Cases from './components/Cases/Cases';
+// import Cases from './components/Cases/Cases';
+import CauseList from './components/CauseLists/CauseList';
 // import Form from './components/Form/Form';
 import FormCases from './components/Form/FormCases';
 import makeStyles from './styles';
@@ -29,14 +30,11 @@ const App = () => {
             <Grow in>
                 <Container>
                     <Grid className={classes.mainContainer} container justify="space-between" alignItems='stretch' spacing={3}>
-                        <Grid item xs={12} sm={7}>
-                            {/* <Posts setCurrentId={setCurrentId} /> */}
-                            <Cases setCurrentId={setCurrentId} />
-                        </Grid>
-                        <Grid item xs={12} sm={4} >
-                            {/* <Form currentId={currentId} setCurrentId={setCurrentId} /> */}
-                            <FormCases currentId={currentId} setCurrentId={setCurrentId} />
-                        </Grid>
+
+                        {/* <Posts setCurrentId={setCurrentId} /> */}
+                        {/* <Cases setCurrentId={setCurrentId} /> */}
+                        <CauseList currentId={currentId} setCurrentId={setCurrentId} />
+
                     </Grid>
                 </Container>
             </Grow>
@@ -46,3 +44,10 @@ const App = () => {
 }
 
 export default App;
+
+//<Grid item xs={12} sm={7}>
+
+//<Grid item xs={12} sm={4} >
+  //                          {/* <Form currentId={currentId} setCurrentId={setCurrentId} /> */}
+    //                        <FormCases currentId={currentId} setCurrentId={setCurrentId} />
+      //                  </Grid>

@@ -33,8 +33,8 @@ const FormCases =  ({ currentId, setCurrentId }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [caseData, setCaseData] = useState({
         // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
-        "Case Title": '', "Case No": '', "Case Type": 'Civil', "Category Per PQS": '', "FIR NO": '', "FIR Date": selectedDate, Thana:'', Section:'', "Date of Institution ": selectedDate, "Date of Disposal Transfer Out": Date, "Disposal OR Transfer Out Flag": '', "Disposal Mode Flag": '', "Date of Transfer In": Date, "Date of Other Institution": Date, "Institution Flag": ''
-});
+        ["Case Title"]: '', ["Case No"]: '', ["Case Type"]: '', ["Category Per PQS"]: '', ["FIR NO"]: '', ["FIR Date"]: Date, Thana:'', Section:'', ["Date of Institution "]: selectedDate, ["Date of Disposal Transfer Out"]: Date, ["Disposal OR Transfer Out Flag"]: '', ["Disposal Mode Flag"]: '', ["Date of Transfer In"]: Date, ["Date of Other Institution"]: Date, ["Institution Flag"]: ''
+    });
 
     const handleDateChange = (date) => {
         setSelectedDate(date); 
@@ -51,9 +51,10 @@ const FormCases =  ({ currentId, setCurrentId }) => {
     useEffect(() => {
                 // console.log(caseFile);
         setSelectedCaseType('Civil');
+        
         if (caseFile) setCaseData(caseFile);
         // console.log('useEffect called');
-    },[caseFile]);
+    }, [caseFile]);
 
     const handleSubmit = async (e) => {
         
@@ -69,7 +70,7 @@ const FormCases =  ({ currentId, setCurrentId }) => {
     const clear = () => {
         setCurrentId(null);
         // setCaseData({"Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '', "Date of Institution ": selectedDate ,  "Date of Disposal": '', isTransferedIn: false, "Date of Transfered In": Date});
-        setCaseData({"Case Title": '', "Case No": '', "Case Type": '', "Category Per PQS": '', "FIR NO": '', "FIR Date": Date, Thana:'', Section:'', "Date of Institution ": selectedDate, "Date of Disposal Transfer Out": Date, "Disposal OR Transfer Out Flag": '', "Disposal Mode Flag": '', "Date of Transfer In": Date, "Date of Other Institution": Date, "Institution Flag": ''});
+        setCaseData({["Case Title"]: '', ["Case No"]: '', ["Case Type"]: '', ["Category Per PQS"]: '', ["FIR NO"]: '', ["FIR Date"]: Date, Thana:'', Section:'', ["Date of Institution "]: selectedDate, ["Date of Disposal Transfer Out"]: Date, ["Disposal OR Transfer Out Flag"]: '', ["Disposal Mode Flag"]: '', ["Date of Transfer In"]: Date, ["Date of Other Institution"]: Date, ["Institution Flag"]: ''});
     }
 
     return (
@@ -79,11 +80,12 @@ const FormCases =  ({ currentId, setCurrentId }) => {
 
                 <FormControl fullWidth component="fieldset">
                     <FormLabel component="legend"><br />Case Type</FormLabel>
-                    <RadioGroup required row aria-label="Case Type" name="caseType" value={caseData["Case Type"]} onChange={e => { setSelectedCaseType(e.target.value); setCaseData({ ...caseData, "Case Type": e.target.value, "Category Per PQS": ''  }); console.log(caseData);}}>
+                    <RadioGroup required row aria-label="Case Type" name="caseType" value={caseData["Case Type"]} onChange={e => { setSelectedCaseType(e.target.value); setCaseData({ ...caseData, "Case Type": e.target.value }); }}>
                         <FormControlLabel checked={selectedCaseType === 'Civil'} value="Civil" control={<GreenRadio />} label="Civil" />
                         <FormControlLabel checked={selectedCaseType === 'Criminal'} value="Criminal" control={<Radio />} label="Criminal" />
                     </RadioGroup>
                 </FormControl>
+                {/* <TextField name='caseSubType' variant='outlined' label='Case Sub Type' fullWidth value={caseData.caseSubType} onChange={(e) => setCaseData({ ...caseData, caseSubType: e.target.value })} /> */}
                 {selectedCaseType === 'Civil' ? <FormControl fullWidth variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Select Sub Type</InputLabel>
                     <Select
@@ -98,7 +100,7 @@ const FormCases =  ({ currentId, setCurrentId }) => {
           </MenuItem>
                             <MenuItem value={'Civil-001 Civil Suits (Original Jurisdiction)'}>Suit</MenuItem>
                             <MenuItem value={'Civil-022 Civil Appeals'}>Civil Appeal</MenuItem>
-                            <MenuItem value={'Civil-025 Family Appeals'}>Family Appeal</MenuItem>
+                            <MenuItem value={'Civil-035 Family Appeals'}>Family Appeal</MenuItem>
                     <MenuItem value="">
             <em>All Categories</em>
                     </MenuItem>
@@ -124,17 +126,13 @@ const FormCases =  ({ currentId, setCurrentId }) => {
                             <MenuItem value={'Civil-020 Review Petition'}>Civil-020 Review Petition</MenuItem>
                             <MenuItem value={'Civil-021 Objection Petitions'}>Civil-021 Objection Petitions</MenuItem>
                             <MenuItem value={'Civil-022 Civil Appeals'}>Civil-022 Civil Appeals</MenuItem>
-                            <MenuItem value={'Civil-023 Civil Revisions'}>Civil-023 Civil Revisions</MenuItem>
-                            <MenuItem value={'Civil-024 Guardianship and Succession Appeals'}>Civil-024 Guardianship and Succession Appeals</MenuItem>
-                            <MenuItem value={'Civil-025 Family Appeals'}>Civil-025 Family Appeals</MenuItem>
-                            <MenuItem value={'Civil-026 Rent Appeals '}>Civil-026 Rent Appeals </MenuItem>
-                            <MenuItem value={'Civil-027 Civil Appeals against Order '}>Civil-027 Civil Appeals against Order </MenuItem>
-                            <MenuItem value={'Civil-028 Insolvency Cases '}>Civil-028 Insolvency Cases </MenuItem>
-                            <MenuItem value={'Civil-029 Execution Petition Against Government '}>Civil-029 Execution Petition Against Government </MenuItem>
+                            <MenuItem value={'Civil-033 Civil Revisions'}>Civil-033 Civil Revisions</MenuItem>
+                            <MenuItem value={'Civil-034 Guardianship and Succession Appeals'}>Civil-034 Guardianship and Succession Appeals</MenuItem>
+                            <MenuItem value={'Civil-035 Family Appeals'}>Civil-035 Family Appeals</MenuItem>
+                            <MenuItem value={'Civil-036 Rent Appeals '}>Civil-036 Rent Appeals </MenuItem>
                     </Select>
 
-                </FormControl> 
-                :
+                </FormControl> : 
                 <FormControl fullWidth variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Select Sub Type</InputLabel>
                     <Select
@@ -147,8 +145,8 @@ const FormCases =  ({ currentId, setCurrentId }) => {
                         <MenuItem value="">
             <em>Mostly Used</em>
           </MenuItem>
-                            <MenuItem value={'CR-001-Homicide'}>Session Case</MenuItem>
-                            <MenuItem value={'CR-011 Narcotics Substances'}>CNSA Case</MenuItem>
+                            <MenuItem value={'Session Case'}>Session Case</MenuItem>
+                            <MenuItem value={'CNSA Case'}>CNSA Case</MenuItem>
                             <MenuItem value={'CR-020 Bail Applications'}>BA, BBA, BCA, CrMisc</MenuItem>
                             <MenuItem value="">
             <em>All Categories</em>
@@ -181,7 +179,6 @@ const FormCases =  ({ currentId, setCurrentId }) => {
                             <MenuItem value={'CR-026 Criminal Revisions'}>CR-026 Criminal Revisions</MenuItem>
                     </Select>
                 </FormControl>
-                 
                 }
                 <TextField name='caseNumber' variant='outlined' label='Case Number' fullWidth value={caseData["Case No"]} onChange={(e) => setCaseData({ ...caseData, "Case No": e.target.value })} />
                 {/* <Container fullwidth>
@@ -230,22 +227,9 @@ const FormCases =  ({ currentId, setCurrentId }) => {
                 {selectedCaseType === 'Criminal' &&
                     <>
                         <TextField name='FIR' variant='outlined' label='FIR Number' fullWidth value={caseData["FIR NO"]} onChange={(e) => setCaseData({ ...caseData, "FIR NO": e.target.value })} />
-                        {/* <TextField name='FIRdate' variant='outlined' label='FIR Date' fullWidth value={caseData["FIR Date"]} onChange={(e) => setCaseData({ ...caseData, "FIR Date": e.target.value })} /> */}
-                        <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
-                <KeyboardDatePicker
-                    // margin="normal"
-                    id="date-picker-dialog"
-                    label="FIR Date"
-                    format="dd/MM/yyyy"
-                    value={caseData['FIR Date'] ? caseData['FIR Date'] : selectedDate}
-                    onChange={(date) => setCaseData({ ...caseData, "FIR Date": date })}
-                    KeyboardButtonProps={{
-                        'aria-label': 'change date',
-                    }}
-                />
-        </MuiPickersUtilsProvider>
-                        <TextField name='underSection' variant='outlined' label='Under Section/s' fullWidth value={caseData.Section} onChange={(e) => setCaseData({ ...caseData, Section: e.target.value })} />
-                        <TextField name='policeStation' variant='outlined' label='Police Station Name' fullWidth value={caseData.Thana} onChange={(e) => setCaseData({ ...caseData, Thana: e.target.value })} />
+                        <TextField name='FIRdate' variant='outlined' label='FIR Date' fullWidth value={caseData["FIR Date"]} onChange={(e) => setCaseData({ ...caseData, "FIR Date": e.target.value })} />
+                        <TextField name='underSection' variant='outlined' label='Under Section/s' fullWidth value={caseData.underSection} onChange={(e) => setCaseData({ ...caseData, underSection: e.target.value })} />
+                        <TextField name='policeStation' variant='outlined' label='Police Station Name' fullWidth value={caseData.policeStation} onChange={(e) => setCaseData({ ...caseData, policeStation: e.target.value })} />
                     </>
                 }
 

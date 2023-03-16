@@ -3,9 +3,10 @@ import * as api from '../api';
 
 // Actions creators
 export const getCases = () => async (dispatch) => {
-    console.log('getCases Called');
+    // console.log('getCases Called');
     try {
         const { data } = await api.fetchCases();
+        // console.log(data);
         dispatch({ type: FETCH_ALL, payload: data });
     } catch (error) {
         console.log(error);
@@ -23,6 +24,7 @@ export const createCase = (caseFile) => async (dispatch) => {
 
 export const updateCase = (id, caseFile) => async (dispatch) => {
     try {
+        // console.log(id);
         const { data } = await api.updateCase(id, caseFile);
 
         dispatch({ type: UPDATE, payload: data });
