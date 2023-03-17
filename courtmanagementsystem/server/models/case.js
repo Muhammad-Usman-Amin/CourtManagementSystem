@@ -26,6 +26,7 @@ const caseSchema = new mongoose.Schema(
         ["Date of Other Institution"]: Date,
         ["Institution Flag"]: Date,
 
+        orderNumber: String,
         nextDate: Date,
         actionAbstract: String,
         orderDate: { type: Date, default: new Date() },

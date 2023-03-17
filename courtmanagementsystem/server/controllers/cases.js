@@ -45,48 +45,130 @@ export const updateCase = async (req, res) => {
 
     const { orderDate, orderNumber, nextDate, actionAbstract } = req.body;
 
+    const theCase = await Case.findById(id);
+    let updatedCase = null;
+
+    const lastCase = theCase.causeListEntries.toObject();
+    const cEntry = lastCase[lastCase.length - 1];
+    // console.log(cEntry);
+
+    if (new Date(theCase.orderDate).toDateString() === new Date().toDateString()) {
+
+        //$set query  
+        console.log("$set Query");
+
+
+        if (orderNumber) {
+            console.log("1 order number: " + orderNumber);
+            updatedCase = await Case.findByIdAndUpdate(id, {
+                orderNumber: orderNumber, orderDate: orderDate,
+                $set: {
+                    [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, orderNumber: orderNumber }
+                }
+            },
+                { new: true });
+        }
+
+        if (nextDate) {
+            // console.log("2 next date: " + nextDate);
+            updatedCase = await Case.findByIdAndUpdate(id, {
+                nextDate: nextDate, orderDate: orderDate,
+                $set: {
+                    [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, nextDate: nextDate }
+                }
+            },
+                { new: true });
+
+        }
+
+        if (actionAbstract) {
+            // console.log("3 action abstract: " + actionAbstract);
+            updatedCase = await Case.findByIdAndUpdate(id, {
+                actionAbstract: actionAbstract, orderDate: orderDate,
+                $set: {
+                    [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, actionAbstract: actionAbstract }
+                }
+            },
+                { new: true });
+
+        }
+
+    } else {
+
+        // $push query
+        console.log("$push Query");
+
+        if (orderNumber) {
+            // console.log("1 order number: " + orderNumber);
+            updatedCase = await Case.findByIdAndUpdate(id, {
+                orderNumber: orderNumber, orderDate: orderDate,
+                $push: {
+                    causeListEntries: { ...cEntry, orderNumber: orderNumber }
+                }
+            },
+                { new: true });
+        }
+        if (nextDate) {
+            // console.log("2 next date: " + nextDate);
+            updatedCase = await Case.findByIdAndUpdate(id, {
+                nextDate: nextDate, orderDate: orderDate,
+                $push: {
+                    causeListEntries: { ...cEntry, nextDate: nextDate }
+                }
+            },
+                { new: true });
+        }
+
+        if (actionAbstract) {
+            // console.log("3 action abstract: " + actionAbstract);
+            updatedCase = await Case.findByIdAndUpdate(id, {
+                actionAbstract: actionAbstract, orderDate: orderDate,
+                $push: {
+                    causeListEntries: { ...cEntry, actionAbstract: actionAbstract }
+                }
+            },
+                { new: true });
+        }
+    }
+
     // const caseFileData = await Case.findById(id);
 
     // const updatedCase = await Case.findByIdAndUpdate(id, { ...caseFile, id }, { new: true });
 
     // console.log("64: " + orderDate);
-    const theCase = await Case.findById(id);
-    let updatedCase = null;
 
     // console.log("68: " + new Date(theCase.orderDate).toDateString());
     // console.log("69: " + new Date().toDateString());
+    //     console.log((new Date(theCase.orderDate).toDateString() === new Date().toDateString()))
+    //     console.log(theCase.causeListEntries.length);
+    //     const sqtt = `causeListEntries.${theCase.causeListEntries.length - 1}`;
+    //     console.log(sqtt);
 
-    console.log((new Date(theCase.orderDate).toDateString() === new Date().toDateString()))
-    console.log(theCase.causeListEntries.length);
-    const sqtt = `causeListEntries.${theCase.causeListEntries.length - 1}`;
-    console.log(sqtt);
 
-    if (new Date(theCase.orderDate).toDateString() === new Date().toDateString()) {
-        // $set query  
-        console.log("$set Query");
-        updatedCase = await Case.findByIdAndUpdate(id, {
-            nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate,
-            $set: {
-                [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { orderNumber: orderNumber, nextDate: nextDate, actionAbstract: actionAbstract }
-            }
-        },
-            { new: true });
+    //     if (new Date(theCase.orderDate).toDateString() === new Date().toDateString()) {
+    //         // $set query  
+    //         console.log("$set Query");
+    //         updatedCase = await Case.findByIdAndUpdate(id, {
+    //             orderNumber: orderNumber, nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate,
+    //             $set: {
+    //                 [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { orderNumber: orderNumber, nextDate: nextDate, actionAbstract: actionAbstract }
+    //             }
+    //         },
+    //             { new: true });
 
-    } else {
-        console.log("$push Query");
-        // $push query
-        updatedCase = await Case.findByIdAndUpdate(id, {
-            nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate,
-            $push: {
-                causeListEntries: { orderNumber: orderNumber, nextDate: nextDate, actionAbstract: actionAbstract }
-            }
-        },
-            { new: true });
-    }
+    //     } else {
+    //         console.log("$push Query");
+    //         // $push query
+    //         updatedCase = await Case.findByIdAndUpdate(id, {
+    //             nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate,
+    //             $push: {
+    //                 causeListEntries: { orderNumber: orderNumber, nextDate: nextDate, actionAbstract: actionAbstract }
+    //             }
+    //         },
+    //             { new: true });
+    //     }
     console.log(updatedCase);
     res.json(updatedCase);
-
-
 };
 
 export const deleteCase = async (req, res) => {

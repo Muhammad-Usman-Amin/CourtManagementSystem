@@ -40,10 +40,13 @@ const CauseList = ({ currentId, setCurrentId }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const [nextDate, setNextDate] = useState(new Date());
-  const [caseData, setCaseData] = useState({
-    orderDate: new Date(), orderNumber: '', nextDate: nextDate, actionAbstract: '',
-  });
+  // const [nextDate, setNextDate] = useState(new Date());
+  // const [caseData, setCaseData] = useState({
+  //   orderDate: new Date(), orderNumber: '', nextDate: nextDate, actionAbstract: '',
+  // });
+  const [orderNumber, setOrderNumber] = useState({ orderDate: new Date(), orderNumber: '' });
+  const [actionAbstract, setActionAbstract] = useState({ orderDate: new Date(), actionAbstract: '' });
+  const [nextDate, setNextDate] = useState({ orderDate: new Date(), nextDate: new Date() });
   // const [caseData, setCaseData] = useState({
   //   causeListEntries: {
   //     causeListEntry: {
@@ -59,19 +62,35 @@ const CauseList = ({ currentId, setCurrentId }) => {
   //   console.log(typeof cases);
   // }, []);
 
-  const handleSubmit = async (e) => {
-    console.log(caseData);
-    // console.log(caseData);
-    // // e.preventDefault();
+  const handleSubmit = async (data) => {
+    // console.log(e.target.value);
 
-    dispatch(updateCase(caseId, caseData));
-
+    // cases.forEach(caseFile => {
+    //   if (caseFile._id === caseId) {
+    //     // console.log(caseFile._id === caseId);
+    //     setNextDate(caseFile.nextDate);
+    //     setCaseData({ ...caseData, nextDate: nextDate });
+    //   }
+    // });
+    // console.log(data);
+    dispatch(updateCase(caseId, data));
+    console.log(cases);
   };
 
   useEffect(() => {
     if (caseId)
-      handleSubmit();
-  }, [caseData]);
+      handleSubmit(orderNumber);
+  }, [orderNumber])
+
+  useEffect(() => {
+    if (caseId)
+      handleSubmit(actionAbstract);
+  }, [actionAbstract]);
+
+  useEffect(() => {
+    if (caseId)
+      handleSubmit(nextDate);
+  }, [nextDate]);
 
 
   return (
@@ -102,7 +121,7 @@ const CauseList = ({ currentId, setCurrentId }) => {
                 <TableCell align="center">{caseFile["Case Title"]}</TableCell>
                 <TableCell align="center">Attendence</TableCell>
                 <TableCell align="center">{format?.(parseISO(caseFile["Date of Institution "]), "dd-MM-yyy")}</TableCell>
-                <TableCell align="center"><TextField name='Order No' variant='outlined' label='Order No' fullWidth value={caseData.orderNumber} onChange={(e) => { setCaseId(caseFile._id); setCurrentId(caseFile._id); setCaseData({ ...caseData, orderNumber: e.target.value }); }} /></TableCell>
+                <TableCell align="center"><TextField name='Order No' variant='outlined' label='Order No' fullWidth value={caseFile.causeListEntries[caseFile.causeListEntries.length - 1].orderNumber} onChange={(e) => { setCaseId(caseFile._id); setCurrentId(caseFile._id); setOrderNumber({ orderDate: new Date(), orderNumber: e.target.value }); }} /></TableCell>
                 <TableCell>
                   <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
                     <KeyboardDatePicker
@@ -110,8 +129,8 @@ const CauseList = ({ currentId, setCurrentId }) => {
                       id="date-picker-dialog"
                       label=""
                       format="dd/MM/yyyy"
-                      value={caseData.nextDate}
-                      onChange={(date) => { setCaseId(caseFile._id); setCurrentId(caseFile._id); setCaseData({ ...caseData, nextDate: date }); }}
+                      value={caseFile.nextDate}
+                      onChange={(date) => { setCaseId(caseFile._id); setCurrentId(caseFile._id); setNextDate({ orderDate: new Date(), nextDate: date }); }}
                       KeyboardButtonProps={{
                         'aria-label': 'change date',
                       }}
@@ -124,8 +143,8 @@ const CauseList = ({ currentId, setCurrentId }) => {
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
-                      value={caseData.actionAbstract}
-                      onChange={(e) => { setCaseId(caseFile._id); setCurrentId(caseFile._id); setCaseData({ ...caseData, actionAbstract: e.target.value }); }}
+                      value={caseFile.actionAbstract}
+                      onChange={(e) => { setCaseId(caseFile._id); setCurrentId(caseFile._id); setActionAbstract({ orderDate: new Date(), actionAbstract: e.target.value }); }}
                       label="Select Sub Type"
                     >
                       <MenuItem value="">
