@@ -23,10 +23,23 @@ export const createCase = async (req, res) => {
 
     const { body } = req;
     console.log(body);
-    const { ["Case Title"]: caseTitle, ["Case No"]: caseNo, ["Case Type"]: caseType, ["Category Per PQS"]: categoryPerPQS, ["FIR NO"]: FIRNO, ["FIR Date"]: FIRDate, Thana, Section, ["Date of Institution "]: dateOfInstitution, ["Date of Disposal Transfer Out"]: dateOfDisposalTransferOut, ["Disposal OR Transfer Out Flag"]: disposalOrTransferOutFlag, ["Disposal Mode Flag"]: disposalModeFlaq, ["Date of Transfer In"]: dateOfTransferIn, ["Date of Other Institution"]: dateOfOtherInstitution, ["Institution Flag"]: institutionFlag } = body;
+    const { ["Case Title"]: caseTitle, ["Case No"]: caseNo, ["Case Type"]: caseType,
+        ["Category Per PQS"]: categoryPerPQS, ["FIR NO"]: FIRNO, ["FIR Date"]: FIRDate, Thana, Section,
+        ["Date of Institution "]: dateOfInstitution, ["Date of Disposal Transfer Out"]: dateOfDisposalTransferOut,
+        ["Disposal OR Transfer Out Flag"]: disposalOrTransferOutFlag, ["Disposal Mode Flag"]: disposalModeFlaq,
+        ["Date of Transfer In"]: dateOfTransferIn, ["Date of Other Institution"]: dateOfOtherInstitution,
+        ["Institution Flag"]: institutionFlag, nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate,
+    } = body;
     console.log(caseTitle);
     // { body["Case Title"], body["Case No"], body["Case Type"], body["Category Per PQS"], body["FIR NO"], body["FIR Date"], body.underSection, body.policeStation, body["Date of Institution "], body["Date of Disposal"], body.isTransferedIn, body["Date of Transfer In"]});
-    const newCase = new Case({ ["Case Title"]: caseTitle, ["Case No"]: caseNo, ["Case Type"]: caseType, ["Category Per PQS"]: categoryPerPQS, ["FIR NO"]: FIRNO, ["FIR Date"]: FIRDate, Thana, Section, ["Date of Institution "]: dateOfInstitution, ["Date of Disposal Transfer Out"]: dateOfDisposalTransferOut, ["Disposal OR Transfer Out Flag"]: disposalOrTransferOutFlag, ["Disposal Mode Flag"]: disposalModeFlaq, ["Date of Transfer In"]: dateOfTransferIn, ["Date of Other Institution"]: dateOfOtherInstitution, ["Institution Flag"]: institutionFlag });
+    const newCase = new Case({
+        ["Case Title"]: caseTitle, ["Case No"]: caseNo, ["Case Type"]: caseType,
+        ["Category Per PQS"]: categoryPerPQS, ["FIR NO"]: FIRNO, ["FIR Date"]: FIRDate, Thana, Section,
+        ["Date of Institution "]: dateOfInstitution, ["Date of Disposal Transfer Out"]: dateOfDisposalTransferOut,
+        ["Disposal OR Transfer Out Flag"]: disposalOrTransferOutFlag, ["Disposal Mode Flag"]: disposalModeFlaq,
+        ["Date of Transfer In"]: dateOfTransferIn, ["Date of Other Institution"]: dateOfOtherInstitution,
+        ["Institution Flag"]: institutionFlag, nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate,
+    });
 
     try {
         await newCase.save();
@@ -38,7 +51,7 @@ export const createCase = async (req, res) => {
 
 export const updateCase = async (req, res) => {
     const { id } = req.params;
-    // const caseFile = req.body;
+    const caseFile = req.body;
     // console.log(caseFile);
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that ID');
@@ -55,15 +68,15 @@ export const updateCase = async (req, res) => {
     if (new Date(theCase.orderDate).toDateString() === new Date().toDateString()) {
 
         //$set query  
-        console.log("$set Query");
+        // console.log("$set Query");
 
 
-        if (orderNumber) {
-            console.log("1 order number: " + orderNumber);
+        if (orderNumber || orderNumber === '') {
+            // console.log("1 order number: " + orderNumber);
             updatedCase = await Case.findByIdAndUpdate(id, {
                 orderNumber: orderNumber, orderDate: orderDate,
                 $set: {
-                    [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, orderNumber: orderNumber }
+                    [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, orderNumber: orderNumber, orderDate: orderDate }
                 }
             },
                 { new: true });
@@ -74,7 +87,7 @@ export const updateCase = async (req, res) => {
             updatedCase = await Case.findByIdAndUpdate(id, {
                 nextDate: nextDate, orderDate: orderDate,
                 $set: {
-                    [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, nextDate: nextDate }
+                    [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, nextDate: nextDate, orderDate: orderDate }
                 }
             },
                 { new: true });
@@ -86,7 +99,7 @@ export const updateCase = async (req, res) => {
             updatedCase = await Case.findByIdAndUpdate(id, {
                 actionAbstract: actionAbstract, orderDate: orderDate,
                 $set: {
-                    [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, actionAbstract: actionAbstract }
+                    [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, actionAbstract: actionAbstract, orderDate: orderDate }
                 }
             },
                 { new: true });
@@ -96,14 +109,14 @@ export const updateCase = async (req, res) => {
     } else {
 
         // $push query
-        console.log("$push Query");
+        // console.log("$push Query");
 
-        if (orderNumber) {
+        if (orderNumber || orderNumber === '') {
             // console.log("1 order number: " + orderNumber);
             updatedCase = await Case.findByIdAndUpdate(id, {
                 orderNumber: orderNumber, orderDate: orderDate,
                 $push: {
-                    causeListEntries: { ...cEntry, orderNumber: orderNumber }
+                    causeListEntries: { ...cEntry, orderNumber: orderNumber, orderDate: orderDate }
                 }
             },
                 { new: true });
@@ -113,7 +126,7 @@ export const updateCase = async (req, res) => {
             updatedCase = await Case.findByIdAndUpdate(id, {
                 nextDate: nextDate, orderDate: orderDate,
                 $push: {
-                    causeListEntries: { ...cEntry, nextDate: nextDate }
+                    causeListEntries: { ...cEntry, nextDate: nextDate, orderDate: orderDate }
                 }
             },
                 { new: true });
@@ -124,7 +137,7 @@ export const updateCase = async (req, res) => {
             updatedCase = await Case.findByIdAndUpdate(id, {
                 actionAbstract: actionAbstract, orderDate: orderDate,
                 $push: {
-                    causeListEntries: { ...cEntry, actionAbstract: actionAbstract }
+                    causeListEntries: { ...cEntry, actionAbstract: actionAbstract, orderDate: orderDate }
                 }
             },
                 { new: true });
@@ -132,41 +145,11 @@ export const updateCase = async (req, res) => {
     }
 
     // const caseFileData = await Case.findById(id);
+    if (caseFile["Case Title"] || caseFile["Case Title"] === '')
+        updatedCase = await Case.findByIdAndUpdate(id, { ...caseFile, id }, { new: true });
+    // console.log("title received" + caseFile["Case Title"]);
 
-    // const updatedCase = await Case.findByIdAndUpdate(id, { ...caseFile, id }, { new: true });
-
-    // console.log("64: " + orderDate);
-
-    // console.log("68: " + new Date(theCase.orderDate).toDateString());
-    // console.log("69: " + new Date().toDateString());
-    //     console.log((new Date(theCase.orderDate).toDateString() === new Date().toDateString()))
-    //     console.log(theCase.causeListEntries.length);
-    //     const sqtt = `causeListEntries.${theCase.causeListEntries.length - 1}`;
-    //     console.log(sqtt);
-
-
-    //     if (new Date(theCase.orderDate).toDateString() === new Date().toDateString()) {
-    //         // $set query  
-    //         console.log("$set Query");
-    //         updatedCase = await Case.findByIdAndUpdate(id, {
-    //             orderNumber: orderNumber, nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate,
-    //             $set: {
-    //                 [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { orderNumber: orderNumber, nextDate: nextDate, actionAbstract: actionAbstract }
-    //             }
-    //         },
-    //             { new: true });
-
-    //     } else {
-    //         console.log("$push Query");
-    //         // $push query
-    //         updatedCase = await Case.findByIdAndUpdate(id, {
-    //             nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate,
-    //             $push: {
-    //                 causeListEntries: { orderNumber: orderNumber, nextDate: nextDate, actionAbstract: actionAbstract }
-    //             }
-    //         },
-    //             { new: true });
-    //     }
+    console.log("updated Case: ");
     console.log(updatedCase);
     res.json(updatedCase);
 };

@@ -6,8 +6,8 @@ import { useDispatch } from 'react-redux';
 import { getCases } from './actions/cases';
 import courtLogo from './images/courtLogo.png';
 // import Posts from './components/Posts/Posts';
-// import Cases from './components/Cases/Cases';
-import CauseList from './components/CauseLists/CauseList';
+import Cases from './components/Cases/Cases';
+// import CauseList from './components/CauseLists/CauseList';
 // import Form from './components/Form/Form';
 import FormCases from './components/Form/FormCases';
 import makeStyles from './styles';
@@ -29,12 +29,13 @@ const App = () => {
             </AppBar>
             <Grow in>
                 <Container>
-                    <Grid className={classes.mainContainer} container justify="space-between" alignItems='stretch' spacing={3}>
-
-                        {/* <Posts setCurrentId={setCurrentId} /> */}
-                        {/* <Cases setCurrentId={setCurrentId} /> */}
-                        <CauseList currentId={currentId} setCurrentId={setCurrentId} />
-
+                    <Grid container justify="space-between" className={classes.mainContainer} alignItems='stretch' spacing={1}>
+                        <Grid item xs={12} sm={7}>
+                            <Cases setCurrentId={setCurrentId} />
+                        </Grid>
+                        <Grid item xs={12} sm={4} >
+                            <FormCases currentId={currentId} setCurrentId={setCurrentId} />
+                        </Grid>
                     </Grid>
                 </Container>
             </Grow>
@@ -47,7 +48,6 @@ export default App;
 
 //<Grid item xs={12} sm={7}>
 
-//<Grid item xs={12} sm={4} >
-  //                          {/* <Form currentId={currentId} setCurrentId={setCurrentId} /> */}
-    //                        <FormCases currentId={currentId} setCurrentId={setCurrentId} />
-      //                  </Grid>
+// <Posts setCurrentId={setCurrentId} />
+// <Form currentId={currentId} setCurrentId={setCurrentId} />
+// <CauseList currentId={currentId} setCurrentId={setCurrentId} />

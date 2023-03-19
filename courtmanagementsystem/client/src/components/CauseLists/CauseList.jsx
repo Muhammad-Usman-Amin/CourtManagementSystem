@@ -64,7 +64,7 @@ const CauseList = ({ currentId, setCurrentId }) => {
 
   const handleSubmit = async (data) => {
     // console.log(e.target.value);
-
+    console.log(data);
     // cases.forEach(caseFile => {
     //   if (caseFile._id === caseId) {
     //     // console.log(caseFile._id === caseId);
@@ -78,6 +78,7 @@ const CauseList = ({ currentId, setCurrentId }) => {
   };
 
   useEffect(() => {
+    console.log('orederNumber onblurred useEffectcalled:' + orderNumber);
     if (caseId)
       handleSubmit(orderNumber);
   }, [orderNumber])
@@ -106,7 +107,7 @@ const CauseList = ({ currentId, setCurrentId }) => {
               <TableCell align="center">Action</TableCell>
               <TableCell align="center">Previous Date</TableCell>
               <TableCell align="center">Order No</TableCell>
-              <TableCell align="left">Next Date</TableCell>
+              <TableCell style={{ minWidth: 95 }} align="left">Next Date</TableCell>
               <TableCell style={{ minWidth: 140 }} align="center">Action Abstract</TableCell>
             </TableRow>
           </TableHead>
@@ -121,7 +122,7 @@ const CauseList = ({ currentId, setCurrentId }) => {
                 <TableCell align="center">{caseFile["Case Title"]}</TableCell>
                 <TableCell align="center">Attendence</TableCell>
                 <TableCell align="center">{format?.(parseISO(caseFile["Date of Institution "]), "dd-MM-yyy")}</TableCell>
-                <TableCell align="center"><TextField name='Order No' variant='outlined' label='Order No' fullWidth value={caseFile.causeListEntries[caseFile.causeListEntries.length - 1].orderNumber} onChange={(e) => { setCaseId(caseFile._id); setCurrentId(caseFile._id); setOrderNumber({ orderDate: new Date(), orderNumber: e.target.value }); }} /></TableCell>
+                <TableCell align="center"><TextField name='Order No' variant='outlined' label='Order No' fullWidth value={caseFile.causeListEntries[caseFile.causeListEntries.length - 1].orderNumber} onChange={(e) => { console.log('onblurred input: ' + e.target.value); setCaseId(caseFile._id); setCurrentId(caseFile._id); setOrderNumber({ orderDate: new Date(), orderNumber: e.target.value }); }} /></TableCell>
                 <TableCell>
                   <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
                     <KeyboardDatePicker
