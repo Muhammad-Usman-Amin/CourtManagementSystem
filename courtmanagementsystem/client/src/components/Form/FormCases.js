@@ -61,7 +61,7 @@ const FormCases =  ({ currentId, setCurrentId }) => {
         // console.log('useEffect called');
         if (caseFile) {
             setSelectedCaseType(caseFile["Case Type"]);
-            setSelectedDate(caseFile["Date of Instituiton "]);
+            setSelectedDate(caseFile["Date of Institution "]);
             setNextDate(caseFile.nextDate);
             // console.log(selectedCaseType);
             setCaseData(caseFile);

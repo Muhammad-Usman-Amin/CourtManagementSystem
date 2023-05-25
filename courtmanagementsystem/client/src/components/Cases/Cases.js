@@ -13,7 +13,7 @@ const Cases = ({ setCurrentId }) => {
 
     return (
         !cases.length ? <CircularProgress /> : (
-            <Grid className={classes.container} container alignItems='stretch' spacing={2}>
+            <Grid className={classes.mainContainer} container alignItems='stretch' spacing={2}>
                 {cases.map((caseFile) => (
                     <Grid item key={caseFile._id} xs={12} sm={6}>
                         <Case caseFile={caseFile} setCurrentId={setCurrentId} />

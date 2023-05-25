@@ -37,6 +37,7 @@ const useStyles = makeStyles({
 const CauseList = ({ currentId, setCurrentId }) => {
 
   const cases = useSelector((state) => state.cases);
+  console.log(cases);
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -95,7 +96,7 @@ const CauseList = ({ currentId, setCurrentId }) => {
 
 
   return (
-    !cases.length ? <CircularProgress /> : (
+    !cases.length ? <CircularProgress /> :
       <TableContainer component={Paper}>
         <Table stickyHeader size='small' className={classes.table} aria-label="CauseList table">
           <TableHead>
@@ -170,7 +171,6 @@ const CauseList = ({ currentId, setCurrentId }) => {
           </TableBody>
         </Table>
       </TableContainer>
-    )
   );
 }
 
