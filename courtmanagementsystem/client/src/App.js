@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
+import { Container, AppBar, Typography, Grow, Grid, CssBaseline } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
 // import { getPosts } from './actions/posts';
@@ -14,11 +14,14 @@ import Dashboard from './dashboardExample/Dashboard.jsx';
 import SimpleDrawer from './dashboardExample/SimpleDrawer.jsx';
 import CauseList from './components/CauseLists/CauseList.jsx';
 import FormCases from './components/Form/FormCases';
+import FormEmployeeData from './components/Form/FormEmployeeData';
 import { BrowserRouter as Router } from 'react-router-dom/cjs/react-router-dom.min';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom';
+import useStyles from './dashboardExample/dashboard';
 
 const App = () => {
     const classes = makeStyles();
+    const classes2 = useStyles();
     const dispatch = useDispatch();
     const [currentId, setCurrentId] = useState(null);
 
@@ -28,31 +31,45 @@ const App = () => {
 
     return (
         <Router>
-            <div style={{ display: "flex" }}>
+            <div className={classes2.root}>
+                <CssBaseline />
                 <SimpleDrawer />
-                <div style={{ flex: 1, padding: "10px", marginTop: 55, }}>
-                    <Switch>
-                        <Route
-                            path="/"
-                            exact
-                            children=<Dashboard />
-                        />
-                        <Route
-                            path="/FormCases"
-                            children=<FormCases currentId={currentId} setCurrentId={setCurrentId} />
-                        />
-                        <Route
-                            path="/CauseLists"
-                            children=<CauseList currentId={currentId} setCurrentId={setCurrentId} />
-                        />
-                        <Route
-                            path="/Cases"
-                            children=<Cases setCurrentId={setCurrentId} />
-                        />
-                    </Switch>
-                </div>
+                <main className={classes2.content}>
+                    <div className={classes2.appBarSpacer} />
+                    <Container maxWidth="lg" className={classes2.container}>
+                        <Switch>
+                            <Route
+                                path="/"
+                                exact
+                                children=<Dashboard />
+                            />
+                            <Route
+                                path="/FormCases"
+                                children=<FormCases currentId={currentId} setCurrentId={setCurrentId} />
+                            />
+                            <Route
+                                path="/CauseLists"
+                                children=<CauseList currentId={currentId} setCurrentId={setCurrentId} />
+                            />
+                            <Route
+                                path="/Cases"
+                                children=<Cases setCurrentId={setCurrentId} />
+                            />
+                            <Route
+                                path="/FormEmployeeData"
+                                children=<FormEmployeeData setCurrentId={setCurrentId} />
+                            />
+                        </Switch>
+                    </Container>
+                </main>
             </div>
         </Router>
+    );
+}
+export default App;
+
+
+
         // <Router>
         //     <Switch>
         //         {/* <Route exact path="/">
@@ -64,30 +81,27 @@ const App = () => {
         //         </Route>
         //     </Switch>
         // </Router>
-    );
     // <Container maxWidth="lg">
-    {/* <AppBar className={classes.appBar} position="static" color="inherit">
-                <Typography className={classes.heading} variant="h3" align="center">District Judiciary Dir Lower</Typography>
-                <img className={classes.image} src={courtLogo} alt='District Judiciary Logo' height="60" />
-            </AppBar> */}
-    {/* <Grow in> */ }
-    {/* <Container> */ }
-    {/* <Grid container justify="space-between" className={classes.mainContainer} alignItems='stretch' spacing={1}> */ }
-    {/* <Grid item xs={12} sm={7}> */ }
-    {/* <Cases setCurrentId={setCurrentId} /> */ }
-    {/* </Grid> */ }
-    {/* <Grid item xs={12} sm={4} > */ }
-    {/* <FormCases currentId={currentId} setCurrentId={setCurrentId} /> */ }
-    {/* </Grid> */ }
-    {/* </Grid> */ }
-    {/* </Container> */ }
-    {/* </Grow> */ }
+    // {/* <AppBar className={classes.appBar} position="static" color="inherit">
+    //             <Typography className={classes.heading} variant="h3" align="center">District Judiciary Dir Lower</Typography>
+    //             <img className={classes.image} src={courtLogo} alt='District Judiciary Logo' height="60" />
+    //         </AppBar> */}
+    // {/* <Grow in> */ }
+    // {/* <Container> */ }
+    // {/* <Grid container justify="space-between" className={classes.mainContainer} alignItems='stretch' spacing={1}> */ }
+    // {/* <Grid item xs={12} sm={7}> */ }
+    // {/* <Cases setCurrentId={setCurrentId} /> */ }
+    // {/* </Grid> */ }
+    // {/* <Grid item xs={12} sm={4} > */ }
+    // {/* <FormCases currentId={currentId} setCurrentId={setCurrentId} /> */ }
+    // {/* </Grid> */ }
+    // {/* </Grid> */ }
+    // {/* </Container> */ }
+    // {/* </Grow> */ }
 
     // </Container>
     // );
-}
 
-export default App;
 
 //<Grid item xs={12} sm={7}>
 

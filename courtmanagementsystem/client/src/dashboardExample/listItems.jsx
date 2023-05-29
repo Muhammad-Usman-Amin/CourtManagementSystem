@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import FolderIcon from '@material-ui/icons/Folder';
 import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 export const mainListItems = (
     <div>
@@ -40,6 +41,12 @@ export const mainListItems = (
                 <FolderIcon />
             </ListItemIcon>
             <ListItemText primary="Cases" />
+        </ListItem>
+        <ListItem button component={Link} to='/FormEmployeeData'>
+            <ListItemIcon>
+                <PersonAddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Add New Employee" />
         </ListItem>
         <ListItem button>
             <ListItemIcon>

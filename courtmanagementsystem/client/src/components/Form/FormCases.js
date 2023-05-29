@@ -15,6 +15,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import useStyles from './styles';
+import useStyles2 from '../../dashboardExample/dashboard';
+import Container from '@material-ui/core/Container';
 import { createCase, updateCase } from '../../actions/cases';
 
 const GreenRadio = withStyles({
@@ -51,6 +53,7 @@ const FormCases =  ({ currentId, setCurrentId }) => {
     const [selectedCaseType, setSelectedCaseType] = useState('Civil');
     const caseFile = useSelector((state) => currentId ? state.cases.find((c) => c._id === currentId) : null);
     const classes = useStyles();
+    const classes2 = useStyles2();
     const dispatch = useDispatch();
     
     useEffect(()=>{

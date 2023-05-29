@@ -19,5 +19,11 @@ export default makeStyles((theme) => ({
     mainContainer: {
       flexDirection: 'column-reverse'
     }
-  }
+  },
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    height: '100vh',
+    overflow: 'auto',
+  },
 }));
