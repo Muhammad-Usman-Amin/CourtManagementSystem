@@ -20,7 +20,8 @@ import useStyles from './styles';
 import useStyles2 from '../../dashboardExample/dashboard';
 import Container from '@material-ui/core/Container';
 import { createCase, updateCase } from '../../actions/cases';
-import { useFormik } from 'formik';
+
+import { useFormikContext, Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 const GreenRadio = withStyles({
@@ -35,71 +36,6 @@ const GreenRadio = withStyles({
 
 
 const FormEmployeeData = ({ currentId, setCurrentId }) => {
-
-    const formik = useFormik({
-
-        initialValues: {
-            name: '',
-            fatherName: '',
-            dateOfBirth: Date,
-            designation: '',
-            currentAddress: '',
-            permanentAddress: '',
-            email: '',
-            mobileNumber: '',
-            maritalStatus: '',
-            dateOfFirstPromotion: Date,
-            firstPromotionToThePostOf: '',
-            dateOfSecondPromotion: Date,
-            secondPromotionToThePostOf: '',
-            dateOfThirdPromotion: Date,
-            thirdPromotionToThePostOf: '',
-            initialAppointmentAs: '',
-            dateOfInitialAppointment: Date,
-            appointedOnAnySonQuota: Boolean,
-            fatherDesignation: '',
-            fatherDateOfRetirement: Date,
-            numberOfChildren: '',
-            detilsOfChildren: [
-            ],
-            nearestStationToHome: '',
-            stationChoice: {
-
-            },
-            transferHistory: [],
-            sufferingFromDisease: Boolean,
-            highestQualification: '',
-            professionalQualification: '',
-            computerLiteracy: Boolean,
-            computerLiteracyLevel: '',
-            extraSkill: '',
-        },
-
-        validationSchema: Yup.object({
-
-            name: Yup.string()
-
-                .max(20, 'Must be 20 characters or less')
-
-                .required('Name is a required field'),
-
-            fatherName: Yup.string()
-
-                .max(20, 'Must be 20 characters or less')
-
-                .required('Father Name is Required'),
-
-            email: Yup.string().email('Invalid email address').required('Required'),
-
-        }),
-
-        onSubmit: values => {
-
-            alert(JSON.stringify(values, null, 2));
-
-        },
-
-    });
 
     // const [selectedDate, setSelectedDate] = useState(new Date());
     const [nextDate, setNextDate] = useState(new Date());
@@ -120,6 +56,8 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
     const classes = useStyles();
     const classes2 = useStyles2();
     const dispatch = useDispatch();
+    const formik = useFormikContext();
+    // const { values, handleReset } = useFormikContext();
 
     useEffect(() => {
         // setSelectedCaseType('Civil');
@@ -149,51 +87,238 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
     };
     const clear = () => {
         setCurrentId(null);
-        formik.handleReset();
+        formik.resetForm();
+    }
+
+    const errorMessage = () => {
+
     }
 
     return (
-        <Paper className={classes.paper} >
+        <Formik
 
-            <form onSubmit={formik.handleSubmit} autoComplete='off' noValidate className={`${classes.root} ${classes.form}`}>
-                <Typography variant='h6'>{currentId ? 'Edit' : 'Add New'} Employee</Typography>
+            initialValues={{
+                name: '',
+                fatherName: '',
+                dateOfBirth: Date,
+                designation: '',
+                currentAddress: '',
+                permanentAddress: '',
+                email: '',
+                mobileNumber: '',
+                maritalStatus: '',
+                dateOfFirstPromotion: Date,
+                firstPromotionToThePostOf: '',
+                dateOfSecondPromotion: Date,
+                secondPromotionToThePostOf: '',
+                dateOfThirdPromotion: Date,
+                thirdPromotionToThePostOf: '',
+                initialAppointmentAs: '',
+                dateOfInitialAppointment: Date,
+                appointedOnAnySonQuota: Boolean,
+                fatherDesignation: '',
+                fatherDateOfRetirement: Date,
+                numberOfChildren: '',
+                detilsOfChildren: [
+                ],
+                nearestStationToHome: '',
+                stationChoice: {
 
-                <TextField onBlur={formik.handleBlur} onChange={formik.handleChange}
-                    type='text' name='name' variant='outlined' label='Employee Name'
-                    fullWidth value={formik.values.name} />
-                {formik.touched.name && formik.errors.name ? (<div style={{ color: 'red' }}>{formik.errors.name}</div>) : null}
+                },
+                transferHistory: [],
+                sufferingFromDisease: Boolean,
+                highestQualification: '',
+                professionalQualification: '',
+                computerLiteracy: Boolean,
+                computerLiteracyLevel: '',
+                extraSkill: '',
+            }}
 
-                <TextField onBlur={formik.handleBlur} fullWidth type='text' name='fatherName' variant='outlined'
-                    label='Father Name' value={formik.values.fatherName} onChange={formik.handleChange} />
-                {formik.touched.fatherName && formik.errors.fatherName ? (<div style={{ color: 'red' }}>{formik.errors.fatherName}</div>) : null}
+            validationSchema={Yup.object({
 
-                <TextField fullWidth type='text' variant='outlined'
-                    {...formik.getFieldProps('email')}
-                    label='Email' />
-                {formik.touched.email && formik.errors.email ? (<div style={{ color: 'red' }}>{formik.errors.email}</div>) : null}
+                name: Yup.string()
+                    .max(20, 'Must be 20 characters or less')
+                    .required('Name is a required field'),
 
-                <FormControl fullWidth variant="outlined" className={classes.formControl}>
-                    <InputLabel id="designation">Designation</InputLabel>
-                    <Select
-                        labelId="designation"
-                        name='designation'
-                        id="designation"
-                        onChange={formik.handleChange}
-                        value={formik.values.designation}
-                        label="Select Sub Type"
-                    >
-                        <MenuItem value="">
-                            <em>Select Designation</em>
-                        </MenuItem>
-                        <MenuItem value={'Computer Operator'}>Computer Operator</MenuItem>
-                        <MenuItem value={'Assistant'}>Assistant</MenuItem>
-                        <MenuItem value={'Senior Clerk'}>Senior Clerk</MenuItem>
-                        <MenuItem value={'Junior Clerk'}>Junior Clerk</MenuItem>
-                    </Select>
-                </FormControl>
+                fatherName: Yup.string()
+                    .max(20, 'Must be 20 characters or less')
+                    .required('Father Name is Required'),
+
+                email: Yup.string().email('Invalid email address').required('Required'),
+
+            })}
+
+            onSubmit={(values, { setSubmitting }) => {
+
+                setTimeout(() => {
+
+                    alert(JSON.stringify(values, null, 2));
+
+                    setSubmitting(false);
+
+                }, 400);
+
+            }}
+
+            onReset={(values, formikBag) => {
+                // Reset the form
+                formikBag.resetForm();
+            }}
+
+        >
+            {(formikProps) => (
+                <Form>
+                    <Typography variant='h6'>{currentId ? 'Edit' : 'Add New'} Employee</Typography>
+
+                    <TextField name='name' variant='outlined' label='Employee Name' fullWidth />
+                    <ErrorMessage render={msg => <div style={{
+                        fontSize: "12px",
+                        color: 'red',
+                        width: "400px",
+                        marginTop: "0.25rem"
+                    }}>{msg}</div>} name="name" />
 
 
-                {/* <FormControl fullWidth component="fieldset">
+                    {/* <label htmlFor="firstName">First Name</label>
+
+         <Field name="firstName" type="text" />
+
+
+ 
+
+         <label htmlFor="lastName">Last Name</label>
+
+         <Field name="lastName" type="text" />
+
+         <ErrorMessage name="lastName" />
+
+ 
+
+         <label htmlFor="email">Email Address</label>
+
+         <Field name="email" type="email" />
+
+         <ErrorMessage name="email" />*/}
+
+
+                    <Button fullWidth className={classes.buttonSubmit} variant='contained' color='primary' size='large' type='submit'>Submit</Button>
+                    <Button fullWidth variant='contained' color='secondary' size='small' onClick={clear} >Clear</Button>
+
+                </Form>)}
+
+        </Formik>
+    );
+};
+
+// const formik = useFormik({
+
+//     initialValues: {
+//         name: '',
+//         fatherName: '',
+//         dateOfBirth: Date,
+//         designation: '',
+//         currentAddress: '',
+//         permanentAddress: '',
+//         email: '',
+//         mobileNumber: '',
+//         maritalStatus: '',
+//         dateOfFirstPromotion: Date,
+//         firstPromotionToThePostOf: '',
+//         dateOfSecondPromotion: Date,
+//         secondPromotionToThePostOf: '',
+//         dateOfThirdPromotion: Date,
+//         thirdPromotionToThePostOf: '',
+//         initialAppointmentAs: '',
+//         dateOfInitialAppointment: Date,
+//         appointedOnAnySonQuota: Boolean,
+//         fatherDesignation: '',
+//         fatherDateOfRetirement: Date,
+//         numberOfChildren: '',
+//         detilsOfChildren: [
+//         ],
+//         nearestStationToHome: '',
+//         stationChoice: {
+
+//         },
+//         transferHistory: [],
+//         sufferingFromDisease: Boolean,
+//         highestQualification: '',
+//         professionalQualification: '',
+//         computerLiteracy: Boolean,
+//         computerLiteracyLevel: '',
+//         extraSkill: '',
+//     },
+
+//     validationSchema: Yup.object({
+
+//         name: Yup.string()
+
+//             .max(20, 'Must be 20 characters or less')
+
+//             .required('Name is a required field'),
+
+//         fatherName: Yup.string()
+
+//             .max(20, 'Must be 20 characters or less')
+
+//             .required('Father Name is Required'),
+
+//         email: Yup.string().email('Invalid email address').required('Required'),
+
+//     }),
+
+//     onSubmit: values => {
+
+//         alert(JSON.stringify(values, null, 2));
+
+//     },
+
+// });
+
+
+
+// return (
+//     <Paper className={classes.paper} >
+
+//         <form onSubmit={formik.handleSubmit} autoComplete='off' noValidate className={`${classes.root} ${classes.form}`}>
+//             <Typography variant='h6'>{currentId ? 'Edit' : 'Add New'} Employee</Typography>
+
+//             <TextField onBlur={formik.handleBlur} onChange={formik.handleChange}
+//                 type='text' name='name' variant='outlined' label='Employee Name'
+//                 fullWidth value={formik.values.name} />
+//             {formik.touched.name && formik.errors.name ? (<div style={{ color: 'red' }}>{formik.errors.name}</div>) : null}
+
+//             <TextField onBlur={formik.handleBlur} fullWidth type='text' name='fatherName' variant='outlined'
+//                 label='Father Name' value={formik.values.fatherName} onChange={formik.handleChange} />
+//             {formik.touched.fatherName && formik.errors.fatherName ? (<div style={{ color: 'red' }}>{formik.errors.fatherName}</div>) : null}
+
+//             <TextField placeholder='someone@gmail.com' fullWidth type='text' variant='outlined'
+//                 {...formik.getFieldProps('email')}
+//                 label='Email' />
+//             {formik.touched.email && formik.errors.email ? (<div style={{ color: 'red' }}>{formik.errors.email}</div>) : null}
+
+//             <FormControl fullWidth variant="outlined" className={classes.formControl}>
+//                 <InputLabel id="designation">Designation</InputLabel>
+//                 <Select
+//                     labelId="designation"
+//                     name='designation'
+//                     id="designation"
+//                     onChange={formik.handleChange}
+//                     value={formik.values.designation}
+//                     label="Select Sub Type"
+//                 >
+//                     <MenuItem value="">
+//                         <em>Select Designation</em>
+//                     </MenuItem>
+//                     <MenuItem value={'Computer Operator'}>Computer Operator</MenuItem>
+//                     <MenuItem value={'Assistant'}>Assistant</MenuItem>
+//                     <MenuItem value={'Senior Clerk'}>Senior Clerk</MenuItem>
+//                     <MenuItem value={'Junior Clerk'}>Junior Clerk</MenuItem>
+//                 </Select>
+//             </FormControl>
+
+
+{/* <FormControl fullWidth component="fieldset">
                     <FormLabel component="legend"><br />Case Type</FormLabel>
                     <RadioGroup required row aria-label="Case Type" name="caseType" value={employeeData["Case Type"]} onChange={e => { setSelectedCaseType(e.target.value); setEmployeeData({ ...employeeData, "Case Type": e.target.value, "Category Per PQS": ''  }); }}>
                         <FormControlLabel checked={selectedCaseType === 'Civil'} value="Civil" control={<GreenRadio />} label="Civil" />
@@ -254,11 +379,11 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
                         <TextField name='policeStation' variant='outlined' label='Police Station Name' fullWidth value={employeeData.Thana} onChange={(e) => setEmployeeData({ ...employeeData, Thana: e.target.value })} />
                     </>
                 } */}
-                <Button fullWidth className={classes.buttonSubmit} variant='contained' color='primary' size='large' type='submit'>Submit</Button>
-                <Button fullWidth variant='contained' color='secondary' size='small' onClick={clear} >Clear</Button>
-            </form>
-        </Paper>
-    );
-}
+//                 <Button fullWidth className={classes.buttonSubmit} variant='contained' color='primary' size='large' type='submit'>Submit</Button>
+//                 <Button fullWidth variant='contained' color='secondary' size='small' onClick={clear} >Clear</Button>
+//             </form>
+//         </Paper>
+//     );
+// }
 
 export default FormEmployeeData;
