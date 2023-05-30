@@ -22,4 +22,14 @@ export default makeStyles((theme) => ({
     buttonSubmit: {
         marginBottom: 10,
     },
+    error: {
+        fontSize: "12px",
+        color: 'red',
+        // width: "400px",
+        marginTop: "-0.4rem",
+
+    },
+    formControl: {
+        margin: '10px',
+    }
 }));

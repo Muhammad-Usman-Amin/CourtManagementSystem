@@ -56,157 +56,151 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
     const classes = useStyles();
     const classes2 = useStyles2();
     const dispatch = useDispatch();
-    const formik = useFormikContext();
     // const { values, handleReset } = useFormikContext();
 
-    useEffect(() => {
-        // setSelectedCaseType('Civil');
-    }, []);
-    useEffect(() => {
-        // console.log(caseFile);
-        // console.log('useEffect called');
-        if (caseFile) {
-            // setSelectedCaseType(caseFile["Case Type"]);
-            // setSelectedDate(caseFile["Date of Institution "]);
-            // setNextDate(caseFile.nextDate);
-            // console.log(selectedCaseType);
-            // setEmployeeData(caseFile);
-        }
-    }, [caseFile]);
+    // useEffect(() => {
+    //     // setSelectedCaseType('Civil');
+    // }, []);
+    // useEffect(() => {
+    //     // console.log(caseFile);
+    //     // console.log('useEffect called');
+    //     if (caseFile) {
+    //         // setSelectedCaseType(caseFile["Case Type"]);
+    //         // setSelectedDate(caseFile["Date of Institution "]);
+    //         // setNextDate(caseFile.nextDate);
+    //         // console.log(selectedCaseType);
+    //         // setEmployeeData(caseFile);
+    //     }
+    // }, [caseFile]);
 
-    const handleSubmit = async (e) => {
+    // const handleSubmit = async (e) => {
 
-        e.preventDefault();
+    //     e.preventDefault();
 
-        if (currentId) {
-            // dispatch(updateCase(currentId, employeeData));
-        } else {
-            // dispatch(createCase(employeeData));
-        }
-        clear();
-    };
-    const clear = () => {
-        setCurrentId(null);
-        formik.resetForm();
-    }
-
-    const errorMessage = () => {
-
-    }
+    //     if (currentId) {
+    //         // dispatch(updateCase(currentId, employeeData));
+    //     } else {
+    //         // dispatch(createCase(employeeData));
+    //     }
+    //     clear();
+    // };
+    // const clear = () => {
+    //     setCurrentId(null);
+    //     formik.resetForm();
+    // }
 
     return (
-        <Formik
+        <Paper className={classes.paper} >
+            <Formik
+                initialValues={{
+                    name: '',
+                    fatherName: '',
+                    dateOfBirth: Date,
+                    designation: '',
+                    currentAddress: '',
+                    permanentAddress: '',
+                    email: '',
+                    mobileNumber: '',
+                    maritalStatus: '',
+                    dateOfFirstPromotion: Date,
+                    firstPromotionToThePostOf: '',
+                    dateOfSecondPromotion: Date,
+                    secondPromotionToThePostOf: '',
+                    dateOfThirdPromotion: Date,
+                    thirdPromotionToThePostOf: '',
+                    initialAppointmentAs: '',
+                    dateOfInitialAppointment: Date,
+                    appointedOnAnySonQuota: Boolean,
+                    fatherDesignation: '',
+                    fatherDateOfRetirement: Date,
+                    numberOfChildren: '',
+                    detilsOfChildren: [
+                    ],
+                    nearestStationToHome: '',
+                    stationChoice: {
 
-            initialValues={{
-                name: '',
-                fatherName: '',
-                dateOfBirth: Date,
-                designation: '',
-                currentAddress: '',
-                permanentAddress: '',
-                email: '',
-                mobileNumber: '',
-                maritalStatus: '',
-                dateOfFirstPromotion: Date,
-                firstPromotionToThePostOf: '',
-                dateOfSecondPromotion: Date,
-                secondPromotionToThePostOf: '',
-                dateOfThirdPromotion: Date,
-                thirdPromotionToThePostOf: '',
-                initialAppointmentAs: '',
-                dateOfInitialAppointment: Date,
-                appointedOnAnySonQuota: Boolean,
-                fatherDesignation: '',
-                fatherDateOfRetirement: Date,
-                numberOfChildren: '',
-                detilsOfChildren: [
-                ],
-                nearestStationToHome: '',
-                stationChoice: {
+                    },
+                    transferHistory: [],
+                    sufferingFromDisease: Boolean,
+                    highestQualification: '',
+                    professionalQualification: '',
+                    computerLiteracy: Boolean,
+                    computerLiteracyLevel: '',
+                    extraSkill: '',
+                }}
 
-                },
-                transferHistory: [],
-                sufferingFromDisease: Boolean,
-                highestQualification: '',
-                professionalQualification: '',
-                computerLiteracy: Boolean,
-                computerLiteracyLevel: '',
-                extraSkill: '',
-            }}
+                validationSchema={Yup.object({
 
-            validationSchema={Yup.object({
+                    name: Yup.string()
+                        .max(20, 'Must be 20 characters or less')
+                        .required('Name is Required'),
 
-                name: Yup.string()
-                    .max(20, 'Must be 20 characters or less')
-                    .required('Name is a required field'),
+                    fatherName: Yup.string()
+                        .max(20, 'Must be 20 characters or less')
+                        .required('Father Name is Required'),
 
-                fatherName: Yup.string()
-                    .max(20, 'Must be 20 characters or less')
-                    .required('Father Name is Required'),
+                    email: Yup.string().email('Invalid email address').required('Required'),
 
-                email: Yup.string().email('Invalid email address').required('Required'),
+                })}
 
-            })}
+                onSubmit={async (values, { setSubmitting }) => {
+                    setTimeout(() => {
 
-            onSubmit={(values, { setSubmitting }) => {
+                        alert(JSON.stringify(values, null, 2));
 
-                setTimeout(() => {
+                        setSubmitting(false);
 
-                    alert(JSON.stringify(values, null, 2));
+                    }, 400);
 
-                    setSubmitting(false);
+                }}
+            >
+                {({ dirty, values, handleChange, isSubmitting }) => (
+                    <Form className={`${classes.root} ${classes.form}`}>
+                        {isSubmitting && <div>Loading...</div>}
 
-                }, 400);
+                        <Typography variant='h6'>{currentId ? 'Edit' : 'Add New'} Employee</Typography>
 
-            }}
+                        <TextField onChange={handleChange} type="text" value={values.name} name="name" variant='outlined'
+                            label='Employee Name' fullWidth />
+                        <ErrorMessage render={msg => <div className={classes.error}>{msg}</div>} name="name" />
 
-            onReset={(values, formikBag) => {
-                // Reset the form
-                formikBag.resetForm();
-            }}
+                        <TextField onChange={handleChange} type="text" value={values.fatherName} name="fatherName" variant='outlined'
+                            label='Father Name' fullWidth />
+                        <ErrorMessage render={msg => <div className={classes.error}>{msg}</div>} name="fatherName" />
 
-        >
-            {(formikProps) => (
-                <Form>
-                    <Typography variant='h6'>{currentId ? 'Edit' : 'Add New'} Employee</Typography>
+                        <TextField onChange={handleChange} type="text" value={values.email} name="email" variant='outlined'
+                            label='Email' fullWidth placeholder='employee@email.com' />
+                        <ErrorMessage render={msg => <div className={classes.error}>{msg}</div>} name="email" />
 
-                    <TextField name='name' variant='outlined' label='Employee Name' fullWidth />
-                    <ErrorMessage render={msg => <div style={{
-                        fontSize: "12px",
-                        color: 'red',
-                        width: "400px",
-                        marginTop: "0.25rem"
-                    }}>{msg}</div>} name="name" />
+                        <FormControl fullWidth variant="outlined" className={classes.formControl}>
+                            <InputLabel id="designation">Designation</InputLabel>
+                            <Select
+                                labelId="designation"
+                                name='designation'
+                                id="designation"
+                                onChange={handleChange}
+                                value={values.designation}
+                                label="Select Sub Type"
+                            >
+                                <MenuItem value="">
+                                    <em>Select Designation</em>
+                                </MenuItem>
+                                <MenuItem value={'Computer Operator'}>Computer Operator</MenuItem>
+                                <MenuItem value={'Assistant'}>Assistant</MenuItem>
+                                <MenuItem value={'Senior Clerk'}>Senior Clerk</MenuItem>
+                                <MenuItem value={'Junior Clerk'}>Junior Clerk</MenuItem>
+                            </Select>
+                        </FormControl>
 
+                        <Button fullWidth className={classes.buttonSubmit} variant='contained' color='primary' size='large' disabled={isSubmitting} type='submit'>Submit</Button>
+                        <Button fullWidth variant='contained' color='secondary' size='small' disabled={!dirty} type='reset' >Clear</Button>
 
-                    {/* <label htmlFor="firstName">First Name</label>
+                    </Form>
+                )
+                }
 
-         <Field name="firstName" type="text" />
-
-
- 
-
-         <label htmlFor="lastName">Last Name</label>
-
-         <Field name="lastName" type="text" />
-
-         <ErrorMessage name="lastName" />
-
- 
-
-         <label htmlFor="email">Email Address</label>
-
-         <Field name="email" type="email" />
-
-         <ErrorMessage name="email" />*/}
-
-
-                    <Button fullWidth className={classes.buttonSubmit} variant='contained' color='primary' size='large' type='submit'>Submit</Button>
-                    <Button fullWidth variant='contained' color='secondary' size='small' onClick={clear} >Clear</Button>
-
-                </Form>)}
-
-        </Formik>
+            </Formik>
+        </Paper>
     );
 };
 
@@ -297,25 +291,25 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
 //                 label='Email' />
 //             {formik.touched.email && formik.errors.email ? (<div style={{ color: 'red' }}>{formik.errors.email}</div>) : null}
 
-//             <FormControl fullWidth variant="outlined" className={classes.formControl}>
-//                 <InputLabel id="designation">Designation</InputLabel>
-//                 <Select
-//                     labelId="designation"
-//                     name='designation'
-//                     id="designation"
-//                     onChange={formik.handleChange}
-//                     value={formik.values.designation}
-//                     label="Select Sub Type"
-//                 >
-//                     <MenuItem value="">
-//                         <em>Select Designation</em>
-//                     </MenuItem>
-//                     <MenuItem value={'Computer Operator'}>Computer Operator</MenuItem>
-//                     <MenuItem value={'Assistant'}>Assistant</MenuItem>
-//                     <MenuItem value={'Senior Clerk'}>Senior Clerk</MenuItem>
-//                     <MenuItem value={'Junior Clerk'}>Junior Clerk</MenuItem>
-//                 </Select>
-//             </FormControl>
+// <FormControl fullWidth variant="outlined" className={classes.formControl}>
+//     <InputLabel id="designation">Designation</InputLabel>
+//     <Select
+//         labelId="designation"
+//         name='designation'
+//         id="designation"
+//         onChange={formik.handleChange}
+//         value={formik.values.designation}
+//         label="Select Sub Type"
+//     >
+//         <MenuItem value="">
+//             <em>Select Designation</em>
+//         </MenuItem>
+//         <MenuItem value={'Computer Operator'}>Computer Operator</MenuItem>
+//         <MenuItem value={'Assistant'}>Assistant</MenuItem>
+//         <MenuItem value={'Senior Clerk'}>Senior Clerk</MenuItem>
+//         <MenuItem value={'Junior Clerk'}>Junior Clerk</MenuItem>
+//     </Select>
+// </FormControl>
 
 
 {/* <FormControl fullWidth component="fieldset">
