@@ -2,8 +2,37 @@ import mongoose from 'mongoose';
 
 const employeeSchema = new mongoose.Schema(
     {
-        name: String, fatherName: String,
-        dateOfBirth: { type: Date, default: new Date() },
+        name: String,
+        fatherName: String,
+        dateOfBirth: Date,
+        designation: String,
+        currentAddress: String,
+        permanentAddress: String,
+        email: String,
+        mobileNumber: String,
+        maritalStatus: String,
+        dateOfFirstPromotion: Date,
+        firstPromotionToThePostOf: String,
+        dateOfSecondPromotion: Date,
+        secondPromotionToThePostOf: String,
+        dateOfThirdPromotion: Date,
+        thirdPromotionToThePostOf: String,
+        initialAppointmentAs: String,
+        dateOfInitialAppointment: Date,
+        appointedOnAnySonQuota: Boolean,
+        fatherDesignation: String,
+        fatherDateOfRetirement: Date,
+        numberOfChildren: String,
+        detilsOfChildren: [],
+        nearestStationToHome: String,
+        stationChoice: {},
+        transferHistory: [],
+        sufferingFromDisease: Boolean,
+        highestQualification: String,
+        professionalQualification: String,
+        computerLiteracy: Boolean,
+        computerLiteracyLevel: String,
+        extraSkill: String,
         // ["Case Title"]: String,
         // ["Case No"]: String,
         // ["Case Type"]: String,
@@ -38,6 +67,6 @@ const employeeSchema = new mongoose.Schema(
         // },
     });
 
-const EmployeeData = mongoose.model('EmployeesData', employeeSchema, 'EmployeeData');
+const EmployeesData = mongoose.model('EmployeesData', employeeSchema, 'EmployeesData');
 
-export default EmployeeData;
+export default EmployeesData;

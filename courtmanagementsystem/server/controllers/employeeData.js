@@ -8,9 +8,9 @@ const router = express.Router();
 
 export const getEmployeeData = async (req, res) => {
     try {
-        const cases = await EmployeeData.find();
+        const employeesData = await EmployeeData.find();
 
-        res.status(200).json(cases);
+        res.status(200).json(employeesData);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -22,28 +22,27 @@ export const createEmployeeData = async (req, res) => {
     // const newCase = new Case({ title, caseNumber, caseType, caseSubType, FIR, FIRdate, UnderSection, policeStation, institutionDate, disposalDate, isTransferedIn });
 
     const { body } = req;
-    console.log(body);
-    const { ["Case Title"]: caseTitle, ["Case No"]: caseNo, ["Case Type"]: caseType,
-        ["Category Per PQS"]: categoryPerPQS, ["FIR NO"]: FIRNO, ["FIR Date"]: FIRDate, Thana, Section,
-        ["Date of Institution "]: dateOfInstitution, ["Date of Disposal Transfer Out"]: dateOfDisposalTransferOut,
-        ["Disposal OR Transfer Out Flag"]: disposalOrTransferOutFlag, ["Disposal Mode Flag"]: disposalModeFlaq,
-        ["Date of Transfer In"]: dateOfTransferIn, ["Date of Other Institution"]: dateOfOtherInstitution,
-        ["Institution Flag"]: institutionFlag, nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate,
-    } = body;
-    console.log(caseTitle);
-    // { body["Case Title"], body["Case No"], body["Case Type"], body["Category Per PQS"], body["FIR NO"], body["FIR Date"], body.underSection, body.policeStation, body["Date of Institution "], body["Date of Disposal"], body.isTransferedIn, body["Date of Transfer In"]});
-    const newCase = new EmployeeData({
-        ["Case Title"]: caseTitle, ["Case No"]: caseNo, ["Case Type"]: caseType,
-        ["Category Per PQS"]: categoryPerPQS, ["FIR NO"]: FIRNO, ["FIR Date"]: FIRDate, Thana, Section,
-        ["Date of Institution "]: dateOfInstitution, ["Date of Disposal Transfer Out"]: dateOfDisposalTransferOut,
-        ["Disposal OR Transfer Out Flag"]: disposalOrTransferOutFlag, ["Disposal Mode Flag"]: disposalModeFlaq,
-        ["Date of Transfer In"]: dateOfTransferIn, ["Date of Other Institution"]: dateOfOtherInstitution,
-        ["Institution Flag"]: institutionFlag, nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate,
+    // console.log(body);
+    const { name, fatherName, dateOfBirth, designation, currentAddress, permanentAddress,
+        email, mobileNumber, maritalStatus, dateOfFirstPromotion, firstPromotionToThePostOf, dateOfSecondPromotion,
+        secondPromotionToThePostOf, dateOfThirdPromotion, thirdPromotionToThePostOf, initialAppointmentAs,
+        dateOfInitialAppointment, appointedOnAnySonQuota, fatherDesignation, fatherDateOfRetirement, numberOfChildren,
+        detilsOfChildren, nearestStationToHome, stationChoice, transferHistory, sufferingFromDisease,
+        highestQualification, professionalQualification, computerLiteracy, computerLiteracyLevel, extraSkill } = body;
+    // console.log(caseTitle);
+
+    const newEmployeeFile = new EmployeeData({
+        name, fatherName, dateOfBirth, designation, currentAddress, permanentAddress,
+        email, mobileNumber, maritalStatus, dateOfFirstPromotion, firstPromotionToThePostOf, dateOfSecondPromotion,
+        secondPromotionToThePostOf, dateOfThirdPromotion, thirdPromotionToThePostOf, initialAppointmentAs,
+        dateOfInitialAppointment, appointedOnAnySonQuota, fatherDesignation, fatherDateOfRetirement, numberOfChildren,
+        detilsOfChildren, nearestStationToHome, stationChoice, transferHistory, sufferingFromDisease,
+        highestQualification, professionalQualification, computerLiteracy, computerLiteracyLevel, extraSkill
     });
 
     try {
-        await newCase.save();
-        res.status(201).json(newCase);
+        await newEmployeeFile.save();
+        res.status(201).json(newEmployeeFile);
     } catch (error) {
         res.status(409).json({ error });
     }
@@ -51,7 +50,7 @@ export const createEmployeeData = async (req, res) => {
 
 export const updateEmployeeData = async (req, res) => {
     const { id } = req.params;
-    const caseFile = req.body;
+    const employeeFile = req.body;
     // console.log(caseFile);
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that ID');
@@ -145,8 +144,8 @@ export const updateEmployeeData = async (req, res) => {
     }
 
     // const caseFileData = await Case.findById(id);
-    if (caseFile["Case Title"] || caseFile["Case Title"] === '')
-        updatedCase = await EmployeeData.findByIdAndUpdate(id, { ...caseFile, id }, { new: true });
+    if (employeeFile["Case Title"] || employeeFile["Case Title"] === '')
+        updatedCase = await EmployeeData.findByIdAndUpdate(id, { ...employeeFile, id }, { new: true });
     // console.log("title received" + caseFile["Case Title"]);
 
     console.log("updated Case: ");
@@ -160,6 +159,17 @@ export const deleteEmployeeData = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that ID');
     await EmployeeData.findByIdAndRemove(id);
     res.json({ message: 'Post deleted successfully' });
+}
+
+export const likeEmployeeData = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that ID');
+
+    const employeeFile = await Case.findById(id);
+    const updatedEmployeeFile = await Case.findByIdAndUpdate(id, { likeCount: employeeFile.likeCount + 1 }, { new: true });
+
+    res.json(updatedEmployeeFile);
 }
 
 export default router;

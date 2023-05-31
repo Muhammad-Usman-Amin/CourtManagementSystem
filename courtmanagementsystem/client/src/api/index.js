@@ -3,6 +3,7 @@ import axios from 'axios';
 //const url = 'http://localhost:5000/posts';
 const url = 'http://192.168.43.52:5000/posts'; // this is accessible from local network i.e mobiles etc, the ip is wireless wifi's ipv4 address
 const urlCases = 'http://192.168.43.52:5000/cases';
+const urlEmployeeData = 'http://192.168.43.52:5000/employeeData';
 const urlpqsp = 'http://192.168.43.52:5000/pqsp';
 
 export const fetchPosts = () => axios.get(url);
@@ -17,4 +18,10 @@ export const updateCase = (id, updatedCase) => axios.patch(`${urlCases}/${id}`, 
 export const deleteCase = (id) => axios.delete(`${urlCases}/${id}`);
 export const likeCase = (id) => axios.patch(`${urlCases}/${id}/likeCase`);
 
-export const fetchpqsp = () => axios.get(urlpqsp);
+export const fetchEmployeeData = () => axios.get(urlEmployeeData);
+export const createEmployeeData = (newEmployeeFile) => axios.post(urlEmployeeData, newEmployeeFile);
+export const updateEmployeeData = (id, updatedEmployeeFile) => axios.patch(`${urlEmployeeData}/${id}`, updatedEmployeeFile);
+export const deleteEmployeeData = (id) => axios.delete(`${urlEmployeeData}/${id}`);
+export const likeEmployeeData = (id) => axios.patch(`${urlEmployeeData}/${id}/likeCase`);
+
+//export const fetchpqsp = () => axios.get(urlpqsp);

@@ -19,10 +19,12 @@ import { useSelector } from 'react-redux';
 import useStyles from './styles';
 import useStyles2 from '../../dashboardExample/dashboard';
 import Container from '@material-ui/core/Container';
-import { createCase, updateCase } from '../../actions/cases';
+// import { createCase, updateCase } from '../../actions/cases';
+import { createEmployeeData, updateEmployeeData } from '../../actions/empoyeeData';
 
-import { useFormikContext, Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import SaveIcon from '@material-ui/icons/Save';
 
 const GreenRadio = withStyles({
     root: {
@@ -141,16 +143,28 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
 
                     email: Yup.string().email('Invalid email address').required('Required'),
 
+                    currentAddress: Yup.string().min(5, 'Too few words friend')
+                        .max(50, 'Too much, Must be less than 50 characters').required('Address is Required'),
+
                 })}
 
-                onSubmit={async (values, { setSubmitting }) => {
-                    setTimeout(() => {
+                onSubmit={async (values, { setSubmitting, resetForm }) => {
 
-                        alert(JSON.stringify(values, null, 2));
+                    if (currentId) {
+                        dispatch(updateEmployeeData(currentId, values));
+                    } else {
+                        dispatch(createEmployeeData(values));
+                    }
+                    setSubmitting(false);
+                    resetForm();
 
-                        setSubmitting(false);
+                    // setTimeout(() => {
 
-                    }, 400);
+                    //     alert(JSON.stringify(values, null, 2));
+
+                    //     setSubmitting(false);
+
+                    // }, 400);
 
                 }}
             >
@@ -167,6 +181,10 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
                         <TextField onChange={handleChange} type="text" value={values.fatherName} name="fatherName" variant='outlined'
                             label='Father Name' fullWidth />
                         <ErrorMessage render={msg => <div className={classes.error}>{msg}</div>} name="fatherName" />
+
+                        <TextField onChange={handleChange} type="text" value={values.currentAddress} name="currentAddress" variant='outlined'
+                            label='Current Address' fullWidth />
+                        <ErrorMessage render={msg => <div className={classes.error}>{msg}</div>} name="currentAddress" />
 
                         <TextField onChange={handleChange} type="text" value={values.email} name="email" variant='outlined'
                             label='Email' fullWidth placeholder='employee@email.com' />
@@ -192,8 +210,11 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
                             </Select>
                         </FormControl>
 
-                        <Button fullWidth className={classes.buttonSubmit} variant='contained' color='primary' size='large' disabled={isSubmitting} type='submit'>Submit</Button>
-                        <Button fullWidth variant='contained' color='secondary' size='small' disabled={!dirty} type='reset' >Clear</Button>
+                        <Button fullWidth className={classes.buttonSubmit} variant='contained' color='primary'
+                            size='large' disabled={isSubmitting} type='submit' startIcon={<SaveIcon />}>
+                            SAVE</Button>
+                        <Button fullWidth variant='contained' color='secondary' size='small' disabled={!dirty}
+                            type='reset' >Clear</Button>
 
                     </Form>
                 )
