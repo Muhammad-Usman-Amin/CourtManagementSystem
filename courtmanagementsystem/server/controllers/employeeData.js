@@ -23,7 +23,7 @@ export const createEmployeeData = async (req, res) => {
 
     const { body } = req;
     // console.log(body);
-    const { name, fatherName, dateOfBirth, designation, currentAddress, permanentAddress,
+    const { name, attachedToCourt, designation, dutyAs, fatherName, dateOfBirth, currentAddress, permanentAddress,
         email, mobileNumber, maritalStatus, dateOfFirstPromotion, firstPromotionToThePostOf, dateOfSecondPromotion,
         secondPromotionToThePostOf, dateOfThirdPromotion, thirdPromotionToThePostOf, initialAppointmentAs,
         dateOfInitialAppointment, appointedOnAnySonQuota, fatherDesignation, fatherDateOfRetirement, numberOfChildren,
@@ -32,7 +32,7 @@ export const createEmployeeData = async (req, res) => {
     // console.log(caseTitle);
 
     const newEmployeeFile = new EmployeeData({
-        name, fatherName, dateOfBirth, designation, currentAddress, permanentAddress,
+        name, attachedToCourt, designation, dutyAs, fatherName, dateOfBirth, currentAddress, permanentAddress,
         email, mobileNumber, maritalStatus, dateOfFirstPromotion, firstPromotionToThePostOf, dateOfSecondPromotion,
         secondPromotionToThePostOf, dateOfThirdPromotion, thirdPromotionToThePostOf, initialAppointmentAs,
         dateOfInitialAppointment, appointedOnAnySonQuota, fatherDesignation, fatherDateOfRetirement, numberOfChildren,

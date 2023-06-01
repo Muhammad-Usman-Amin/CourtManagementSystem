@@ -3,9 +3,11 @@ import mongoose from 'mongoose';
 const employeeSchema = new mongoose.Schema(
     {
         name: String,
+        attachedToCourt: String,
+        designation: String,
+        dutyAs: String,
         fatherName: String,
         dateOfBirth: Date,
-        designation: String,
         currentAddress: String,
         permanentAddress: String,
         email: String,

@@ -9,7 +9,7 @@ import {
 
 import {
     TextField, Button, Typography, Paper, Radio, RadioGroup, FormControlLabel, FormControl,
-    FormLabel, Select, MenuItem, InputLabel,
+    FormLabel, Select, MenuItem, InputLabel, Box
 } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
@@ -96,9 +96,11 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
             <Formik
                 initialValues={{
                     name: '',
+                    designation: '',
+                    dutyAs: '',
+                    attachedToCourt: '',
                     fatherName: '',
                     dateOfBirth: Date,
-                    designation: '',
                     currentAddress: '',
                     permanentAddress: '',
                     email: '',
@@ -137,11 +139,16 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
                         .max(20, 'Must be 20 characters or less')
                         .required('Name is Required'),
 
+                    attachedToCourt: Yup.string()
+                        .required('Court is Required'),
+                    dutyAs: Yup.string()
+                        .required('Duty As is Required'),
+
                     fatherName: Yup.string()
                         .max(20, 'Must be 20 characters or less')
                         .required('Father Name is Required'),
 
-                    email: Yup.string().email('Invalid email address').required('Required'),
+                    email: Yup.string().email('Invalid email address').required('Email Required'),
 
                     currentAddress: Yup.string().min(5, 'Too few words friend')
                         .max(50, 'Too much, Must be less than 50 characters').required('Address is Required'),
@@ -150,21 +157,21 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
 
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
 
-                    if (currentId) {
-                        dispatch(updateEmployeeData(currentId, values));
-                    } else {
-                        dispatch(createEmployeeData(values));
-                    }
+                    // if (currentId) {
+                    //     dispatch(updateEmployeeData(currentId, values));
+                    // } else {
+                    //     dispatch(createEmployeeData(values));
+                    // }
                     setSubmitting(false);
+
+                    setTimeout(() => {
+
+                        alert(JSON.stringify(values, null, 2));
+
+                        setSubmitting(false);
+
+                    }, 400);
                     resetForm();
-
-                    // setTimeout(() => {
-
-                    //     alert(JSON.stringify(values, null, 2));
-
-                    //     setSubmitting(false);
-
-                    // }, 400);
 
                 }}
             >
@@ -175,8 +182,94 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
                         <Typography variant='h6'>{currentId ? 'Edit' : 'Add New'} Employee</Typography>
 
                         <TextField onChange={handleChange} type="text" value={values.name} name="name" variant='outlined'
-                            label='Employee Name' fullWidth />
+                            label='Name of Employee' fullWidth />
                         <ErrorMessage render={msg => <div className={classes.error}>{msg}</div>} name="name" />
+
+                        <Box boxSizing='border-box' width="30%" p={1}>
+                            <FormControl fullWidth variant="outlined" className={classes.formControl}>
+                                <InputLabel id="designation">Designation</InputLabel>
+                                <Select
+                                    labelId="designation"
+                                    name='designation'
+                                    id="designation"
+                                    onChange={handleChange}
+                                    value={values.designation}
+                                    label="Select Sub Type"
+                                >
+                                    <MenuItem value="">
+                                        <em>Select Designation</em>
+                                    </MenuItem>
+                                    <MenuItem value={'Computer Operator'}>Computer Operator</MenuItem>
+                                    <MenuItem value={'Assistant'}>Assistant</MenuItem>
+                                    <MenuItem value={'Senior Clerk'}>Senior Clerk</MenuItem>
+                                    <MenuItem value={'Junior Clerk'}>Junior Clerk</MenuItem>
+                                    <MenuItem value={'Junior Clerk'}>Junior Clerk</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+                        {/* <Box display="flex" justifyContent="center" flexDirection="row" flexGrow={1} style={{ backgroundColor: 'yellow' }}> */}
+                        <Box boxSizing='border-box' width="40%" p={1}>
+                            <FormControl fullWidth variant="outlined" className={classes.formControl}>
+                                <InputLabel id="attachedToCourt">Attached with the Court/Administration of</InputLabel>
+                                <Select
+                                    labelId="attachedToCourt"
+                                    name="attachedToCourt"
+                                    id="attachedToCourt"
+                                    onChange={handleChange}
+                                    value={values.attachedToCourt}
+                                    label="Attached with the Court/Administration of"
+                                >
+                                    <MenuItem value=""> <em>Upper Courts</em></MenuItem>
+                                    <MenuItem value={'DSJ'}>DSJ</MenuItem>
+                                    <MenuItem value={'ADSJ at Timergara'}>ADSJ at Timergara</MenuItem>
+                                    <MenuItem value={'ADSJ at Chakdara'}>ADSJ at Chakdara</MenuItem>
+                                    <MenuItem value={'ADSJ at Samarbagh'}>ADSJ at Samarbagh</MenuItem>
+                                    <MenuItem value={'ADSJ at Lal Qilla'}>ADSJ at Lal Qilla</MenuItem>
+                                    <MenuItem value={'SCJ ADMIN'}>SCJ ADMIN</MenuItem>
+
+                                    <MenuItem value=""><em>Lower Courts</em></MenuItem>
+                                    <MenuItem value={'SCJ JUDICIAL at Timergara'}>SCJ JUDICIAL at Timergara</MenuItem>
+                                    <MenuItem value={'CJ-I at Timergara'}>CJ-I at Timergara</MenuItem>
+                                    <MenuItem value={'CJ-II at Timergara'}>CJ-II at Timergara</MenuItem>
+                                    <MenuItem value={'CJ-III at Timergara'}>CJ-III at Timergara</MenuItem>
+                                    <MenuItem value={'CJ-IV at Timergara'}>CJ-IV at Timergara</MenuItem>
+                                    <MenuItem value={'CJ-V at Timergara'}>CJ-V at Timergara</MenuItem>
+                                    <MenuItem value={'CJ-VI at Timergara'}>CJ-VI at Timergara</MenuItem>
+                                    <MenuItem value={'CJ-I at Chakdara'}>CJ-I at Chakdara</MenuItem>
+                                    <MenuItem value={'CJ-I at Lal Qilla'}>CJ-I at Lal Qilla</MenuItem>
+                                    <MenuItem value={'CJ-I at Samarbagh'}>CJ-I at Samarbagh</MenuItem>
+
+                                    <MenuItem value=""><em></em></MenuItem>
+                                </Select>
+                            </FormControl>
+                            <ErrorMessage render={msg => <div className={classes.error}>{msg}</div>} name="attachedToCourt" />
+                        </Box>
+                        <Box width="30%" p={1}>
+                            <FormControl fullWidth variant="outlined" className={classes.formControl}>
+                                <InputLabel id="dutyAs">Performing Duty As</InputLabel>
+                                <Select
+                                    labelId="dutyAs"
+                                    name="dutyAs"
+                                    id="dutyAs"
+                                    onChange={handleChange}
+                                    value={values.dutyAs}
+                                    label="Performing Duty As"
+                                >
+                                    <MenuItem value=""> <em>Grade 1</em></MenuItem>
+                                    <MenuItem value={'Computer Operator'}>Computer Operator</MenuItem>
+                                    <MenuItem value={'Stenographer'}>Stenographer</MenuItem>
+                                    <MenuItem value={'Reader'}>Reader</MenuItem>
+
+                                    <MenuItem value=""><em>Grade 2</em></MenuItem>
+                                    <MenuItem value={'Muharrir'}>Muharrir</MenuItem>
+
+                                    <MenuItem value=""><em>Grade 3</em></MenuItem>
+                                    <MenuItem value={'Naib Qasid'}>Naib Qasid</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <ErrorMessage render={msg => <div className={classes.error}>{msg}</div>} name="dutyAs" />
+                        </Box>
+                        {/* </Box> */}
 
                         <TextField onChange={handleChange} type="text" value={values.fatherName} name="fatherName" variant='outlined'
                             label='Father Name' fullWidth />
@@ -186,29 +279,18 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
                             label='Current Address' fullWidth />
                         <ErrorMessage render={msg => <div className={classes.error}>{msg}</div>} name="currentAddress" />
 
+                        <TextField onChange={handleChange} type="text" value={values.permanentAddress} name="permanentAddress" variant='outlined'
+                            label='Permanent Address' fullWidth />
+                        <ErrorMessage render={msg => <div className={classes.error}>{msg}</div>} name="permanentAddress" />
+
+                        <TextField onChange={handleChange} type="text" value={values.mobileNumber} name="mobileNumber" variant='outlined'
+                            label='Mobile Number' fullWidth placeholder='0346 1234567' />
+                        <ErrorMessage render={msg => <div className={classes.error}>{msg}</div>} name="mobileNumber" />
+
                         <TextField onChange={handleChange} type="text" value={values.email} name="email" variant='outlined'
                             label='Email' fullWidth placeholder='employee@email.com' />
                         <ErrorMessage render={msg => <div className={classes.error}>{msg}</div>} name="email" />
 
-                        <FormControl fullWidth variant="outlined" className={classes.formControl}>
-                            <InputLabel id="designation">Designation</InputLabel>
-                            <Select
-                                labelId="designation"
-                                name='designation'
-                                id="designation"
-                                onChange={handleChange}
-                                value={values.designation}
-                                label="Select Sub Type"
-                            >
-                                <MenuItem value="">
-                                    <em>Select Designation</em>
-                                </MenuItem>
-                                <MenuItem value={'Computer Operator'}>Computer Operator</MenuItem>
-                                <MenuItem value={'Assistant'}>Assistant</MenuItem>
-                                <MenuItem value={'Senior Clerk'}>Senior Clerk</MenuItem>
-                                <MenuItem value={'Junior Clerk'}>Junior Clerk</MenuItem>
-                            </Select>
-                        </FormControl>
 
                         <Button fullWidth className={classes.buttonSubmit} variant='contained' color='primary'
                             size='large' disabled={isSubmitting} type='submit' startIcon={<SaveIcon />}>

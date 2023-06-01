@@ -30,6 +30,6 @@ export default makeStyles((theme) => ({
 
     },
     formControl: {
-        margin: '10px',
+        margin: '0px',
     }
 }));
