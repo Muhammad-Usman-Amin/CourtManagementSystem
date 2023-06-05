@@ -23,21 +23,19 @@ export const createEmployeeData = async (req, res) => {
 
     const { body } = req;
     // console.log(body);
-    const { name, attachedToCourt, designation, dutyAs, fatherName, dateOfBirth, currentAddress, permanentAddress,
-        email, mobileNumber, maritalStatus, dateOfFirstPromotion, firstPromotionToThePostOf, dateOfSecondPromotion,
-        secondPromotionToThePostOf, dateOfThirdPromotion, thirdPromotionToThePostOf, initialAppointmentAs,
-        dateOfInitialAppointment, appointedOnAnySonQuota, fatherDesignation, fatherDateOfRetirement, numberOfChildren,
-        detilsOfChildren, nearestStationToHome, stationChoice, transferHistory, sufferingFromDisease,
-        highestQualification, professionalQualification, computerLiteracy, computerLiteracyLevel, extraSkill } = body;
+    const { name, designation, dutyAs, attachedToCourt, fatherName, dateOfBirth, gender, currentAddress, permanentAddress, sameAsCurrentAddress,
+        email, mobileNumber, maritalStatus, promotions, initialAppointmentAs,
+        dateOfInitialAppointment, appointedOnAnySonQuota, fatherDesignation, fatherDateOfRetirement,
+        transferHistory, children, nearestStationToHome, nearestStationToHomeC1, nearestStationToHomeC2, nearestStationToHomeC3,
+        IsSufferingFromDisease, highestQualification, professionalQualification, computerLiteracy, computerLiteracyLevel, extraSkill } = body;
     // console.log(caseTitle);
 
     const newEmployeeFile = new EmployeeData({
-        name, attachedToCourt, designation, dutyAs, fatherName, dateOfBirth, currentAddress, permanentAddress,
-        email, mobileNumber, maritalStatus, dateOfFirstPromotion, firstPromotionToThePostOf, dateOfSecondPromotion,
-        secondPromotionToThePostOf, dateOfThirdPromotion, thirdPromotionToThePostOf, initialAppointmentAs,
-        dateOfInitialAppointment, appointedOnAnySonQuota, fatherDesignation, fatherDateOfRetirement, numberOfChildren,
-        detilsOfChildren, nearestStationToHome, stationChoice, transferHistory, sufferingFromDisease,
-        highestQualification, professionalQualification, computerLiteracy, computerLiteracyLevel, extraSkill
+        name, designation, dutyAs, attachedToCourt, fatherName, dateOfBirth, gender, currentAddress, permanentAddress, sameAsCurrentAddress,
+        email, mobileNumber, maritalStatus, promotions, initialAppointmentAs,
+        dateOfInitialAppointment, appointedOnAnySonQuota, fatherDesignation, fatherDateOfRetirement,
+        transferHistory, children, nearestStationToHome, nearestStationToHomeC1, nearestStationToHomeC2, nearestStationToHomeC3,
+        IsSufferingFromDisease, highestQualification, professionalQualification, computerLiteracy, computerLiteracyLevel, extraSkill
     });
 
     try {

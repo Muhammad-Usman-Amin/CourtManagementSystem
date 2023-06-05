@@ -23,18 +23,21 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
         </ListItem>
+
         <ListItem button component={Link} to='/FormCases'>
             <ListItemIcon >
                 <CreateNewFolderIcon />
             </ListItemIcon>
             <ListItemText primary="Add New Case" />
         </ListItem>
+
         <ListItem button component={Link} to='/CauseLists'>
             <ListItemIcon>
                 <ListAltRoundedIcon />
             </ListItemIcon>
             <ListItemText primary="Cause Lists" />
         </ListItem>
+
         <ListItem button component={Link} to='/Cases'>
             <ListItemIcon>
                 {/* <PeopleIcon /> */}
@@ -42,18 +45,21 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Cases" />
         </ListItem>
+
         <ListItem button component={Link} to='/FormEmployeeData'>
             <ListItemIcon>
                 <PersonAddIcon />
             </ListItemIcon>
             <ListItemText primary="Add New Employee" />
         </ListItem>
-        <ListItem button>
+
+        <ListItem button component={Link} to='/EmployeeListTable'>
             <ListItemIcon>
                 <BarChartIcon />
             </ListItemIcon>
             <ListItemText primary="Reports" />
         </ListItem>
+
         <ListItem button>
             <ListItemIcon>
                 <LayersIcon />

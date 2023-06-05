@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 // import { getPosts } from './actions/posts';
 import { getCases } from './actions/cases';
+import { getEmployeeData } from './actions/employeeData.js';
 import courtLogo from './images/courtLogo.png';
 // import Posts from './components/Posts/Posts';
 import Cases from './components/Cases/Cases';
@@ -15,6 +16,8 @@ import SimpleDrawer from './dashboardExample/SimpleDrawer.jsx';
 import CauseList from './components/CauseLists/CauseList.jsx';
 import FormCases from './components/Form/FormCases';
 import FormEmployeeData from './components/Form/FormEmployeeData';
+import EmployeeListTable from './components/Form/EmployeeListTable.jsx';
+
 import { BrowserRouter as Router } from 'react-router-dom/cjs/react-router-dom.min';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom';
 import useStyles from './dashboardExample/dashboard';
@@ -28,6 +31,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(getCases());
+        dispatch(getEmployeeData());
     }, [currentId, dispatch])
 
     return (
@@ -59,6 +63,10 @@ const App = () => {
                             <Route
                                 path="/FormEmployeeData"
                                 children=<FormEmployeeData setCurrentId={setCurrentId} />
+                            />
+                            <Route
+                                path="/EmployeeListTable"
+                                children=<EmployeeListTable currentId={currentId} setCurrentId={setCurrentId} />
                             />
                         </Switch>
                     </Container>

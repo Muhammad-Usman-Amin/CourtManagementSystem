@@ -20,7 +20,7 @@ import useStyles from './styles';
 import useStyles2 from '../../dashboardExample/dashboard';
 import Container from '@material-ui/core/Container';
 // import { createCase, updateCase } from '../../actions/cases';
-import { createEmployeeData, updateEmployeeData } from '../../actions/empoyeeData';
+import { createEmployeeData, updateEmployeeData } from '../../actions/employeeData';
 
 import { Formik, Form, ErrorMessage, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
@@ -43,17 +43,17 @@ const GreenRadio = withStyles({
 const FormEmployeeData = ({ currentId, setCurrentId }) => {
 
     // const [selectedDate, setSelectedDate] = useState(new Date());
-    const [nextDate, setNextDate] = useState(new Date());
+    // const [nextDate, setNextDate] = useState(new Date());
     // const [employeeData, setEmployeeData] = useState({
     //     name: '', fatherName: '', dateOfBirth: new Date(), designation: '',
     // });
 
-    const handleDateChange = (date) => {
-        // setSelectedDate(date);
+    // const handleDateChange = (date) => {
+    // setSelectedDate(date);
 
-        // setEmployeeData({ ...employeeData, "Date of Institution ": date });
-        // console.log(caseData["Date of Institution "]);
-    };
+    // setEmployeeData({ ...employeeData, "Date of Institution ": date });
+    // console.log(caseData["Date of Institution "]);
+    // };
 
     // const [selectedCaseType, setSelectedCaseType] = useState('Civil');
 
@@ -145,20 +145,20 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
 
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
                     console.log(values);
-                    // if (currentId) {
-                    //     dispatch(updateEmployeeData(currentId, values));
-                    // } else {
-                    //     dispatch(createEmployeeData(values));
-                    // }
+                    if (currentId) {
+                        dispatch(updateEmployeeData(currentId, values));
+                    } else {
+                        dispatch(createEmployeeData(values));
+                    }
                     setSubmitting(false);
 
-                    setTimeout(() => {
+                    // setTimeout(() => {
 
-                        alert(JSON.stringify(values, null, 2));
+                    //     alert(JSON.stringify(values, null, 2));
 
-                        setSubmitting(false);
+                    //     setSubmitting(false);
 
-                    }, 400);
+                    // }, 400);
                     resetForm();
 
                 }}
