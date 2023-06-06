@@ -1,18 +1,24 @@
 import axios from 'axios';
 
 //LocalHost Network
+<<<<<<< HEAD
 // const url = 'http://localhost:5000/posts';
 // const urlCases = 'http://localhost:5000/posts';
 // const urlEmployeeData = 'http://localhost:5000/employeeData';
+=======
+const url = 'http://localhost:5000/posts';
+const urlCases = 'http://localhost:5000/posts';
+const urlEmployeeData = 'http://localhost:5000/employeeData';
+>>>>>>> 81f9d23b06c49d1f635186ce9daf1053d5269cb2
 // const urlpqsp = 'http://localhost:5000/pqsp';
 // const url = 'http://localhost:5000/posts';
 
 // Home Network
 // const url = 'http://localhost:5000/posts';
-const url = 'http://192.168.43.52:5000/posts'; // this is accessible from local network i.e mobiles etc, the ip is wireless wifi's ipv4 address
-const urlCases = 'http://192.168.43.52:5000/cases';
-const urlEmployeeData = 'http://192.168.43.52:5000/employeeData';
-const urlpqsp = 'http://192.168.43.52:5000/pqsp';
+// const url = 'http://192.168.43.52:5000/posts'; // this is accessible from local network i.e mobiles etc, the ip is wireless wifi's ipv4 address
+// const urlCases = 'http://192.168.43.52:5000/cases';
+// const urlEmployeeData = 'http://192.168.43.52:5000/employeeData';
+// const urlpqsp = 'http://192.168.43.52:5000/pqsp';
 
 //Court Network
 // const url = 'http://192.168.1.106:5000/posts'; // (Court) this is accessible from local network i.e mobiles etc, the ip is wireless wifi's ipv4 address
