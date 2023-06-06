@@ -13,6 +13,7 @@ const Cases = ({ setCurrentId }) => {
     const cases = useSelector((state) => state.cases);
 
     // console.log(cases);
+    // console.log(cases[0]["Date of Institution "]);
 
     return (
         !cases.length ? <CircularProgress /> : (

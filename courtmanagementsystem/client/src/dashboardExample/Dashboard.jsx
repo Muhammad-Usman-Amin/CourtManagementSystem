@@ -23,6 +23,10 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import useStyles from './dashboard';
+import { Button } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+// import store from '../index';
+
 
 function Copyright() {
     return (
@@ -120,12 +124,14 @@ const drawerWidth = 240;
 
 export default function Dashboard() {
     const classes = useStyles();
+    const employeeData = useSelector((state) => state.employeeData);
+    const cases = useSelector((state) => state.cases);
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     return (
         <React.Fragment>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} >
                 {/* Chart */}
                 <Grid item xs={12} md={8} lg={9}>
                     <Paper className={fixedHeightPaper}>
@@ -144,6 +150,11 @@ export default function Dashboard() {
                         <Orders />
                     </Paper>
                 </Grid>
+            </Grid>
+            <Grid item xs={6} md={6} >
+                <Button fullWidth variant='outlined' onClick={() => console.log(employeeData)}>employeeData</Button>
+                <Button fullWidth variant='outlined' onClick={() => console.log(cases)}>Cases Data</Button>
+                {/* <Button fullWidth variant='outlined' onClick={() => console.log(store.getState())}>Store State</Button> */}
             </Grid>
             <Box pt={4}>
                 <Copyright />

@@ -9,6 +9,7 @@ import App from './App';
 // import './index.css';
 
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
+// export default store;
 
 ReactDOM.render(
     <Provider store={store}>

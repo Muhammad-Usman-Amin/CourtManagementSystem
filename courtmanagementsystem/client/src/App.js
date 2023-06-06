@@ -30,8 +30,8 @@ const App = () => {
     const [currentId, setCurrentId] = useState(null);
 
     useEffect(() => {
-        dispatch(getCases());
         dispatch(getEmployeeData());
+        dispatch(getCases());
     }, [currentId, dispatch])
 
     return (

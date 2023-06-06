@@ -4,13 +4,16 @@ import * as api from '../api';
 // Actions creators
 export const getCases = () => async (dispatch) => {
     // console.log('getCases Called');
+    let datam = null;
     try {
         const { data } = await api.fetchCases();
-        // console.log(data);
         dispatch({ type: FETCH_ALL, payload: data });
+        datam = data;
     } catch (error) {
         console.log(error);
     }
+    // console.log("Cases Action result:");
+    // console.log(datam);
 };
 export const createCase = (caseFile) => async (dispatch) => {
     // console.log(caseFile);

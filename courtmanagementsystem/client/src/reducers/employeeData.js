@@ -1,4 +1,4 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL_EMPLOYEE_DATA, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 
 export default (employeeData = [], action) => {
     switch (action.type) {
@@ -7,7 +7,7 @@ export default (employeeData = [], action) => {
         case UPDATE:
         case LIKE:
             return employeeData.map((employeeFile) => employeeFile._id === action.payload._id ? action.payload : employeeFile);
-        case FETCH_ALL:
+        case FETCH_ALL_EMPLOYEE_DATA:
             return action.payload;
         case CREATE:
             return [...employeeData, action.payload];

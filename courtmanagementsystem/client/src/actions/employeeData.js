@@ -1,16 +1,20 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL_EMPLOYEE_DATA, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Actions creators
 export const getEmployeeData = () => async (dispatch) => {
     // console.log('getCases Called');
+    let datam = null;
     try {
         const { data } = await api.fetchEmployeeData();
         // console.log(data);
-        dispatch({ type: FETCH_ALL, payload: data });
+        dispatch({ type: FETCH_ALL_EMPLOYEE_DATA, payload: data });
+        datam = data;
     } catch (error) {
         console.log(error);
     }
+    // console.log("Employee Data Action result:");
+    // console.log(datam);
 };
 export const createEmployeeData = (employeeFile) => async (dispatch) => {
     // console.log(caseFile);

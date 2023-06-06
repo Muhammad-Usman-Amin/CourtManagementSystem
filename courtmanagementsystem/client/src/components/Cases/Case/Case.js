@@ -41,6 +41,7 @@ const Case = ({ caseFile, setCurrentId }) => {
     const dispatch = useDispatch();
     // Date of Institution
     // console.log(caseFile);
+    // console.log(caseFile["Date of Institution "]);
     // const institutionDate = new Date(caseFile["Date of Institution "]);
     // const institutionDate = new Date("2021-01-21T19:00:00.000+00:00");
     // console.log(caseFile["Date of Institution"]);
@@ -53,6 +54,7 @@ const Case = ({ caseFile, setCurrentId }) => {
                 <Typography variant='h6'>Case No: {caseFile["Case No"]}</Typography>
                 {/* <Typography variant='body2'>{moment(caseFile.institutionDate).fromNow()}</Typography> */}
                 {/* <Typography variant='body2'>{format(parseISO(caseFile.institutionDate), 'dd/MM/yyyy')}</Typography> */}
+                {console.log(caseFile["Date of Institution "])}
                 <Typography variant='body2'>Ins Date: {format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</Typography>
                 {/* <Typography variant='body2'>Ins Date: {caseFile["Date of Institution "]}</Typography> */}
             </div>
