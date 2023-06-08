@@ -53,102 +53,108 @@ export const updateEmployeeData = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that ID');
 
-    const { orderDate, orderNumber, nextDate, actionAbstract } = req.body;
+    const updatedFile = await EmployeeData.findByIdAndUpdate(id, { ...employeeFile, id }, { new: true });
 
-    const theCase = await EmployeeData.findById(id);
-    let updatedCase = null;
+    res.json(updatedFile);
 
-    const lastCase = theCase.causeListEntries.toObject();
-    const cEntry = lastCase[lastCase.length - 1];
+    // const { orderDate, orderNumber, nextDate, actionAbstract } = req.body;
+
+
+    // const theCase = await EmployeeData.findById(id);
+    // let updatedCase = null;
+
+
+    // const lastCase = theCase.causeListEntries.toObject();
+    // const cEntry = lastCase[lastCase.length - 1];
     // console.log(cEntry);
 
-    if (new Date(theCase.orderDate).toDateString() === new Date().toDateString()) {
+    // if (new Date(theCase.orderDate).toDateString() === new Date().toDateString()) {
 
-        //$set query  
-        // console.log("$set Query");
+    //     //$set query  
+    //     // console.log("$set Query");
 
 
-        if (orderNumber || orderNumber === '') {
-            // console.log("1 order number: " + orderNumber);
-            updatedCase = await EmployeeData.findByIdAndUpdate(id, {
-                orderNumber: orderNumber, orderDate: orderDate,
-                $set: {
-                    [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, orderNumber: orderNumber, orderDate: orderDate }
-                }
-            },
-                { new: true });
-        }
+    //     if (orderNumber || orderNumber === '') {
+    //         // console.log("1 order number: " + orderNumber);
+    //         updatedCase = await EmployeeData.findByIdAndUpdate(id, {
+    //             orderNumber: orderNumber, orderDate: orderDate,
+    //             $set: {
+    //                 [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, orderNumber: orderNumber, orderDate: orderDate }
+    //             }
+    //         },
+    //             { new: true });
+    //     }
 
-        if (nextDate) {
-            // console.log("2 next date: " + nextDate);
-            updatedCase = await EmployeeData.findByIdAndUpdate(id, {
-                nextDate: nextDate, orderDate: orderDate,
-                $set: {
-                    [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, nextDate: nextDate, orderDate: orderDate }
-                }
-            },
-                { new: true });
+    //     if (nextDate) {
+    //         // console.log("2 next date: " + nextDate);
+    //         updatedCase = await EmployeeData.findByIdAndUpdate(id, {
+    //             nextDate: nextDate, orderDate: orderDate,
+    //             $set: {
+    //                 [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, nextDate: nextDate, orderDate: orderDate }
+    //             }
+    //         },
+    //             { new: true });
 
-        }
+    //     }
 
-        if (actionAbstract) {
-            // console.log("3 action abstract: " + actionAbstract);
-            updatedCase = await EmployeeData.findByIdAndUpdate(id, {
-                actionAbstract: actionAbstract, orderDate: orderDate,
-                $set: {
-                    [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, actionAbstract: actionAbstract, orderDate: orderDate }
-                }
-            },
-                { new: true });
+    //     if (actionAbstract) {
+    //         // console.log("3 action abstract: " + actionAbstract);
+    //         updatedCase = await EmployeeData.findByIdAndUpdate(id, {
+    //             actionAbstract: actionAbstract, orderDate: orderDate,
+    //             $set: {
+    //                 [`causeListEntries.${theCase.causeListEntries.length - 1}`]: { ...cEntry, actionAbstract: actionAbstract, orderDate: orderDate }
+    //             }
+    //         },
+    //             { new: true });
 
-        }
+    //     }
 
-    } else {
+    // } else {
 
-        // $push query
-        // console.log("$push Query");
+    //     // $push query
+    //     // console.log("$push Query");
 
-        if (orderNumber || orderNumber === '') {
-            // console.log("1 order number: " + orderNumber);
-            updatedCase = await EmployeeData.findByIdAndUpdate(id, {
-                orderNumber: orderNumber, orderDate: orderDate,
-                $push: {
-                    causeListEntries: { ...cEntry, orderNumber: orderNumber, orderDate: orderDate }
-                }
-            },
-                { new: true });
-        }
-        if (nextDate) {
-            // console.log("2 next date: " + nextDate);
-            updatedCase = await EmployeeData.findByIdAndUpdate(id, {
-                nextDate: nextDate, orderDate: orderDate,
-                $push: {
-                    causeListEntries: { ...cEntry, nextDate: nextDate, orderDate: orderDate }
-                }
-            },
-                { new: true });
-        }
+    //     if (orderNumber || orderNumber === '') {
+    //         // console.log("1 order number: " + orderNumber);
+    //         updatedCase = await EmployeeData.findByIdAndUpdate(id, {
+    //             orderNumber: orderNumber, orderDate: orderDate,
+    //             $push: {
+    //                 causeListEntries: { ...cEntry, orderNumber: orderNumber, orderDate: orderDate }
+    //             }
+    //         },
+    //             { new: true });
+    //     }
+    //     if (nextDate) {
+    //         // console.log("2 next date: " + nextDate);
+    //         updatedCase = await EmployeeData.findByIdAndUpdate(id, {
+    //             nextDate: nextDate, orderDate: orderDate,
+    //             $push: {
+    //                 causeListEntries: { ...cEntry, nextDate: nextDate, orderDate: orderDate }
+    //             }
+    //         },
+    //             { new: true });
+    //     }
 
-        if (actionAbstract) {
-            // console.log("3 action abstract: " + actionAbstract);
-            updatedCase = await EmployeeData.findByIdAndUpdate(id, {
-                actionAbstract: actionAbstract, orderDate: orderDate,
-                $push: {
-                    causeListEntries: { ...cEntry, actionAbstract: actionAbstract, orderDate: orderDate }
-                }
-            },
-                { new: true });
-        }
-    }
+    //     if (actionAbstract) {
+    //         // console.log("3 action abstract: " + actionAbstract);
+    //         updatedCase = await EmployeeData.findByIdAndUpdate(id, {
+    //             actionAbstract: actionAbstract, orderDate: orderDate,
+    //             $push: {
+    //                 causeListEntries: { ...cEntry, actionAbstract: actionAbstract, orderDate: orderDate }
+    //             }
+    //         },
+    //             { new: true });
+    //     }
+    // }
 
     // const caseFileData = await Case.findById(id);
-    if (employeeFile["Case Title"] || employeeFile["Case Title"] === '')
-        updatedCase = await EmployeeData.findByIdAndUpdate(id, { ...employeeFile, id }, { new: true });
+    // if (employeeFile["Case Title"] || employeeFile["Case Title"] === '')
+    // updatedCase = await EmployeeData.findByIdAndUpdate(id, { ...employeeFile, id }, { new: true });
     // console.log("title received" + caseFile["Case Title"]);
 
-    console.log("updated Case: ");
-    console.log(updatedCase);
-    res.json(updatedCase);
+    // console.log("updated Case: ");
+    // console.log(updatedCase);
+    // res.json(updatedCase);
 };
 
 export const deleteEmployeeData = async (req, res) => {

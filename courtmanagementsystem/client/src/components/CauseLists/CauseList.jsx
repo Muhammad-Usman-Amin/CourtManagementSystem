@@ -40,7 +40,7 @@ const CauseList = ({ currentId, setCurrentId }) => {
 
   const classes2 = useStyles2();
   const cases = useSelector((state) => state.cases);
-  console.log(cases);
+  // console.log(cases);
   const dispatch = useDispatch();
   const classes = useStyles();
 

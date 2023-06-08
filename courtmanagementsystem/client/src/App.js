@@ -21,7 +21,6 @@ import EmployeeListTable from './components/Form/EmployeeListTable.jsx';
 import { BrowserRouter as Router } from 'react-router-dom/cjs/react-router-dom.min';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom';
 import useStyles from './dashboardExample/dashboard';
-// import { Formik, FormikContext,  } from 'formik';
 
 const App = () => {
     const classes = makeStyles();
@@ -34,9 +33,10 @@ const App = () => {
         dispatch(getCases());
     }, [currentId, dispatch])
 
+
     return (
         <Router>
-            <div className={classes2.root}>
+            <div className={classes2.root} style={{ backgroundColor: 'aliceblue' }}>
                 <CssBaseline />
                 <SimpleDrawer />
                 <main className={classes2.content}>
@@ -62,7 +62,7 @@ const App = () => {
                             />
                             <Route
                                 path="/FormEmployeeData"
-                                children=<FormEmployeeData setCurrentId={setCurrentId} />
+                                children=<FormEmployeeData currentId={currentId} setCurrentId={setCurrentId} />
                             />
                             <Route
                                 path="/EmployeeListTable"

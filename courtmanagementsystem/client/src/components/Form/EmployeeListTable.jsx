@@ -7,8 +7,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import EditIcon from '@material-ui/icons/Edit';
+
 
 // import { getEmployeeData } from './actions/employeeData';
 
@@ -18,9 +20,9 @@ const useStyles = makeStyles({
     },
 });
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
+// function createData(name, calories, fat, carbs, protein) {
+//     return { name, calories, fat, carbs, protein };
+// }
 
 // const rows = [
 //     createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
@@ -38,11 +40,14 @@ export default function EmployeeListTable({ currentId, setCurrentId }) {
     return (
         !employeeData.length ? <CircularProgress /> :
             <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
+                <Table stickyHeader size="small" className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Name of Official</TableCell>
-                            <TableCell align="right">Designation</TableCell>
+                            <TableCell>S.No</TableCell>
+                            <TableCell component="th" scope="row" align="left">Name of Official</TableCell>
+                            <TableCell align="left">Designation</TableCell>
+                            <TableCell align="left">Attached to Court</TableCell>
+                            <TableCell align="left">Edit</TableCell>
                             {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
                         <TableCell align="right">Carbs&nbsp;(g)</TableCell>
                         <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
@@ -50,11 +55,24 @@ export default function EmployeeListTable({ currentId, setCurrentId }) {
                     </TableHead>
                     <TableBody>
                         {employeeData.map((row) => (
-                            <TableRow key={row._id}>
+                            <TableRow hover key={row._id}>
                                 <TableCell component="th" scope="row">
-                                    {row.name}{console.log(employeeData)}
+                                    {employeeData.indexOf(row) + 1}
                                 </TableCell>
-                                <TableCell align="right">{row.designation}</TableCell>
+                                <TableCell component="th" scope="row">
+                                    {row.name}
+                                </TableCell>
+                                <TableCell align="left">{row.designation}</TableCell>
+                                <TableCell align="left">{row.attachedToCourt}</TableCell>
+                                <TableCell align="left"><Button size='small'
+                                    variant='contained' style={{ borderRadius: 50 }}
+                                    onClick={() => {
+                                        setCurrentId(row._id);
+                                        console.log(currentId);
+                                    }}
+                                >
+                                    {<EditIcon />}
+                                </Button> </TableCell>
                                 {/* <TableCell align="right">{row.fat}</TableCell>
                             <TableCell align="right">{row.carbs}</TableCell>
                             <TableCell align="right">{row.protein}</TableCell> */}

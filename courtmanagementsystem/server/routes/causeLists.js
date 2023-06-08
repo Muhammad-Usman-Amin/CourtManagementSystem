@@ -1,12 +1,12 @@
-import express from 'express';
-import { getCauseLists, createCauseList } from '../controllers/causeLists.js';
+// import express from 'express';
+// import { getCauseLists, createCauseList } from '../controllers/causeLists.js';
 
-const router = express.Router();
+// const router = express.Router();
 
 
-// directory to localhost:5000/posts
+// // directory to localhost:5000/posts
 
-router.get('/', getCauseLists);
-router.post('/', createCauseList);
+// router.get('/', getCauseLists);
+// router.post('/', createCauseList);
 
-export default router;
+// export default router;

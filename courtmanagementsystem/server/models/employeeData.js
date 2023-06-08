@@ -29,7 +29,7 @@ const employeeSchema = new mongoose.Schema(
         IsSufferingFromDisease: Boolean,
         highestQualification: String,
         professionalQualification: String,
-        computerLiteracy: Boolean,
+        computerLiteracy: String,
         computerLiteracyLevel: String,
         extraSkill: String,
         // ["Case Title"]: String,

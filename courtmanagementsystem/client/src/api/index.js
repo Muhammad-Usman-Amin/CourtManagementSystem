@@ -1,14 +1,10 @@
 import axios from 'axios';
 
 //LocalHost Network
-// const url = 'http://localhost:5000/posts';
-// const urlCases = 'http://localhost:5000/posts';
-// const urlEmployeeData = 'http://localhost:5000/employeeData';
 const url = 'http://localhost:5000/posts';
-const urlCases = 'http://localhost:5000/posts';
+const urlCases = 'http://localhost:5000/cases';
 const urlEmployeeData = 'http://localhost:5000/employeeData';
 // const urlpqsp = 'http://localhost:5000/pqsp';
-// const url = 'http://localhost:5000/posts';
 
 // Home Network
 // const url = 'http://localhost:5000/posts';

@@ -42,25 +42,37 @@ const GreenRadio = withStyles({
 
 const FormEmployeeData = ({ currentId, setCurrentId }) => {
 
-    // const [selectedDate, setSelectedDate] = useState(new Date());
-    // const [nextDate, setNextDate] = useState(new Date());
-    // const [employeeData, setEmployeeData] = useState({
-    //     name: '', fatherName: '', dateOfBirth: new Date(), designation: '',
-    // });
+    const employeeFile = useSelector((state) => currentId ? state.employeeData.find((c) => c._id === currentId) : null);
 
-    // const handleDateChange = (date) => {
-    // setSelectedDate(date);
-
-    // setEmployeeData({ ...employeeData, "Date of Institution ": date });
-    // console.log(caseData["Date of Institution "]);
-    // };
-
-    // const [selectedCaseType, setSelectedCaseType] = useState('Civil');
-
-    const caseFile = useSelector((state) => currentId ? state.employeeData.find((c) => c._id === currentId) : null);
+    const initialValues = employeeFile ? employeeFile : {
+        name: '', designation: '', dutyAs: '', attachedToCourt: '', fatherName: '',
+        dateOfBirth: null, gender: 'male', currentAddress: '', permanentAddress: '', sameAsCurrentAddress: false, email: '',
+        mobileNumber: '', maritalStatus: 'single', initialAppointmentAs: '', dateOfInitialAppointment: null,
+        appointedOnAnySonQuota: false, fatherDesignation: '', fatherDateOfRetirement: null,
+        nearestStationToHome: '', nearestStationToHomeC1: '', nearestStationToHomeC2: '',
+        nearestStationToHomeC3: '', nearestStationToHomeC4: '',
+        IsSufferingFromDisease: null, highestQualification: '', professionalQualification: '', computerLiteracy: false,
+        computerLiteracyLevel: '', extraSkill: '',
+        children: [{ name: '', dob: null, gender: '', maritalStatus: null }],
+        promotions: [{ dateOfPromotion: null, promotionTo: '' }],
+        transferHistory: [{ fromCourt: '', toCourt: '', dateOfTransfer: null }],
+    };
+    // console.log(currentId);
     const classes = useStyles();
-    const classes2 = useStyles2();
+    // const classes2 = useStyles2();
     const dispatch = useDispatch();
+    // const formikContext = useContext(FormikContext);
+    // useEffect(() => {
+    //     if (employeeFile) {
+    //         // formikContext.setValues(employeeFile);
+    //         // initialValues = employeeFile;
+    //         setInitialValues(employeeFile);
+    //         console.log(currentId);
+    //         console.log(employeeFile);
+    //         console.log(initialValues);
+    //     }
+    // }, [][employeeFile]);
+
     // const { values, handleReset } = useFormikContext();
 
     // useEffect(() => {
@@ -93,19 +105,7 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
     //     setCurrentId(null);
     //     formik.resetForm();
     // }
-    const initialValues = {
-        name: '', designation: '', dutyAs: '', attachedToCourt: '', fatherName: '',
-        dateOfBirth: null, gender: '', currentAddress: '', permanentAddress: '', sameAsCurrentAddress: false, email: '',
-        mobileNumber: '', maritalStatus: '', initialAppointmentAs: '', dateOfInitialAppointment: null,
-        appointedOnAnySonQuota: false, fatherDesignation: '', fatherDateOfRetirement: null,
-        nearestStationToHome: '', nearestStationToHomeC1: '', nearestStationToHomeC2: '',
-        nearestStationToHomeC3: '', nearestStationToHomeC4: '',
-        IsSufferingFromDisease: null, highestQualification: '', professionalQualification: '', computerLiteracy: 'no',
-        computerLiteracyLevel: '', extraSkill: '',
-        children: [{ name: '', dob: null, gender: '', maritalStatus: null }],
-        promotions: [{ dateOfPromotion: null, promotionTo: '' }],
-        transferHistory: [{ fromCourt: '', toCourt: '', dateOfTransfer: null }],
-    };
+
     const validationSchema = Yup.object({
 
         name: Yup.string()
@@ -142,6 +142,7 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
+                enableReinitialize
 
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
                     console.log(values);
@@ -160,12 +161,14 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
 
                     // }, 400);
                     resetForm();
+                    setCurrentId(null);
 
                 }}
             >
                 {({ dirty, values, handleChange, isSubmitting, setFieldValue }) => (
                     <Form className={`${classes.root} ${classes.form}`}>
                         {isSubmitting && <div>Loading...</div>}
+                        {/* {console.log(employeeFile)} */}
                         <Grid container justify='center'>
                             <Typography gutterBottom variant='h5' >{currentId ? 'Edit' : 'Add New'} Employee</Typography>
                         </Grid>
@@ -1002,6 +1005,7 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
                                                 name='computerLiteracyLevel'
                                                 onChange={handleChange}
                                                 row
+                                                value={values.computerLiteracyLevel}
                                             // defaultValue=''
                                             >
                                                 <FormControlLabel value="Basic" control={<Radio />} label="Basic" />
