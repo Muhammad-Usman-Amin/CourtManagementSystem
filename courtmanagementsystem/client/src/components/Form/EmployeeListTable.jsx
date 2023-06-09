@@ -10,9 +10,13 @@ import Paper from '@material-ui/core/Paper';
 import { Button, CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
-
+import { Link } from 'react-router-dom';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { deleteEmployeeData } from '../../actions/employeeData';
+import { useDispatch } from 'react-redux';
 
 // import { getEmployeeData } from './actions/employeeData';
+
 
 const useStyles = makeStyles({
     table: {
@@ -36,6 +40,7 @@ export default function EmployeeListTable({ currentId, setCurrentId }) {
 
     const employeeData = useSelector((state) => state.employeeData);
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     return (
         !employeeData.length ? <CircularProgress /> :
@@ -48,6 +53,7 @@ export default function EmployeeListTable({ currentId, setCurrentId }) {
                             <TableCell align="left">Designation</TableCell>
                             <TableCell align="left">Attached to Court</TableCell>
                             <TableCell align="left">Edit</TableCell>
+                            <TableCell align="left">Delete</TableCell>
                             {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
                         <TableCell align="right">Carbs&nbsp;(g)</TableCell>
                         <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
@@ -64,15 +70,29 @@ export default function EmployeeListTable({ currentId, setCurrentId }) {
                                 </TableCell>
                                 <TableCell align="left">{row.designation}</TableCell>
                                 <TableCell align="left">{row.attachedToCourt}</TableCell>
-                                <TableCell align="left"><Button size='small'
-                                    variant='contained' style={{ borderRadius: 50 }}
-                                    onClick={() => {
-                                        setCurrentId(row._id);
-                                        console.log(currentId);
-                                    }}
-                                >
-                                    {<EditIcon />}
-                                </Button> </TableCell>
+                                <TableCell align="left">
+                                    <Button size='small' component={Link} to='/FormEmployeeData'
+                                        variant='contained' style={{ borderRadius: 50 }}
+                                        onClick={() => {
+                                            setCurrentId(row._id);
+                                            console.log(currentId);
+                                        }}
+                                    >
+                                        {<EditIcon />}
+                                    </Button> </TableCell>
+
+                                <TableCell align="left">
+                                    <Button fontSize='small' size='small'
+                                        variant='contained' style={{ borderRadius: 50 }}
+                                        onClick={() => dispatch(deleteEmployeeData(row._id))
+                                            // setCurrentId(row._id);
+                                            // console.log(currentId);
+                                        }
+                                    >
+                                        {<DeleteIcon fontSize='small' />}
+                                    </Button>
+                                </TableCell>
+
                                 {/* <TableCell align="right">{row.fat}</TableCell>
                             <TableCell align="right">{row.carbs}</TableCell>
                             <TableCell align="right">{row.protein}</TableCell> */}
@@ -80,6 +100,6 @@ export default function EmployeeListTable({ currentId, setCurrentId }) {
                         ))}
                     </TableBody>
                 </Table>
-            </TableContainer>
+            </TableContainer >
     );
 }

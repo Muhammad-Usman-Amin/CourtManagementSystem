@@ -37,7 +37,7 @@ export const updateEmployeeData = (id, employeeFile) => async (dispatch) => {
     }
 };
 
-export const deleteCase = (id) => async (dispatch) => {
+export const deleteEmployeeData = (id) => async (dispatch) => {
     try {
         await api.deleteEmployeeData(id);
 
