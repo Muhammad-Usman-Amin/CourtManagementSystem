@@ -30,7 +30,7 @@ const GreenRadio = withStyles({
 })((props) => <Radio color="default" {...props} />);
 
 
-const FormCases =  ({ currentId, setCurrentId }) => {
+const FormCases =  ({ currentId, setCurrentId,onPageChange }) => {
     
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [nextDate, setNextDate] = useState(new Date());
@@ -70,6 +70,9 @@ const FormCases =  ({ currentId, setCurrentId }) => {
             setCaseData(caseFile);
         }
     },[caseFile]);
+    useEffect(() => {
+        onPageChange(() => (currentId ? `Editing Case "${caseFile["Case Title"]}"` : 'Creating New Case'));
+      }, [onPageChange]);
 
     const handleSubmit = async (e) => {
         

@@ -14,8 +14,9 @@ import { Link } from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteEmployeeData } from '../../actions/employeeData';
 import { useDispatch } from 'react-redux';
-
+import { format, parseISO } from 'date-fns';
 // import { getEmployeeData } from './actions/employeeData';
+// import { parseISO } from 'date-fns/parseISO';
 
 
 const useStyles = makeStyles({
@@ -36,11 +37,14 @@ const useStyles = makeStyles({
 //     createData('Gingerbread', 356, 16.0, 49, 3.9),
 // ];
 
-export default function EmployeeListTable({ currentId, setCurrentId }) {
+export default function EmployeeListTable({ currentId, setCurrentId, onPageChange }) {
 
     const employeeData = useSelector((state) => state.employeeData);
     const classes = useStyles();
     const dispatch = useDispatch();
+    useEffect(() => {
+        onPageChange('Employee List');
+    }, [onPageChange]);
 
     return (
         !employeeData.length ? <CircularProgress /> :
@@ -52,6 +56,7 @@ export default function EmployeeListTable({ currentId, setCurrentId }) {
                             <TableCell component="th" scope="row" align="left">Name of Official</TableCell>
                             <TableCell align="left">Designation</TableCell>
                             <TableCell align="left">Attached to Court</TableCell>
+                            <TableCell align="left">Date Of Initial Appointment</TableCell>
                             <TableCell align="left">Edit</TableCell>
                             <TableCell align="left">Delete</TableCell>
                             {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
@@ -70,9 +75,10 @@ export default function EmployeeListTable({ currentId, setCurrentId }) {
                                 </TableCell>
                                 <TableCell align="left">{row.designation}</TableCell>
                                 <TableCell align="left">{row.attachedToCourt}</TableCell>
+                                <TableCell align="left">{format?.(parseISO(row.dateOfInitialAppointment), "dd-MM-yyy")}</TableCell>
                                 <TableCell align="left">
-                                    <Button size='small' component={Link} to='/FormEmployeeData'
-                                        variant='contained' style={{ borderRadius: 50 }}
+                                    <Button size='small' color='primary' component={Link} to='/FormEmployeeData'
+                                        variant='outlined' style={{ borderRadius: 50 }}
                                         onClick={() => {
                                             setCurrentId(row._id);
                                             console.log(currentId);
@@ -82,8 +88,8 @@ export default function EmployeeListTable({ currentId, setCurrentId }) {
                                     </Button> </TableCell>
 
                                 <TableCell align="left">
-                                    <Button fontSize='small' size='small'
-                                        variant='contained' style={{ borderRadius: 50 }}
+                                    <Button fontSize='small' color='secondary' size='small'
+                                        variant='outlined' style={{ borderRadius: 50 }}
                                         onClick={() => dispatch(deleteEmployeeData(row._id))
                                             // setCurrentId(row._id);
                                             // console.log(currentId);

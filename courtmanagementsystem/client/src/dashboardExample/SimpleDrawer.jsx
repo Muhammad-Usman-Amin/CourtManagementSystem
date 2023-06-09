@@ -41,7 +41,7 @@ function Copyright() {
     );
 }
 
-export default function SimpleDrawer() {
+export default function SimpleDrawer({ title }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const handleDrawerOpen = () => {
@@ -66,7 +66,7 @@ export default function SimpleDrawer() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Dashboard
+                        {title}
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={455} color="secondary">

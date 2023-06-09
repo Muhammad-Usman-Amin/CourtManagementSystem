@@ -57,14 +57,14 @@ export const mainListItems = (
             <ListItemIcon>
                 <BarChartIcon />
             </ListItemIcon>
-            <ListItemText primary="Reports" />
+            <ListItemText primary="Employee Reports" />
         </ListItem>
 
-        <ListItem button>
+        <ListItem button component={Link} to='/CourtList'>
             <ListItemIcon>
                 <LayersIcon />
             </ListItemIcon>
-            <ListItemText primary="Integrations" />
+            <ListItemText primary="Court List" />
         </ListItem>
     </div>
 );

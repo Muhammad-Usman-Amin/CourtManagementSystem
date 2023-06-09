@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 });
 
 
-const CauseList = ({ currentId, setCurrentId }) => {
+const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
   const classes2 = useStyles2();
   const cases = useSelector((state) => state.cases);
@@ -80,6 +80,10 @@ const CauseList = ({ currentId, setCurrentId }) => {
     dispatch(updateCase(caseId, data));
     console.log(cases);
   };
+
+  useEffect(() => {
+    onPageChange('Daily Cause List');
+  }, [onPageChange]);
 
   useEffect(() => {
     console.log('orederNumber onblurred useEffectcalled:' + orderNumber);

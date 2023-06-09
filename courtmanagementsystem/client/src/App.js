@@ -17,6 +17,8 @@ import CauseList from './components/CauseLists/CauseList.jsx';
 import FormCases from './components/Form/FormCases';
 import FormEmployeeData from './components/Form/FormEmployeeData';
 import EmployeeListTable from './components/Form/EmployeeListTable.jsx';
+import CourtList from './screens/CourtsScreen';
+import CourtPage from './screens/CourtPage';
 
 import { BrowserRouter as Router } from 'react-router-dom/cjs/react-router-dom.min';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom';
@@ -27,6 +29,10 @@ const App = () => {
     const classes2 = useStyles();
     const dispatch = useDispatch();
     const [currentId, setCurrentId] = useState(null);
+    const [pageTitle, setPageTitle] = useState('Dashboard');
+    const handlePageChange = (title) => {
+        setPageTitle(title);
+    };
 
     useEffect(() => {
         dispatch(getEmployeeData());
@@ -38,7 +44,7 @@ const App = () => {
         <Router>
             <div className={classes2.root} style={{ backgroundColor: 'aliceblue' }}>
                 <CssBaseline />
-                <SimpleDrawer />
+                <SimpleDrawer title={pageTitle} />
                 <main className={classes2.content}>
                     <div className={classes2.appBarSpacer} />
                     <Container maxWidth="lg" className={classes2.container}>
@@ -46,28 +52,42 @@ const App = () => {
                             <Route
                                 path="/"
                                 exact
-                                children=<Dashboard />
+                                children=<Dashboard onPageChange={handlePageChange} />
                             />
                             <Route
                                 path="/FormCases"
-                                children=<FormCases currentId={currentId} setCurrentId={setCurrentId} />
+                                children=<FormCases currentId={currentId} setCurrentId={setCurrentId}
+                                    onPageChange={handlePageChange}
+                                />
                             />
                             <Route
                                 path="/CauseLists"
-                                children=<CauseList currentId={currentId} setCurrentId={setCurrentId} />
+                                children=<CauseList currentId={currentId} setCurrentId={setCurrentId}
+                                    onPageChange={handlePageChange}
+                                />
                             />
                             <Route
                                 path="/Cases"
-                                children=<Cases setCurrentId={setCurrentId} />
+                                children=<Cases setCurrentId={setCurrentId} onPageChange={handlePageChange} />
                             />
                             <Route
                                 path="/FormEmployeeData"
-                                children=<FormEmployeeData currentId={currentId} setCurrentId={setCurrentId} />
+                                children=<FormEmployeeData currentId={currentId} setCurrentId={setCurrentId}
+                                    onPageChange={handlePageChange} />
                             />
                             <Route
                                 path="/EmployeeListTable"
-                                children=<EmployeeListTable currentId={currentId} setCurrentId={setCurrentId} />
+                                children=<EmployeeListTable currentId={currentId} setCurrentId={setCurrentId}
+                                    onPageChange={handlePageChange}
+                                />
                             />
+                            <Route
+                                path="/CourtList"
+                                children=<CourtList currentId={currentId} setCurrentId={setCurrentId}
+                                    onPageChange={handlePageChange}
+                                />
+                            />
+                            <Route path="/court/:courtId" component={CourtPage} />
                         </Switch>
                     </Container>
                 </main>

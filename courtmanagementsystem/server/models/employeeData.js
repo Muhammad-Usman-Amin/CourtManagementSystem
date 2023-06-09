@@ -9,6 +9,7 @@ const employeeSchema = new mongoose.Schema(
         fatherName: String,
         dateOfBirth: Date,
         currentAddress: String,
+        sameAsCurrentAddress: Boolean,
         permanentAddress: String,
         email: String,
         mobileNumber: String,

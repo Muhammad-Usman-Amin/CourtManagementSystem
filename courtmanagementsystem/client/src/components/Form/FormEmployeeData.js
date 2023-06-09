@@ -40,7 +40,7 @@ const GreenRadio = withStyles({
 })((props) => <Radio color="default" {...props} />);
 
 
-const FormEmployeeData = ({ currentId, setCurrentId }) => {
+const FormEmployeeData = ({ currentId, setCurrentId, onPageChange }) => {
 
     const employeeFile = useSelector((state) => currentId ? state.employeeData.find((c) => c._id === currentId) : null);
 
@@ -61,6 +61,10 @@ const FormEmployeeData = ({ currentId, setCurrentId }) => {
     const classes = useStyles();
     // const classes2 = useStyles2();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        onPageChange(() => (currentId ? `Edit Employee "${employeeFile.name}"` : 'Add New Employee'));
+    }, [onPageChange]);
     // const formikContext = useContext(FormikContext);
     // useEffect(() => {
     //     if (employeeFile) {
