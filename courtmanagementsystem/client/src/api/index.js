@@ -4,6 +4,8 @@ import axios from 'axios';
 const url = 'http://localhost:5000/posts';
 const urlCases = 'http://localhost:5000/cases';
 const urlEmployeeData = 'http://localhost:5000/employeeData';
+const urlQueryData = 'http://localhost:5000/api/queryData';
+// const urlQueryData = 'http://localhost:5000/employeeData/api/queryData';
 // const urlpqsp = 'http://localhost:5000/pqsp';
 
 // Home Network
@@ -36,5 +38,11 @@ export const createEmployeeData = (newEmployeeFile) => axios.post(urlEmployeeDat
 export const updateEmployeeData = (id, updatedEmployeeFile) => axios.patch(`${urlEmployeeData}/${id}`, updatedEmployeeFile);
 export const deleteEmployeeData = (id) => axios.delete(`${urlEmployeeData}/${id}`);
 export const likeEmployeeData = (id) => axios.patch(`${urlEmployeeData}/${id}/likeCase`);
+
+export const fetchQueryData = (params) => axios.get(urlQueryData, { params: params });
+// export const createEmployeeData = (newEmployeeFile) => axios.post(urlEmployeeData, newEmployeeFile);
+// export const updateEmployeeData = (id, updatedEmployeeFile) => axios.patch(`${urlEmployeeData}/${id}`, updatedEmployeeFile);
+// export const deleteEmployeeData = (id) => axios.delete(`${urlEmployeeData}/${id}`);
+// export const likeEmployeeData = (id) => axios.patch(`${urlEmployeeData}/${id}/likeCase`);
 
 //export const fetchpqsp = () => axios.get(urlpqsp);

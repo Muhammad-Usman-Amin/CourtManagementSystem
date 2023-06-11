@@ -1,4 +1,4 @@
-import { FETCH_ALL_EMPLOYEE_DATA, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL_EMPLOYEE_DATA, QUERY, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 
 export default (employeeData = [], action) => {
     switch (action.type) {

@@ -4,8 +4,6 @@ import express from 'express';
 
 const router = express.Router();
 
-
-
 export const getEmployeeData = async (req, res) => {
     try {
         const employeesData = await EmployeeData.find();

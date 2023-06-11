@@ -6,6 +6,7 @@ const router = express.Router();
 
 // directory to localhost:5000/cases
 
+// router.get('/api/queryData', getQueryData);
 router.get('/', getEmployeeData);
 router.post('/', createEmployeeData);
 router.patch('/:id', updateEmployeeData);
