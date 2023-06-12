@@ -43,6 +43,7 @@ export default function EmployeeListTable({ currentId, setCurrentId, onPageChang
     const classes = useStyles();
     const dispatch = useDispatch();
     useEffect(() => {
+        setCurrentId(null);
         onPageChange('Employee List');
     }, [onPageChange]);
 

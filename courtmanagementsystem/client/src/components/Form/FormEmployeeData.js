@@ -82,6 +82,7 @@ const FormEmployeeData = ({ currentId, setCurrentId, onPageChange }) => {
     // useEffect(() => {
     //     // setSelectedCaseType('Civil');
     // }, []);
+
     // useEffect(() => {
     //     // console.log(caseFile);
     //     // console.log('useEffect called');

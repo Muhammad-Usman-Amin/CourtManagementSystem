@@ -23,6 +23,7 @@ import CourtPage from './screens/CourtPage';
 import { BrowserRouter as Router } from 'react-router-dom/cjs/react-router-dom.min';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom';
 import useStyles from './dashboardExample/dashboard';
+import Error404Screen from './screens/Error404Screen';
 
 const App = () => {
     const classes = makeStyles();
@@ -88,6 +89,10 @@ const App = () => {
                                 />
                             />
                             <Route path="/court/:courtId" component={CourtPage} />
+
+                            <Route path="*">
+                                <Error404Screen />
+                            </Route>
                         </Switch>
                     </Container>
                 </main>
