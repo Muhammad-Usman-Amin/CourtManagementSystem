@@ -12,9 +12,10 @@ import { useSelector } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { deleteEmployeeData } from '../../actions/employeeData';
+import { deleteEmployeeData, getQueryData } from '../../actions/employeeData';
 import { useDispatch } from 'react-redux';
 import { format, parseISO } from 'date-fns';
+import { useReactToPrint } from 'react-to-print';
 // import { getEmployeeData } from './actions/employeeData';
 // import { parseISO } from 'date-fns/parseISO';
 
@@ -39,7 +40,14 @@ const useStyles = makeStyles({
 
 export default function EmployeeListTable({ currentId, setCurrentId, onPageChange }) {
 
+    const tableRef = React.useRef();
+
+    const handlePrint = useReactToPrint({
+        content: () => tableRef.current,
+    });
+
     const employeeData = useSelector((state) => state.employeeData);
+    const queryData = useSelector((state) => state.queryData);
     const classes = useStyles();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -50,7 +58,7 @@ export default function EmployeeListTable({ currentId, setCurrentId, onPageChang
     return (
         !employeeData.length ? <CircularProgress /> :
             <TableContainer component={Paper}>
-                <Table stickyHeader size="small" className={classes.table} aria-label="simple table">
+                <Table ref={tableRef} stickyHeader size="small" className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>S.No</TableCell>
@@ -107,6 +115,19 @@ export default function EmployeeListTable({ currentId, setCurrentId, onPageChang
                         ))}
                     </TableBody>
                 </Table>
+                <Button component={Link} to='/PrintDataTable'>Print</Button>
+                {/* <button onClick={handlePrint}>Print</button> */}
+                <Button fontSize='small' color='secondary' size='small'
+                    variant='outlined' style={{ borderRadius: 50 }}
+                    onClick={() => {
+                        dispatch(getQueryData({ designation: 'Computer Operator' }))
+                        console.log(queryData);
+                        console.log(employeeData);
+                    }
+                    }
+                >
+                    {<DeleteIcon fontSize='small' />}
+                </Button>
             </TableContainer >
     );
 }

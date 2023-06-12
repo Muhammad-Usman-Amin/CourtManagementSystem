@@ -17,6 +17,7 @@ import CauseList from './components/CauseLists/CauseList.jsx';
 import FormCases from './components/Form/FormCases';
 import FormEmployeeData from './components/Form/FormEmployeeData';
 import EmployeeListTable from './components/Form/EmployeeListTable.jsx';
+import PrintDataTable from './components/Form/PrintDataTable.jsx';
 import CourtList from './screens/CourtsScreen';
 import CourtPage from './screens/CourtPage';
 
@@ -43,7 +44,8 @@ const App = () => {
 
     return (
         <Router>
-            <div className={classes2.root} style={{ backgroundColor: 'aliceblue' }}>
+            {/* <div className={classes2.root} style={{ backgroundColor: 'aliceblue' }}> */}
+            <div className={classes2.root} >
                 <CssBaseline />
                 <SimpleDrawer title={pageTitle} />
                 <main className={classes2.content}>
@@ -89,6 +91,7 @@ const App = () => {
                                 />
                             />
                             <Route path="/court/:courtId" component={CourtPage} />
+                            <Route path="/PrintDataTable" component={PrintDataTable} />
 
                             <Route path="*">
                                 <Error404Screen />

@@ -1,15 +1,34 @@
-import { FETCH_ALL_EMPLOYEE_DATA, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL_EMPLOYEE_DATA, CREATE, UPDATE, DELETE, QUERY, LIKE } from '../constants/actionTypes';
 import * as api from '../api';
+
+//Query for optional data
+export const getQueryData = (params) => async (dispatch) => {
+    try {
+        const { data } = await api.fetchQueryData(params);
+        dispatch({ type: QUERY, payload: data });
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//     api.get('/api/data', {
+//     params: {
+//       id: 123,
+//       type: 'example',
+//       filter: 'someValue'
+//     }
+//   })
 
 // Actions creators
 export const getEmployeeData = () => async (dispatch) => {
     // console.log('getCases Called');
-    let datam = null;
+    // let datam = null;
     try {
         const { data } = await api.fetchEmployeeData();
         // console.log(data);
         dispatch({ type: FETCH_ALL_EMPLOYEE_DATA, payload: data });
-        datam = data;
+        // datam = data;
     } catch (error) {
         console.log(error);
     }

@@ -9,6 +9,7 @@ import postRoutes from './routes/posts.js';
 import casesRoutes from './routes/cases.js';
 import employeeDataRoutes from './routes/employeeData.js';
 import pqspRoutes from './routes/pqsp.js';
+import queryData from './routes/queryData.js';
 
 const app = express();
 dotenv.config();
@@ -21,6 +22,7 @@ app.use('/posts', postRoutes);
 app.use('/cases', casesRoutes);
 app.use('/employeeData', employeeDataRoutes);
 app.use('/pqsp', pqspRoutes);
+app.use('/api/queryData', queryData);
 
 // console.log(new Date());
 // let st = new Date('04-Jun-2004');
