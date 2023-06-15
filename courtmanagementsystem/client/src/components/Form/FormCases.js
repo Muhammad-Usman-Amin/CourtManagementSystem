@@ -154,7 +154,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     <Grid item xs={12} sm={3}>
                         <FormControl fullWidth component="fieldset">
                             <FormLabel component="legend">
-                                <br />
+                                {/* <br /> */}
                                 Case Type
                             </FormLabel>
                             <RadioGroup
