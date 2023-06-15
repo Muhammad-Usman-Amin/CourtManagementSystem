@@ -38,7 +38,7 @@ export const mainListItems = (
             <ListItemText primary="Cause Lists" />
         </ListItem>
 
-        <ListItem button component={Link} to='/Cases'>
+        <ListItem button component={Link} to='/CasesListTable'>
             <ListItemIcon>
                 {/* <PeopleIcon /> */}
                 <FolderIcon />

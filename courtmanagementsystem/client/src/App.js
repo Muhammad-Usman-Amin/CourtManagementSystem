@@ -17,6 +17,7 @@ import CauseList from './components/CauseLists/CauseList.jsx';
 import FormCases from './components/Form/FormCases';
 import FormEmployeeData from './components/Form/FormEmployeeData';
 import EmployeeListTable from './components/Form/EmployeeListTable.jsx';
+import CasesListTable from './components/Form/CasesListTable.jsx';
 import PrintDataTable from './components/Form/PrintDataTable.jsx';
 import CourtList from './screens/CourtsScreen';
 import CourtPage from './screens/CourtPage';
@@ -81,6 +82,12 @@ const App = () => {
                             <Route
                                 path="/EmployeeListTable"
                                 children=<EmployeeListTable currentId={currentId} setCurrentId={setCurrentId}
+                                    onPageChange={handlePageChange}
+                                />
+                            />
+                            <Route
+                                path="/CasesListTable"
+                                children=<CasesListTable currentId={currentId} setCurrentId={setCurrentId}
                                     onPageChange={handlePageChange}
                                 />
                             />
