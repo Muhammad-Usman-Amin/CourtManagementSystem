@@ -43,7 +43,7 @@ const GreenRadio = withStyles({
 })((props) => <Radio color="default" {...props} />);
 
 const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [institutionDate, setInstitutionDate] = useState(new Date());
     const [nextDate, setNextDate] = useState(new Date());
     const [caseData, setCaseData] = useState({
         // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
@@ -52,10 +52,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
         "Case Type": "Civil",
         "Category Per PQS": "",
         "FIR NO": "",
-        "FIR Date": selectedDate,
+        "FIR Date": institutionDate,
         Thana: "",
         Section: "",
-        "Date of Institution ": selectedDate,
+        "Date of Institution ": institutionDate,
         "Date of Disposal Transfer Out": Date,
         "Disposal OR Transfer Out Flag": "",
         "Disposal Mode Flag": "",
@@ -63,12 +63,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
         "Date of Other Institution": Date,
         "Institution Flag": "",
         nextDate: nextDate,
+        orderNumber: "0",
         actionAbstract: "",
         orderDate: new Date(),
     });
 
     const handleDateChange = (date) => {
-        setSelectedDate(date);
+        setInstitutionDate(date);
 
         setCaseData({ ...caseData, "Date of Institution ": date });
         // console.log(caseData["Date of Institution "]);
@@ -90,7 +91,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
         // console.log('useEffect called');
         if (caseFile) {
             setSelectedCaseType(caseFile["Case Type"]);
-            setSelectedDate(caseFile["Date of Institution "]);
+            setInstitutionDate(caseFile["Date of Institution "]);
             setNextDate(caseFile.nextDate);
             // console.log(selectedCaseType);
             setCaseData(caseFile);
@@ -118,6 +119,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
         setCurrentId(null);
         setSelectedCaseType("Civil");
         // setCaseData({"Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '', "Date of Institution ": selectedDate ,  "Date of Disposal": '', isTransferedIn: false, "Date of Transfered In": Date});
+        setInstitutionDate(new Date());
         setCaseData({
             "Case Title": "",
             "Case No": "",
@@ -136,6 +138,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
             "Institution Flag": "",
             nextDate: new Date(),
             actionAbstract: "",
+            orderNumber: "",
         });
     };
 
@@ -150,6 +153,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <Typography variant="h6">
                     {currentId ? "Editing" : "Creating"} a Case
                 </Typography>
+
                 <Grid container spacing={2} alignContent="center" justify="center">
                     <Grid item xs={12} sm={3}>
                         <FormControl fullWidth component="fieldset">
@@ -453,21 +457,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                             </FormControl>
                         )}
                     </Grid>
-                    <TextField
-                        name="caseNumber"
-                        variant="outlined"
-                        label="Case Number"
-                        fullWidth
-                        value={caseData["Case No"]}
-                        onChange={(e) =>
-                            setCaseData({ ...caseData, "Case No": e.target.value })
-                        }
-                    />
-                    {/* <Container fullwidth>
-                    <TextField name='institutionDate' variant='outlined' label='Institution Date' fullWidth value={caseData.institutionDate} onChange={(e) => setCaseData({ ...caseData, institutionDate: e.target.value })} /> */}
-                    <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
-                        {/* <Grid container justifyContent="space-around"> */}
-                        {/* <KeyboardDatePicker
+
+                    <Grid item xs={12} sm={3}>
+
+
+                        <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+                            {/* <Grid container justifyContent="space-around"> */}
+                            {/* <KeyboardDatePicker
                     disableToolbar
                     variant="inline"
                     format="dd/MM/yyyy"
@@ -480,58 +476,98 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         'aria-label': 'change date',
                     }}
                 /> */}
-                        <KeyboardDatePicker
-                            // disableToolbar
-                            // variant="inline"
-                            // margin="normal"
-                            id="date-picker-inline"
-                            // id="date-picker-dialog"
-                            label="Institution Date"
-                            format="dd/MM/yyyy"
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            KeyboardButtonProps={{
-                                "aria-label": "change date",
-                            }}
+                            <KeyboardDatePicker
+                                // disableToolbar
+                                // variant="inline"
+                                // margin="normal"
+                                id="date-picker-inline"
+                                // id="date-picker-dialog"
+                                label="Institution Date"
+                                autoOk
+                                format="dd/MM/yyyy"
+                                value={institutionDate}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                    "aria-label": "change date",
+                                }}
+                            />
+                            {/* </Grid> */}
+                        </MuiPickersUtilsProvider>
+                        {/* </Container> */}
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                        <TextField
+                            name="caseNumber"
+                            variant="outlined"
+                            label="Case Number"
+                            fullWidth
+                            value={caseData["Case No"]}
+                            onChange={(e) =>
+                                setCaseData({ ...caseData, "Case No": e.target.value })
+                            }
                         />
-                        {/* </Grid> */}
-                    </MuiPickersUtilsProvider>
-                    {/* </Container> */}
-                    <TextField
-                        name="title"
-                        variant="outlined"
-                        label="Title"
-                        fullWidth
-                        value={caseData["Case Title"]}
-                        onChange={(e) =>
-                            setCaseData({ ...caseData, "Case Title": e.target.value })
-                        }
-                    />
-                    <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
-                        <KeyboardDatePicker
-                            margin="normal"
-                            disableToolbar
-                            variant="inline"
-                            id="date-picker-inline"
-                            label="Next Date"
-                            format="dd/MM/yyyy"
-                            value={caseData["nextDate"] ? caseData["nextDate"] : nextDate}
-                            onChange={(date) => setCaseData({ ...caseData, nextDate: date })}
-                            KeyboardButtonProps={{
-                                "aria-label": "change date",
-                            }}
+                    </Grid>
+                    {/* <Container fullwidth>
+                    <TextField name='institutionDate' variant='outlined' label='Institution Date' fullWidth value={caseData.institutionDate} onChange={(e) => setCaseData({ ...caseData, institutionDate: e.target.value })} /> */}
+                    <Grid item xs={12} sm={6}>
+
+                        <TextField
+                            name="title"
+                            variant="outlined"
+                            label="Title"
+                            fullWidth
+                            value={caseData["Case Title"]}
+                            onChange={(e) =>
+                                setCaseData({ ...caseData, "Case Title": e.target.value })
+                            }
                         />
-                    </MuiPickersUtilsProvider>
-                    <TextField
-                        name="Action Abstract"
-                        variant="outlined"
-                        label="Action Abstract"
-                        fullWidth
-                        value={caseData.actionAbstract}
-                        onChange={(e) =>
-                            setCaseData({ ...caseData, actionAbstract: e.target.value })
-                        }
-                    />
+                    </Grid>
+
+                    <Grid item xs={12} sm={3}>
+
+                        <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+                            <KeyboardDatePicker
+                                margin="normal"
+                                disableToolbar
+                                variant="inline"
+                                id="date-picker-inline"
+                                label="Next Date"
+                                format="dd/MM/yyyy"
+                                autoOk
+                                value={caseData["nextDate"] ? caseData["nextDate"] : nextDate}
+                                onChange={(date) => setCaseData({ ...caseData, nextDate: date })}
+                                KeyboardButtonProps={{
+                                    "aria-label": "change date",
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+
+                        <TextField
+                            name="Order Number"
+                            variant="outlined"
+                            label="Order Number"
+                            fullWidth
+                            value={caseData.orderNumber}
+                            onChange={(e) =>
+                                setCaseData({ ...caseData, orderNumber: e.target.value })
+                            }
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+
+                        <TextField
+                            name="Action Abstract"
+                            variant="outlined"
+                            label="Action Abstract"
+                            fullWidth
+                            value={caseData.actionAbstract}
+                            onChange={(e) =>
+                                setCaseData({ ...caseData, actionAbstract: e.target.value })
+                            }
+                        />
+                    </Grid>
 
                     {selectedCaseType === "Criminal" && (
                         <>
@@ -553,7 +589,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                                     label="FIR Date"
                                     format="dd/MM/yyyy"
                                     value={
-                                        caseData["FIR Date"] ? caseData["FIR Date"] : selectedDate
+                                        caseData["FIR Date"] ? caseData["FIR Date"] : institutionDate
                                     }
                                     onChange={(date) =>
                                         setCaseData({ ...caseData, "FIR Date": date })

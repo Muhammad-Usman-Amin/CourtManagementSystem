@@ -28,7 +28,7 @@ export const createCase = async (req, res) => {
         ["Date of Institution "]: dateOfInstitution, ["Date of Disposal Transfer Out"]: dateOfDisposalTransferOut,
         ["Disposal OR Transfer Out Flag"]: disposalOrTransferOutFlag, ["Disposal Mode Flag"]: disposalModeFlaq,
         ["Date of Transfer In"]: dateOfTransferIn, ["Date of Other Institution"]: dateOfOtherInstitution,
-        ["Institution Flag"]: institutionFlag, nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate,
+        ["Institution Flag"]: institutionFlag, nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate, orderNumber,
     } = body;
     console.log(caseTitle);
     // { body["Case Title"], body["Case No"], body["Case Type"], body["Category Per PQS"], body["FIR NO"], body["FIR Date"], body.underSection, body.policeStation, body["Date of Institution "], body["Date of Disposal"], body.isTransferedIn, body["Date of Transfer In"]});
@@ -38,7 +38,7 @@ export const createCase = async (req, res) => {
         ["Date of Institution "]: dateOfInstitution, ["Date of Disposal Transfer Out"]: dateOfDisposalTransferOut,
         ["Disposal OR Transfer Out Flag"]: disposalOrTransferOutFlag, ["Disposal Mode Flag"]: disposalModeFlaq,
         ["Date of Transfer In"]: dateOfTransferIn, ["Date of Other Institution"]: dateOfOtherInstitution,
-        ["Institution Flag"]: institutionFlag, nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate,
+        ["Institution Flag"]: institutionFlag, nextDate: nextDate, actionAbstract: actionAbstract, orderDate: orderDate, orderNumber,
     });
 
     try {
