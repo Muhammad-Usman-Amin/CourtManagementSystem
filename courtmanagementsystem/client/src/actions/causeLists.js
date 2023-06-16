@@ -1,11 +1,11 @@
-import { FETCH_ALL_EMPLOYEE_DATA, CREATE, UPDATE, DELETE, QUERY, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL_CAUSE_LIST, FETCH_ALL_EMPLOYEE_DATA, CREATE, UPDATE, DELETE, QUERY, LIKE } from '../constants/actionTypes';
 import * as api from '../api';
 
 //Query for optional data
-export const getQueryData = (params) => async (dispatch) => {
+export const getCauseList = (params) => async (dispatch) => {
     try {
-        const { data } = await api.fetchQueryData(params);
-        dispatch({ type: QUERY, payload: data });
+        const { data } = await api.fetchCauseList(params);
+        dispatch({ type: FETCH_ALL_CAUSE_LIST, payload: data });
         console.log(data);
     } catch (error) {
         console.log(error);

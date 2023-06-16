@@ -26,6 +26,7 @@ import {
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { updateCase } from '../../actions/cases';
+import { getCauseList } from '../../actions/causeLists';
 import useStyles2 from '../../dashboardExample/dashboard';
 import Container from '@material-ui/core/Container';
 
@@ -83,6 +84,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
   useEffect(() => {
     onPageChange('Daily Cause List');
+    // dispatch(getCauseList(params));
   }, [onPageChange]);
 
   useEffect(() => {

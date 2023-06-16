@@ -5,6 +5,7 @@ const url = 'http://localhost:5000/posts';
 const urlCases = 'http://localhost:5000/cases';
 const urlEmployeeData = 'http://localhost:5000/employeeData';
 const urlQueryData = 'http://localhost:5000/api/queryData';
+const urlCauseLists = 'http://localhost:5000/api/causeLists';
 // const urlQueryData = 'http://localhost:5000/employeeData/api/queryData';
 // const urlpqsp = 'http://localhost:5000/pqsp';
 
@@ -44,5 +45,7 @@ export const fetchQueryData = (params) => axios.get(urlQueryData, { params: para
 // export const updateEmployeeData = (id, updatedEmployeeFile) => axios.patch(`${urlEmployeeData}/${id}`, updatedEmployeeFile);
 // export const deleteEmployeeData = (id) => axios.delete(`${urlEmployeeData}/${id}`);
 // export const likeEmployeeData = (id) => axios.patch(`${urlEmployeeData}/${id}/likeCase`);
+
+export const fetchCauseList = (params) => axios.get(urlCauseLists, { params: params });
 
 //export const fetchpqsp = () => axios.get(urlpqsp);

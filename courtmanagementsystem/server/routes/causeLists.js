@@ -12,10 +12,10 @@
 // export default router;
 import express from 'express';
 import {
-    getQueryData, getCauseList,
+    getCauseList,
     // createEmployeeData, updateEmployeeData,
     // deleteEmployeeData, likeEmployeeData
-} from '../controllers/queryData.js';
+} from '../controllers/causeLists.js';
 
 const router = express.Router();
 
