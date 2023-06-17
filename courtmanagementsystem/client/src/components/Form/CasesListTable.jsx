@@ -16,13 +16,15 @@ import { deleteEmployeeData, getQueryData } from "../../actions/employeeData";
 import { useDispatch } from "react-redux";
 import { format, parseISO } from "date-fns";
 import { useReactToPrint } from "react-to-print";
+import { deleteCase, likeCase } from "../../actions/cases";
+
 // import { getEmployeeData } from './actions/employeeData';
 // import { parseISO } from 'date-fns/parseISO';
 
 const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
+  table: {
+    minWidth: 650,
+  },
 });
 
 // function createData(name, calories, fat, carbs, protein) {
@@ -38,126 +40,116 @@ const useStyles = makeStyles({
 // ];
 
 export default function CasesListTable({
-    currentId,
-    setCurrentId,
-    onPageChange,
+  currentId,
+  setCurrentId,
+  onPageChange,
 }) {
-    const tableRef = React.useRef();
+  const tableRef = React.useRef();
 
-    const handlePrint = useReactToPrint({
-        content: () => tableRef.current,
-    });
+  const handlePrint = useReactToPrint({
+    content: () => tableRef.current,
+  });
 
-    const cases = useSelector((state) => state.cases);
-    const queryData = useSelector((state) => state.queryData);
-    const classes = useStyles();
-    const dispatch = useDispatch();
-    useEffect(() => {
-        setCurrentId(null);
-        onPageChange("Cases List");
-    }, [onPageChange]);
+  const cases = useSelector((state) => state.cases);
+  const queryData = useSelector((state) => state.queryData);
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    setCurrentId(null);
+    onPageChange("Cases List");
+  }, [onPageChange]);
 
-    return !cases.length ? (
-        <CircularProgress />
-    ) : (
-        <TableContainer component={Paper}>
-            <Table
-                ref={tableRef}
-                stickyHeader
-                size="small"
-                className={classes.table}
-                aria-label="simple table"
-            >
-                <TableHead>
-                    <TableRow>
-                        <TableCell>S.No</TableCell>
-                        <TableCell component="th" scope="row" align="left">
-                            Case NO
-                        </TableCell>
-                        <TableCell align="left">Case Title</TableCell>
-                        <TableCell align="left">Case Type</TableCell>
-                        <TableCell align="left">Date Of Institution</TableCell>
-                        <TableCell align="left">Institution Year</TableCell>
-                        <TableCell align="left">Edit</TableCell>
-                        <TableCell align="left">Delete</TableCell>
-                        {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
+  return !cases.length ? (
+    <CircularProgress />
+  ) : (
+    <TableContainer component={Paper}>
+      <Table
+        ref={tableRef}
+        stickyHeader
+        size="small"
+        className={classes.table}
+        aria-label="simple table"
+      >
+        <TableHead>
+          <TableRow>
+            <TableCell>S.No</TableCell>
+            <TableCell component="th" scope="row" align="left">
+              Case NO
+            </TableCell>
+            <TableCell align="left">Case Title</TableCell>
+            <TableCell align="left">Case Type</TableCell>
+            <TableCell align="left">Date Of Institution</TableCell>
+            <TableCell align="left">Institution Year</TableCell>
+            <TableCell align="left">Edit</TableCell>
+            <TableCell align="left">Delete</TableCell>
+            {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
                         <TableCell align="right">Carbs&nbsp;(g)</TableCell>
                         <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {cases.map((row) => (
-                        <TableRow hover key={row._id}>
-                            <TableCell component="th" scope="row">
-                                {cases.indexOf(row) + 1}
-                            </TableCell>
-                            <TableCell align="left">{row["Case No"]}</TableCell>
-                            <TableCell align="left">{row["Case Title"]}</TableCell>
-                            <TableCell align="left">{row["Case Type"]}</TableCell>
-                            <TableCell align="left">
-                                {format?.(parseISO(row["Date of Institution "]), "dd-MM-yyy")}
-                            </TableCell>
-                            <TableCell align="left">{row["Institution Year"]}</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {cases.map((row) => (
+            <TableRow hover key={row._id}>
+              <TableCell component="th" scope="row">
+                {cases.indexOf(row) + 1}
+              </TableCell>
+              <TableCell align="left">{row["Case No"]}</TableCell>
+              <TableCell align="left">{row["Case Title"]}</TableCell>
+              <TableCell align="left">{row["Case Type"]}</TableCell>
+              <TableCell align="left">
+                {!row["Date of Institution "]
+                  ? "null"
+                  : format?.(
+                      parseISO(row["Date of Institution "]),
+                      "dd-MM-yyy"
+                    )}
+              </TableCell>
+              <TableCell align="left">{row["Institution Year"]}</TableCell>
 
-                            <TableCell align="left">
-                                <Button
-                                    size="small"
-                                    color="primary"
-                                    component={Link}
-                                    to="/FormCases"
-                                    variant="outlined"
-                                    style={{ borderRadius: 50 }}
-                                    onClick={() => {
-                                        setCurrentId(row._id);
-                                        console.log(currentId);
-                                    }}
-                                >
-                                    {<EditIcon />}
-                                </Button>{" "}
-                            </TableCell>
+              <TableCell align="left">
+                <Button
+                  size="small"
+                  color="primary"
+                  component={Link}
+                  to="/FormCases"
+                  variant="outlined"
+                  style={{ borderRadius: 50 }}
+                  onClick={() => {
+                    setCurrentId(row._id);
+                    console.log(currentId);
+                  }}
+                >
+                  {<EditIcon />}
+                </Button>{" "}
+              </TableCell>
 
-                            <TableCell align="left">
-                                <Button
-                                    fontSize="small"
-                                    color="secondary"
-                                    size="small"
-                                    variant="outlined"
-                                    style={{ borderRadius: 50 }}
-                                    onClick={
-                                        () => dispatch(deleteEmployeeData(row._id))
-                                        // setCurrentId(row._id);
-                                        // console.log(currentId);
-                                    }
-                                >
-                                    {<DeleteIcon fontSize="small" />}
-                                </Button>
-                            </TableCell>
+              <TableCell align="left">
+                <Button
+                  fontSize="small"
+                  color="secondary"
+                  size="small"
+                  variant="outlined"
+                  style={{ borderRadius: 50 }}
+                  onClick={
+                    () => dispatch(deleteCase(row._id))
+                    // setCurrentId(row._id);
+                    // console.log(currentId);
+                  }
+                >
+                  {<DeleteIcon fontSize="small" />}
+                </Button>
+              </TableCell>
 
-                            {/* <TableCell align="right">{row.fat}</TableCell>
+              {/* <TableCell align="right">{row.fat}</TableCell>
                             <TableCell align="right">{row.carbs}</TableCell>
                             <TableCell align="right">{row.protein}</TableCell> */}
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            <Button component={Link} to="/PrintDataTable">
-                Print
-            </Button>
-            {/* <button onClick={handlePrint}>Print</button> */}
-            <Button
-                fontSize="small"
-                color="secondary"
-                size="small"
-                variant="outlined"
-                style={{ borderRadius: 50 }}
-                onClick={() => {
-                    dispatch(getQueryData({ designation: "Computer Operator" }));
-                    console.log(queryData);
-                    // console.log(cases);
-                }}
-            >
-                {<DeleteIcon fontSize="small" />}
-            </Button>
-        </TableContainer>
-    );
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <Button component={Link} to="/PrintDataTable">
+        Print
+      </Button>
+    </TableContainer>
+  );
 }
