@@ -223,7 +223,7 @@ const FormEmployeeData = ({ currentId, setCurrentId, onPageChange }) => {
             </Grid>
 
             <Grid container spacing={1}>
-              <Grid item xs={12} sm={7}>
+              <Grid item xs={12} sm={5}>
                 <TextField
                   onChange={handleChange}
                   type="text"
@@ -239,7 +239,7 @@ const FormEmployeeData = ({ currentId, setCurrentId, onPageChange }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={5}>
+              <Grid item xs={12} sm={4}>
                 <TextField
                   onChange={handleChange}
                   type="text"
@@ -253,6 +253,31 @@ const FormEmployeeData = ({ currentId, setCurrentId, onPageChange }) => {
                   render={(msg) => <div className={classes.error}>{msg}</div>}
                   name="fatherName"
                 />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <TextField
+                    label="Date Of Birth"
+                    fullWidth
+                    variant="outlined"
+                    onClick={() => {
+                      document.getElementById("date-of-birth").focus();
+                    }}
+                    InputProps={{
+                      inputComponent: KeyboardDatePicker,
+                      inputProps: {
+                        id: "date-of-birth",
+                        name: "dateOfBirth",
+                        value: values.dateOfBirth
+                          ? values.dateOfBirth
+                          : new Date("01/01/2000"),
+                        format: "dd/MM/yyyy",
+                        autoOk: true,
+                        onChange: (date) => setFieldValue("dateOfBirth", date),
+                      },
+                    }}
+                  ></TextField>
+                </MuiPickersUtilsProvider>
               </Grid>
             </Grid>
 

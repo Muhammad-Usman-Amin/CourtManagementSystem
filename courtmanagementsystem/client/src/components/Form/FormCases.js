@@ -55,7 +55,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     "Case Type": "Civil",
     "Category Per PQS": "",
     "FIR NO": "",
-    "FIR Date": institutionDate,
+    "FIR Date": null,
     Thana: "",
     Section: "",
     "Date of Institution ": institutionDate,
@@ -66,8 +66,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     "Date of Other Institution": Date,
     "Institution Flag": "",
     nextDate: nextDate,
-    orderNumber: "0",
-    actionAbstract: "",
+    orderNumber: "1",
+    actionAbstract: "حاضری",
     orderDate: new Date(),
   });
 
@@ -100,6 +100,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       setCaseData(caseFile);
     }
   }, [caseFile]);
+
   useEffect(() => {
     onPageChange(() =>
       currentId
@@ -114,7 +115,18 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     if (currentId) {
       dispatch(updateCase(currentId, caseData));
     } else {
-      dispatch(createCase(caseData));
+      if (selectedCaseType === "Civil") {
+        setCaseData({
+          ...caseData,
+          "FIR NO": null,
+          "FIR Date": null,
+          Thana: null,
+          Section: null,
+        });
+        dispatch(createCase(caseData));
+      } else {
+        dispatch(createCase(caseData));
+      }
     }
     clear();
   };
@@ -142,6 +154,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       nextDate: new Date(),
       actionAbstract: "",
       orderNumber: "",
+      nextDate: nextDate,
+      orderNumber: "1",
+      actionAbstract: "حاضری",
+      orderDate: new Date(),
     });
   };
 
@@ -555,7 +571,38 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
+            <FormControl fullWidth variant="outlined">
+              <InputLabel id="demo-simple-select-outlined-label">
+                Action Abstract
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={caseData.actionAbstract}
+                onChange={(e) => {
+                  setCaseData({ ...caseData, actionAbstract: e.target.value });
+                  // setActionAbstract({
+                  //   orderDate: new Date(),
+                  //   actionAbstract: e.target.value,
+                  // });
+                }}
+                label="Select Sub Type"
+              >
+                <MenuItem value="">
+                  <em>Mostly Used</em>
+                </MenuItem>
+                <MenuItem value={"حاضری"}>حاضری</MenuItem>
+                <MenuItem value={"بحث"}>بحث</MenuItem>
+                <MenuItem value={"شہادت"}>شہادت</MenuItem>
+                <MenuItem value={"حکم"}>حکم</MenuItem>
+                <MenuItem value="">
+                  <em>All Categories</em>
+                </MenuItem>
+                <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
+              </Select>
+            </FormControl>
+
+            {/* <TextField
               name="Action Abstract"
               variant="outlined"
               label="Action Abstract"
@@ -564,7 +611,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               onChange={(e) =>
                 setCaseData({ ...caseData, actionAbstract: e.target.value })
               }
-            />
+            /> */}
           </Grid>
 
           {selectedCaseType === "Criminal" && (

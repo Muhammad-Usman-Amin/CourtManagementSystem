@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
-    Container,
-    AppBar,
-    Typography,
-    Grow,
-    Grid,
-    CssBaseline,
+  Container,
+  AppBar,
+  Typography,
+  Grow,
+  Grid,
+  CssBaseline,
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 
@@ -33,104 +33,117 @@ import { BrowserRouter as Router } from "react-router-dom/cjs/react-router-dom.m
 import { Route, Switch } from "react-router-dom/cjs/react-router-dom";
 import useStyles from "./dashboardExample/dashboard";
 import Error404Screen from "./screens/Error404Screen";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { dayTheme, nightTheme } from "./theme";
 
 const App = () => {
-    const classes = makeStyles();
-    const classes2 = useStyles();
-    const dispatch = useDispatch();
-    const [currentId, setCurrentId] = useState(null);
-    const [pageTitle, setPageTitle] = useState("Dashboard");
-    const handlePageChange = (title) => {
-        setPageTitle(title);
-    };
+  const classes = makeStyles();
+  const classes2 = useStyles();
+  const dispatch = useDispatch();
+  const [currentId, setCurrentId] = useState(null);
+  const [pageTitle, setPageTitle] = useState("Dashboard");
+  const handlePageChange = (title) => {
+    setPageTitle(title);
+  };
 
-    useEffect(() => {
-        dispatch(getEmployeeData());
-        dispatch(getCases());
-    }, [currentId, dispatch]);
+  useEffect(() => {
+    dispatch(getEmployeeData());
+    dispatch(getCases());
+  }, [currentId, dispatch]);
 
-    return (
-        <Router>
-            {/* <div className={classes2.root} style={{ backgroundColor: 'aliceblue' }}> */}
-            <div className={classes2.root}>
-                <CssBaseline />
-                <SimpleDrawer title={pageTitle} />
-                <main className={classes2.content}>
-                    <div className={classes2.appBarSpacer} />
-                    <Container maxWidth="lg" className={classes2.container}>
-                        <Switch>
-                            <Route
-                                path="/"
-                                exact
-                                children=<Dashboard onPageChange={handlePageChange} />
-                            />
-                            <Route
-                                path="/FormCases"
-                                children=<FormCases
-                                    currentId={currentId}
-                                    setCurrentId={setCurrentId}
-                                    onPageChange={handlePageChange}
-                                />
-                            />
-                            <Route
-                                path="/CauseLists"
-                                children=<CauseList
-                                    currentId={currentId}
-                                    setCurrentId={setCurrentId}
-                                    onPageChange={handlePageChange}
-                                />
-                            />
-                            <Route
-                                path="/Cases"
-                                children=<Cases
-                                    setCurrentId={setCurrentId}
-                                    onPageChange={handlePageChange}
-                                />
-                            />
-                            <Route
-                                path="/FormEmployeeData"
-                                children=<FormEmployeeData
-                                    currentId={currentId}
-                                    setCurrentId={setCurrentId}
-                                    onPageChange={handlePageChange}
-                                />
-                            />
-                            <Route
-                                path="/EmployeeListTable"
-                                children=<EmployeeListTable
-                                    currentId={currentId}
-                                    setCurrentId={setCurrentId}
-                                    onPageChange={handlePageChange}
-                                />
-                            />
-                            <Route
-                                path="/CasesListTable"
-                                children=<CasesListTable
-                                    currentId={currentId}
-                                    setCurrentId={setCurrentId}
-                                    onPageChange={handlePageChange}
-                                />
-                            />
-                            <Route
-                                path="/CourtList"
-                                children=<CourtList
-                                    currentId={currentId}
-                                    setCurrentId={setCurrentId}
-                                    onPageChange={handlePageChange}
-                                />
-                            />
-                            <Route path="/court/:courtId" component={CourtPage} />
-                            <Route path="/PrintDataTable" component={PrintDataTable} />
+  const [themeMode, setThemeMode] = useState("night"); // 'day' or 'night'
+  const toggleThemeMode = () => {
+    setThemeMode((prevMode) => (prevMode === "day" ? "night" : "day"));
+  };
 
-                            <Route path="*">
-                                <Error404Screen />
-                            </Route>
-                        </Switch>
-                    </Container>
-                </main>
-            </div>
-        </Router>
-    );
+  return (
+    <ThemeProvider theme={themeMode === "day" ? dayTheme : nightTheme}>
+      <Router>
+        {/* <div className={classes2.root} style={{ backgroundColor: 'aliceblue' }}> */}
+        <div className={classes2.root}>
+          <CssBaseline />
+          <SimpleDrawer
+            title={pageTitle}
+            toggleThemeMode={toggleThemeMode}
+            themeMode={themeMode}
+          />
+          <main className={classes2.content}>
+            <div className={classes2.appBarSpacer} />
+            <Container maxWidth="lg" className={classes2.container}>
+              <Switch>
+                <Route
+                  path="/"
+                  exact
+                  children=<Dashboard onPageChange={handlePageChange} />
+                />
+                <Route
+                  path="/FormCases"
+                  children=<FormCases
+                    currentId={currentId}
+                    setCurrentId={setCurrentId}
+                    onPageChange={handlePageChange}
+                  />
+                />
+                <Route
+                  path="/CauseLists"
+                  children=<CauseList
+                    currentId={currentId}
+                    setCurrentId={setCurrentId}
+                    onPageChange={handlePageChange}
+                  />
+                />
+                <Route
+                  path="/Cases"
+                  children=<Cases
+                    setCurrentId={setCurrentId}
+                    onPageChange={handlePageChange}
+                  />
+                />
+                <Route
+                  path="/FormEmployeeData"
+                  children=<FormEmployeeData
+                    currentId={currentId}
+                    setCurrentId={setCurrentId}
+                    onPageChange={handlePageChange}
+                  />
+                />
+                <Route
+                  path="/EmployeeListTable"
+                  children=<EmployeeListTable
+                    currentId={currentId}
+                    setCurrentId={setCurrentId}
+                    onPageChange={handlePageChange}
+                  />
+                />
+                <Route
+                  path="/CasesListTable"
+                  children=<CasesListTable
+                    currentId={currentId}
+                    setCurrentId={setCurrentId}
+                    onPageChange={handlePageChange}
+                  />
+                />
+                <Route
+                  path="/CourtList"
+                  children=<CourtList
+                    currentId={currentId}
+                    setCurrentId={setCurrentId}
+                    onPageChange={handlePageChange}
+                  />
+                />
+                <Route path="/court/:courtId" component={CourtPage} />
+                <Route path="/PrintDataTable" component={PrintDataTable} />
+
+                <Route path="*">
+                  <Error404Screen />
+                </Route>
+              </Switch>
+            </Container>
+          </main>
+        </div>
+      </Router>
+    </ThemeProvider>
+  );
 };
 export default App;
 

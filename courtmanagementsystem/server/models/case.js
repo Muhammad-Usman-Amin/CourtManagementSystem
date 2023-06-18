@@ -1,48 +1,47 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const caseSchema = new mongoose.Schema(
+const caseSchema = new mongoose.Schema({
+  // "Case Title": String,
+  // "Case No": String,
+  // "Case Type": String,
+  // "Category Per PQS": String,
+  // "FIR NO": String, "FIR Date": Date, underSection: String, policeStation: String,
+  // "Date of Institution ": Date,
+  // "Date of Disposal": Date,
+  // isTransferedIn: Boolean, "Date of Transfer In": Date,
+  ["Case Title"]: String,
+  ["Case No"]: String,
+  ["Case Type"]: String,
+  ["Category Per PQS"]: String,
+  ["FIR NO"]: String,
+  ["FIR Date"]: Date,
+  Thana: String,
+  Section: String,
+  ["Date of Institution "]: Date,
+  ["Date of Disposal Transfer Out"]: Date,
+  ["Disposal OR Transfer Out Flag"]: String,
+  ["Disposal Mode Flag"]: String,
+  ["Date of Transfer In"]: Date,
+  ["Date of Other Institution"]: Date,
+  ["Institution Flag"]: Date,
+
+  orderNumber: String,
+  nextDate: Date,
+  actionAbstract: String,
+  orderDate: { type: Date, default: new Date() },
+  causeListEntries: [
     {
-        // "Case Title": String,
-        // "Case No": String,
-        // "Case Type": String,
-        // "Category Per PQS": String,
-        // "FIR NO": String, "FIR Date": Date, underSection: String, policeStation: String,
-        // "Date of Institution ": Date,
-        // "Date of Disposal": Date,
-        // isTransferedIn: Boolean, "Date of Transfer In": Date,
-        ["Case Title"]: String,
-        ["Case No"]: String,
-        ["Case Type"]: String,
-        ["Category Per PQS"]: String,
-        ["FIR NO"]: String,
-        ["FIR Date"]: Date,
-        Thana: String,
-        Section: String,
-        ["Date of Institution "]: Date,
-        ["Date of Disposal Transfer Out"]: Date,
-        ["Disposal OR Transfer Out Flag"]: String,
-        ["Disposal Mode Flag"]: String,
-        ["Date of Transfer In"]: Date,
-        ["Date of Other Institution"]: Date,
-        ["Institution Flag"]: Date,
-
-        orderNumber: String,
-        nextDate: Date,
-        actionAbstract: String,
-        orderDate: { type: Date, default: new Date() },
-        causeListEntries: [
-            {
-                orderNumber: String,
-                orderDate: { type: Date, default: new Date() },
-                nextDate: Date,
-                actionAbstract: String,
-            }
-        ],
-        likeCount: {
-            type: Number,
-            default: 0
-        },
-    });
+      orderNumber: String,
+      orderDate: { type: Date, default: new Date() },
+      nextDate: Date,
+      actionAbstract: String,
+    },
+  ],
+  likeCount: {
+    type: Number,
+    default: 0,
+  },
+});
 
 // {
 // title: String,
@@ -75,6 +74,6 @@ const caseSchema = new mongoose.Schema(
 // }
 // });
 
-const Case = mongoose.model('Case', caseSchema, 'cases');
+const Case = mongoose.model("Case", caseSchema, "cases");
 
 export default Case;

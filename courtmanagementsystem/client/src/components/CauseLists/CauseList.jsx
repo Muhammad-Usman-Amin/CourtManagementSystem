@@ -46,21 +46,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   // console.log(cases);
   const dispatch = useDispatch();
   const classes = useStyles();
+  // const [orderDate, setOrderDate] = useState(new Date("2023-06-19"));
+  const [orderDate, setOrderDate] = useState(new Date());
 
   // const [nextDate, setNextDate] = useState(new Date());
   // const [caseData, setCaseData] = useState({
   //   orderDate: new Date(), orderNumber: '', nextDate: nextDate, actionAbstract: '',
   // });
   const [orderNumber, setOrderNumber] = useState({
-    orderDate: new Date(),
+    orderDate: orderDate,
     orderNumber: "",
   });
   const [actionAbstract, setActionAbstract] = useState({
-    orderDate: new Date(),
+    orderDate: orderDate,
     actionAbstract: "",
   });
   const [nextDate, setNextDate] = useState({
-    orderDate: new Date(),
+    orderDate: orderDate,
     nextDate: new Date(),
   });
   // const [caseData, setCaseData] = useState({
@@ -177,9 +179,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     onChange={(e) => {
                       console.log("onblurred input: " + e.target.value);
                       setCaseId(caseFile._id);
-                      setCurrentId(caseFile._id);
+                      // setCurrentId(caseFile._id);
                       setOrderNumber({
-                        orderDate: new Date(),
+                        orderDate: orderDate,
                         orderNumber: e.target.value,
                       });
                     }}
@@ -195,8 +197,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       value={caseFile.nextDate}
                       onChange={(date) => {
                         setCaseId(caseFile._id);
-                        setCurrentId(caseFile._id);
-                        setNextDate({ orderDate: new Date(), nextDate: date });
+                        // setCurrentId(caseFile._id);
+                        setNextDate({ orderDate: orderDate, nextDate: date });
                       }}
                       KeyboardButtonProps={{
                         "aria-label": "change date",
@@ -219,9 +221,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       value={caseFile.actionAbstract}
                       onChange={(e) => {
                         setCaseId(caseFile._id);
-                        setCurrentId(caseFile._id);
+                        // setCurrentId(caseFile._id);
                         setActionAbstract({
-                          orderDate: new Date(),
+                          orderDate: orderDate,
                           actionAbstract: e.target.value,
                         });
                       }}
