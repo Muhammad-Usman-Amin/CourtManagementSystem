@@ -22,6 +22,8 @@ import {
   InputLabel,
   Grid,
   Box,
+  Checkbox,
+  FormHelperText,
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
@@ -34,6 +36,7 @@ import Container from "@material-ui/core/Container";
 import { createCase, updateCase } from "../../actions/cases";
 import ClearAllIcon from "@material-ui/icons/ClearAll";
 import SaveIcon from "@material-ui/icons/Save";
+import { addDays } from "date-fns";
 
 const GreenRadio = withStyles({
   root: {
@@ -47,7 +50,8 @@ const GreenRadio = withStyles({
 
 const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [institutionDate, setInstitutionDate] = useState(new Date());
-  const [nextDate, setNextDate] = useState(new Date());
+  const [nextDate, setNextDate] = useState(addDays(new Date(), 15));
+  const [sameAsInstitutionDate, setSameAsInstitutiondate] = useState(false);
   const [caseData, setCaseData] = useState({
     // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
     "Case Title": "",
@@ -558,7 +562,43 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               />
             </MuiPickersUtilsProvider>
           </Grid>
-          <Grid item xs={12} sm={3}>
+
+          <Grid item xs={12} sm={4}>
+            {/* <Grid container alignItems="center"> */}
+            <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+              <KeyboardDatePicker
+                disabled={sameAsInstitutionDate}
+                disableToolbar
+                variant="inline"
+                id="date-picker-inline-order-date"
+                label="Order Date"
+                format="dd/MM/yyyy"
+                autoOk
+                value={caseData.orderDate ? caseData.orderDate : new Date()}
+                onChange={(date) =>
+                  setCaseData({ ...caseData, orderDate: date })
+                }
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+            </MuiPickersUtilsProvider>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={sameAsInstitutionDate}
+                  onChange={(e) => setSameAsInstitutiondate(e.target.checked)}
+                  name="sameAsInstitutionDate"
+                  color="primary"
+                />
+              }
+              label="Order Date is Same as Institution Date?"
+            />
+            <FormHelperText error>Check Box if apply!</FormHelperText>
+            {/* </Grid> */}
+          </Grid>
+
+          <Grid item xs={12} sm={2}>
             <TextField
               name="Order Number"
               variant="outlined"
@@ -570,7 +610,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={3}>
             <FormControl fullWidth variant="outlined">
               <InputLabel id="demo-simple-select-outlined-label">
                 Action Abstract

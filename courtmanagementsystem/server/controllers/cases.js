@@ -60,7 +60,6 @@ export const createCase = async (req, res) => {
     ["Date of Other Institution"]: dateOfOtherInstitution,
     ["Institution Flag"]: institutionFlag,
     causeListEntries: [
-      ...causeListEntries,
       {
         orderNumber: orderNumber,
         orderDate: orderDate,

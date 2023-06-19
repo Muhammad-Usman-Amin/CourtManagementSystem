@@ -113,6 +113,16 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     if (caseId) handleSubmit(nextDate);
   }, [nextDate]);
 
+  function getSecondToLastElement(array) {
+    if (array.length === 0) {
+      return null;
+    }
+    if (array.length < 2) {
+      return array[array.length - 1]; // or any other appropriate value or action
+    }
+    return array[array.length - 2];
+  }
+
   return !cases.length ? (
     <CircularProgress />
   ) : (
@@ -126,16 +136,20 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
         >
           <TableHead>
             <TableRow>
-              <TableCell>نمبر شمار</TableCell>
+              <TableCell style={{ maxWidth: 5 }}>نمبر شمار</TableCell>
               <TableCell align="right">Case No</TableCell>
-              <TableCell align="center">Institution</TableCell>
-              <TableCell style={{ minWidth: 140 }} align="center">
+              <TableCell align="center" style={{ minWidth: 100 }}>
+                Institution
+              </TableCell>
+              <TableCell style={{ minWidth: 130 }} align="center">
                 Title
               </TableCell>
               <TableCell align="center">Action</TableCell>
               <TableCell align="center">Previous Date</TableCell>
-              <TableCell align="center">Order No</TableCell>
-              <TableCell style={{ minWidth: 95 }} align="left">
+              <TableCell align="center" style={{ maxWidth: 10 }}>
+                Order No
+              </TableCell>
+              <TableCell style={{ minWidth: 80 }} align="left">
                 Next Date
               </TableCell>
               <TableCell style={{ minWidth: 140 }} align="center">
@@ -157,10 +171,18 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   )}
                 </TableCell>
                 <TableCell align="center">{caseFile["Case Title"]}</TableCell>
-                <TableCell align="center">Attendence</TableCell>
+                <TableCell align="center">
+                  {
+                    getSecondToLastElement(caseFile.causeListEntries)
+                      .actionAbstract
+                  }
+                </TableCell>
                 <TableCell align="center">
                   {format?.(
-                    parseISO(caseFile["Date of Institution "]),
+                    parseISO(
+                      getSecondToLastElement(caseFile.causeListEntries)
+                        .orderDate
+                    ),
                     "dd-MM-yyy"
                   )}
                 </TableCell>
