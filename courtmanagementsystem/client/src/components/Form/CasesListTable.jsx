@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -17,6 +17,13 @@ import { useDispatch } from "react-redux";
 import { format, parseISO } from "date-fns";
 import { useReactToPrint } from "react-to-print";
 import { deleteCase, likeCase } from "../../actions/cases";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
 
 // import { getEmployeeData } from './actions/employeeData';
 // import { parseISO } from 'date-fns/parseISO';
@@ -59,97 +66,150 @@ export default function CasesListTable({
     onPageChange("Cases List");
   }, [onPageChange]);
 
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const handleDelete = (id) => {
+    setSelectedRow(id);
+    setOpenDeleteDialog(true);
+  };
+
+  const handleDeleteConfirmation = () => {
+    // Dispatch your delete action using Redux here, passing the selectedRow to identify the item to delete
+    console.log("Delete item:", selectedRow);
+    dispatch(deleteCase(selectedRow));
+    setOpenDeleteDialog(false);
+  };
+
+  const handleCancelDelete = () => {
+    setOpenDeleteDialog(false);
+  };
+
   return !cases.length ? (
     <CircularProgress />
   ) : (
-    <TableContainer component={Paper}>
-      <Table
-        ref={tableRef}
-        stickyHeader
-        size="small"
-        className={classes.table}
-        aria-label="simple table"
-      >
-        <TableHead>
-          <TableRow>
-            <TableCell>S.No</TableCell>
-            <TableCell component="th" scope="row" align="left">
-              Case NO
-            </TableCell>
-            <TableCell align="left">Case Title</TableCell>
-            <TableCell align="left">Case Type</TableCell>
-            <TableCell align="left">Date Of Institution</TableCell>
-            <TableCell align="left">Institution Year</TableCell>
-            <TableCell align="left">Edit</TableCell>
-            <TableCell align="left">Delete</TableCell>
-            {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
+    <>
+      <TableContainer component={Paper}>
+        <Table
+          ref={tableRef}
+          stickyHeader
+          size="small"
+          className={classes.table}
+          aria-label="simple table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell>S.No</TableCell>
+              <TableCell component="th" scope="row" align="left">
+                Case NO
+              </TableCell>
+              <TableCell align="left">Case Title</TableCell>
+              <TableCell align="left">Case Type</TableCell>
+              <TableCell align="left">Date Of Institution</TableCell>
+              <TableCell align="left">Institution Year</TableCell>
+              <TableCell align="left">Edit</TableCell>
+              <TableCell align="left">Delete</TableCell>
+              {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
                         <TableCell align="right">Carbs&nbsp;(g)</TableCell>
                         <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {cases.map((row) => (
-            <TableRow hover key={row._id}>
-              <TableCell component="th" scope="row">
-                {cases.indexOf(row) + 1}
-              </TableCell>
-              <TableCell align="left">{row["Case No"]}</TableCell>
-              <TableCell align="left">{row["Case Title"]}</TableCell>
-              <TableCell align="left">{row["Case Type"]}</TableCell>
-              <TableCell align="left">
-                {!row["Date of Institution "]
-                  ? "null"
-                  : format?.(
-                      parseISO(row["Date of Institution "]),
-                      "dd-MM-yyy"
-                    )}
-              </TableCell>
-              <TableCell align="left">{row["Institution Year"]}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {cases.map((row) => (
+              <TableRow hover key={row._id}>
+                <TableCell component="th" scope="row">
+                  {cases.indexOf(row) + 1}
+                </TableCell>
+                <TableCell align="left">{row["Case No"]}</TableCell>
+                <TableCell align="left">{row["Case Title"]}</TableCell>
+                <TableCell align="left">{row["Case Type"]}</TableCell>
+                <TableCell align="left">
+                  {!row["Date of Institution "]
+                    ? "null"
+                    : format?.(
+                        parseISO(row["Date of Institution "]),
+                        "dd-MM-yyy"
+                      )}
+                </TableCell>
+                <TableCell align="left">{row["Institution Year"]}</TableCell>
 
-              <TableCell align="left">
-                <Button
-                  size="small"
-                  color="primary"
-                  component={Link}
-                  to="/FormCases"
-                  variant="outlined"
-                  style={{ borderRadius: 50 }}
-                  onClick={() => {
-                    setCurrentId(row._id);
-                    console.log(currentId);
-                  }}
-                >
-                  {<EditIcon />}
-                </Button>{" "}
-              </TableCell>
+                <TableCell align="left">
+                  <Button
+                    size="small"
+                    color="primary"
+                    component={Link}
+                    to="/FormCases"
+                    variant="outlined"
+                    style={{ borderRadius: 50 }}
+                    onClick={() => {
+                      setCurrentId(row._id);
+                      console.log(currentId);
+                    }}
+                  >
+                    {<EditIcon />}
+                  </Button>{" "}
+                </TableCell>
 
-              <TableCell align="left">
-                <Button
-                  fontSize="small"
-                  color="secondary"
-                  size="small"
-                  variant="outlined"
-                  style={{ borderRadius: 50 }}
-                  onClick={
-                    () => dispatch(deleteCase(row._id))
-                    // setCurrentId(row._id);
-                    // console.log(currentId);
-                  }
-                >
-                  {<DeleteIcon fontSize="small" />}
-                </Button>
-              </TableCell>
+                <TableCell align="left">
+                  <Button
+                    fontSize="small"
+                    color="secondary"
+                    size="small"
+                    variant="outlined"
+                    style={{ borderRadius: 50 }}
+                    onClick={
+                      () => handleDelete(row._id)
 
-              {/* <TableCell align="right">{row.fat}</TableCell>
+                      // () => dispatch(deleteCase(row._id))
+                      // setCurrentId(row._id);
+                      // console.log(currentId);
+                    }
+                  >
+                    {<DeleteIcon fontSize="small" />}
+                  </Button>
+                </TableCell>
+
+                {/* <TableCell align="right">{row.fat}</TableCell>
                             <TableCell align="right">{row.carbs}</TableCell>
                             <TableCell align="right">{row.protein}</TableCell> */}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Button component={Link} to="/PrintDataTable">
-        Print
-      </Button>
-    </TableContainer>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <Button component={Link} to="/PrintDataTable">
+          Print
+        </Button>
+      </TableContainer>
+
+      {/* Delete confirmation dialog */}
+      <div>
+        <Dialog
+          open={openDeleteDialog}
+          onClose={handleCancelDelete}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Confirm Delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete this item:{" "}
+              {selectedRow && selectedRow.name}?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCancelDelete} color="primary">
+              No
+            </Button>
+            <Button
+              onClick={handleDeleteConfirmation}
+              color="primary"
+              autoFocus
+            >
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    </>
   );
 }
