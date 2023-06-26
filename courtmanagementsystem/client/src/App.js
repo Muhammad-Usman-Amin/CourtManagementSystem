@@ -53,11 +53,11 @@ const App = () => {
 
   const [themeMode, setThemeMode] = useState("night"); // 'day' or 'night'
   const toggleThemeMode = () => {
-    setThemeMode((prevMode) => (prevMode === "day" ? "night" : "day"));
+    setThemeMode((prevMode) => (prevMode === "Day" ? "Night" : "Day"));
   };
 
   return (
-    <ThemeProvider theme={themeMode === "day" ? dayTheme : nightTheme}>
+    <ThemeProvider theme={themeMode === "Day" ? dayTheme : nightTheme}>
       <Router>
         {/* <div className={classes2.root} style={{ backgroundColor: 'aliceblue' }}> */}
         <div className={classes2.root}>
