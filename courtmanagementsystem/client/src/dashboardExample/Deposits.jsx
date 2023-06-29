@@ -23,7 +23,7 @@ export default function Deposits() {
   return (
     <React.Fragment>
       <Title>Total Number of Employees</Title>
-      <Typography component="p" variant="h2">
+      <Typography component="p" variant="h1">
         {employeeData?.length}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>

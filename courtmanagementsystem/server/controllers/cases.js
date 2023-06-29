@@ -143,7 +143,8 @@ export const updateCase = async (req, res) => {
   //if the order date is the same as today then REPLACE the required entries
   //in the array at last position using the $set operator
   if (
-    new Date(theCase.orderDate).toDateString() === new Date().toDateString()
+    new Date(theCase.orderDate).toDateString() === new Date().toDateString() &&
+    theCase.causeListEntries.length > 1
   ) {
     //$set query
     // console.log("$set Query");

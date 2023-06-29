@@ -543,6 +543,70 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
             />
           </Grid>
 
+          {selectedCaseType === "Criminal" && (
+            <>
+              <Grid item xs={12} sm={3}>
+                {/* <TextField name='FIRdate' variant='outlined' label='FIR Date' fullWidth value={caseData["FIR Date"]} onChange={(e) => setCaseData({ ...caseData, "FIR Date": e.target.value })} /> */}
+                <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+                  <KeyboardDatePicker
+                    // margin="normal"
+                    id="date-picker-dialog"
+                    label="FIR Date"
+                    format="dd/MM/yyyy"
+                    autoOk
+                    value={
+                      caseData["FIR Date"]
+                        ? caseData["FIR Date"]
+                        : institutionDate
+                    }
+                    onChange={(date) =>
+                      setCaseData({ ...caseData, "FIR Date": date })
+                    }
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                </MuiPickersUtilsProvider>
+              </Grid>
+              <Grid item xs={12} sm={2}>
+                <TextField
+                  name="FIR"
+                  variant="outlined"
+                  label="FIR Number"
+                  fullWidth
+                  value={caseData["FIR NO"]}
+                  onChange={(e) =>
+                    setCaseData({ ...caseData, "FIR NO": e.target.value })
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  name="underSection"
+                  variant="outlined"
+                  label="Under Section/s"
+                  fullWidth
+                  value={caseData.Section}
+                  onChange={(e) =>
+                    setCaseData({ ...caseData, Section: e.target.value })
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <TextField
+                  name="policeStation"
+                  variant="outlined"
+                  label="Police Station Name"
+                  fullWidth
+                  value={caseData.Thana}
+                  onChange={(e) =>
+                    setCaseData({ ...caseData, Thana: e.target.value })
+                  }
+                />
+              </Grid>
+            </>
+          )}
+
           <Grid item xs={12} sm={3}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
               <KeyboardDatePicker
@@ -653,70 +717,6 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               }
             /> */}
           </Grid>
-
-          {selectedCaseType === "Criminal" && (
-            <>
-              <Grid item xs={12} sm={3}>
-                {/* <TextField name='FIRdate' variant='outlined' label='FIR Date' fullWidth value={caseData["FIR Date"]} onChange={(e) => setCaseData({ ...caseData, "FIR Date": e.target.value })} /> */}
-                <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
-                  <KeyboardDatePicker
-                    // margin="normal"
-                    id="date-picker-dialog"
-                    label="FIR Date"
-                    format="dd/MM/yyyy"
-                    autoOk
-                    value={
-                      caseData["FIR Date"]
-                        ? caseData["FIR Date"]
-                        : institutionDate
-                    }
-                    onChange={(date) =>
-                      setCaseData({ ...caseData, "FIR Date": date })
-                    }
-                    KeyboardButtonProps={{
-                      "aria-label": "change date",
-                    }}
-                  />
-                </MuiPickersUtilsProvider>
-              </Grid>
-              <Grid item xs={12} sm={2}>
-                <TextField
-                  name="FIR"
-                  variant="outlined"
-                  label="FIR Number"
-                  fullWidth
-                  value={caseData["FIR NO"]}
-                  onChange={(e) =>
-                    setCaseData({ ...caseData, "FIR NO": e.target.value })
-                  }
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  name="underSection"
-                  variant="outlined"
-                  label="Under Section/s"
-                  fullWidth
-                  value={caseData.Section}
-                  onChange={(e) =>
-                    setCaseData({ ...caseData, Section: e.target.value })
-                  }
-                />
-              </Grid>
-              <Grid item xs={12} sm={3}>
-                <TextField
-                  name="policeStation"
-                  variant="outlined"
-                  label="Police Station Name"
-                  fullWidth
-                  value={caseData.Thana}
-                  onChange={(e) =>
-                    setCaseData({ ...caseData, Thana: e.target.value })
-                  }
-                />
-              </Grid>
-            </>
-          )}
 
           {/* <Button
             className={classes.buttonSubmit}

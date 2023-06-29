@@ -7,7 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { CircularProgress, TextField } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
@@ -25,14 +25,18 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  Grid,
+  Box,
+  Divider,
 } from "@material-ui/core";
+import { LinearProgress } from "@material-ui/core";
+//CircularProgress,
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { updateCase } from "../../actions/cases";
 import { getCauseList } from "../../actions/causeLists";
 import useStyles2 from "../../dashboardExample/dashboard";
-import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles({
   table: {
@@ -42,7 +46,8 @@ const useStyles = makeStyles({
 
 const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   const classes2 = useStyles2();
-  const cases = useSelector((state) => state.cases);
+  // const cases = useSelector((state) => state.cases);
+  const cases = useSelector((state) => state.causeLists);
   // console.log(cases);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -101,7 +106,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   }, [onPageChange]);
 
   useEffect(() => {
-    console.log("orederNumber onblurred useEffectcalled:" + orderNumber);
+    // console.log("orederNumber onblurred useEffectcalled:" + orderNumber);
     if (caseId) handleSubmit(orderNumber);
   }, [orderNumber]);
 
@@ -113,6 +118,15 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     if (caseId) handleSubmit(nextDate);
   }, [nextDate]);
 
+  const [dateCauseList, setDateCauseList] = useState(new Date());
+  useEffect(() => {
+    dispatch(getCauseList({ dateCauseList: dateCauseList }));
+  }, [dateCauseList]);
+
+  useEffect(() => {
+    dispatch(getCauseList({ dateCauseList: dateCauseList }));
+  }, []);
+
   function getSecondToLastElement(array) {
     if (array.length === 0) {
       return null;
@@ -123,155 +137,497 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     return array[array.length - 2];
   }
 
-  return !cases.length ? (
-    <CircularProgress />
-  ) : (
-    <React.Fragment>
-      <TableContainer component={Paper}>
-        <Table
-          stickyHeader
-          size="small"
-          className={classes.table}
-          aria-label="CauseList table"
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell style={{ maxWidth: 5 }}>نمبر شمار</TableCell>
-              <TableCell align="right">Case No</TableCell>
-              <TableCell align="center" style={{ minWidth: 100 }}>
-                Institution
-              </TableCell>
-              <TableCell style={{ minWidth: 130 }} align="center">
-                Title
-              </TableCell>
-              <TableCell align="center">Action</TableCell>
-              <TableCell align="center">Previous Date</TableCell>
-              <TableCell align="center" style={{ maxWidth: 10 }}>
-                Order No
-              </TableCell>
-              <TableCell style={{ minWidth: 80 }} align="left">
-                Next Date
-              </TableCell>
-              <TableCell style={{ minWidth: 140 }} align="center">
-                Action Abstract
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {cases.map((caseFile) => (
-              <TableRow key={caseFile._id}>
-                <TableCell component="th" scope="row">
-                  {cases.indexOf(caseFile) + 1}
-                </TableCell>
-                <TableCell align="right">{caseFile["Case No"]}</TableCell>
-                <TableCell align="right">
-                  {format?.(
-                    parseISO(caseFile["Date of Institution "]),
-                    "dd-MM-yyy"
-                  )}
-                </TableCell>
-                <TableCell align="center">{caseFile["Case Title"]}</TableCell>
-                <TableCell align="center">
-                  {
+  return (
+    <>
+      <Grid justify="space-between" container spacing={1} alignItems="center">
+        <Grid item xs={12} sm={6}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+            <KeyboardDatePicker
+              // margin="normal"
+              id="date-picker-causeList"
+              label="CauseList Date"
+              autoOk
+              format="dd/MM/yyyy"
+              value={dateCauseList}
+              onChange={(date) => {
+                // setCaseId(caseFile._id);
+                // setCurrentId(caseFile._id);
+                setDateCauseList(date);
+              }}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid item xs={12} sm={6} container justify="flex-end">
+          {!cases.length && (
+            <Typography>
+              Searching Cases for....
+              {dateCauseList.toLocaleDateString()}
+            </Typography>
+          )}
+          {cases.length && (
+            <Typography>Total Cases : {cases.length}</Typography>
+          )}
+        </Grid>
+        <Grid item xs={12} style={{ marginBottom: "8px" }}>
+          <Divider orientation="horizontal" />
+        </Grid>
+      </Grid>
+      {!cases.length ? (
+        <Box sx={{ width: "100%" }} style={{ margin: "8px 0px" }}>
+          <LinearProgress />
+        </Box>
+      ) : (
+        <React.Fragment>
+          <TableContainer component={Paper}>
+            <Table
+              stickyHeader
+              size="small"
+              className={classes.table}
+              aria-label="CauseList table"
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{ maxWidth: 5 }}>نمبر شمار</TableCell>
+                  <TableCell align="right">Case No</TableCell>
+                  <TableCell align="center" style={{ minWidth: 100 }}>
+                    Institution
+                  </TableCell>
+                  <TableCell style={{ minWidth: 130 }} align="center">
+                    Title
+                  </TableCell>
+                  <TableCell align="center">Action</TableCell>
+                  <TableCell align="center">Previous Date</TableCell>
+                  <TableCell align="center" style={{ maxWidth: 10 }}>
+                    Order No
+                  </TableCell>
+                  <TableCell style={{ minWidth: 80 }} align="left">
+                    Next Date
+                  </TableCell>
+                  <TableCell style={{ minWidth: 140 }} align="center">
+                    Action Abstract
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+
+              <TableBody>
+                <TableRow>
+                  <TableCell align="center" colSpan={9}>
+                    حاضری
+                  </TableCell>
+                </TableRow>
+
+                {cases.map((caseFile) => (
+                  <>
+                    {caseFile.causeListEntries &&
                     getSecondToLastElement(caseFile.causeListEntries)
-                      .actionAbstract
-                  }
-                </TableCell>
-                <TableCell align="center">
-                  {format?.(
-                    parseISO(
-                      getSecondToLastElement(caseFile.causeListEntries)
-                        .orderDate
-                    ),
-                    "dd-MM-yyy"
-                  )}
-                </TableCell>
-                <TableCell align="center">
-                  <TextField
-                    name="Order No"
-                    variant="outlined"
-                    label="Order No"
-                    fullWidth
-                    value={
-                      caseFile.orderNumber
-                      // caseFile.causeListEntries[
-                      //   caseFile.causeListEntries.length - 1
-                      // ].orderNumber
-                    }
-                    onChange={(e) => {
-                      console.log("onblurred input: " + e.target.value);
-                      setCaseId(caseFile._id);
-                      // setCurrentId(caseFile._id);
-                      setOrderNumber({
-                        orderDate: orderDate,
-                        orderNumber: e.target.value,
-                      });
-                    }}
-                  />
-                </TableCell>
-                <TableCell>
-                  <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
-                    <KeyboardDatePicker
-                      // margin="normal"
-                      id="date-picker-dialog"
-                      label=""
-                      format="dd/MM/yyyy"
-                      value={caseFile.nextDate}
-                      onChange={(date) => {
-                        setCaseId(caseFile._id);
-                        // setCurrentId(caseFile._id);
-                        setNextDate({ orderDate: orderDate, nextDate: date });
-                      }}
-                      KeyboardButtonProps={{
-                        "aria-label": "change date",
-                      }}
-                    />
-                  </MuiPickersUtilsProvider>
-                </TableCell>
-                <TableCell align="center">
-                  <FormControl
-                    fullWidth
-                    variant="outlined"
-                    className={classes.formControl}
-                  >
-                    <InputLabel id="demo-simple-select-outlined-label">
-                      خلاصہ کارواءی
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={caseFile.actionAbstract}
-                      onChange={(e) => {
-                        setCaseId(caseFile._id);
-                        // setCurrentId(caseFile._id);
-                        setActionAbstract({
-                          orderDate: orderDate,
-                          actionAbstract: e.target.value,
-                        });
-                      }}
-                      label="Select Sub Type"
-                    >
-                      <MenuItem value="">
-                        <em>Mostly Used</em>
-                      </MenuItem>
-                      <MenuItem value={"حاضری"}>حاضری</MenuItem>
-                      <MenuItem value={"بحث"}>بحث</MenuItem>
-                      <MenuItem value={"شہادت"}>شہادت</MenuItem>
-                      <MenuItem value={"حکم"}>حکم</MenuItem>
-                      <MenuItem value="">
-                        <em>All Categories</em>
-                      </MenuItem>
-                      <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
-                    </Select>
-                  </FormControl>
-                </TableCell>
-                {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </React.Fragment>
+                      .actionAbstract === "حاضری" ? (
+                      <TableRow key={caseFile._id}>
+                        <TableCell component="th" scope="row">
+                          {cases.indexOf(caseFile) + 1}
+                        </TableCell>
+                        <TableCell align="right">
+                          {caseFile["Case No"]}
+                        </TableCell>
+                        <TableCell align="right">
+                          {format?.(
+                            parseISO(caseFile["Date of Institution "]),
+                            "dd-MM-yyy"
+                          )}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            getSecondToLastElement(caseFile.causeListEntries)
+                              .actionAbstract}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            format?.(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
+                        <TableCell align="center">
+                          <TextField
+                            name="Order No"
+                            variant="outlined"
+                            label="Order No"
+                            fullWidth
+                            value={
+                              caseFile.orderNumber
+                              // caseFile.causeListEntries[
+                              //   caseFile.causeListEntries.length - 1
+                              // ].orderNumber
+                            }
+                            onChange={(e) => {
+                              // console.log("onblurred input: " + e.target.value);
+                              setCaseId(caseFile._id);
+                              // setCurrentId(caseFile._id);
+                              setOrderNumber({
+                                orderDate: orderDate,
+                                orderNumber: e.target.value,
+                              });
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <MuiPickersUtilsProvider
+                            utils={DateFnsUtils}
+                            fullWidth
+                          >
+                            <KeyboardDatePicker
+                              // margin="normal"
+                              id="date-picker-dialog"
+                              label=""
+                              autoOk
+                              format="dd/MM/yyyy"
+                              value={caseFile.nextDate}
+                              onChange={(date) => {
+                                setCaseId(caseFile._id);
+                                // setCurrentId(caseFile._id);
+                                setNextDate({
+                                  orderDate: orderDate,
+                                  nextDate: date,
+                                });
+                              }}
+                              KeyboardButtonProps={{
+                                "aria-label": "change date",
+                              }}
+                            />
+                          </MuiPickersUtilsProvider>
+                        </TableCell>
+                        <TableCell align="center">
+                          <FormControl
+                            fullWidth
+                            variant="outlined"
+                            className={classes.formControl}
+                          >
+                            <InputLabel id="demo-simple-select-outlined-label">
+                              خلاصہ کارواءی
+                            </InputLabel>
+                            <Select
+                              labelId="demo-simple-select-outlined-label"
+                              id="demo-simple-select-outlined"
+                              value={caseFile.actionAbstract}
+                              onChange={(e) => {
+                                setCaseId(caseFile._id);
+                                // setCurrentId(caseFile._id);
+                                setActionAbstract({
+                                  orderDate: orderDate,
+                                  actionAbstract: e.target.value,
+                                });
+                              }}
+                              label="Select Sub Type"
+                            >
+                              <MenuItem value="">
+                                <em>Mostly Used</em>
+                              </MenuItem>
+                              <MenuItem value={"حاضری"}>حاضری</MenuItem>
+                              <MenuItem value={"بحث"}>بحث</MenuItem>
+                              <MenuItem value={"شہادت"}>شہادت</MenuItem>
+                              <MenuItem value={"حکم"}>حکم</MenuItem>
+                              <MenuItem value="">
+                                <em>All Categories</em>
+                              </MenuItem>
+                              <MenuItem value={"بحث بر اپیل"}>
+                                بحث بر اپیل
+                              </MenuItem>
+                            </Select>
+                          </FormControl>
+                        </TableCell>
+                        {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
+                      </TableRow>
+                    ) : null}
+                  </>
+                ))}
+
+                <TableRow>
+                  <TableCell align="center" colSpan={9}>
+                    شہادت
+                  </TableCell>
+                </TableRow>
+
+                {cases.map((caseFile) => (
+                  <>
+                    {caseFile.causeListEntries &&
+                    getSecondToLastElement(caseFile.causeListEntries)
+                      .actionAbstract === "شہادت" ? (
+                      <TableRow key={caseFile._id}>
+                        <TableCell component="th" scope="row">
+                          {cases.indexOf(caseFile) + 1}
+                        </TableCell>
+                        <TableCell align="right">
+                          {caseFile["Case No"]}
+                        </TableCell>
+                        <TableCell align="right">
+                          {format?.(
+                            parseISO(caseFile["Date of Institution "]),
+                            "dd-MM-yyy"
+                          )}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            getSecondToLastElement(caseFile.causeListEntries)
+                              .actionAbstract}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            format?.(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
+                        <TableCell align="center">
+                          <TextField
+                            name="Order No"
+                            variant="outlined"
+                            label="Order No"
+                            fullWidth
+                            value={
+                              caseFile.orderNumber
+                              // caseFile.causeListEntries[
+                              //   caseFile.causeListEntries.length - 1
+                              // ].orderNumber
+                            }
+                            onChange={(e) => {
+                              // console.log("onblurred input: " + e.target.value);
+                              setCaseId(caseFile._id);
+                              // setCurrentId(caseFile._id);
+                              setOrderNumber({
+                                orderDate: orderDate,
+                                orderNumber: e.target.value,
+                              });
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <MuiPickersUtilsProvider
+                            utils={DateFnsUtils}
+                            fullWidth
+                          >
+                            <KeyboardDatePicker
+                              // margin="normal"
+                              id="date-picker-dialog"
+                              label=""
+                              autoOk
+                              format="dd/MM/yyyy"
+                              value={caseFile.nextDate}
+                              onChange={(date) => {
+                                setCaseId(caseFile._id);
+                                // setCurrentId(caseFile._id);
+                                setNextDate({
+                                  orderDate: orderDate,
+                                  nextDate: date,
+                                });
+                              }}
+                              KeyboardButtonProps={{
+                                "aria-label": "change date",
+                              }}
+                            />
+                          </MuiPickersUtilsProvider>
+                        </TableCell>
+                        <TableCell align="center">
+                          <FormControl
+                            fullWidth
+                            variant="outlined"
+                            className={classes.formControl}
+                          >
+                            <InputLabel id="demo-simple-select-outlined-label">
+                              خلاصہ کارواءی
+                            </InputLabel>
+                            <Select
+                              labelId="demo-simple-select-outlined-label"
+                              id="demo-simple-select-outlined"
+                              value={caseFile.actionAbstract}
+                              onChange={(e) => {
+                                setCaseId(caseFile._id);
+                                // setCurrentId(caseFile._id);
+                                setActionAbstract({
+                                  orderDate: orderDate,
+                                  actionAbstract: e.target.value,
+                                });
+                              }}
+                              label="Select Sub Type"
+                            >
+                              <MenuItem value="">
+                                <em>Mostly Used</em>
+                              </MenuItem>
+                              <MenuItem value={"حاضری"}>حاضری</MenuItem>
+                              <MenuItem value={"بحث"}>بحث</MenuItem>
+                              <MenuItem value={"شہادت"}>شہادت</MenuItem>
+                              <MenuItem value={"حکم"}>حکم</MenuItem>
+                              <MenuItem value="">
+                                <em>All Categories</em>
+                              </MenuItem>
+                              <MenuItem value={"بحث بر اپیل"}>
+                                بحث بر اپیل
+                              </MenuItem>
+                            </Select>
+                          </FormControl>
+                        </TableCell>
+                        {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
+                      </TableRow>
+                    ) : null}
+                  </>
+                ))}
+                <TableRow>
+                  <TableCell align="center" colSpan={9}>
+                    حکم
+                  </TableCell>
+                </TableRow>
+
+                {cases.map((caseFile) => (
+                  <>
+                    {caseFile.causeListEntries &&
+                    getSecondToLastElement(caseFile.causeListEntries)
+                      .actionAbstract === "حکم" ? (
+                      <TableRow key={caseFile._id}>
+                        <TableCell component="th" scope="row">
+                          {cases.indexOf(caseFile) + 1}
+                        </TableCell>
+                        <TableCell align="right">
+                          {caseFile["Case No"]}
+                        </TableCell>
+                        <TableCell align="right">
+                          {format?.(
+                            parseISO(caseFile["Date of Institution "]),
+                            "dd-MM-yyy"
+                          )}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            getSecondToLastElement(caseFile.causeListEntries)
+                              .actionAbstract}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            format?.(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
+                        <TableCell align="center">
+                          <TextField
+                            name="Order No"
+                            variant="outlined"
+                            label="Order No"
+                            fullWidth
+                            value={
+                              caseFile.orderNumber
+                              // caseFile.causeListEntries[
+                              //   caseFile.causeListEntries.length - 1
+                              // ].orderNumber
+                            }
+                            onChange={(e) => {
+                              // console.log("onblurred input: " + e.target.value);
+                              setCaseId(caseFile._id);
+                              // setCurrentId(caseFile._id);
+                              setOrderNumber({
+                                orderDate: orderDate,
+                                orderNumber: e.target.value,
+                              });
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <MuiPickersUtilsProvider
+                            utils={DateFnsUtils}
+                            fullWidth
+                          >
+                            <KeyboardDatePicker
+                              // margin="normal"
+                              id="date-picker-dialog"
+                              label=""
+                              autoOk
+                              format="dd/MM/yyyy"
+                              value={caseFile.nextDate}
+                              onChange={(date) => {
+                                setCaseId(caseFile._id);
+                                // setCurrentId(caseFile._id);
+                                setNextDate({
+                                  orderDate: orderDate,
+                                  nextDate: date,
+                                });
+                              }}
+                              KeyboardButtonProps={{
+                                "aria-label": "change date",
+                              }}
+                            />
+                          </MuiPickersUtilsProvider>
+                        </TableCell>
+                        <TableCell align="center">
+                          <FormControl
+                            fullWidth
+                            variant="outlined"
+                            className={classes.formControl}
+                          >
+                            <InputLabel id="demo-simple-select-outlined-label">
+                              خلاصہ کارواءی
+                            </InputLabel>
+                            <Select
+                              labelId="demo-simple-select-outlined-label"
+                              id="demo-simple-select-outlined"
+                              value={caseFile.actionAbstract}
+                              onChange={(e) => {
+                                setCaseId(caseFile._id);
+                                // setCurrentId(caseFile._id);
+                                setActionAbstract({
+                                  orderDate: orderDate,
+                                  actionAbstract: e.target.value,
+                                });
+                              }}
+                              label="Select Sub Type"
+                            >
+                              <MenuItem value="">
+                                <em>Mostly Used</em>
+                              </MenuItem>
+                              <MenuItem value={"حاضری"}>حاضری</MenuItem>
+                              <MenuItem value={"بحث"}>بحث</MenuItem>
+                              <MenuItem value={"شہادت"}>شہادت</MenuItem>
+                              <MenuItem value={"حکم"}>حکم</MenuItem>
+                              <MenuItem value="">
+                                <em>All Categories</em>
+                              </MenuItem>
+                              <MenuItem value={"بحث بر اپیل"}>
+                                بحث بر اپیل
+                              </MenuItem>
+                            </Select>
+                          </FormControl>
+                        </TableCell>
+                        {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
+                      </TableRow>
+                    ) : null}
+                  </>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </React.Fragment>
+      )}
+    </>
   );
 };
 
