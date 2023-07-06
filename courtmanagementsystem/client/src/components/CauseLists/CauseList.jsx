@@ -119,6 +119,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   }, [nextDate]);
 
   const [dateCauseList, setDateCauseList] = useState(new Date());
+  const [serialNo, setSerialNo] = useState(0);
   useEffect(() => {
     dispatch(getCauseList({ dateCauseList: dateCauseList }));
   }, [dateCauseList]);
@@ -214,7 +215,16 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
               <TableBody>
                 <TableRow>
-                  <TableCell align="center" colSpan={9}>
+                  <TableCell
+                    align="center"
+                    colSpan={9}
+                    style={{
+                      fontSize: 20,
+                      // fontFamily: "Alvi Nastaleeq Regular",
+                      fontStyle: "",
+                      fontWeight: "bold",
+                    }}
+                  >
                     حاضری
                   </TableCell>
                 </TableRow>
@@ -226,7 +236,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       .actionAbstract === "حاضری" ? (
                       <TableRow key={caseFile._id}>
                         <TableCell component="th" scope="row">
-                          {cases.indexOf(caseFile) + 1}
+                          {/* {setSerialNo(serialNo + 1)} */}
+                          {serialNo}
                         </TableCell>
                         <TableCell align="right">
                           {caseFile["Case No"]}
@@ -273,7 +284,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               setCaseId(caseFile._id);
                               // setCurrentId(caseFile._id);
                               setOrderNumber({
-                                orderDate: orderDate,
+                                orderDate: getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate,
                                 orderNumber: e.target.value,
                               });
                             }}
@@ -295,7 +308,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setNextDate({
-                                  orderDate: orderDate,
+                                  orderDate: getSecondToLastElement(
+                                    caseFile.causeListEntries
+                                  ).orderDate,
                                   nextDate: date,
                                 });
                               }}
@@ -322,7 +337,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setActionAbstract({
-                                  orderDate: orderDate,
+                                  orderDate: getSecondToLastElement(
+                                    caseFile.causeListEntries
+                                  ).orderDate,
                                   actionAbstract: e.target.value,
                                 });
                               }}
@@ -351,7 +368,169 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 ))}
 
                 <TableRow>
-                  <TableCell align="center" colSpan={9}>
+                  <TableCell
+                    align="center"
+                    colSpan={9}
+                    style={{
+                      fontSize: 20,
+                      // fontFamily: "Alvi Nastaleeq Regular",
+                      fontStyle: "",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    بحث
+                  </TableCell>
+                </TableRow>
+
+                {cases.map((caseFile) => (
+                  <>
+                    {caseFile.causeListEntries &&
+                    getSecondToLastElement(caseFile.causeListEntries)
+                      .actionAbstract === "بحث" ? (
+                      <TableRow key={caseFile._id}>
+                        <TableCell component="th" scope="row">
+                          {/* {setSerialNo(serialNo + 1)} */}
+                          {serialNo}
+                        </TableCell>
+                        <TableCell align="right">
+                          {caseFile["Case No"]}
+                        </TableCell>
+                        <TableCell align="right">
+                          {format?.(
+                            parseISO(caseFile["Date of Institution "]),
+                            "dd-MM-yyy"
+                          )}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            getSecondToLastElement(caseFile.causeListEntries)
+                              .actionAbstract}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            format?.(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
+                        <TableCell align="center">
+                          <TextField
+                            name="Order No"
+                            variant="outlined"
+                            label="Order No"
+                            fullWidth
+                            value={
+                              caseFile.orderNumber
+                              // caseFile.causeListEntries[
+                              //   caseFile.causeListEntries.length - 1
+                              // ].orderNumber
+                            }
+                            onChange={(e) => {
+                              // console.log("onblurred input: " + e.target.value);
+                              setCaseId(caseFile._id);
+                              // setCurrentId(caseFile._id);
+                              setOrderNumber({
+                                orderDate: getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate,
+                                orderNumber: e.target.value,
+                              });
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <MuiPickersUtilsProvider
+                            utils={DateFnsUtils}
+                            fullWidth
+                          >
+                            <KeyboardDatePicker
+                              // margin="normal"
+                              id="date-picker-dialog"
+                              label=""
+                              autoOk
+                              format="dd/MM/yyyy"
+                              value={caseFile.nextDate}
+                              onChange={(date) => {
+                                setCaseId(caseFile._id);
+                                // setCurrentId(caseFile._id);
+                                setNextDate({
+                                  orderDate: getSecondToLastElement(
+                                    caseFile.causeListEntries
+                                  ).orderDate,
+                                  nextDate: date,
+                                });
+                              }}
+                              KeyboardButtonProps={{
+                                "aria-label": "change date",
+                              }}
+                            />
+                          </MuiPickersUtilsProvider>
+                        </TableCell>
+                        <TableCell align="center">
+                          <FormControl
+                            fullWidth
+                            variant="outlined"
+                            className={classes.formControl}
+                          >
+                            <InputLabel id="demo-simple-select-outlined-label">
+                              خلاصہ کارواءی
+                            </InputLabel>
+                            <Select
+                              labelId="demo-simple-select-outlined-label"
+                              id="demo-simple-select-outlined"
+                              value={caseFile.actionAbstract}
+                              onChange={(e) => {
+                                setCaseId(caseFile._id);
+                                // setCurrentId(caseFile._id);
+                                setActionAbstract({
+                                  orderDate: getSecondToLastElement(
+                                    caseFile.causeListEntries
+                                  ).orderDate,
+                                  actionAbstract: e.target.value,
+                                });
+                              }}
+                              label="Select Sub Type"
+                            >
+                              <MenuItem value="">
+                                <em>Mostly Used</em>
+                              </MenuItem>
+                              <MenuItem value={"حاضری"}>حاضری</MenuItem>
+                              <MenuItem value={"بحث"}>بحث</MenuItem>
+                              <MenuItem value={"شہادت"}>شہادت</MenuItem>
+                              <MenuItem value={"حکم"}>حکم</MenuItem>
+                              <MenuItem value="">
+                                <em>All Categories</em>
+                              </MenuItem>
+                              <MenuItem value={"بحث بر اپیل"}>
+                                بحث بر اپیل
+                              </MenuItem>
+                            </Select>
+                          </FormControl>
+                        </TableCell>
+                        {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
+                      </TableRow>
+                    ) : null}
+                  </>
+                ))}
+
+                <TableRow>
+                  <TableCell
+                    align="center"
+                    colSpan={9}
+                    style={{
+                      fontSize: 20,
+                      // fontFamily: "Alvi Nastaleeq Regular",
+                      fontStyle: "",
+                      fontWeight: "bold",
+                    }}
+                  >
                     شہادت
                   </TableCell>
                 </TableRow>
@@ -410,7 +589,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               setCaseId(caseFile._id);
                               // setCurrentId(caseFile._id);
                               setOrderNumber({
-                                orderDate: orderDate,
+                                orderDate: getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDateerDate,
                                 orderNumber: e.target.value,
                               });
                             }}
@@ -432,7 +613,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setNextDate({
-                                  orderDate: orderDate,
+                                  orderDate: getSecondToLastElement(
+                                    caseFile.causeListEntries
+                                  ).orderDate,
                                   nextDate: date,
                                 });
                               }}
@@ -459,7 +642,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setActionAbstract({
-                                  orderDate: orderDate,
+                                  orderDate: getSecondToLastElement(
+                                    caseFile.causeListEntries
+                                  ).orderDate,
                                   actionAbstract: e.target.value,
                                 });
                               }}
@@ -487,7 +672,16 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </>
                 ))}
                 <TableRow>
-                  <TableCell align="center" colSpan={9}>
+                  <TableCell
+                    align="center"
+                    style={{
+                      fontSize: 20,
+                      // fontFamily: "Alvi Nastaleeq Regular",
+                      fontStyle: "",
+                      fontWeight: "bold",
+                    }}
+                    colSpan={9}
+                  >
                     حکم
                   </TableCell>
                 </TableRow>
@@ -546,7 +740,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               setCaseId(caseFile._id);
                               // setCurrentId(caseFile._id);
                               setOrderNumber({
-                                orderDate: orderDate,
+                                orderDate: getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate,
                                 orderNumber: e.target.value,
                               });
                             }}
@@ -568,7 +764,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setNextDate({
-                                  orderDate: orderDate,
+                                  orderDate: getSecondToLastElement(
+                                    caseFile.causeListEntries
+                                  ).orderDate,
                                   nextDate: date,
                                 });
                               }}
@@ -595,7 +793,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setActionAbstract({
-                                  orderDate: orderDate,
+                                  orderDate: getSecondToLastElement(
+                                    caseFile.causeListEntries
+                                  ).orderDate,
                                   actionAbstract: e.target.value,
                                 });
                               }}

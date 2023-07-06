@@ -142,9 +142,27 @@ export const updateCase = async (req, res) => {
   // return;
   //if the order date is the same as today then REPLACE the required entries
   //in the array at last position using the $set operator
+
+  // console.log(new Date(theCase.orderDate).toDateString());
+  // console.log(new Date().toDateString());
+  // console.log(new Date(lastCauseListEntry.orderDate).toDateString());
+  // (console.log(theCase.causeListEntries.length > 1) &&
+  //   new Date().toDateString() === new Date(theCase.orderDate).toDateString()) ||
+  //   new Date(lastCauseListEntry.orderDate).toDateString() ===
+  //     new Date(theCase.orderDate).toDateString();
+  ///*
+  // if (
+  //   new Date(theCase.orderDate).toDateString() ===
+  //     (new Date().toDateString() ||
+  //       new Date(lastCauseListEntry.orderDate).toDateString()) &&
+  //   theCase.causeListEntries.length > 1
+  // ) {
   if (
-    new Date(theCase.orderDate).toDateString() === new Date().toDateString() &&
-    theCase.causeListEntries.length > 1
+    (theCase.causeListEntries.length > 1 &&
+      new Date().toDateString() ===
+        new Date(theCase.orderDate).toDateString()) ||
+    new Date(lastCauseListEntry.orderDate).toDateString() ===
+      new Date(theCase.orderDate).toDateString()
   ) {
     //$set query
     // console.log("$set Query");
@@ -269,6 +287,7 @@ export const updateCase = async (req, res) => {
   //   console.log("updated Case: ");
   //   console.log(updatedCase);
   res.json(updatedCase);
+  //*/
 };
 
 export const deleteCase = async (req, res) => {
@@ -295,5 +314,4 @@ export const likeCase = async (req, res) => {
 
   res.json(updatedCase);
 };
-
 export default router;
