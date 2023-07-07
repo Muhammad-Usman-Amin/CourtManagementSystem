@@ -262,7 +262,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               parseISO(
                                 getSecondToLastElement(
                                   caseFile.causeListEntries
-                                ).orderDate
+                                ).nextDate
                               ),
                               "dd-MM-yyy"
                             )}
@@ -284,9 +284,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               setCaseId(caseFile._id);
                               // setCurrentId(caseFile._id);
                               setOrderNumber({
-                                orderDate: getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate,
+                                orderDate: orderDate,
                                 orderNumber: e.target.value,
                               });
                             }}
@@ -308,9 +306,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setNextDate({
-                                  orderDate: getSecondToLastElement(
-                                    caseFile.causeListEntries
-                                  ).orderDate,
+                                  orderDate: orderDate,
                                   nextDate: date,
                                 });
                               }}
@@ -337,9 +333,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setActionAbstract({
-                                  orderDate: getSecondToLastElement(
-                                    caseFile.causeListEntries
-                                  ).orderDate,
+                                  orderDate: orderDate,
                                   actionAbstract: e.target.value,
                                 });
                               }}
@@ -437,9 +431,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               setCaseId(caseFile._id);
                               // setCurrentId(caseFile._id);
                               setOrderNumber({
-                                orderDate: getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate,
+                                orderDate: orderDate,
                                 orderNumber: e.target.value,
                               });
                             }}
@@ -461,9 +453,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setNextDate({
-                                  orderDate: getSecondToLastElement(
-                                    caseFile.causeListEntries
-                                  ).orderDate,
+                                  orderDate: orderDate,
                                   nextDate: date,
                                 });
                               }}
@@ -490,9 +480,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setActionAbstract({
-                                  orderDate: getSecondToLastElement(
-                                    caseFile.causeListEntries
-                                  ).orderDate,
+                                  orderDate: orderDate,
                                   actionAbstract: e.target.value,
                                 });
                               }}
@@ -567,7 +555,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               parseISO(
                                 getSecondToLastElement(
                                   caseFile.causeListEntries
-                                ).orderDate
+                                ).nextDate
                               ),
                               "dd-MM-yyy"
                             )}
@@ -589,9 +577,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               setCaseId(caseFile._id);
                               // setCurrentId(caseFile._id);
                               setOrderNumber({
-                                orderDate: getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDateerDate,
+                                orderDate: orderDate,
                                 orderNumber: e.target.value,
                               });
                             }}
@@ -613,9 +599,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setNextDate({
-                                  orderDate: getSecondToLastElement(
-                                    caseFile.causeListEntries
-                                  ).orderDate,
+                                  orderDate: orderDate,
                                   nextDate: date,
                                 });
                               }}
@@ -642,9 +626,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setActionAbstract({
-                                  orderDate: getSecondToLastElement(
-                                    caseFile.causeListEntries
-                                  ).orderDate,
+                                  orderDate: orderDate,
                                   actionAbstract: e.target.value,
                                 });
                               }}
@@ -740,9 +722,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               setCaseId(caseFile._id);
                               // setCurrentId(caseFile._id);
                               setOrderNumber({
-                                orderDate: getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate,
+                                orderDate: orderDate,
                                 orderNumber: e.target.value,
                               });
                             }}
@@ -764,9 +744,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setNextDate({
-                                  orderDate: getSecondToLastElement(
-                                    caseFile.causeListEntries
-                                  ).orderDate,
+                                  orderDate: orderDate,
                                   nextDate: date,
                                 });
                               }}
@@ -793,9 +771,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
                                 setActionAbstract({
-                                  orderDate: getSecondToLastElement(
-                                    caseFile.causeListEntries
-                                  ).orderDate,
+                                  orderDate: orderDate,
                                   actionAbstract: e.target.value,
                                 });
                               }}

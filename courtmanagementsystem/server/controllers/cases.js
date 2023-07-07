@@ -109,6 +109,7 @@ export const updateCase = async (req, res) => {
 
   // Get the current case's cause List entries and last entry in the array
   const causeListEntries = theCase.causeListEntries.toObject();
+  const causeListDates = theCase.causeListDates.toObject();
   // console.log("causeListEntries: ");
   // console.log(causeListEntries);
   const lastCauseListEntry = causeListEntries[causeListEntries.length - 1];
@@ -117,17 +118,32 @@ export const updateCase = async (req, res) => {
 
   if (caseFile["Case Title"] || caseFile["Case Title"] === "") {
     console.log("Title if executed");
-    causeListEntries[causeListEntries.length - 1] = {
-      orderNumber: orderNumber,
-      orderDate: orderDate,
-      nextDate: nextDate,
-      actionAbstract: actionAbstract,
-    };
+    if (
+      theCase.causeListEntries.length > 1 &&
+      new Date().toDateString() === new Date(theCase.orderDate).toDateString()
+    ) {
+      causeListEntries[causeListEntries.length - 1] = {
+        orderNumber: orderNumber,
+        orderDate: orderDate,
+        nextDate: nextDate,
+        actionAbstract: actionAbstract,
+      };
+      causeListDates[causeListDates.length - 1] = orderDate;
+    } else {
+      causeListDates.push(orderDate);
+      causeListEntries.push({
+        orderNumber: orderNumber,
+        orderDate: orderDate,
+        nextDate: nextDate,
+        actionAbstract: actionAbstract,
+      });
+    }
     updatedCase = await Case.findByIdAndUpdate(
       id,
       {
         ...caseFile,
         causeListEntries: causeListEntries,
+        causeListDates: causeListDates,
       },
       { new: true }
     );
@@ -146,11 +162,19 @@ export const updateCase = async (req, res) => {
   // console.log(new Date(theCase.orderDate).toDateString());
   // console.log(new Date().toDateString());
   // console.log(new Date(lastCauseListEntry.orderDate).toDateString());
+  // console.log(
+  //   theCase.causeListEntries.length > 1 &&
+  //     (new Date().toDateString() ===
+  //       new Date(theCase.orderDate).toDateString() ||
+  //       new Date(lastCauseListEntry.orderDate).toDateString() ===
+  //         new Date(theCase.orderDate).toDateString())
+  // );
   // (console.log(theCase.causeListEntries.length > 1) &&
   //   new Date().toDateString() === new Date(theCase.orderDate).toDateString()) ||
   //   new Date(lastCauseListEntry.orderDate).toDateString() ===
   //     new Date(theCase.orderDate).toDateString();
-  ///*
+
+  // /*
   // if (
   //   new Date(theCase.orderDate).toDateString() ===
   //     (new Date().toDateString() ||
@@ -158,14 +182,12 @@ export const updateCase = async (req, res) => {
   //   theCase.causeListEntries.length > 1
   // ) {
   if (
-    (theCase.causeListEntries.length > 1 &&
-      new Date().toDateString() ===
-        new Date(theCase.orderDate).toDateString()) ||
-    new Date(lastCauseListEntry.orderDate).toDateString() ===
-      new Date(theCase.orderDate).toDateString()
+    theCase.causeListEntries.length > 1 &&
+    new Date().toDateString() === new Date(theCase.orderDate).toDateString()
   ) {
     //$set query
     // console.log("$set Query");
+    causeListDates[causeListDates.length - 1] = orderDate;
 
     if (orderNumber || orderNumber === "") {
       // console.log("1 order number: " + orderNumber);
@@ -181,6 +203,7 @@ export const updateCase = async (req, res) => {
               orderDate: orderDate,
             },
           },
+          causeListDates: causeListDates,
         },
         { new: true }
       );
@@ -200,6 +223,7 @@ export const updateCase = async (req, res) => {
               orderDate: orderDate,
             },
           },
+          causeListDates: causeListDates,
         },
         { new: true }
       );
@@ -219,6 +243,7 @@ export const updateCase = async (req, res) => {
               orderDate: orderDate,
             },
           },
+          causeListDates: causeListDates,
         },
         { new: true }
       );
@@ -227,6 +252,8 @@ export const updateCase = async (req, res) => {
     // $push query
     // console.log("$push Query");
 
+    causeListDates.push(orderDate);
+
     if (orderNumber || orderNumber === "") {
       // console.log("1 order number: " + orderNumber);
       updatedCase = await Case.findByIdAndUpdate(
@@ -241,6 +268,7 @@ export const updateCase = async (req, res) => {
               orderDate: orderDate,
             },
           },
+          causeListDates: causeListDates,
         },
         { new: true }
       );
@@ -259,6 +287,7 @@ export const updateCase = async (req, res) => {
               orderDate: orderDate,
             },
           },
+          causeListDates: causeListDates,
         },
         { new: true }
       );
@@ -278,6 +307,7 @@ export const updateCase = async (req, res) => {
               orderDate: orderDate,
             },
           },
+          causeListDates: causeListDates,
         },
         { new: true }
       );
@@ -287,7 +317,7 @@ export const updateCase = async (req, res) => {
   //   console.log("updated Case: ");
   //   console.log(updatedCase);
   res.json(updatedCase);
-  //*/
+  // */
 };
 
 export const deleteCase = async (req, res) => {

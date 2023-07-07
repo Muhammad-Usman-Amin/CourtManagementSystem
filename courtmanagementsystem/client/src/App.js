@@ -34,7 +34,7 @@ import { Route, Switch } from "react-router-dom/cjs/react-router-dom";
 import useStyles from "./dashboardExample/dashboard";
 import Error404Screen from "./screens/Error404Screen";
 import { ThemeProvider } from "@material-ui/core/styles";
-import { dayTheme, nightTheme } from "./theme";
+import { lightTheme, darkTheme } from "./theme";
 
 const App = () => {
   const classes = makeStyles();
@@ -51,13 +51,13 @@ const App = () => {
     dispatch(getCases());
   }, [currentId, dispatch]);
 
-  const [themeMode, setThemeMode] = useState("night"); // 'day' or 'night'
+  const [themeMode, setThemeMode] = useState("Dark"); // 'day' or 'night'
   const toggleThemeMode = () => {
-    setThemeMode((prevMode) => (prevMode === "Day" ? "Night" : "Day"));
+    setThemeMode((prevMode) => (prevMode === "Light" ? "Dark" : "Light"));
   };
 
   return (
-    <ThemeProvider theme={themeMode === "Day" ? dayTheme : nightTheme}>
+    <ThemeProvider theme={themeMode === "Light" ? lightTheme : darkTheme}>
       <Router>
         {/* <div className={classes2.root} style={{ backgroundColor: 'aliceblue' }}> */}
         <div className={classes2.root}>

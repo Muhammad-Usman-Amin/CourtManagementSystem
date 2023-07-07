@@ -29,6 +29,7 @@ import Deposits from "./Deposits";
 import Orders from "./Orders";
 import useStyles from "./dashboard";
 import SettingsBrightnessIcon from "@material-ui/icons/SettingsBrightness";
+import Tooltip from "@material-ui/core/Tooltip";
 
 function Copyright() {
   return (
@@ -83,11 +84,13 @@ export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
             {title}
           </Typography>
 
-          <IconButton color="inherit" onClick={toggleThemeMode}>
-            <Badge badgeContent={themeMode} color="secondary">
-              <SettingsBrightnessIcon />
-            </Badge>
-          </IconButton>
+          <Tooltip title="Toggle Light/Dark them">
+            <IconButton color="inherit" onClick={toggleThemeMode}>
+              <Badge badgeContent={themeMode} color="secondary">
+                <SettingsBrightnessIcon />
+              </Badge>
+            </IconButton>
+          </Tooltip>
 
           <IconButton color="inherit">
             <Badge badgeContent={455} color="secondary">

@@ -37,6 +37,7 @@ const caseSchema = new mongoose.Schema({
       actionAbstract: String,
     },
   ],
+  causeListDates: [Date],
   likeCount: {
     type: Number,
     default: 0,

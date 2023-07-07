@@ -1,6 +1,6 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
-const dayTheme = createMuiTheme({
+const lightTheme = createMuiTheme({
   // Define your day theme properties
   palette: {
     type: "light",
@@ -14,7 +14,7 @@ const dayTheme = createMuiTheme({
   // ...
 });
 
-const nightTheme = createMuiTheme({
+const darkTheme = createMuiTheme({
   palette: {
     type: "dark",
     primary: {
@@ -32,4 +32,4 @@ const nightTheme = createMuiTheme({
   },
 });
 
-export { dayTheme, nightTheme };
+export { lightTheme, darkTheme };
