@@ -157,7 +157,6 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       "Institution Flag": "",
       nextDate: new Date(),
       actionAbstract: "",
-      orderNumber: "",
       nextDate: nextDate,
       orderNumber: "1",
       actionAbstract: "حاضری",

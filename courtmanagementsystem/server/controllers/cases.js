@@ -144,6 +144,10 @@ export const updateCase = async (req, res) => {
         ...caseFile,
         causeListEntries: causeListEntries,
         causeListDates: causeListDates,
+        orderNumber: orderNumber,
+        orderDate: orderDate,
+        nextDate: nextDate,
+        actionAbstract: actionAbstract,
       },
       { new: true }
     );

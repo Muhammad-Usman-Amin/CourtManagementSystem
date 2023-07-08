@@ -275,6 +275,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             fullWidth
                             value={
                               caseFile.orderNumber
+                                ? caseFile.orderNumber
+                                : "null"
                               // caseFile.causeListEntries[
                               //   caseFile.causeListEntries.length - 1
                               // ].orderNumber
@@ -301,7 +303,11 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               label=""
                               autoOk
                               format="dd/MM/yyyy"
-                              value={caseFile.nextDate}
+                              value={
+                                caseFile.nextDate
+                                  ? caseFile.nextDate
+                                  : orderDate
+                              }
                               onChange={(date) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
@@ -328,7 +334,11 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             <Select
                               labelId="demo-simple-select-outlined-label"
                               id="demo-simple-select-outlined"
-                              value={caseFile.actionAbstract}
+                              value={
+                                caseFile.actionAbstract
+                                  ? caseFile.actionAbstract
+                                  : "null"
+                              }
                               onChange={(e) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
@@ -422,6 +432,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             fullWidth
                             value={
                               caseFile.orderNumber
+                                ? caseFile.orderNumber
+                                : "null"
                               // caseFile.causeListEntries[
                               //   caseFile.causeListEntries.length - 1
                               // ].orderNumber
@@ -448,7 +460,11 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               label=""
                               autoOk
                               format="dd/MM/yyyy"
-                              value={caseFile.nextDate}
+                              value={
+                                caseFile.nextDate
+                                  ? caseFile.nextDate
+                                  : orderDate
+                              }
                               onChange={(date) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
@@ -475,7 +491,11 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             <Select
                               labelId="demo-simple-select-outlined-label"
                               id="demo-simple-select-outlined"
-                              value={caseFile.actionAbstract}
+                              value={
+                                caseFile.actionAbstract
+                                  ? caseFile.actionAbstract
+                                  : "null"
+                              }
                               onChange={(e) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
@@ -568,6 +588,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             fullWidth
                             value={
                               caseFile.orderNumber
+                                ? caseFile.orderNumber
+                                : "null"
                               // caseFile.causeListEntries[
                               //   caseFile.causeListEntries.length - 1
                               // ].orderNumber
@@ -594,7 +616,11 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               label=""
                               autoOk
                               format="dd/MM/yyyy"
-                              value={caseFile.nextDate}
+                              value={
+                                caseFile.nextDate
+                                  ? caseFile.nextDate
+                                  : orderDate
+                              }
                               onChange={(date) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
@@ -621,7 +647,11 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             <Select
                               labelId="demo-simple-select-outlined-label"
                               id="demo-simple-select-outlined"
-                              value={caseFile.actionAbstract}
+                              value={
+                                caseFile.actionAbstract
+                                  ? caseFile.actionAbstract
+                                  : "null"
+                              }
                               onChange={(e) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
@@ -713,6 +743,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             fullWidth
                             value={
                               caseFile.orderNumber
+                                ? caseFile.orderNumber
+                                : "null"
+
                               // caseFile.causeListEntries[
                               //   caseFile.causeListEntries.length - 1
                               // ].orderNumber
@@ -739,7 +772,11 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               label=""
                               autoOk
                               format="dd/MM/yyyy"
-                              value={caseFile.nextDate}
+                              value={
+                                caseFile.nextDate
+                                  ? caseFile.nextDate
+                                  : orderDate
+                              }
                               onChange={(date) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);
@@ -766,7 +803,11 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             <Select
                               labelId="demo-simple-select-outlined-label"
                               id="demo-simple-select-outlined"
-                              value={caseFile.actionAbstract}
+                              value={
+                                caseFile.actionAbstract
+                                  ? caseFile.actionAbstract
+                                  : "null"
+                              }
                               onChange={(e) => {
                                 setCaseId(caseFile._id);
                                 // setCurrentId(caseFile._id);

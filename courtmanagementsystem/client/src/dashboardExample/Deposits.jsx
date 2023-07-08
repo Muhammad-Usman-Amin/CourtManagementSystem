@@ -18,25 +18,25 @@ const useStyles = makeStyles({
 });
 
 export default function Deposits() {
-  const employeeData = useSelector((state) => state.employeeData);
+  const cases = useSelector((state) => state.cases);
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Total Number of Employees</Title>
-      <Typography component="p" variant="h1">
-        {employeeData?.length}
+      <Title>Total Cases</Title>
+      <Typography component="p" variant="h2">
+        {cases?.length}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        on {format(Date.now(), "dd MMMM, yyy")}
+        as of {format(Date.now(), "dd MMMM, yyy")}
       </Typography>
       <div>
         <MuiLink
           color="primary"
           component={Link}
-          to="EmployeeListTable"
+          to="CasesListTable"
           //   onClick={preventDefault}
         >
-          View Employees
+          View Cases
         </MuiLink>
       </div>
     </React.Fragment>
