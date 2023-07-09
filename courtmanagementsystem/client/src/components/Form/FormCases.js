@@ -55,6 +55,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [caseData, setCaseData] = useState({
     // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
     "Case Title": "",
+    urduTitle: "",
     "Case No": "",
     "Case Type": "Civil",
     "Category Per PQS": "",
@@ -141,6 +142,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     setInstitutionDate(new Date());
     setCaseData({
       "Case Title": "",
+      urduTitle: "",
       "Case No": "",
       "Case Type": selectedCaseType,
       "Category Per PQS": "",
@@ -177,7 +179,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
         </Typography>
 
         <Grid container spacing={2} alignContent="center" justify="center">
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={2}>
             <FormControl fullWidth component="fieldset">
               <FormLabel component="legend">
                 {/* <br /> */}
@@ -213,7 +215,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               </RadioGroup>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={9}>
+
+          <Grid item xs={12} sm={6}>
             {selectedCaseType === "Civil" ? (
               <FormControl
                 fullWidth
@@ -479,8 +482,19 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               </FormControl>
             )}
           </Grid>
-
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              name="caseNumber"
+              variant="outlined"
+              label="Case Number"
+              fullWidth
+              value={caseData["Case No"]}
+              onChange={(e) =>
+                setCaseData({ ...caseData, "Case No": e.target.value })
+              }
+            />
+          </Grid>
+          <Grid item xs={12} sm={2}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
               {/* <Grid container justifyContent="space-around"> */}
               {/* <KeyboardDatePicker
@@ -515,21 +529,22 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
             </MuiPickersUtilsProvider>
             {/* </Container> */}
           </Grid>
-          <Grid item xs={12} sm={3}>
+
+          {/* <Container fullwidth>
+                    <TextField name='institutionDate' variant='outlined' label='Institution Date' fullWidth value={caseData.institutionDate} onChange={(e) => setCaseData({ ...caseData, institutionDate: e.target.value })} /> */}
+          <Grid item xs={12} sm={5}>
             <TextField
-              name="caseNumber"
+              name="urduTitle"
               variant="outlined"
-              label="Case Number"
+              label="Urdu Title"
               fullWidth
-              value={caseData["Case No"]}
+              value={caseData.urduTitle ? caseData.urduTitle : null}
               onChange={(e) =>
-                setCaseData({ ...caseData, "Case No": e.target.value })
+                setCaseData({ ...caseData, urduTitle: e.target.value })
               }
             />
           </Grid>
-          {/* <Container fullwidth>
-                    <TextField name='institutionDate' variant='outlined' label='Institution Date' fullWidth value={caseData.institutionDate} onChange={(e) => setCaseData({ ...caseData, institutionDate: e.target.value })} /> */}
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={5}>
             <TextField
               name="title"
               variant="outlined"

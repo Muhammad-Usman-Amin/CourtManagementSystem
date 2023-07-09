@@ -10,6 +10,7 @@ const caseSchema = new mongoose.Schema({
   // "Date of Disposal": Date,
   // isTransferedIn: Boolean, "Date of Transfer In": Date,
   ["Case Title"]: String,
+  urduTitle: String,
   ["Case No"]: String,
   ["Case Type"]: String,
   ["Category Per PQS"]: String,

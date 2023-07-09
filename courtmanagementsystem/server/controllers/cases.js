@@ -22,6 +22,7 @@ export const createCase = async (req, res) => {
   console.log(body);
   const {
     ["Case Title"]: caseTitle,
+    urduTitle: urduTitle,
     ["Case No"]: caseNo,
     ["Case Type"]: caseType,
     ["Category Per PQS"]: categoryPerPQS,
@@ -45,6 +46,7 @@ export const createCase = async (req, res) => {
 
   const newCase = new Case({
     ["Case Title"]: caseTitle,
+    urduTitle: urduTitle,
     ["Case No"]: caseNo,
     ["Case Type"]: caseType,
     ["Category Per PQS"]: categoryPerPQS,

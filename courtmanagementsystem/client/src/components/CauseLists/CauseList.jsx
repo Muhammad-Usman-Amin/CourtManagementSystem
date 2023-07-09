@@ -9,6 +9,8 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { TextField, Typography } from "@material-ui/core";
 
+import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import parseISO from "date-fns/parseISO";
@@ -141,7 +143,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   return (
     <>
       <Grid justify="space-between" container spacing={1} alignItems="center">
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
             <KeyboardDatePicker
               // margin="normal"
@@ -161,7 +163,16 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
             />
           </MuiPickersUtilsProvider>
         </Grid>
-        <Grid item xs={12} sm={6} container justify="flex-end">
+
+        <Grid item container justify="space-between" xs={12} sm={4}>
+          <Divider orientation="vertical" flexItem />
+          <Button variant="contained" component={Link} to="/PrintCauseList">
+            Print CauseList
+          </Button>
+          <Divider orientation="vertical" flexItem />
+        </Grid>
+
+        <Grid item xs={12} sm={4} container justify="flex-end">
           {!cases.length && (
             <Typography>
               Searching Cases for....

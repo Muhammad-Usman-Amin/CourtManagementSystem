@@ -28,6 +28,7 @@ import CasesListTable from "./components/Form/CasesListTable.jsx";
 import PrintDataTable from "./components/Form/PrintDataTable.jsx";
 import CourtList from "./screens/CourtsScreen";
 import CourtPage from "./screens/CourtPage";
+import PrintCauseList from "./components/CauseLists/PrintCauseList";
 
 import { BrowserRouter as Router } from "react-router-dom/cjs/react-router-dom.min";
 import { Route, Switch } from "react-router-dom/cjs/react-router-dom";
@@ -51,7 +52,7 @@ const App = () => {
     dispatch(getCases());
   }, [currentId, dispatch]);
 
-  const [themeMode, setThemeMode] = useState("Dark"); // 'day' or 'night'
+  const [themeMode, setThemeMode] = useState("Light"); // 'day' or 'night'
   const toggleThemeMode = () => {
     setThemeMode((prevMode) => (prevMode === "Light" ? "Dark" : "Light"));
   };
@@ -133,6 +134,7 @@ const App = () => {
                 />
                 <Route path="/court/:courtId" component={CourtPage} />
                 <Route path="/PrintDataTable" component={PrintDataTable} />
+                <Route path="/PrintCauseList" component={PrintCauseList} />
 
                 <Route path="*">
                   <Error404Screen />
