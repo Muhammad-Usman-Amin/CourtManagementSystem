@@ -157,8 +157,6 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       "Date of Transfer In": Date,
       "Date of Other Institution": new Date(),
       "Institution Flag": "",
-      nextDate: new Date(),
-      actionAbstract: "",
       nextDate: nextDate,
       orderNumber: "1",
       actionAbstract: "حاضری",
@@ -632,7 +630,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 label="Next Date"
                 format="dd/MM/yyyy"
                 autoOk
-                value={caseData["nextDate"] ? caseData["nextDate"] : nextDate}
+                value={caseData.nextDate ? caseData.nextDate : nextDate}
                 onChange={(date) =>
                   setCaseData({ ...caseData, nextDate: date })
                 }
@@ -684,7 +682,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               variant="outlined"
               label="Order Number"
               fullWidth
-              value={caseData.orderNumber}
+              value={caseData.orderNumber ? caseData.orderNumber : "1"}
               onChange={(e) =>
                 setCaseData({ ...caseData, orderNumber: e.target.value })
               }
@@ -698,7 +696,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               <Select
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
-                value={caseData.actionAbstract}
+                value={
+                  caseData.actionAbstract ? caseData.actionAbstract : "حاضری"
+                }
                 onChange={(e) => {
                   setCaseData({ ...caseData, actionAbstract: e.target.value });
                   // setActionAbstract({
