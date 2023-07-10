@@ -32,6 +32,10 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  dateValue: {
+    minWidth: "100px",
+    whiteSpace: "nowrap",
+  },
 });
 
 // function createData(name, calories, fat, carbs, protein) {
@@ -100,13 +104,22 @@ export default function CasesListTable({
           <TableHead>
             <TableRow>
               <TableCell>S.No</TableCell>
-              <TableCell component="th" scope="row" align="left">
-                Case NO
+              <TableCell
+                // component="th"
+                // scope="row"
+                align="left"
+              >
+                Case No
+              </TableCell>
+              <TableCell classes={classes.dateValue} align="left">
+                Date Of Institution
               </TableCell>
               <TableCell align="left">Case Title</TableCell>
               <TableCell align="left">Case Type</TableCell>
-              <TableCell align="left">Date Of Institution</TableCell>
-              <TableCell align="left">Institution Year</TableCell>
+              {/* <TableCell align="left">Institution Year</TableCell> */}
+              <TableCell classes={classes.dateValue} align="left">
+                Next Date
+              </TableCell>
               <TableCell align="left">Edit</TableCell>
               <TableCell align="left">Delete</TableCell>
               {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
@@ -121,8 +134,6 @@ export default function CasesListTable({
                   {cases.indexOf(row) + 1}
                 </TableCell>
                 <TableCell align="left">{row["Case No"]}</TableCell>
-                <TableCell align="left">{row["Case Title"]}</TableCell>
-                <TableCell align="left">{row["Case Type"]}</TableCell>
                 <TableCell align="left">
                   {!row["Date of Institution "]
                     ? "null"
@@ -131,7 +142,17 @@ export default function CasesListTable({
                         "dd-MM-yyy"
                       )}
                 </TableCell>
-                <TableCell align="left">{row["Institution Year"]}</TableCell>
+                <TableCell align="left">{row["Case Title"]}</TableCell>
+                <TableCell align="left">{row["Case Type"]}</TableCell>
+                {/* <TableCell align="left">{row["Institution Year"]}</TableCell> */}
+                <TableCell
+                  style={{ minWidth: "fit-content", whiteSpace: "nowrap" }}
+                  align="left"
+                >
+                  {!row.nextDate
+                    ? "null"
+                    : format?.(parseISO(row.nextDate), "dd-MM-yyy")}
+                </TableCell>
 
                 <TableCell align="left">
                   <Button

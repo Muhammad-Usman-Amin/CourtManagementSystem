@@ -150,6 +150,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
               id="date-picker-causeList"
               label="CauseList Date"
               autoOk
+              variant="inline"
               format="dd/MM/yyyy"
               value={dateCauseList}
               onChange={(date) => {
@@ -243,8 +244,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 {cases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    getSecondToLastElement(caseFile.causeListEntries)
-                      .actionAbstract === "حاضری" ? (
+                    getSecondToLastElement(
+                      caseFile.causeListEntries
+                    ).actionAbstract.includes("حاضری") ? (
                       <TableRow key={caseFile._id}>
                         <TableCell component="th" scope="row">
                           {/* {setSerialNo(serialNo + 1)} */}
@@ -370,8 +372,26 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"ابتدائی بحث"}>
+                                ابتدائی بحث
+                              </MenuItem>
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
+                              </MenuItem>
+                              <MenuItem value={"بحث بر درخواست"}>
+                                بحث بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"حاضری، اشتہار"}>
+                                حاضری، اشتہار
+                              </MenuItem>
+                              <MenuItem value={"حاضری، ریکارڈ"}>
+                                حاضری، ریکارڈ
+                              </MenuItem>
+                              <MenuItem value={"حکم بر درخواست"}>
+                                حکم بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"یکطرفہ شہادت"}>
+                                یکطرفہ شہادت
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -400,8 +420,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 {cases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    getSecondToLastElement(caseFile.causeListEntries)
-                      .actionAbstract === "بحث" ? (
+                    getSecondToLastElement(
+                      caseFile.causeListEntries
+                    ).actionAbstract.includes("بحث") ? (
                       <TableRow key={caseFile._id}>
                         <TableCell component="th" scope="row">
                           {/* {setSerialNo(serialNo + 1)} */}
@@ -527,8 +548,26 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"ابتدائی بحث"}>
+                                ابتدائی بحث
+                              </MenuItem>
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
+                              </MenuItem>
+                              <MenuItem value={"بحث بر درخواست"}>
+                                بحث بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"حاضری، اشتہار"}>
+                                حاضری، اشتہار
+                              </MenuItem>
+                              <MenuItem value={"حاضری، ریکارڈ"}>
+                                حاضری، ریکارڈ
+                              </MenuItem>
+                              <MenuItem value={"حکم بر درخواست"}>
+                                حکم بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"یکطرفہ شہادت"}>
+                                یکطرفہ شہادت
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -557,8 +596,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 {cases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    getSecondToLastElement(caseFile.causeListEntries)
-                      .actionAbstract === "شہادت" ? (
+                    getSecondToLastElement(
+                      caseFile.causeListEntries
+                    ).actionAbstract.includes("شہادت") ? (
                       <TableRow key={caseFile._id}>
                         <TableCell component="th" scope="row">
                           {cases.indexOf(caseFile) + 1}
@@ -683,8 +723,26 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"ابتدائی بحث"}>
+                                ابتدائی بحث
+                              </MenuItem>
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
+                              </MenuItem>
+                              <MenuItem value={"بحث بر درخواست"}>
+                                بحث بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"حاضری، اشتہار"}>
+                                حاضری، اشتہار
+                              </MenuItem>
+                              <MenuItem value={"حاضری، ریکارڈ"}>
+                                حاضری، ریکارڈ
+                              </MenuItem>
+                              <MenuItem value={"حکم بر درخواست"}>
+                                حکم بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"یکطرفہ شہادت"}>
+                                یکطرفہ شہادت
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -712,8 +770,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 {cases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    getSecondToLastElement(caseFile.causeListEntries)
-                      .actionAbstract === "حکم" ? (
+                    getSecondToLastElement(
+                      caseFile.causeListEntries
+                    ).actionAbstract.includes("حکم") ? (
                       <TableRow key={caseFile._id}>
                         <TableCell component="th" scope="row">
                           {cases.indexOf(caseFile) + 1}
@@ -839,8 +898,27 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"ابتدائی بحث"}>
+                                ابتدائی بحث
+                              </MenuItem>
+                              <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
+                              </MenuItem>
+                              <MenuItem value={"بحث بر درخواست"}>
+                                بحث بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"حاضری، اشتہار"}>
+                                حاضری، اشتہار
+                              </MenuItem>
+                              <MenuItem value={"حاضری، ریکارڈ"}>
+                                حاضری، ریکارڈ
+                              </MenuItem>
+                              <MenuItem value={"حکم بر درخواست"}>
+                                حکم بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"یکطرفہ شہادت"}>
+                                یکطرفہ شہادت
                               </MenuItem>
                             </Select>
                           </FormControl>
