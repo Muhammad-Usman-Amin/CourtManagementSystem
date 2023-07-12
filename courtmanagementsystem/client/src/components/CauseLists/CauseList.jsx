@@ -121,7 +121,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   }, [nextDate]);
 
   const [dateCauseList, setDateCauseList] = useState(new Date());
-  const [serialNo, setSerialNo] = useState(0);
+  const [serialNo, setSerialNo] = useState([]);
+  let index = 0;
+  // let sno = [];
   useEffect(() => {
     dispatch(getCauseList({ dateCauseList: dateCauseList }));
   }, [dateCauseList]);
@@ -129,6 +131,14 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   useEffect(() => {
     dispatch(getCauseList({ dateCauseList: dateCauseList }));
   }, []);
+  useEffect(() => {
+    for (let i = 1; i <= cases.length; i++) {
+      // sno.push(i);
+      // setSerialNo((oldArray) => [...oldArray, i]);
+      setSerialNo((prevArray) => [...prevArray, i]);
+    }
+    console.log(serialNo);
+  }, [cases]);
 
   function getSecondToLastElement(array) {
     if (array.length === 0) {
@@ -246,12 +256,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     {caseFile.causeListEntries &&
                     getSecondToLastElement(
                       caseFile.causeListEntries
-                    ).actionAbstract.includes("حاضری") ? (
+                    ).actionAbstract?.includes("حاضری") ? (
                       <TableRow key={caseFile._id}>
-                        <TableCell component="th" scope="row">
-                          {/* {setSerialNo(serialNo + 1)} */}
-                          {serialNo}
-                        </TableCell>
+                        <TableCell>{serialNo[index++]}</TableCell>
                         <TableCell align="right">
                           {caseFile["Case No"]}
                         </TableCell>
@@ -399,6 +406,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
                       </TableRow>
                     ) : null}
+                    {/* {(index += 1)} */}
+                    {/* {setSerialNo((prevIndex) => prevIndex + 1)} */}
                   </>
                 ))}
 
@@ -422,11 +431,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     {caseFile.causeListEntries &&
                     getSecondToLastElement(
                       caseFile.causeListEntries
-                    ).actionAbstract.includes("بحث") ? (
+                    ).actionAbstract?.includes("بحث") ? (
                       <TableRow key={caseFile._id}>
                         <TableCell component="th" scope="row">
                           {/* {setSerialNo(serialNo + 1)} */}
-                          {serialNo}
+                          {/* {serialNo} */}
+                          {serialNo[index++]}
                         </TableCell>
                         <TableCell align="right">
                           {caseFile["Case No"]}
@@ -572,6 +582,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             </Select>
                           </FormControl>
                         </TableCell>
+                        {/* {setSerialNo((prevIndex) => prevIndex + 1)} */}
                         {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
                       </TableRow>
                     ) : null}
@@ -598,10 +609,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     {caseFile.causeListEntries &&
                     getSecondToLastElement(
                       caseFile.causeListEntries
-                    ).actionAbstract.includes("شہادت") ? (
+                    ).actionAbstract?.includes("شہادت") ? (
                       <TableRow key={caseFile._id}>
                         <TableCell component="th" scope="row">
-                          {cases.indexOf(caseFile) + 1}
+                          {/* {cases.indexOf(caseFile) + 1} */}
+                          {/* {serialNo} */}
+                          {serialNo[index++]}
                         </TableCell>
                         <TableCell align="right">
                           {caseFile["Case No"]}
@@ -747,6 +760,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             </Select>
                           </FormControl>
                         </TableCell>
+                        {/* {setSerialNo((prevIndex) => prevIndex + 1)} */}
                         {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
                       </TableRow>
                     ) : null}
@@ -772,10 +786,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     {caseFile.causeListEntries &&
                     getSecondToLastElement(
                       caseFile.causeListEntries
-                    ).actionAbstract.includes("حکم") ? (
+                    ).actionAbstract?.includes("حکم") ? (
                       <TableRow key={caseFile._id}>
                         <TableCell component="th" scope="row">
-                          {cases.indexOf(caseFile) + 1}
+                          {/* {cases.indexOf(caseFile) + 1} */}
+                          {/* {serialNo} */}
+                          {serialNo[index++]}
                         </TableCell>
                         <TableCell align="right">
                           {caseFile["Case No"]}
@@ -926,6 +942,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
                       </TableRow>
                     ) : null}
+                    {/* {setSerialNo((prevIndex) => prevIndex + 1)} */}
                   </>
                 ))}
               </TableBody>
