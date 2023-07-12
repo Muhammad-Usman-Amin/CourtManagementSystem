@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -10,13 +10,16 @@ import { format, parseISO } from "date-fns";
 import { useSelector } from "react-redux";
 import { Button, Grid } from "@material-ui/core";
 
+import { useDispatch } from "react-redux";
+import { getCauseList } from "../../actions/causeLists";
+import { LinearProgress } from "@material-ui/core";
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     centeredDiv: {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      /* Additional styles as needed */
       // width: 100%,
       // height: 100vh,
       // border: "1px solid black",
@@ -25,8 +28,8 @@ const useStyles = makeStyles((theme) =>
     },
     table: {
       margin: theme.spacing(1),
-      // borderCollapse: "collapse",
-      // maxWidth: "8.5in",
+      borderCollapse: "collapse",
+      maxWidth: "8.5in",
       // maxHeight: "13in",
       // margin: "0 auto",
       // minWidth: 650,
@@ -38,8 +41,8 @@ const useStyles = makeStyles((theme) =>
       // borderRadius: "30px",
     },
     tableHeaderCell: {
-      border: "1px solid black",
-      // borderColor: theme.palette.primary.black,
+      border: "1px solid",
+      borderColor: theme.palette.primary.black,
       fontWeight: "bold",
       fontSize: 11,
       minWidth: "100px",
@@ -51,8 +54,8 @@ const useStyles = makeStyles((theme) =>
       // align: "center",
       textAlign: "center",
       border: "1px solid",
-      // borderColor: theme.palette.grey[300],
       borderColor: theme.palette.black,
+      // borderColor: theme.palette.grey[300],
       padding: theme.spacing(1),
       fontFamily: "Alvi Nastaleeq Regular",
     },
@@ -70,9 +73,25 @@ const useStyles = makeStyles((theme) =>
 );
 
 const PrintCauseList = () => {
+  const [dateCauseList, setDateCauseList] = useState(new Date());
+  const [sno, setSno] = useState([]);
+  const [index, setIndex] = useState(0);
+
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.causeLists);
+  // const numbers = [];
+  useEffect(() => {
+    if (!data) dispatch(getCauseList({ dateCauseList: dateCauseList }));
+    for (let i = 1; i <= data.length; i++) {
+      // numbers.push(i);
+      setSno((sno) => [...sno, i]);
+    }
+    // console.log(sno);
+    // setSno.length = data.length
+  }, []);
+
   const classes = useStyles();
   const tableRef = React.useRef();
-  const data = useSelector((state) => state.causeLists);
 
   const handlePrint = useReactToPrint({
     content: () => tableRef.current,
@@ -88,63 +107,79 @@ const PrintCauseList = () => {
     return array[array.length - 2];
   }
 
-  return (
-    <div className={classes.centeredDiv}>
-      <Grid container>
-        <Grid item xs={12} sm={12}>
-          <Button variant="contained" color="secondary" onClick={handlePrint}>
-            Print
-          </Button>
-        </Grid>
-        <Grid>
-          <Table
-            ref={tableRef}
-            size="small"
-            className={classes.table}
-            aria-label="simple table"
-            dir="rtl"
-          >
-            <TableRow>
-              <TableCell
-                align="center"
-                colSpan={8}
-                style={{
-                  fontSize: 24,
-                  // fontFamily: "Alvi Nastaleeq Regular",
-                  // fontStyle: "",
-                  fontWeight: "bold",
-                  padding: "10px",
-                }}
-                className={classes.tableHeaderCell}
-              >
-                بعدالت جناب امین سید ایڈیشنل ڈسٹرکٹ اینڈ سیشن جج، ضلع دیرپائین
-                بمقام تیمر گرہ
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell
-                className={classes.tableHeaderCell}
-                align="center"
-                colSpan={8}
-              >
-                <Grid
-                  container
-                  spacing={2}
-                  alignContent="center"
-                  justify="flex-start"
+  return !data.length ? (
+    <LinearProgress />
+  ) : (
+    <>
+      <div className={classes.centeredDiv} style={{ flexGrow: 1 }}>
+        {/* <div> */}
+        <Grid container spacing={2} alignContent="center" justify="center">
+          <Grid item container justify="center" xs={12}>
+            <Button
+              // fullWidth
+              variant="contained"
+              color="secondary"
+              onClick={handlePrint}
+            >
+              Print
+            </Button>
+          </Grid>
+          <Grid item xs={12} container justify="center">
+            <Table
+              ref={tableRef}
+              size="small"
+              className={classes.table}
+              aria-label="simple table"
+              dir="rtl"
+            >
+              <TableRow>
+                <TableCell
+                  align="center"
+                  colSpan={8}
+                  style={{
+                    fontSize: 24,
+                    // fontFamily: "Alvi Nastaleeq Regular",
+                    // fontStyle: "",
+                    fontWeight: "bold",
+                    padding: "10px",
+                  }}
+                  className={classes.tableHeaderCell}
                 >
-                  <Grid item sm={4} className={classes.tableHeadTwo}>
-                    بروز:
-                    {data[0]?.orderDate
-                      ? new Date(data[0].orderDate).toLocaleDateString("ur", {
-                          weekday: "long",
-                        })
-                      : new Date().toLocaleDateString("ur", {
-                          weekday: "long",
-                        })}
-                  </Grid>
-                  <Grid item sm={4} className={classes.tableHeadTwo}>
-                    {/* <Typography
+                  بعدالت جناب امین سید ایڈیشنل ڈسٹرکٹ اینڈ سیشن جج، ضلع دیرپائین
+                  بمقام تیمر گرہ
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell
+                  className={classes.tableHeaderCell}
+                  align="center"
+                  colSpan={8}
+                >
+                  <Grid
+                    container
+                    spacing={2}
+                    alignContent="center"
+                    // justify="flex-start"
+                  >
+                    <Grid item sm={4} className={classes.tableHeadTwo}>
+                      بروز:
+                      {/* {data[0]?.orderDate */}
+                      {data &&
+                      new Date().toDateString() ===
+                        new Date(data[0]?.orderDate).toDateString()
+                        ? new Date(data[0]?.orderDate).toLocaleDateString(
+                            "ur",
+                            {
+                              weekday: "long",
+                            }
+                          )
+                        : data &&
+                          new Date(data[0]?.nextDate).toLocaleDateString("ur", {
+                            weekday: "long",
+                          })}
+                    </Grid>
+                    <Grid item sm={4} className={classes.tableHeadTwo}>
+                      {/* <Typography
                     style={{
                       fontSize: 20,
                       // fontFamily: "Alvi Nastaleeq Regular",
@@ -152,363 +187,375 @@ const PrintCauseList = () => {
                       // fontWeight: "bold",
                     }}
                   > */}
-                    تاریخ:
-                    {data[0]?.orderDate
-                      ? format(parseISO(data[0]?.orderDate), "yyy-MM-dd")
-                      : format(parseISO(new Date().toISOString()), "yyy-MM-dd")}
-                    {/* </Typography> */}
+                      تاریخ:
+                      {data &&
+                      new Date().toDateString() ===
+                        new Date(data[0]?.orderDate).toDateString()
+                        ? format(parseISO(data[0].orderDate), "yyy-MM-dd")
+                        : data &&
+                          format(parseISO(data[0].nextDate), "yyy-MM-dd")}
+                      {/* </Typography> */}
+                    </Grid>
+                    <Grid item sm={4} className={classes.tableHeadTwo}>
+                      کل تعداد:
+                      {data && data.length}
+                    </Grid>
                   </Grid>
-                  <Grid item sm={4} className={classes.tableHeadTwo}>
-                    کل تعداد:
-                    {data.length}
-                  </Grid>
-                </Grid>
-              </TableCell>
-            </TableRow>
-            {/* <TableHead> */}
-            <TableRow>
-              <TableCell className={classes.tableHeaderCell}>
-                نمبرشمار
-              </TableCell>
-              <TableCell className={classes.tableHeaderCell}>
-                مقدمہ نمبر
-              </TableCell>
-              <TableCell className={classes.tableHeaderCell} align="left">
-                تاریخ رجوعہ
-              </TableCell>
-              <TableCell className={classes.tableHeaderCell} align="left">
-                عنوان مقدمہ
-              </TableCell>
-              <TableCell className={classes.tableHeaderCell} align="left">
-                کارروائی
-              </TableCell>
-              <TableCell className={classes.tableHeaderCell} align="left">
-                سابقہ تاریخ
-              </TableCell>
-              <TableCell className={classes.tableHeaderCell} align="left">
-                آئیندہ تاریخ پیشی
-              </TableCell>
-              <TableCell className={classes.tableHeaderCell} align="left">
-                خلاصہ کارروائی
-              </TableCell>
-            </TableRow>
-            {/* </TableHead> */}
-
-            <TableRow>
-              <TableCell
-                align="center"
-                colSpan={9}
-                style={{
-                  fontSize: 20,
-                  // fontFamily: "Alvi Nastaleeq Regular",
-                  fontStyle: "",
-                  fontWeight: "bold",
-                }}
-                className={classes.tableHeaderCell}
-              >
-                حاضری
-              </TableCell>
-            </TableRow>
-
-            <TableBody>
-              {data.map((caseFile) => (
-                <>
-                  {caseFile.causeListEntries &&
-                  getSecondToLastElement(
-                    caseFile.causeListEntries
-                  ).actionAbstract?.includes("حاضری") ? (
-                    <TableRow hover key={caseFile._id}>
-                      <TableCell
-                        className={classes.tableCell}
-                        component="th"
-                        scope="row"
-                        style={{ maxWidth: 1 }}
-                      >
-                        {data.indexOf(caseFile) + 1}
-                      </TableCell>
-                      <TableCell
-                        className={classes.tableCell}
-                        component="th"
-                        scope="row"
-                      >
-                        {caseFile["Case No"]}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} align="left">
-                        {!caseFile["Date of Institution "]
-                          ? "null"
-                          : format?.(
-                              parseISO(caseFile["Date of Institution "]),
-                              "dd-MM-yyy"
-                            )}
-                      </TableCell>
-                      <TableCell
-                        className={classes.tableCell}
-                        align="left"
-                        style={{ fontSize: "auto" }}
-                      >
-                        {caseFile.urduTitle
-                          ? caseFile.urduTitle
-                          : caseFile["Case Title"]}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} align="left">
-                        {caseFile.causeListEntries &&
-                          getSecondToLastElement(caseFile.causeListEntries)
-                            .actionAbstract}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} align="left">
-                        {caseFile.causeListEntries &&
-                          format(
-                            parseISO(
-                              getSecondToLastElement(caseFile.causeListEntries)
-                                .orderDate
-                            ),
-                            "dd-MM-yyy"
-                          )}
-                      </TableCell>
-                      <TableCell className={classes.tableCell}></TableCell>
-                      <TableCell className={classes.tableCell}></TableCell>
-                    </TableRow>
-                  ) : null}
-                </>
-              ))}
-
-              <TableRow>
-                <TableCell
-                  align="center"
-                  colSpan={9}
-                  style={{
-                    fontSize: 20,
-                    // fontFamily: "Alvi Nastaleeq Regular",
-                    fontStyle: "",
-                    fontWeight: "bold",
-                  }}
-                  className={classes.tableHeaderCell}
-                >
-                  بحث
                 </TableCell>
               </TableRow>
-
-              {data.map((caseFile) => (
-                <>
-                  {caseFile.causeListEntries &&
-                  getSecondToLastElement(
-                    caseFile.causeListEntries
-                  ).actionAbstract?.includes("بحث") ? (
-                    <TableRow hover key={caseFile._id}>
-                      <TableCell
-                        className={classes.tableCell}
-                        component="th"
-                        scope="row"
-                        style={{ maxWidth: 1 }}
-                      >
-                        {data.indexOf(caseFile) + 1}
-                      </TableCell>
-                      <TableCell
-                        className={classes.tableCell}
-                        component="th"
-                        scope="row"
-                      >
-                        {caseFile["Case No"]}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} align="left">
-                        {!caseFile["Date of Institution "]
-                          ? "null"
-                          : format?.(
-                              parseISO(caseFile["Date of Institution "]),
-                              "dd-MM-yyy"
-                            )}
-                      </TableCell>
-                      <TableCell
-                        className={classes.tableCell}
-                        align="left"
-                        style={{ fontSize: "auto" }}
-                      >
-                        {caseFile.urduTitle
-                          ? caseFile.urduTitle
-                          : caseFile["Case Title"]}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} align="left">
-                        {caseFile.causeListEntries &&
-                          getSecondToLastElement(caseFile.causeListEntries)
-                            .actionAbstract}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} align="left">
-                        {caseFile.causeListEntries &&
-                          format(
-                            parseISO(
-                              getSecondToLastElement(caseFile.causeListEntries)
-                                .orderDate
-                            ),
-                            "dd-MM-yyy"
-                          )}
-                      </TableCell>
-                      <TableCell className={classes.tableCell}></TableCell>
-                      <TableCell className={classes.tableCell}></TableCell>
-                    </TableRow>
-                  ) : null}
-                </>
-              ))}
-
+              {/* <TableHead> */}
               <TableRow>
-                <TableCell
-                  align="center"
-                  colSpan={9}
-                  style={{
-                    fontSize: 20,
-                    // fontFamily: "Alvi Nastaleeq Regular",
-                    fontStyle: "",
-                    fontWeight: "bold",
-                  }}
-                  className={classes.tableHeaderCell}
-                >
-                  شہادت
+                <TableCell className={classes.tableHeaderCell}>
+                  نمبرشمار
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  مقدمہ نمبر
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell} align="left">
+                  تاریخ رجوعہ
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell} align="left">
+                  عنوان مقدمہ
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell} align="left">
+                  کارروائی
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell} align="left">
+                  سابقہ تاریخ
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell} align="left">
+                  آئیندہ تاریخ پیشی
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell} align="left">
+                  خلاصہ کارروائی
                 </TableCell>
               </TableRow>
+              {/* </TableHead> */}
 
-              {data.map((caseFile) => (
-                <>
-                  {caseFile.causeListEntries &&
-                  getSecondToLastElement(
-                    caseFile.causeListEntries
-                  ).actionAbstract?.includes("شہادت") ? (
-                    <TableRow hover key={caseFile._id}>
-                      <TableCell
-                        className={classes.tableCell}
-                        component="th"
-                        scope="row"
-                        style={{ maxWidth: 1 }}
-                      >
-                        {data.indexOf(caseFile) + 1}
-                      </TableCell>
-                      <TableCell
-                        className={classes.tableCell}
-                        component="th"
-                        scope="row"
-                      >
-                        {caseFile["Case No"]}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} align="left">
-                        {!caseFile["Date of Institution "]
-                          ? "null"
-                          : format?.(
-                              parseISO(caseFile["Date of Institution "]),
+              <TableBody>
+                <TableRow>
+                  <TableCell
+                    align="center"
+                    colSpan={9}
+                    style={{
+                      fontSize: 20,
+                      // fontFamily: "Alvi Nastaleeq Regular",
+                      fontStyle: "",
+                      fontWeight: "bold",
+                    }}
+                    className={classes.tableHeaderCell}
+                  >
+                    حاضری
+                  </TableCell>
+                </TableRow>
+
+                {data.map((caseFile) => (
+                  <>
+                    {caseFile.causeListEntries &&
+                    getSecondToLastElement(
+                      caseFile.causeListEntries
+                    ).actionAbstract?.includes("حاضری") ? (
+                      <TableRow hover key={caseFile._id}>
+                        <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                          style={{ maxWidth: 1 }}
+                        >
+                          {data.indexOf(caseFile) + 1}
+                          {/* {console.log(numbers)} */}
+                          {/* {setSno(() => sno.shift())} */}
+                          {/* {sno[index]} */}
+                          {/* {setIndex(() => index + 1)} */}
+                          {/* {console.log(sno)} */}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                        >
+                          {caseFile["Case No"]}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {!caseFile["Date of Institution "]
+                            ? "null"
+                            : format?.(
+                                parseISO(caseFile["Date of Institution "]),
+                                "dd-MM-yyy"
+                              )}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          align="left"
+                          style={{ fontSize: "auto" }}
+                        >
+                          {caseFile.urduTitle
+                            ? caseFile.urduTitle
+                            : caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            getSecondToLastElement(caseFile.causeListEntries)
+                              .actionAbstract}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            format(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
                               "dd-MM-yyy"
                             )}
-                      </TableCell>
-                      <TableCell
-                        className={classes.tableCell}
-                        align="left"
-                        style={{ fontSize: "auto" }}
-                      >
-                        {caseFile.urduTitle
-                          ? caseFile.urduTitle
-                          : caseFile["Case Title"]}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} align="left">
-                        {caseFile.causeListEntries &&
-                          getSecondToLastElement(caseFile.causeListEntries)
-                            .actionAbstract}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} align="left">
-                        {caseFile.causeListEntries &&
-                          format(
-                            parseISO(
-                              getSecondToLastElement(caseFile.causeListEntries)
-                                .orderDate
-                            ),
-                            "dd-MM-yyy"
-                          )}
-                      </TableCell>
-                      <TableCell className={classes.tableCell}></TableCell>
-                      <TableCell className={classes.tableCell}></TableCell>
-                    </TableRow>
-                  ) : null}
-                </>
-              ))}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}></TableCell>
+                        <TableCell className={classes.tableCell}></TableCell>
+                      </TableRow>
+                    ) : null}
+                  </>
+                ))}
 
-              <TableRow>
-                <TableCell
-                  align="center"
-                  colSpan={9}
-                  style={{
-                    fontSize: 20,
-                    // fontFamily: "Alvi Nastaleeq Regular",
-                    fontStyle: "",
-                    fontWeight: "bold",
-                  }}
-                  className={classes.tableHeaderCell}
-                >
-                  حکم
-                </TableCell>
-              </TableRow>
+                <TableRow>
+                  <TableCell
+                    align="center"
+                    colSpan={9}
+                    style={{
+                      fontSize: 20,
+                      // fontFamily: "Alvi Nastaleeq Regular",
+                      fontStyle: "",
+                      fontWeight: "bold",
+                    }}
+                    className={classes.tableHeaderCell}
+                  >
+                    بحث
+                  </TableCell>
+                </TableRow>
 
-              {data.map((caseFile) => (
-                <>
-                  {caseFile.causeListEntries &&
-                  getSecondToLastElement(
-                    caseFile.causeListEntries
-                  ).actionAbstract?.includes("حکم") ? (
-                    <TableRow hover key={caseFile._id}>
-                      <TableCell
-                        className={classes.tableCell}
-                        component="th"
-                        scope="row"
-                        style={{ maxWidth: 1 }}
-                      >
-                        {data.indexOf(caseFile) + 1}
-                      </TableCell>
-                      <TableCell
-                        className={classes.tableCell}
-                        component="th"
-                        scope="row"
-                      >
-                        {caseFile["Case No"]}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} align="left">
-                        {!caseFile["Date of Institution "]
-                          ? "null"
-                          : format?.(
-                              parseISO(caseFile["Date of Institution "]),
+                {data.map((caseFile) => (
+                  <>
+                    {caseFile.causeListEntries &&
+                    getSecondToLastElement(
+                      caseFile.causeListEntries
+                    ).actionAbstract?.includes("بحث") ? (
+                      <TableRow hover key={caseFile._id}>
+                        <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                          style={{ maxWidth: 1 }}
+                        >
+                          {data.indexOf(caseFile) + 1}
+                          {/* {numbers.pop()} */}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                        >
+                          {caseFile["Case No"]}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {!caseFile["Date of Institution "]
+                            ? "null"
+                            : format?.(
+                                parseISO(caseFile["Date of Institution "]),
+                                "dd-MM-yyy"
+                              )}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          align="left"
+                          style={{ fontSize: "auto" }}
+                        >
+                          {caseFile.urduTitle
+                            ? caseFile.urduTitle
+                            : caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            getSecondToLastElement(caseFile.causeListEntries)
+                              .actionAbstract}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            format(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
                               "dd-MM-yyy"
                             )}
-                      </TableCell>
-                      <TableCell
-                        className={classes.tableCell}
-                        align="left"
-                        style={{ fontSize: "auto" }}
-                      >
-                        {caseFile.urduTitle
-                          ? caseFile.urduTitle
-                          : caseFile["Case Title"]}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} align="left">
-                        {caseFile.causeListEntries &&
-                          getSecondToLastElement(caseFile.causeListEntries)
-                            .actionAbstract}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} align="left">
-                        {caseFile.causeListEntries &&
-                          format(
-                            parseISO(
-                              getSecondToLastElement(caseFile.causeListEntries)
-                                .orderDate
-                            ),
-                            "dd-MM-yyy"
-                          )}
-                      </TableCell>
-                      <TableCell className={classes.tableCell}></TableCell>
-                      <TableCell className={classes.tableCell}></TableCell>
-                    </TableRow>
-                  ) : null}
-                </>
-              ))}
-            </TableBody>
-          </Table>
+                        </TableCell>
+                        <TableCell className={classes.tableCell}></TableCell>
+                        <TableCell className={classes.tableCell}></TableCell>
+                      </TableRow>
+                    ) : null}
+                  </>
+                ))}
+
+                <TableRow>
+                  <TableCell
+                    align="center"
+                    colSpan={9}
+                    style={{
+                      fontSize: 20,
+                      // fontFamily: "Alvi Nastaleeq Regular",
+                      fontStyle: "",
+                      fontWeight: "bold",
+                    }}
+                    className={classes.tableHeaderCell}
+                  >
+                    شہادت
+                  </TableCell>
+                </TableRow>
+
+                {data.map((caseFile) => (
+                  <>
+                    {caseFile.causeListEntries &&
+                    getSecondToLastElement(
+                      caseFile.causeListEntries
+                    ).actionAbstract?.includes("شہادت") ? (
+                      <TableRow hover key={caseFile._id}>
+                        <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                          style={{ maxWidth: 1 }}
+                        >
+                          {data.indexOf(caseFile) + 1}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                        >
+                          {caseFile["Case No"]}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {!caseFile["Date of Institution "]
+                            ? "null"
+                            : format?.(
+                                parseISO(caseFile["Date of Institution "]),
+                                "dd-MM-yyy"
+                              )}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          align="left"
+                          style={{ fontSize: "auto" }}
+                        >
+                          {caseFile.urduTitle
+                            ? caseFile.urduTitle
+                            : caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            getSecondToLastElement(caseFile.causeListEntries)
+                              .actionAbstract}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            format(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}></TableCell>
+                        <TableCell className={classes.tableCell}></TableCell>
+                      </TableRow>
+                    ) : null}
+                  </>
+                ))}
+
+                <TableRow>
+                  <TableCell
+                    align="center"
+                    colSpan={9}
+                    style={{
+                      fontSize: 20,
+                      // fontFamily: "Alvi Nastaleeq Regular",
+                      fontStyle: "",
+                      fontWeight: "bold",
+                    }}
+                    className={classes.tableHeaderCell}
+                  >
+                    حکم
+                  </TableCell>
+                </TableRow>
+
+                {data.map((caseFile) => (
+                  <>
+                    {caseFile.causeListEntries &&
+                    getSecondToLastElement(
+                      caseFile.causeListEntries
+                    ).actionAbstract?.includes("حکم") ? (
+                      <TableRow hover key={caseFile._id}>
+                        <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                          style={{ maxWidth: 1 }}
+                        >
+                          {data.indexOf(caseFile) + 1}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                        >
+                          {caseFile["Case No"]}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {!caseFile["Date of Institution "]
+                            ? "null"
+                            : format?.(
+                                parseISO(caseFile["Date of Institution "]),
+                                "dd-MM-yyy"
+                              )}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          align="left"
+                          style={{ fontSize: "auto" }}
+                        >
+                          {caseFile.urduTitle
+                            ? caseFile.urduTitle
+                            : caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            getSecondToLastElement(caseFile.causeListEntries)
+                              .actionAbstract}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            format(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}></TableCell>
+                        <TableCell className={classes.tableCell}></TableCell>
+                      </TableRow>
+                    ) : null}
+                  </>
+                ))}
+              </TableBody>
+            </Table>
+          </Grid>
         </Grid>
-      </Grid>
-
-      {/* <button onClick={handlePrint}>Print</button> */}
-    </div>
+      </div>
+    </>
   );
 };
 

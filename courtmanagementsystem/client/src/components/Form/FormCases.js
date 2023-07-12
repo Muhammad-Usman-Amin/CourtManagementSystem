@@ -123,10 +123,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       if (selectedCaseType === "Civil") {
         setCaseData({
           ...caseData,
-          "FIR NO": null,
-          "FIR Date": null,
-          Thana: null,
-          Section: null,
+          "FIR NO": "",
+          Thana: "",
+          Section: "",
         });
         dispatch(createCase(caseData));
       } else {
@@ -311,7 +310,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem value={"Civil-016-Cases under other laws"}>
                     Civil-016 Cases under other laws
                   </MenuItem>
-                  <MenuItem value={"Civil-017 Others"}>
+                  <MenuItem value={"Civil-017-Others"}>
                     Civil-017 Others
                   </MenuItem>
                   {/* <MenuItem value={"Civil-018-Other Civil Misc Applications"}>
@@ -538,7 +537,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               variant="outlined"
               label="Urdu Title"
               fullWidth
-              value={caseData.urduTitle ? caseData.urduTitle : null}
+              value={caseData.urduTitle ? caseData.urduTitle : ""}
               onChange={(e) =>
                 setCaseData({ ...caseData, urduTitle: e.target.value })
               }
