@@ -739,6 +739,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
+                <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
               </Select>
             </FormControl>
 

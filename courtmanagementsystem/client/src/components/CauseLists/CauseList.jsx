@@ -139,6 +139,14 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     }
     console.log(serialNo);
   }, [cases]);
+  useEffect(() => {
+    for (let i = 1; i <= cases.length; i++) {
+      // sno.push(i);
+      // setSerialNo((oldArray) => [...oldArray, i]);
+      setSerialNo((prevArray) => [...prevArray, i]);
+    }
+    console.log(serialNo);
+  }, [dateCauseList]);
 
   function getSecondToLastElement(array) {
     if (array.length === 0) {
@@ -153,7 +161,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   return (
     <>
       <Grid justify="space-between" container spacing={1} alignItems="center">
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={3}>
           <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
             <KeyboardDatePicker
               // margin="normal"
@@ -174,8 +182,29 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
             />
           </MuiPickersUtilsProvider>
         </Grid>
+        <Grid item xs={12} sm={3}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+            <KeyboardDatePicker
+              // margin="normal"
+              id="date-picker-causeList-orderDate"
+              label="Order Date"
+              autoOk
+              variant="inline"
+              format="dd/MM/yyyy"
+              value={orderDate}
+              onChange={(date) => {
+                // setCaseId(caseFile._id);
+                // setCurrentId(caseFile._id);
+                setOrderDate(date);
+              }}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </MuiPickersUtilsProvider>
+        </Grid>
 
-        <Grid item container justify="space-between" xs={12} sm={4}>
+        <Grid item container justify="space-between" xs={12} sm={3}>
           <Divider orientation="vertical" flexItem />
           <Button variant="contained" component={Link} to="/PrintCauseList">
             Print CauseList
@@ -183,7 +212,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
           <Divider orientation="vertical" flexItem />
         </Grid>
 
-        <Grid item xs={12} sm={4} container justify="flex-end">
+        <Grid item xs={12} sm={3} container justify="flex-end">
           {!cases.length && (
             <Typography>
               Searching Cases for....
@@ -282,7 +311,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               parseISO(
                                 getSecondToLastElement(
                                   caseFile.causeListEntries
-                                ).nextDate
+                                ).orderDate
                               ),
                               "dd-MM-yyy"
                             )}
@@ -379,14 +408,36 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"آدائیگی، حاضری"}>
+                                آدائیگی، حاضری
+                              </MenuItem>
                               <MenuItem value={"ابتدائی بحث"}>
                                 ابتدائی بحث
+                              </MenuItem>
+                              <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
+                                بحث، رپورٹ اہل کمیشن
+                              </MenuItem>
+                              <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
+                              <MenuItem value={"تقرری وکیل، بحث"}>
+                                تقرری وکیل، بحث
                               </MenuItem>
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
                               </MenuItem>
+                              <MenuItem value={"بحث بر نگرانی"}>
+                                بحث بر نگرانی
+                              </MenuItem>
                               <MenuItem value={"بحث بر درخواست"}>
                                 بحث بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"تنقیحات، بحث"}>
+                                تنقیحات، بحث
+                              </MenuItem>
+                              <MenuItem value={"جواب دعویٰ، بحث"}>
+                                جواب دعویٰ، بحث
+                              </MenuItem>
+                              <MenuItem value={"جواب درخواست، بحث"}>
+                                جواب درخواست، بحث
                               </MenuItem>
                               <MenuItem value={"حاضری، اشتہار"}>
                                 حاضری، اشتہار
@@ -397,8 +448,14 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"حکم بر درخواست"}>
                                 حکم بر درخواست
                               </MenuItem>
+                              <MenuItem value={"طلبیدہ گواہان، شہادت"}>
+                                طلبیدہ گواہان، شہادت
+                              </MenuItem>
                               <MenuItem value={"یکطرفہ شہادت"}>
                                 یکطرفہ شہادت
+                              </MenuItem>
+                              <MenuItem value={"فرد جرم، حاضری"}>
+                                فرد جرم، حاضری
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -558,14 +615,36 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"آدائیگی، حاضری"}>
+                                آدائیگی، حاضری
+                              </MenuItem>
                               <MenuItem value={"ابتدائی بحث"}>
                                 ابتدائی بحث
+                              </MenuItem>
+                              <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
+                                بحث، رپورٹ اہل کمیشن
+                              </MenuItem>
+                              <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
+                              <MenuItem value={"تقرری وکیل، بحث"}>
+                                تقرری وکیل، بحث
                               </MenuItem>
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
                               </MenuItem>
+                              <MenuItem value={"بحث بر نگرانی"}>
+                                بحث بر نگرانی
+                              </MenuItem>
                               <MenuItem value={"بحث بر درخواست"}>
                                 بحث بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"تنقیحات، بحث"}>
+                                تنقیحات، بحث
+                              </MenuItem>
+                              <MenuItem value={"جواب دعویٰ، بحث"}>
+                                جواب دعویٰ، بحث
+                              </MenuItem>
+                              <MenuItem value={"جواب درخواست، بحث"}>
+                                جواب درخواست، بحث
                               </MenuItem>
                               <MenuItem value={"حاضری، اشتہار"}>
                                 حاضری، اشتہار
@@ -576,8 +655,14 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"حکم بر درخواست"}>
                                 حکم بر درخواست
                               </MenuItem>
+                              <MenuItem value={"طلبیدہ گواہان، شہادت"}>
+                                طلبیدہ گواہان، شہادت
+                              </MenuItem>
                               <MenuItem value={"یکطرفہ شہادت"}>
                                 یکطرفہ شہادت
+                              </MenuItem>
+                              <MenuItem value={"فرد جرم، حاضری"}>
+                                فرد جرم، حاضری
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -639,7 +724,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               parseISO(
                                 getSecondToLastElement(
                                   caseFile.causeListEntries
-                                ).nextDate
+                                ).orderDate
                               ),
                               "dd-MM-yyy"
                             )}
@@ -736,14 +821,36 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"آدائیگی، حاضری"}>
+                                آدائیگی، حاضری
+                              </MenuItem>
                               <MenuItem value={"ابتدائی بحث"}>
                                 ابتدائی بحث
+                              </MenuItem>
+                              <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
+                                بحث، رپورٹ اہل کمیشن
+                              </MenuItem>
+                              <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
+                              <MenuItem value={"تقرری وکیل، بحث"}>
+                                تقرری وکیل، بحث
                               </MenuItem>
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
                               </MenuItem>
+                              <MenuItem value={"بحث بر نگرانی"}>
+                                بحث بر نگرانی
+                              </MenuItem>
                               <MenuItem value={"بحث بر درخواست"}>
                                 بحث بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"تنقیحات، بحث"}>
+                                تنقیحات، بحث
+                              </MenuItem>
+                              <MenuItem value={"جواب دعویٰ، بحث"}>
+                                جواب دعویٰ، بحث
+                              </MenuItem>
+                              <MenuItem value={"جواب درخواست، بحث"}>
+                                جواب درخواست، بحث
                               </MenuItem>
                               <MenuItem value={"حاضری، اشتہار"}>
                                 حاضری، اشتہار
@@ -754,8 +861,14 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"حکم بر درخواست"}>
                                 حکم بر درخواست
                               </MenuItem>
+                              <MenuItem value={"طلبیدہ گواہان، شہادت"}>
+                                طلبیدہ گواہان، شہادت
+                              </MenuItem>
                               <MenuItem value={"یکطرفہ شہادت"}>
                                 یکطرفہ شہادت
+                              </MenuItem>
+                              <MenuItem value={"فرد جرم، حاضری"}>
+                                فرد جرم، حاضری
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -914,15 +1027,36 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"آدائیگی، حاضری"}>
+                                آدائیگی، حاضری
+                              </MenuItem>
                               <MenuItem value={"ابتدائی بحث"}>
                                 ابتدائی بحث
                               </MenuItem>
+                              <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
+                                بحث، رپورٹ اہل کمیشن
+                              </MenuItem>
                               <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
+                              <MenuItem value={"تقرری وکیل، بحث"}>
+                                تقرری وکیل، بحث
+                              </MenuItem>
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
                               </MenuItem>
+                              <MenuItem value={"بحث بر نگرانی"}>
+                                بحث بر نگرانی
+                              </MenuItem>
                               <MenuItem value={"بحث بر درخواست"}>
                                 بحث بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"تنقیحات، بحث"}>
+                                تنقیحات، بحث
+                              </MenuItem>
+                              <MenuItem value={"جواب دعویٰ، بحث"}>
+                                جواب دعویٰ، بحث
+                              </MenuItem>
+                              <MenuItem value={"جواب درخواست، بحث"}>
+                                جواب درخواست، بحث
                               </MenuItem>
                               <MenuItem value={"حاضری، اشتہار"}>
                                 حاضری، اشتہار
@@ -933,8 +1067,220 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"حکم بر درخواست"}>
                                 حکم بر درخواست
                               </MenuItem>
+                              <MenuItem value={"طلبیدہ گواہان، شہادت"}>
+                                طلبیدہ گواہان، شہادت
+                              </MenuItem>
                               <MenuItem value={"یکطرفہ شہادت"}>
                                 یکطرفہ شہادت
+                              </MenuItem>
+                              <MenuItem value={"فرد جرم، حاضری"}>
+                                فرد جرم، حاضری
+                              </MenuItem>
+                            </Select>
+                          </FormControl>
+                        </TableCell>
+                        {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
+                      </TableRow>
+                    ) : null}
+                    {/* {setSerialNo((prevIndex) => prevIndex + 1)} */}
+                  </>
+                ))}
+
+                <TableRow>
+                  <TableCell
+                    align="center"
+                    colSpan={9}
+                    style={{
+                      fontSize: 20,
+                      // fontFamily: "Alvi Nastaleeq Regular",
+                      fontStyle: "",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    متفرق
+                  </TableCell>
+                </TableRow>
+
+                {cases.map((caseFile) => (
+                  <>
+                    {caseFile.causeListEntries &&
+                    !getSecondToLastElement(caseFile.causeListEntries)
+                      .actionAbstract ? (
+                      <TableRow key={caseFile._id}>
+                        <TableCell component="th" scope="row">
+                          {/* {cases.indexOf(caseFile) + 1} */}
+                          {/* {serialNo} */}
+                          {serialNo[index++]}
+                        </TableCell>
+                        <TableCell align="right">
+                          {caseFile["Case No"]}
+                        </TableCell>
+                        <TableCell align="right">
+                          {format?.(
+                            parseISO(caseFile["Date of Institution "]),
+                            "dd-MM-yyy"
+                          )}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            getSecondToLastElement(caseFile.causeListEntries)
+                              .actionAbstract}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            format?.(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
+                        <TableCell align="center">
+                          <TextField
+                            name="Order No"
+                            variant="outlined"
+                            label="Order No"
+                            fullWidth
+                            value={
+                              caseFile.orderNumber
+                                ? caseFile.orderNumber
+                                : "null"
+
+                              // caseFile.causeListEntries[
+                              //   caseFile.causeListEntries.length - 1
+                              // ].orderNumber
+                            }
+                            onChange={(e) => {
+                              // console.log("onblurred input: " + e.target.value);
+                              setCaseId(caseFile._id);
+                              // setCurrentId(caseFile._id);
+                              setOrderNumber({
+                                orderDate: orderDate,
+                                orderNumber: e.target.value,
+                              });
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <MuiPickersUtilsProvider
+                            utils={DateFnsUtils}
+                            fullWidth
+                          >
+                            <KeyboardDatePicker
+                              // margin="normal"
+                              id="date-picker-dialog"
+                              label=""
+                              autoOk
+                              format="dd/MM/yyyy"
+                              value={
+                                caseFile.nextDate
+                                  ? caseFile.nextDate
+                                  : orderDate
+                              }
+                              onChange={(date) => {
+                                setCaseId(caseFile._id);
+                                // setCurrentId(caseFile._id);
+                                setNextDate({
+                                  orderDate: orderDate,
+                                  nextDate: date,
+                                });
+                              }}
+                              KeyboardButtonProps={{
+                                "aria-label": "change date",
+                              }}
+                            />
+                          </MuiPickersUtilsProvider>
+                        </TableCell>
+                        <TableCell align="center">
+                          <FormControl
+                            fullWidth
+                            variant="outlined"
+                            className={classes.formControl}
+                          >
+                            <InputLabel id="demo-simple-select-outlined-label">
+                              خلاصہ کارواءی
+                            </InputLabel>
+                            <Select
+                              labelId="demo-simple-select-outlined-label"
+                              id="demo-simple-select-outlined"
+                              value={
+                                caseFile.actionAbstract
+                                  ? caseFile.actionAbstract
+                                  : "null"
+                              }
+                              onChange={(e) => {
+                                setCaseId(caseFile._id);
+                                // setCurrentId(caseFile._id);
+                                setActionAbstract({
+                                  orderDate: orderDate,
+                                  actionAbstract: e.target.value,
+                                });
+                              }}
+                              label="Select Sub Type"
+                            >
+                              <MenuItem value="">
+                                <em>Mostly Used</em>
+                              </MenuItem>
+                              <MenuItem value={"حاضری"}>حاضری</MenuItem>
+                              <MenuItem value={"بحث"}>بحث</MenuItem>
+                              <MenuItem value={"شہادت"}>شہادت</MenuItem>
+                              <MenuItem value={"حکم"}>حکم</MenuItem>
+                              <MenuItem value="">
+                                <em>All Categories</em>
+                              </MenuItem>
+                              <MenuItem value={"آدائیگی، حاضری"}>
+                                آدائیگی، حاضری
+                              </MenuItem>
+                              <MenuItem value={"ابتدائی بحث"}>
+                                ابتدائی بحث
+                              </MenuItem>
+                              <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
+                                بحث، رپورٹ اہل کمیشن
+                              </MenuItem>
+                              <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
+                              <MenuItem value={"تقرری وکیل، بحث"}>
+                                تقرری وکیل، بحث
+                              </MenuItem>
+                              <MenuItem value={"بحث بر اپیل"}>
+                                بحث بر اپیل
+                              </MenuItem>
+                              <MenuItem value={"بحث بر نگرانی"}>
+                                بحث بر نگرانی
+                              </MenuItem>
+                              <MenuItem value={"بحث بر درخواست"}>
+                                بحث بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"تنقیحات، بحث"}>
+                                تنقیحات، بحث
+                              </MenuItem>
+                              <MenuItem value={"جواب دعویٰ، بحث"}>
+                                جواب دعویٰ، بحث
+                              </MenuItem>
+                              <MenuItem value={"جواب درخواست، بحث"}>
+                                جواب درخواست، بحث
+                              </MenuItem>
+                              <MenuItem value={"حاضری، اشتہار"}>
+                                حاضری، اشتہار
+                              </MenuItem>
+                              <MenuItem value={"حاضری، ریکارڈ"}>
+                                حاضری، ریکارڈ
+                              </MenuItem>
+                              <MenuItem value={"حکم بر درخواست"}>
+                                حکم بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"طلبیدہ گواہان، شہادت"}>
+                                طلبیدہ گواہان، شہادت
+                              </MenuItem>
+                              <MenuItem value={"یکطرفہ شہادت"}>
+                                یکطرفہ شہادت
+                              </MenuItem>
+                              <MenuItem value={"فرد جرم، حاضری"}>
+                                فرد جرم، حاضری
                               </MenuItem>
                             </Select>
                           </FormControl>
