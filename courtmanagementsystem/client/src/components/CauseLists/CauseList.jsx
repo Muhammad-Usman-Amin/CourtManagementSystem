@@ -148,14 +148,43 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     console.log(serialNo);
   }, [dateCauseList]);
 
+  function getSecondToLastElementCategory(array) {
+    if (array.length === 0) {
+      return null;
+    }
+    if (array.length > 1) {
+      if (
+        new Date(array[array.length - 1].orderDate).toDateString() ===
+        new Date(orderDate).toDateString()
+      ) {
+        // console.log(
+        //   new Date(array[array.length - 1].orderDate).toDateString() ===
+        //     new Date(orderDate).toDateString()
+        // );
+        return array[array.length - 2];
+      }
+    }
+    // console.log("-1 exec");
+    return array[array.length - 1]; // or any other appropriate value or action
+  }
   function getSecondToLastElement(array) {
     if (array.length === 0) {
       return null;
     }
-    if (array.length < 2) {
-      return array[array.length - 1]; // or any other appropriate value or action
+    if (array.length > 1) {
+      if (
+        new Date(array[array.length - 1].nextDate).toDateString() ===
+        new Date(orderDate).toDateString()
+      ) {
+        // console.log(
+        //   new Date(array[array.length - 1].orderDate).toDateString() ===
+        //     new Date(orderDate).toDateString()
+        // );
+        return array[array.length - 2];
+      }
     }
-    return array[array.length - 2];
+    // console.log("-1 exec");
+    return array[array.length - 1]; // or any other appropriate value or action
   }
 
   return (
@@ -206,7 +235,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
         <Grid item container justify="space-between" xs={12} sm={3}>
           <Divider orientation="vertical" flexItem />
-          <Button variant="contained" component={Link} to="/PrintCauseList">
+          <Button
+            variant="contained"
+            component={Link}
+            to={{
+              pathname: "/PrintCauseList",
+              state: {
+                nextDate: nextDate,
+                orderDate: orderDate,
+              },
+            }}
+          >
             Print CauseList
           </Button>
           <Divider orientation="vertical" flexItem />
@@ -283,7 +322,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 {cases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    getSecondToLastElement(
+                    getSecondToLastElementCategory(
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("حاضری") ? (
                       <TableRow key={caseFile._id}>
@@ -408,6 +447,15 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"حاضری، ریکارڈ"}>
+                                حاضری، ریکارڈ
+                              </MenuItem>
+                              <MenuItem value={"فرد جرم، حاضری"}>
+                                فرد جرم، حاضری
+                              </MenuItem>
+                              <MenuItem value={"حاضری، اشتہار"}>
+                                حاضری، اشتہار
+                              </MenuItem>
                               <MenuItem value={"آدائیگی، حاضری"}>
                                 آدائیگی، حاضری
                               </MenuItem>
@@ -417,13 +465,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                                 بحث، رپورٹ اہل کمیشن
                               </MenuItem>
+                              <MenuItem value={"بحث، ریکارڈ"}>
+                                بحث، ریکارڈ
+                              </MenuItem>
                               <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
                               <MenuItem value={"تقرری وکیل، بحث"}>
                                 تقرری وکیل، بحث
                               </MenuItem>
+                              <MenuItem value={"راضی نامہ، بحث"}>
+                                راضی نامہ، بحث
+                              </MenuItem>
+
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
                               </MenuItem>
+                              <MenuItem value={"بحث بر مقدمہ"}>
+                                بحث بر مقدمہ
+                              </MenuItem>
+
                               <MenuItem value={"بحث بر نگرانی"}>
                                 بحث بر نگرانی
                               </MenuItem>
@@ -439,23 +498,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
                               </MenuItem>
-                              <MenuItem value={"حاضری، اشتہار"}>
-                                حاضری، اشتہار
-                              </MenuItem>
-                              <MenuItem value={"حاضری، ریکارڈ"}>
-                                حاضری، ریکارڈ
-                              </MenuItem>
-                              <MenuItem value={"حکم بر درخواست"}>
-                                حکم بر درخواست
-                              </MenuItem>
                               <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                                 طلبیدہ گواہان، شہادت
+                              </MenuItem>
+                              <MenuItem value={"شہادت استغاثہ"}>
+                                شہادت استغاثہ
                               </MenuItem>
                               <MenuItem value={"یکطرفہ شہادت"}>
                                 یکطرفہ شہادت
                               </MenuItem>
-                              <MenuItem value={"فرد جرم، حاضری"}>
-                                فرد جرم، حاضری
+                              <MenuItem value={"حکم بر درخواست"}>
+                                حکم بر درخواست
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -486,7 +539,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 {cases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    getSecondToLastElement(
+                    getSecondToLastElementCategory(
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("بحث") ? (
                       <TableRow key={caseFile._id}>
@@ -615,6 +668,15 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"حاضری، ریکارڈ"}>
+                                حاضری، ریکارڈ
+                              </MenuItem>
+                              <MenuItem value={"فرد جرم، حاضری"}>
+                                فرد جرم، حاضری
+                              </MenuItem>
+                              <MenuItem value={"حاضری، اشتہار"}>
+                                حاضری، اشتہار
+                              </MenuItem>
                               <MenuItem value={"آدائیگی، حاضری"}>
                                 آدائیگی، حاضری
                               </MenuItem>
@@ -624,13 +686,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                                 بحث، رپورٹ اہل کمیشن
                               </MenuItem>
+                              <MenuItem value={"بحث، ریکارڈ"}>
+                                بحث، ریکارڈ
+                              </MenuItem>
                               <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
                               <MenuItem value={"تقرری وکیل، بحث"}>
                                 تقرری وکیل، بحث
                               </MenuItem>
+                              <MenuItem value={"راضی نامہ، بحث"}>
+                                راضی نامہ، بحث
+                              </MenuItem>
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
                               </MenuItem>
+                              <MenuItem value={"بحث بر مقدمہ"}>
+                                بحث بر مقدمہ
+                              </MenuItem>
+
                               <MenuItem value={"بحث بر نگرانی"}>
                                 بحث بر نگرانی
                               </MenuItem>
@@ -646,23 +718,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
                               </MenuItem>
-                              <MenuItem value={"حاضری، اشتہار"}>
-                                حاضری، اشتہار
-                              </MenuItem>
-                              <MenuItem value={"حاضری، ریکارڈ"}>
-                                حاضری، ریکارڈ
-                              </MenuItem>
-                              <MenuItem value={"حکم بر درخواست"}>
-                                حکم بر درخواست
-                              </MenuItem>
                               <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                                 طلبیدہ گواہان، شہادت
+                              </MenuItem>
+                              <MenuItem value={"شہادت استغاثہ"}>
+                                شہادت استغاثہ
                               </MenuItem>
                               <MenuItem value={"یکطرفہ شہادت"}>
                                 یکطرفہ شہادت
                               </MenuItem>
-                              <MenuItem value={"فرد جرم، حاضری"}>
-                                فرد جرم، حاضری
+                              <MenuItem value={"حکم بر درخواست"}>
+                                حکم بر درخواست
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -692,7 +758,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 {cases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    getSecondToLastElement(
+                    getSecondToLastElementCategory(
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("شہادت") ? (
                       <TableRow key={caseFile._id}>
@@ -821,6 +887,15 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"حاضری، ریکارڈ"}>
+                                حاضری، ریکارڈ
+                              </MenuItem>
+                              <MenuItem value={"فرد جرم، حاضری"}>
+                                فرد جرم، حاضری
+                              </MenuItem>
+                              <MenuItem value={"حاضری، اشتہار"}>
+                                حاضری، اشتہار
+                              </MenuItem>
                               <MenuItem value={"آدائیگی، حاضری"}>
                                 آدائیگی، حاضری
                               </MenuItem>
@@ -830,13 +905,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                                 بحث، رپورٹ اہل کمیشن
                               </MenuItem>
+                              <MenuItem value={"بحث، ریکارڈ"}>
+                                بحث، ریکارڈ
+                              </MenuItem>
                               <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
                               <MenuItem value={"تقرری وکیل، بحث"}>
                                 تقرری وکیل، بحث
                               </MenuItem>
+                              <MenuItem value={"راضی نامہ، بحث"}>
+                                راضی نامہ، بحث
+                              </MenuItem>
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
                               </MenuItem>
+                              <MenuItem value={"بحث بر مقدمہ"}>
+                                بحث بر مقدمہ
+                              </MenuItem>
+
                               <MenuItem value={"بحث بر نگرانی"}>
                                 بحث بر نگرانی
                               </MenuItem>
@@ -852,25 +937,19 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
                               </MenuItem>
-                              <MenuItem value={"حاضری، اشتہار"}>
-                                حاضری، اشتہار
-                              </MenuItem>
-                              <MenuItem value={"حاضری، ریکارڈ"}>
-                                حاضری، ریکارڈ
-                              </MenuItem>
-                              <MenuItem value={"حکم بر درخواست"}>
-                                حکم بر درخواست
-                              </MenuItem>
                               <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                                 طلبیدہ گواہان، شہادت
+                              </MenuItem>
+                              <MenuItem value={"شہادت استغاثہ"}>
+                                شہادت استغاثہ
                               </MenuItem>
                               <MenuItem value={"یکطرفہ شہادت"}>
                                 یکطرفہ شہادت
                               </MenuItem>
-                              <MenuItem value={"فرد جرم، حاضری"}>
-                                فرد جرم، حاضری
+                              <MenuItem value={"حکم بر درخواست"}>
+                                حکم بر درخواست
                               </MenuItem>
-                            </Select>
+                            </Select>{" "}
                           </FormControl>
                         </TableCell>
                         {/* {setSerialNo((prevIndex) => prevIndex + 1)} */}
@@ -897,7 +976,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 {cases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    getSecondToLastElement(
+                    getSecondToLastElementCategory(
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("حکم") ? (
                       <TableRow key={caseFile._id}>
@@ -1027,6 +1106,15 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"حاضری، ریکارڈ"}>
+                                حاضری، ریکارڈ
+                              </MenuItem>
+                              <MenuItem value={"فرد جرم، حاضری"}>
+                                فرد جرم، حاضری
+                              </MenuItem>
+                              <MenuItem value={"حاضری، اشتہار"}>
+                                حاضری، اشتہار
+                              </MenuItem>
                               <MenuItem value={"آدائیگی، حاضری"}>
                                 آدائیگی، حاضری
                               </MenuItem>
@@ -1036,13 +1124,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                                 بحث، رپورٹ اہل کمیشن
                               </MenuItem>
+                              <MenuItem value={"بحث، ریکارڈ"}>
+                                بحث، ریکارڈ
+                              </MenuItem>
                               <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
                               <MenuItem value={"تقرری وکیل، بحث"}>
                                 تقرری وکیل، بحث
                               </MenuItem>
+                              <MenuItem value={"راضی نامہ، بحث"}>
+                                راضی نامہ، بحث
+                              </MenuItem>
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
                               </MenuItem>
+                              <MenuItem value={"بحث بر مقدمہ"}>
+                                بحث بر مقدمہ
+                              </MenuItem>
+
                               <MenuItem value={"بحث بر نگرانی"}>
                                 بحث بر نگرانی
                               </MenuItem>
@@ -1058,23 +1156,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
                               </MenuItem>
-                              <MenuItem value={"حاضری، اشتہار"}>
-                                حاضری، اشتہار
-                              </MenuItem>
-                              <MenuItem value={"حاضری، ریکارڈ"}>
-                                حاضری، ریکارڈ
-                              </MenuItem>
-                              <MenuItem value={"حکم بر درخواست"}>
-                                حکم بر درخواست
-                              </MenuItem>
                               <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                                 طلبیدہ گواہان، شہادت
+                              </MenuItem>
+                              <MenuItem value={"شہادت استغاثہ"}>
+                                شہادت استغاثہ
                               </MenuItem>
                               <MenuItem value={"یکطرفہ شہادت"}>
                                 یکطرفہ شہادت
                               </MenuItem>
-                              <MenuItem value={"فرد جرم، حاضری"}>
-                                فرد جرم، حاضری
+                              <MenuItem value={"حکم بر درخواست"}>
+                                حکم بر درخواست
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -1104,7 +1196,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 {cases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    !getSecondToLastElement(caseFile.causeListEntries)
+                    !getSecondToLastElementCategory(caseFile.causeListEntries)
                       .actionAbstract ? (
                       <TableRow key={caseFile._id}>
                         <TableCell component="th" scope="row">
@@ -1233,6 +1325,15 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value="">
                                 <em>All Categories</em>
                               </MenuItem>
+                              <MenuItem value={"حاضری، ریکارڈ"}>
+                                حاضری، ریکارڈ
+                              </MenuItem>
+                              <MenuItem value={"فرد جرم، حاضری"}>
+                                فرد جرم، حاضری
+                              </MenuItem>
+                              <MenuItem value={"حاضری، اشتہار"}>
+                                حاضری، اشتہار
+                              </MenuItem>
                               <MenuItem value={"آدائیگی، حاضری"}>
                                 آدائیگی، حاضری
                               </MenuItem>
@@ -1242,13 +1343,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                                 بحث، رپورٹ اہل کمیشن
                               </MenuItem>
+                              <MenuItem value={"بحث، ریکارڈ"}>
+                                بحث، ریکارڈ
+                              </MenuItem>
                               <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
                               <MenuItem value={"تقرری وکیل، بحث"}>
                                 تقرری وکیل، بحث
                               </MenuItem>
+                              <MenuItem value={"راضی نامہ، بحث"}>
+                                راضی نامہ، بحث
+                              </MenuItem>
                               <MenuItem value={"بحث بر اپیل"}>
                                 بحث بر اپیل
                               </MenuItem>
+                              <MenuItem value={"بحث بر مقدمہ"}>
+                                بحث بر مقدمہ
+                              </MenuItem>
+
                               <MenuItem value={"بحث بر نگرانی"}>
                                 بحث بر نگرانی
                               </MenuItem>
@@ -1264,23 +1375,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
                               </MenuItem>
-                              <MenuItem value={"حاضری، اشتہار"}>
-                                حاضری، اشتہار
-                              </MenuItem>
-                              <MenuItem value={"حاضری، ریکارڈ"}>
-                                حاضری، ریکارڈ
-                              </MenuItem>
-                              <MenuItem value={"حکم بر درخواست"}>
-                                حکم بر درخواست
-                              </MenuItem>
                               <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                                 طلبیدہ گواہان، شہادت
+                              </MenuItem>
+                              <MenuItem value={"شہادت استغاثہ"}>
+                                شہادت استغاثہ
                               </MenuItem>
                               <MenuItem value={"یکطرفہ شہادت"}>
                                 یکطرفہ شہادت
                               </MenuItem>
-                              <MenuItem value={"فرد جرم، حاضری"}>
-                                فرد جرم، حاضری
+                              <MenuItem value={"حکم بر درخواست"}>
+                                حکم بر درخواست
                               </MenuItem>
                             </Select>
                           </FormControl>

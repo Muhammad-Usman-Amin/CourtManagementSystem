@@ -122,7 +122,8 @@ export const updateCase = async (req, res) => {
     console.log("Title if executed");
     if (
       theCase.causeListEntries.length > 0 &&
-      new Date().toDateString() === new Date(theCase.orderDate).toDateString()
+      new Date(orderDate).toDateString() ===
+        new Date(theCase.orderDate).toDateString()
     ) {
       causeListEntries[causeListEntries.length - 1] = {
         orderNumber: orderNumber,
@@ -189,7 +190,8 @@ export const updateCase = async (req, res) => {
   // ) {
   if (
     theCase.causeListEntries.length > 0 &&
-    new Date().toDateString() === new Date(theCase.orderDate).toDateString()
+    new Date(orderDate).toDateString() ===
+      new Date(theCase.orderDate).toDateString()
   ) {
     //$set query
     // console.log("$set Query");

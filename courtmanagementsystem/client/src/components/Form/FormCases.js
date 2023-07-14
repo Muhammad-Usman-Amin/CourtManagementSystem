@@ -71,8 +71,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     "Date of Other Institution": Date,
     "Institution Flag": "",
     nextDate: nextDate,
-    orderNumber: "1",
-    actionAbstract: "حاضری",
+    orderNumber: "",
+    actionAbstract: "",
     orderDate: new Date(),
   });
 
@@ -157,8 +157,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       "Date of Other Institution": new Date(),
       "Institution Flag": "",
       nextDate: nextDate,
-      orderNumber: "1",
-      actionAbstract: "حاضری",
+      orderNumber: "",
+      actionAbstract: "",
       orderDate: new Date(),
     });
   };
@@ -245,7 +245,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem value={"Civil-025-Family Appeals"}>
                     Family Appeal
                   </MenuItem>
-                  <MenuItem value={"Civil-018-Other Civil Misc Applications"}>
+                  <MenuItem value={"Civil-027-Civil Appeals against Orders"}>
                     MCA
                   </MenuItem>
 
@@ -341,19 +341,19 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   {/* <MenuItem value={"Civil-025-Family Appeals"}>
                     Civil-025 Family Appeals
                   </MenuItem> */}
-                  <MenuItem value={"Civil-026-Rent Appeals "}>
-                    Civil-026 Rent Appeals{" "}
+                  <MenuItem value={"Civil-026-Rent Appeals"}>
+                    Civil-026 Rent Appeals
                   </MenuItem>
-                  <MenuItem value={"Civil-027-Civil Appeals against Order "}>
-                    Civil-027 Civil Appeals against Order{" "}
-                  </MenuItem>
-                  <MenuItem value={"Civil-028-Insolvency Cases "}>
-                    Civil-028 Insolvency Cases{" "}
+                  {/* <MenuItem value={"Civil-027-Civil Appeals against Order"}>
+                    Civil-027 Civil Appeals against Order
+                  </MenuItem> */}
+                  <MenuItem value={"Civil-028-Insolvency Cases"}>
+                    Civil-028 Insolvency Cases
                   </MenuItem>
                   <MenuItem
-                    value={"Civil-029-Execution Petition Against Government "}
+                    value={"Civil-029-Execution Petition Against Government"}
                   >
-                    Civil-029 Execution Petition Against Government{" "}
+                    Civil-029 Execution Petition Against Government
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -384,7 +384,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem value={"CR-001-Homicide"}>
                     Homicide Session Case
                   </MenuItem>
-                  <MenuItem value={"CR-011-Narcotics Substances"}>
+                  <MenuItem value={"CR-011-Norcotics Substances"}>
                     CNSA Case
                   </MenuItem>
                   <MenuItem value={"CR-020-Bail Applications"}>
@@ -681,7 +681,11 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               variant="outlined"
               label="Order Number"
               fullWidth
-              value={caseData.orderNumber ? caseData.orderNumber : "1"}
+              value={
+                caseData.orderNumber
+                  ? caseData.orderNumber
+                  : setCaseData({ ...caseData, orderNumber: "1" })
+              }
               onChange={(e) =>
                 setCaseData({ ...caseData, orderNumber: e.target.value })
               }
@@ -696,7 +700,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
                 value={
-                  caseData.actionAbstract ? caseData.actionAbstract : "حاضری"
+                  caseData.actionAbstract
+                    ? caseData.actionAbstract
+                    : setCaseData({ ...caseData, actionAbstract: "حاضری" })
                 }
                 onChange={(e) => {
                   setCaseData({ ...caseData, actionAbstract: e.target.value });
@@ -717,14 +723,20 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value="">
                   <em>All Categories</em>
                 </MenuItem>
+                <MenuItem value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
+                <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"آدائیگی، حاضری"}>آدائیگی، حاضری</MenuItem>
                 <MenuItem value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
                 <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                   بحث، رپورٹ اہل کمیشن
                 </MenuItem>
+                <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
                 <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
                 <MenuItem value={"تقرری وکیل، بحث"}>تقرری وکیل، بحث</MenuItem>
+                <MenuItem value={"راضی نامہ، بحث"}> راضی نامہ، بحث</MenuItem>
                 <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
+                <MenuItem value={"بحث بر مقدمہ"}>بحث بر مقدمہ</MenuItem>
                 <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
                 <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
                 <MenuItem value={"تنقیحات، بحث"}>تنقیحات، بحث</MenuItem>
@@ -732,14 +744,12 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"جواب درخواست، بحث"}>
                   جواب درخواست، بحث
                 </MenuItem>
-                <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
-                <MenuItem value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
-                <MenuItem value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
+                <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
-                <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
+                <MenuItem value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
               </Select>
             </FormControl>
 

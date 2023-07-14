@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) =>
     table: {
       margin: theme.spacing(1),
       borderCollapse: "collapse",
-      // maxWidth: "8.5in",
+      maxWidth: "8.5in",
       // maxHeight: "13in",
       // margin: "0 auto",
       // minWidth: 650,
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) =>
       borderColor: theme.palette.primary.black,
       fontWeight: "bold",
       fontSize: 14,
-      minWidth: "100px",
+      // minWidth: "100px",
       // align: "center",
       textAlign: "center",
     },
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) =>
       // textAlign: "center",
     },
     tableCell: {
-      fontSize: 11,
+      fontSize: 14,
       // align: "center",
       textAlign: "center",
       border: "1px solid",
@@ -86,7 +86,10 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const PrintCauseList = () => {
+const PrintCauseList = (props) => {
+  // const nextDate = props.location.nextDate;
+  const orderDate = props.location.state.orderDate;
+  console.log(orderDate);
   const [dateCauseList, setDateCauseList] = useState(new Date());
 
   const dispatch = useDispatch();
@@ -111,14 +114,44 @@ const PrintCauseList = () => {
     content: () => tableRef.current,
   });
 
+  function getSecondToLastElementCategory(array) {
+    if (array.length === 0) {
+      return null;
+    }
+    if (array.length > 1) {
+      if (
+        new Date(array[array.length - 1].orderDate).toDateString() ===
+        new Date(orderDate).toDateString()
+      ) {
+        console.log(
+          new Date(array[array.length - 1].orderDate).toDateString() ===
+            new Date(orderDate).toDateString()
+        );
+        return array[array.length - 2];
+      }
+    }
+    // console.log("-1 exec");
+    return array[array.length - 1]; // or any other appropriate value or action
+  }
+
   function getSecondToLastElement(array) {
     if (array.length === 0) {
       return null;
     }
-    if (array.length < 2) {
-      return array[array.length - 1]; // or any other appropriate value or action
+    if (array.length > 1) {
+      if (
+        new Date(array[array.length - 1].nextDate).toDateString() ===
+        new Date(orderDate).toDateString()
+      ) {
+        // console.log(
+        //   new Date(array[array.length - 1].orderDate).toDateString() ===
+        //     new Date(orderDate).toDateString()
+        // );
+        return array[array.length - 2];
+      }
     }
-    return array[array.length - 2];
+    // console.log("-1 exec");
+    return array[array.length - 1]; // or any other appropriate value or action
   }
 
   return !data.length ? (
@@ -177,7 +210,7 @@ const PrintCauseList = () => {
                       // justify="flex-start"
                     >
                       <Grid item sm={4} className={classes.tableHeadTwo}>
-                        بروز:
+                        {" بروز: "}
                         {/* {data[0]?.orderDate */}
                         {data &&
                         new Date().toDateString() ===
@@ -272,7 +305,7 @@ const PrintCauseList = () => {
                 {data.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    getSecondToLastElement(
+                    getSecondToLastElementCategory(
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("حاضری") ? (
                       <TableRow hover key={caseFile._id}>
@@ -355,7 +388,7 @@ const PrintCauseList = () => {
                 {data.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    getSecondToLastElement(
+                    getSecondToLastElementCategory(
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("بحث") ? (
                       <TableRow hover key={caseFile._id}>
@@ -438,7 +471,7 @@ const PrintCauseList = () => {
                 {data.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    getSecondToLastElement(
+                    getSecondToLastElementCategory(
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("شہادت") ? (
                       <TableRow hover key={caseFile._id}>
@@ -521,7 +554,7 @@ const PrintCauseList = () => {
                 {data.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
-                    getSecondToLastElement(
+                    getSecondToLastElementCategory(
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("حکم") ? (
                       <TableRow hover key={caseFile._id}>
@@ -590,10 +623,11 @@ const PrintCauseList = () => {
                     align="center"
                     colSpan={9}
                     style={{
-                      fontSize: 20,
+                      // fontSize: 20,
                       // fontFamily: "Alvi Nastaleeq Regular",
-                      fontStyle: "",
-                      fontWeight: "bold",
+                      fontFamily: "Time Roman",
+                      // fontStyle: "",
+                      // fontWeight: "bold",
                     }}
                     className={classes.tableHeaderCell}
                   >
