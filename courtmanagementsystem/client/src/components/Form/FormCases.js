@@ -50,7 +50,7 @@ const GreenRadio = withStyles({
 
 const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [institutionDate, setInstitutionDate] = useState(new Date());
-  const [nextDate, setNextDate] = useState(addDays(new Date(), 15));
+  const [nextDate, setNextDate] = useState(addDays(new Date(), 1));
   const [sameAsInstitutionDate, setSameAsInstitutiondate] = useState(false);
   const [caseData, setCaseData] = useState({
     // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
@@ -100,7 +100,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     if (caseFile) {
       setSelectedCaseType(caseFile["Case Type"]);
       setInstitutionDate(caseFile["Date of Institution "]);
-      setNextDate(caseFile.nextDate);
+      setNextDate(caseFile.nextDate ? caseFile.nextDate : nextDate);
       // console.log(selectedCaseType);
       setCaseData(caseFile);
     }
@@ -313,9 +313,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem value={"Civil-017-Others"}>
                     Civil-017 Others
                   </MenuItem>
-                  {/* <MenuItem value={"Civil-018-Other Civil Misc Applications"}>
+                  <MenuItem value={"Civil-018-Other Civil Misc Applications"}>
                     Civil-018-Other Civil Misc Applications
-                  </MenuItem> */}
+                  </MenuItem>
                   <MenuItem
                     value={"Civil-019-Application under section 12(2) CPC"}
                   >
@@ -629,7 +629,11 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 label="Next Date"
                 format="dd/MM/yyyy"
                 autoOk
-                value={caseData.nextDate ? caseData.nextDate : nextDate}
+                value={
+                  caseData.nextDate
+                    ? caseData.nextDate
+                    : setCaseData({ ...caseData, nextDate: nextDate })
+                }
                 onChange={(date) =>
                   setCaseData({ ...caseData, nextDate: date })
                 }
@@ -681,11 +685,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               variant="outlined"
               label="Order Number"
               fullWidth
-              value={
-                caseData.orderNumber
-                  ? caseData.orderNumber
-                  : setCaseData({ ...caseData, orderNumber: "1" })
-              }
+              value={caseData.orderNumber}
               onChange={(e) =>
                 setCaseData({ ...caseData, orderNumber: e.target.value })
               }
@@ -744,12 +744,16 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"جواب درخواست، بحث"}>
                   جواب درخواست، بحث
                 </MenuItem>
+                <MenuItem value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
+                <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
                 <MenuItem value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
+                <MenuItem value={"حکم بر مقدمہ"}>حکم بر مقدمہ</MenuItem>
+                <MenuItem value={"راضی نامہ، حکم"}>راضی نامہ، حکم</MenuItem>
               </Select>
             </FormControl>
 

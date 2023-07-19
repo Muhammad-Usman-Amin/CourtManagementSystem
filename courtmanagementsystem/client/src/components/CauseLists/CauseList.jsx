@@ -39,6 +39,7 @@ import { useDispatch } from "react-redux";
 import { updateCase } from "../../actions/cases";
 import { getCauseList } from "../../actions/causeLists";
 import useStyles2 from "../../dashboardExample/dashboard";
+import { addDays } from "date-fns";
 
 const useStyles = makeStyles({
   table: {
@@ -120,7 +121,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     if (caseId) handleSubmit(nextDate);
   }, [nextDate]);
 
-  const [dateCauseList, setDateCauseList] = useState(new Date());
+  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 1));
   const [serialNo, setSerialNo] = useState([]);
   let index = 0;
   // let sno = [];
@@ -498,6 +499,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
                               </MenuItem>
+                              <MenuItem value={"شہادت مدعی"}>
+                                شہادت مدعی
+                              </MenuItem>
+                              <MenuItem value={"شہادت مدعا علیہ"}>
+                                شہادت مدعا علیہ
+                              </MenuItem>
                               <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                                 طلبیدہ گواہان، شہادت
                               </MenuItem>
@@ -509,6 +516,15 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem value={"حکم بر درخواست"}>
                                 حکم بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"حکم بر مقدمہ"}>
+                                حکم بر مقدمہ
+                              </MenuItem>
+                              <MenuItem value={"حکم بر مقدمہ"}>
+                                حکم بر مقدمہ
+                              </MenuItem>
+                              <MenuItem value={"راضی نامہ، حکم"}>
+                                راضی نامہ، حکم
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -718,6 +734,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
                               </MenuItem>
+                              <MenuItem value={"شہادت مدعی"}>
+                                شہادت مدعی
+                              </MenuItem>
+                              <MenuItem value={"شہادت مدعا علیہ"}>
+                                شہادت مدعا علیہ
+                              </MenuItem>
                               <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                                 طلبیدہ گواہان، شہادت
                               </MenuItem>
@@ -729,6 +751,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem value={"حکم بر درخواست"}>
                                 حکم بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"حکم بر مقدمہ"}>
+                                حکم بر مقدمہ
+                              </MenuItem>
+                              <MenuItem value={"راضی نامہ، حکم"}>
+                                راضی نامہ، حکم
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -937,6 +965,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
                               </MenuItem>
+                              <MenuItem value={"شہادت مدعی"}>
+                                شہادت مدعی
+                              </MenuItem>
+                              <MenuItem value={"شہادت مدعا علیہ"}>
+                                شہادت مدعا علیہ
+                              </MenuItem>
                               <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                                 طلبیدہ گواہان، شہادت
                               </MenuItem>
@@ -949,7 +983,13 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"حکم بر درخواست"}>
                                 حکم بر درخواست
                               </MenuItem>
-                            </Select>{" "}
+                              <MenuItem value={"حکم بر مقدمہ"}>
+                                حکم بر مقدمہ
+                              </MenuItem>
+                              <MenuItem value={"راضی نامہ، حکم"}>
+                                راضی نامہ، حکم
+                              </MenuItem>
+                            </Select>
                           </FormControl>
                         </TableCell>
                         {/* {setSerialNo((prevIndex) => prevIndex + 1)} */}
@@ -1156,6 +1196,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
                               </MenuItem>
+                              <MenuItem value={"شہادت مدعی"}>
+                                شہادت مدعی
+                              </MenuItem>
+                              <MenuItem value={"شہادت مدعا علیہ"}>
+                                شہادت مدعا علیہ
+                              </MenuItem>
                               <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                                 طلبیدہ گواہان، شہادت
                               </MenuItem>
@@ -1167,6 +1213,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem value={"حکم بر درخواست"}>
                                 حکم بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"حکم بر مقدمہ"}>
+                                حکم بر مقدمہ
+                              </MenuItem>
+                              <MenuItem value={"راضی نامہ، حکم"}>
+                                راضی نامہ، حکم
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -1375,6 +1427,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
                               </MenuItem>
+                              <MenuItem value={"شہادت مدعی"}>
+                                شہادت مدعی
+                              </MenuItem>
+                              <MenuItem value={"شہادت مدعا علیہ"}>
+                                شہادت مدعا علیہ
+                              </MenuItem>
                               <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                                 طلبیدہ گواہان، شہادت
                               </MenuItem>
@@ -1386,6 +1444,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem value={"حکم بر درخواست"}>
                                 حکم بر درخواست
+                              </MenuItem>
+                              <MenuItem value={"حکم بر مقدمہ"}>
+                                حکم بر مقدمہ
+                              </MenuItem>
+                              <MenuItem value={"راضی نامہ، حکم"}>
+                                راضی نامہ، حکم
                               </MenuItem>
                             </Select>
                           </FormControl>

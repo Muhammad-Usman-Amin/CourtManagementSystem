@@ -381,7 +381,7 @@ const PrintCauseList = (props) => {
                     }}
                     className={classes.tableHeaderCell}
                   >
-                    بحث
+                    شہادت
                   </TableCell>
                 </TableRow>
 
@@ -390,7 +390,7 @@ const PrintCauseList = (props) => {
                     {caseFile.causeListEntries &&
                     getSecondToLastElementCategory(
                       caseFile.causeListEntries
-                    ).actionAbstract?.includes("بحث") ? (
+                    ).actionAbstract?.includes("شہادت") ? (
                       <TableRow hover key={caseFile._id}>
                         <TableCell className={classes.tableEmptyCell}>
                           {""}
@@ -402,8 +402,8 @@ const PrintCauseList = (props) => {
                           scope="row"
                           style={{ maxWidth: 1 }}
                         >
-                          {/* {data.indexOf(caseFile) + 1} */}
                           {serialNo[index++]}
+                          {/* {data.indexOf(caseFile) + 1} */}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -464,7 +464,7 @@ const PrintCauseList = (props) => {
                     }}
                     className={classes.tableHeaderCell}
                   >
-                    شہادت
+                    بحث
                   </TableCell>
                 </TableRow>
 
@@ -473,7 +473,7 @@ const PrintCauseList = (props) => {
                     {caseFile.causeListEntries &&
                     getSecondToLastElementCategory(
                       caseFile.causeListEntries
-                    ).actionAbstract?.includes("شہادت") ? (
+                    ).actionAbstract?.includes("بحث") ? (
                       <TableRow hover key={caseFile._id}>
                         <TableCell className={classes.tableEmptyCell}>
                           {""}
@@ -485,8 +485,8 @@ const PrintCauseList = (props) => {
                           scope="row"
                           style={{ maxWidth: 1 }}
                         >
-                          {serialNo[index++]}
                           {/* {data.indexOf(caseFile) + 1} */}
+                          {serialNo[index++]}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}

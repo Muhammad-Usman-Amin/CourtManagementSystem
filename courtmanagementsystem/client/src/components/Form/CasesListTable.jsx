@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     minWidth: 650,
   },
   dateValue: {
-    minWidth: "100px",
+    // minWidth: "100px",
     whiteSpace: "nowrap",
   },
 });
@@ -111,13 +111,13 @@ export default function CasesListTable({
               >
                 Case No
               </TableCell>
-              <TableCell classes={classes.dateValue} align="left">
+              <TableCell className={classes.dateValue} align="left">
                 Date Of Institution
               </TableCell>
               <TableCell align="left">Case Title</TableCell>
               <TableCell align="left">Case Type</TableCell>
               {/* <TableCell align="left">Institution Year</TableCell> */}
-              <TableCell classes={classes.dateValue} align="left">
+              <TableCell className={classes.dateValue} align="left">
                 Next Date
               </TableCell>
               <TableCell align="left">Edit</TableCell>
