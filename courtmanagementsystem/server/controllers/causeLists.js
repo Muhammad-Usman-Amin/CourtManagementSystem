@@ -7,6 +7,7 @@ const router = express.Router();
 
 export const getCauseList = async (req, res) => {
   const { dateCauseList } = req.query;
+  console.log(dateCauseList);
   //   console.log(new Date(dateCauseList).toDateString());
   //   const date = new Date(dateCauseList).toDateString();
   const selectedDate = new Date(dateCauseList);
@@ -32,7 +33,13 @@ export const getCauseList = async (req, res) => {
       {
         $expr: {
           $eq: [
-            { $dateToString: { format: "%Y-%m-%d", date: "$orderDate" } },
+            {
+              $dateToString: {
+                format: "%Y-%m-%d",
+                date: "$orderDate",
+                timezone: "+05:00",
+              },
+            },
             selectedDate.toISOString().split("T")[0],
           ],
         },
@@ -40,7 +47,13 @@ export const getCauseList = async (req, res) => {
       {
         $expr: {
           $eq: [
-            { $dateToString: { format: "%Y-%m-%d", date: "$nextDate" } },
+            {
+              $dateToString: {
+                format: "%Y-%m-%d",
+                date: "$nextDate",
+                timezone: "+05:00",
+              },
+            },
             selectedDate.toISOString().split("T")[0],
           ],
         },
