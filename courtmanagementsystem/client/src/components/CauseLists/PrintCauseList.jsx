@@ -123,10 +123,10 @@ const PrintCauseList = (props) => {
         new Date(array[array.length - 1].orderDate).toDateString() ===
         new Date(orderDate).toDateString()
       ) {
-        console.log(
-          new Date(array[array.length - 1].orderDate).toDateString() ===
-            new Date(orderDate).toDateString()
-        );
+        // console.log(
+        //   new Date(array[array.length - 1].orderDate).toDateString() ===
+        //     new Date(orderDate).toDateString()
+        // );
         return array[array.length - 2];
       }
     }
@@ -186,7 +186,7 @@ const PrintCauseList = (props) => {
                     colSpan={9}
                     style={{
                       fontSize: 24,
-                      // fontFamily: "Alvi Nastaleeq Regular",
+                      fontFamily: "Times Roman",
                       // fontStyle: "",
                       fontWeight: "bold",
                       padding: "10px",
