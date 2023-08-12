@@ -50,7 +50,7 @@ const GreenRadio = withStyles({
 
 const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [institutionDate, setInstitutionDate] = useState(new Date());
-  const [nextDate, setNextDate] = useState(addDays(new Date(), 1));
+  const [nextDate, setNextDate] = useState(addDays(new Date(), 3));
   const [sameAsInstitutionDate, setSameAsInstitutiondate] = useState(false);
   const [caseData, setCaseData] = useState({
     // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
@@ -725,6 +725,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
+                <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
+                <MenuItem value={"طلبی انکوائری، حاضری"}>
+                  طلبی انکوائری، حاضری
+                </MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"آدائیگی، حاضری"}>آدائیگی، حاضری</MenuItem>
                 <MenuItem value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>

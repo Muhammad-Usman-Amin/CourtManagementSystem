@@ -121,7 +121,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     if (caseId) handleSubmit(nextDate);
   }, [nextDate]);
 
-  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 1));
+  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 3));
   const [serialNo, setSerialNo] = useState([]);
   let index = 0;
   // let sno = [];
@@ -174,7 +174,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     }
     if (array.length > 1) {
       if (
-        new Date(array[array.length - 1].nextDate).toDateString() ===
+        new Date(array[array.length - 1].orderDate).toDateString() ===
         new Date(orderDate).toDateString()
       ) {
         // console.log(
@@ -454,6 +454,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"فرد جرم، حاضری"}>
                                 فرد جرم، حاضری
                               </MenuItem>
+                              <MenuItem value={"کمنٹس، حاضری"}>
+                                کمنٹس، حاضری
+                              </MenuItem>
+                              <MenuItem value={"طلبی انکوائری، حاضری"}>
+                                طلبی انکوائری، حاضری
+                              </MenuItem>
                               <MenuItem value={"حاضری، اشتہار"}>
                                 حاضری، اشتہار
                               </MenuItem>
@@ -690,6 +696,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"فرد جرم، حاضری"}>
                                 فرد جرم، حاضری
                               </MenuItem>
+                              <MenuItem value={"کمنٹس، حاضری"}>
+                                کمنٹس، حاضری
+                              </MenuItem>
+                              <MenuItem value={"طلبی انکوائری، حاضری"}>
+                                طلبی انکوائری، حاضری
+                              </MenuItem>
                               <MenuItem value={"حاضری، اشتہار"}>
                                 حاضری، اشتہار
                               </MenuItem>
@@ -920,6 +932,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem value={"فرد جرم، حاضری"}>
                                 فرد جرم، حاضری
+                              </MenuItem>
+                              <MenuItem value={"کمنٹس، حاضری"}>
+                                کمنٹس، حاضری
+                              </MenuItem>
+                              <MenuItem value={"طلبی انکوائری، حاضری"}>
+                                طلبی انکوائری، حاضری
                               </MenuItem>
                               <MenuItem value={"حاضری، اشتہار"}>
                                 حاضری، اشتہار
@@ -1152,6 +1170,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"فرد جرم، حاضری"}>
                                 فرد جرم، حاضری
                               </MenuItem>
+                              <MenuItem value={"کمنٹس، حاضری"}>
+                                کمنٹس، حاضری
+                              </MenuItem>
+                              <MenuItem value={"طلبی انکوائری، حاضری"}>
+                                طلبی انکوائری، حاضری
+                              </MenuItem>
                               <MenuItem value={"حاضری، اشتہار"}>
                                 حاضری، اشتہار
                               </MenuItem>
@@ -1382,6 +1406,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem value={"فرد جرم، حاضری"}>
                                 فرد جرم، حاضری
+                              </MenuItem>
+                              <MenuItem value={"کمنٹس، حاضری"}>
+                                کمنٹس، حاضری
+                              </MenuItem>
+                              <MenuItem value={"طلبی انکوائری، حاضری"}>
+                                طلبی انکوائری، حاضری
                               </MenuItem>
                               <MenuItem value={"حاضری، اشتہار"}>
                                 حاضری، اشتہار

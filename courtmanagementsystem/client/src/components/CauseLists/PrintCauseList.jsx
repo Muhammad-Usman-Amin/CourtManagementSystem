@@ -140,7 +140,7 @@ const PrintCauseList = (props) => {
     }
     if (array.length > 1) {
       if (
-        new Date(array[array.length - 1].nextDate).toDateString() ===
+        new Date(array[array.length - 1].orderDate).toDateString() ===
         new Date(orderDate).toDateString()
       ) {
         // console.log(
