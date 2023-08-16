@@ -121,7 +121,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     if (caseId) handleSubmit(nextDate);
   }, [nextDate]);
 
-  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 3));
+  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 1));
   const [serialNo, setSerialNo] = useState([]);
   let index = 0;
   // let sno = [];
@@ -469,6 +469,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"ابتدائی بحث"}>
                                 ابتدائی بحث
                               </MenuItem>
+                              <MenuItem value={"یکطرفہ بحث"}>
+                                یکطرفہ بحث
+                              </MenuItem>
+
                               <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                                 بحث، رپورٹ اہل کمیشن
                               </MenuItem>
@@ -504,6 +508,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
+                              </MenuItem>
+                              <MenuItem value={"تقرری وکیل، شہادت"}>
+                                تقرری وکیل، شہادت
                               </MenuItem>
                               <MenuItem value={"شہادت مدعی"}>
                                 شہادت مدعی
@@ -711,6 +718,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"ابتدائی بحث"}>
                                 ابتدائی بحث
                               </MenuItem>
+                              <MenuItem value={"یکطرفہ بحث"}>
+                                یکطرفہ بحث
+                              </MenuItem>
+
                               <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                                 بحث، رپورٹ اہل کمیشن
                               </MenuItem>
@@ -745,6 +756,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
+                              </MenuItem>
+                              <MenuItem value={"تقرری وکیل، شہادت"}>
+                                تقرری وکیل، شہادت
                               </MenuItem>
                               <MenuItem value={"شہادت مدعی"}>
                                 شہادت مدعی
@@ -948,6 +962,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"ابتدائی بحث"}>
                                 ابتدائی بحث
                               </MenuItem>
+                              <MenuItem value={"یکطرفہ بحث"}>
+                                یکطرفہ بحث
+                              </MenuItem>
+
                               <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                                 بحث، رپورٹ اہل کمیشن
                               </MenuItem>
@@ -982,6 +1000,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
+                              </MenuItem>
+                              <MenuItem value={"تقرری وکیل، شہادت"}>
+                                تقرری وکیل، شہادت
                               </MenuItem>
                               <MenuItem value={"شہادت مدعی"}>
                                 شہادت مدعی
@@ -1185,6 +1206,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"ابتدائی بحث"}>
                                 ابتدائی بحث
                               </MenuItem>
+                              <MenuItem value={"یکطرفہ بحث"}>
+                                یکطرفہ بحث
+                              </MenuItem>
+
                               <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                                 بحث، رپورٹ اہل کمیشن
                               </MenuItem>
@@ -1219,6 +1244,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
+                              </MenuItem>
+                              <MenuItem value={"تقرری وکیل، شہادت"}>
+                                تقرری وکیل، شہادت
                               </MenuItem>
                               <MenuItem value={"شہادت مدعی"}>
                                 شہادت مدعی
@@ -1422,6 +1450,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"ابتدائی بحث"}>
                                 ابتدائی بحث
                               </MenuItem>
+                              <MenuItem value={"یکطرفہ بحث"}>
+                                یکطرفہ بحث
+                              </MenuItem>
+
                               <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                                 بحث، رپورٹ اہل کمیشن
                               </MenuItem>
@@ -1456,6 +1488,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem value={"جواب درخواست، بحث"}>
                                 جواب درخواست، بحث
+                              </MenuItem>
+                              <MenuItem value={"تقرری وکیل، شہادت"}>
+                                تقرری وکیل، شہادت
                               </MenuItem>
                               <MenuItem value={"شہادت مدعی"}>
                                 شہادت مدعی

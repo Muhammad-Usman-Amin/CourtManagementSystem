@@ -50,7 +50,7 @@ const GreenRadio = withStyles({
 
 const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [institutionDate, setInstitutionDate] = useState(new Date());
-  const [nextDate, setNextDate] = useState(addDays(new Date(), 3));
+  const [nextDate, setNextDate] = useState(addDays(new Date(), 1));
   const [sameAsInstitutionDate, setSameAsInstitutiondate] = useState(false);
   const [caseData, setCaseData] = useState({
     // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
@@ -477,6 +477,14 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem value={"CR-026-Criminal Revisions"}>
                     CR-026 Criminal Revisions
                   </MenuItem>
+                  <MenuItem
+                    value={
+                      "CR-027-Other PPC related cases(Not Listed in above Categories)"
+                    }
+                  >
+                    CR-027-Other PPC related cases(Not Listed in above
+                    Categories)
+                  </MenuItem>
                 </Select>
               </FormControl>
             )}
@@ -515,7 +523,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 // margin="normal"
                 id="date-picker-inline"
                 // id="date-picker-dialog"
-                label="Institution Date"
+                label="Original Institution Date"
                 autoOk
                 format="dd/MM/yyyy"
                 value={institutionDate}
@@ -732,6 +740,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"آدائیگی، حاضری"}>آدائیگی، حاضری</MenuItem>
                 <MenuItem value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
+                <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
                 <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                   بحث، رپورٹ اہل کمیشن
                 </MenuItem>
@@ -747,6 +756,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"جواب دعویٰ، بحث"}>جواب دعویٰ، بحث</MenuItem>
                 <MenuItem value={"جواب درخواست، بحث"}>
                   جواب درخواست، بحث
+                </MenuItem>
+                <MenuItem value={"تقرری وکیل، شہادت"}>
+                  تقرری وکیل، شہادت
                 </MenuItem>
                 <MenuItem value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
@@ -771,6 +783,49 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 setCaseData({ ...caseData, actionAbstract: e.target.value })
               }
             /> */}
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth component="fieldset">
+              <FormLabel component="legend">
+                {/* <br /> */}
+                Case Type
+              </FormLabel>
+              <RadioGroup
+                required
+                row
+                aria-label="Select If Apply"
+                name="Select If Apply"
+                value={"Disposed"}
+                onChange={(e) => {
+                  setSelectedCaseType(e.target.value);
+                  setCaseData({
+                    ...caseData,
+                    "Case Type": e.target.value,
+                    "Category Per PQS": "",
+                  });
+                }}
+              >
+                <FormControlLabel
+                  checked={selectedCaseType === "transferedIn"}
+                  value="transferedIn"
+                  control={<GreenRadio />}
+                  label="Transfered In"
+                />
+                <FormControlLabel
+                  checked={selectedCaseType === "TransferedOut"}
+                  value="TransferedOut"
+                  control={<Radio />}
+                  label="Transfered Out"
+                />
+                <FormControlLabel
+                  checked={selectedCaseType === "Disposed"}
+                  value="Disposed"
+                  control={<Radio />}
+                  label="Disposed"
+                />
+              </RadioGroup>
+            </FormControl>
           </Grid>
 
           {/* <Button
