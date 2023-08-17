@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) =>
       // textAlign: "center",
     },
     tableCell: {
-      fontSize: 14,
+      fontSize: 16,
       // align: "center",
       textAlign: "center",
       border: "1px solid",

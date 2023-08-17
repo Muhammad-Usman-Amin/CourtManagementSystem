@@ -24,6 +24,7 @@ import {
   Box,
   Checkbox,
   FormHelperText,
+  Divider,
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
@@ -37,6 +38,16 @@ import { createCase, updateCase } from "../../actions/cases";
 import ClearAllIcon from "@material-ui/icons/ClearAll";
 import SaveIcon from "@material-ui/icons/Save";
 import { addDays } from "date-fns";
+
+const GreenCheckbox = withStyles({
+  root: {
+    color: green[400],
+    "&$checked": {
+      color: green[600],
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 const GreenRadio = withStyles({
   root: {
@@ -64,12 +75,16 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     Thana: "",
     Section: "",
     "Date of Institution ": institutionDate,
-    "Date of Disposal Transfer Out": Date,
-    "Disposal OR Transfer Out Flag": "",
-    "Disposal Mode Flag": "",
-    "Date of Transfer In": Date,
-    "Date of Other Institution": Date,
-    "Institution Flag": "",
+    "Date of Disposal Transfer Out": null,
+    disposed: false,
+    transferedOut: false,
+    transferedIn: false,
+    AcquittalORConvictionFlag: "",
+    // "Disposal OR Transfer Out Flag": "",
+    "Disposal Mode Flag": "", //used for contested, non-contested etc
+    "Date of Transfer In": null,
+    "Date of Other Institution": null,
+    "Institution Flag": "", // used for Remander, Restored flags
     nextDate: nextDate,
     orderNumber: "",
     actionAbstract: "",
@@ -150,12 +165,16 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       Thana: "",
       Section: "",
       "Date of Institution ": new Date(),
-      "Date of Disposal Transfer Out": Date,
-      "Disposal OR Transfer Out Flag": "",
-      "Disposal Mode Flag": "",
-      "Date of Transfer In": Date,
-      "Date of Other Institution": new Date(),
-      "Institution Flag": "",
+      "Date of Disposal Transfer Out": null,
+      disposed: false,
+      transferedOut: false,
+      transferedIn: false,
+      AcquittalORConvictionFlag: "", //only for Criminal cases
+      // "Disposal OR Transfer Out Flag": "",
+      "Disposal Mode Flag": "", //used for contested, non-contested etc
+      "Date of Transfer In": null,
+      "Date of Other Institution": null,
+      "Institution Flag": "", //used for Remanded, Restored flags
       nextDate: nextDate,
       orderNumber: "",
       actionAbstract: "",
@@ -785,47 +804,70 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
             /> */}
           </Grid>
 
-          <Grid item xs={12} sm={4}>
-            <FormControl fullWidth component="fieldset">
-              <FormLabel component="legend">
-                {/* <br /> */}
-                Case Type
-              </FormLabel>
-              <RadioGroup
-                required
-                row
-                aria-label="Select If Apply"
-                name="Select If Apply"
-                value={"Disposed"}
-                onChange={(e) => {
-                  setSelectedCaseType(e.target.value);
-                  setCaseData({
-                    ...caseData,
-                    "Case Type": e.target.value,
-                    "Category Per PQS": "",
-                  });
-                }}
-              >
-                <FormControlLabel
-                  checked={selectedCaseType === "transferedIn"}
-                  value="transferedIn"
-                  control={<GreenRadio />}
-                  label="Transfered In"
-                />
-                <FormControlLabel
-                  checked={selectedCaseType === "TransferedOut"}
-                  value="TransferedOut"
-                  control={<Radio />}
-                  label="Transfered Out"
-                />
-                <FormControlLabel
-                  checked={selectedCaseType === "Disposed"}
-                  value="Disposed"
-                  control={<Radio />}
-                  label="Disposed"
-                />
-              </RadioGroup>
-            </FormControl>
+          <Grid item xs={12} sm={12}>
+            <Divider></Divider>
+          </Grid>
+
+          <Grid item xs={12} sm={12}>
+            <Grid container xs={12} sm={12}>
+              <FormControl fullWidth component="fieldset">
+                <Grid item xs={6} sm={4}>
+                  <FormControlLabel
+                    control={
+                      <GreenCheckbox
+                        checked={caseData.disposed}
+                        onChange={(e) =>
+                          setCaseData({
+                            ...caseData,
+                            disposed: e.target.checked,
+                            transferedOut: false,
+                          })
+                        }
+                        name="disposed"
+                      />
+                    }
+                    label="Disposed"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={4}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={caseData.transferedOut}
+                        color="secondary"
+                        onChange={(e) =>
+                          setCaseData({
+                            ...caseData,
+                            transferedOut: e.target.checked,
+                            disposed: false,
+                          })
+                        }
+                        name="transferedOut"
+                      />
+                    }
+                    label="Transfered Out"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={4}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={caseData.transferedIn}
+                        color="primary"
+                        onChange={(e) =>
+                          setCaseData({
+                            ...caseData,
+                            transferedIn: e.target.checked,
+                          })
+                        }
+                        name="transferedIn"
+                      />
+                    }
+                    label="Transfered In"
+                  />
+                </Grid>
+              </FormControl>
+            </Grid>
           </Grid>
 
           {/* <Button
