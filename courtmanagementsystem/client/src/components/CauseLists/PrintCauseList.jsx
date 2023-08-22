@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) =>
       // borderRadius: "30px",
     },
     tableHeaderCell: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
       fontFamily: "Jameel Noori Nastaleeq",
       border: "1px solid",
       borderColor: theme.palette.primary.black,
@@ -62,6 +65,9 @@ const useStyles = makeStyles((theme) =>
       // textAlign: "center",
     },
     tableCell: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
       fontSize: 16,
       // align: "center",
       textAlign: "center",
