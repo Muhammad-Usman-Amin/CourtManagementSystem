@@ -121,7 +121,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     if (caseId) handleSubmit(nextDate);
   }, [nextDate]);
 
-  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 1));
+  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 0));
   const [serialNo, setSerialNo] = useState([]);
   let index = 0;
   // let sno = [];
@@ -457,6 +457,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"کمنٹس، حاضری"}>
                                 کمنٹس، حاضری
                               </MenuItem>
+                              <MenuItem value={"رپورٹ SHO، حاضری"}>
+                                رپورٹ SHO، حاضری
+                              </MenuItem>
+
                               <MenuItem value={"طلبی انکوائری، حاضری"}>
                                 طلبی انکوائری، حاضری
                               </MenuItem>
@@ -706,6 +710,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"کمنٹس، حاضری"}>
                                 کمنٹس، حاضری
                               </MenuItem>
+                              <MenuItem value={"رپورٹ SHO، حاضری"}>
+                                رپورٹ SHO، حاضری
+                              </MenuItem>
+
                               <MenuItem value={"طلبی انکوائری، حاضری"}>
                                 طلبی انکوائری، حاضری
                               </MenuItem>
@@ -950,6 +958,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"کمنٹس، حاضری"}>
                                 کمنٹس، حاضری
                               </MenuItem>
+                              <MenuItem value={"رپورٹ SHO، حاضری"}>
+                                رپورٹ SHO، حاضری
+                              </MenuItem>
+
                               <MenuItem value={"طلبی انکوائری، حاضری"}>
                                 طلبی انکوائری، حاضری
                               </MenuItem>
@@ -1194,6 +1206,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"کمنٹس، حاضری"}>
                                 کمنٹس، حاضری
                               </MenuItem>
+                              <MenuItem value={"رپورٹ SHO، حاضری"}>
+                                رپورٹ SHO، حاضری
+                              </MenuItem>
+
                               <MenuItem value={"طلبی انکوائری، حاضری"}>
                                 طلبی انکوائری، حاضری
                               </MenuItem>
@@ -1438,6 +1454,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <MenuItem value={"کمنٹس، حاضری"}>
                                 کمنٹس، حاضری
                               </MenuItem>
+                              <MenuItem value={"رپورٹ SHO، حاضری"}>
+                                رپورٹ SHO، حاضری
+                              </MenuItem>
+
                               <MenuItem value={"طلبی انکوائری، حاضری"}>
                                 طلبی انکوائری، حاضری
                               </MenuItem>

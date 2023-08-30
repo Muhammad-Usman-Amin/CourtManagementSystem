@@ -61,7 +61,7 @@ const GreenRadio = withStyles({
 
 const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [institutionDate, setInstitutionDate] = useState(new Date());
-  const [nextDate, setNextDate] = useState(addDays(new Date(), 1));
+  const [nextDate, setNextDate] = useState(addDays(new Date(), 0));
   const [sameAsInstitutionDate, setSameAsInstitutiondate] = useState(false);
   const [caseData, setCaseData] = useState({
     // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
@@ -753,6 +753,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
+                <MenuItem value={"رپورٹ SHO، حاضری"}>رپورٹ SHO، حاضری</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری، حاضری
                 </MenuItem>
@@ -808,67 +809,153 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
             <Divider></Divider>
           </Grid>
 
-          <Grid item xs={12} sm={12}>
-            <Grid container xs={12} sm={12}>
-              <FormControl fullWidth component="fieldset">
-                <Grid item xs={6} sm={4}>
-                  <FormControlLabel
-                    control={
-                      <GreenCheckbox
-                        checked={caseData.disposed}
-                        onChange={(e) =>
-                          setCaseData({
-                            ...caseData,
-                            disposed: e.target.checked,
-                            transferedOut: false,
-                          })
-                        }
-                        name="disposed"
-                      />
+          {/* <Grid item xs={12} sm={12}> */}
+          <Grid item container xs={12} sm={12} alignItems="center" spacing={1}>
+            {/* <FormControl fullWidth component="fieldset"> */}
+            <Grid item xs={6} sm={4}>
+              <FormControlLabel
+                control={
+                  <GreenCheckbox
+                    checked={caseData.disposed}
+                    onChange={(e) =>
+                      setCaseData({
+                        ...caseData,
+                        disposed: e.target.checked,
+                        transferedOut: false,
+                      })
                     }
-                    label="Disposed"
+                    name="disposed"
                   />
-                </Grid>
-                <Grid item xs={6} sm={4}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={caseData.transferedOut}
-                        color="secondary"
-                        onChange={(e) =>
-                          setCaseData({
-                            ...caseData,
-                            transferedOut: e.target.checked,
-                            disposed: false,
-                          })
-                        }
-                        name="transferedOut"
-                      />
-                    }
-                    label="Transfered Out"
-                  />
-                </Grid>
-                <Grid item xs={6} sm={4}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={caseData.transferedIn}
-                        color="primary"
-                        onChange={(e) =>
-                          setCaseData({
-                            ...caseData,
-                            transferedIn: e.target.checked,
-                          })
-                        }
-                        name="transferedIn"
-                      />
-                    }
-                    label="Transfered In"
-                  />
-                </Grid>
-              </FormControl>
+                }
+                label="Disposed"
+              />
             </Grid>
+            <Grid item xs={6} sm={4}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={caseData.transferedOut}
+                    color="secondary"
+                    onChange={(e) =>
+                      setCaseData({
+                        ...caseData,
+                        transferedOut: e.target.checked,
+                        disposed: false,
+                      })
+                    }
+                    name="transferedOut"
+                  />
+                }
+                label="Transfered Out"
+              />
+            </Grid>
+            <Grid item xs={6} sm={4}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={caseData.transferedIn}
+                    color="primary"
+                    onChange={(e) =>
+                      setCaseData({
+                        ...caseData,
+                        transferedIn: e.target.checked,
+                      })
+                    }
+                    name="transferedIn"
+                  />
+                }
+                label="Transfered In"
+              />
+            </Grid>
+            {/* </FormControl> */}
+
+            {caseData.disposed && (
+              <>
+                <Grid item xs={12} sm={2}>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+                    {/* <Grid container justifyContent="space-around"> */}
+                    {/* <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Institution Date"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                    }}
+                /> */}
+                    <KeyboardDatePicker
+                      // disableToolbar
+                      // variant="inline"
+                      // margin="normal"
+                      id="date-picker-inline"
+                      // id="date-picker-dialog"
+                      label="Disposed Date"
+                      autoOk
+                      format="dd/MM/yyyy"
+                      value={
+                        caseData["Date of Disposal Transfer Out"]
+                          ? caseData["Date of Disposal Transfer Out"]
+                          : null
+                      }
+                      onChange={(date) =>
+                        setCaseData({
+                          ...caseData,
+                          "Date of Disposal Transfer Out": date,
+                        })
+                      }
+                      KeyboardButtonProps={{
+                        "aria-label": "change date of disposal",
+                      }}
+                    />
+                    {/* </Grid> */}
+                  </MuiPickersUtilsProvider>
+                  {/* </Container> */}
+                </Grid>
+
+                <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Disposal Mode Flag
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={
+                        caseData["Disposal Mode Flag"]
+                          ? caseData["Disposal Mode Flag"]
+                          : setCaseData({
+                              ...caseData,
+                              "Disposal Mode Flag": "-",
+                            })
+                      }
+                      onChange={(e) => {
+                        setCaseData({
+                          ...caseData,
+                          "Disposal Mode Flag": e.target.value,
+                        });
+                      }}
+                      label="Disposal Mode Flag"
+                    >
+                      <MenuItem value=""></MenuItem>
+                      <MenuItem value={"Contested-Trial Based"}>
+                        Contested-Trial Based
+                      </MenuItem>
+                      <MenuItem value={"Contested-Non Trial Based"}>
+                        Contested-Non Trial Based
+                      </MenuItem>
+                      <MenuItem value={"Uncontested"}>Uncontested</MenuItem>
+                      <MenuItem value={"In Default"}>In Default</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </>
+            )}
           </Grid>
+          {/* </Grid> */}
 
           {/* <Button
             className={classes.buttonSubmit}
