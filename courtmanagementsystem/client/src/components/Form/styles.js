@@ -34,5 +34,8 @@ export default makeStyles((theme) => ({
     },
     bb: {
         boxSizing: 'borderBox',
+    },
+    boldThis: {
+        fontWeight: 'bold'
     }
 }));

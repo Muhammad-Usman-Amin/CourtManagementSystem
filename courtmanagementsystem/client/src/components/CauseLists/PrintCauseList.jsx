@@ -199,8 +199,7 @@ const PrintCauseList = (props) => {
                     }}
                     className={classes.tableHeaderCell}
                   >
-                    بعدالت جناب امین سید ایڈیشنل ڈسٹرکٹ اینڈ سیشن جج، ضلع
-                    دیرپائین بمقام تیمر گرہ
+                    بعدالت جناب شبیراحمد سِول جج/جوڈیشل مجسٹریٹ/علاقہ قاضی-II، ضلع دیر پائین بمقام تیمرگرہ
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -263,7 +262,7 @@ const PrintCauseList = (props) => {
 
                 {/* <TableHead> */}
                 <TableRow>
-                  <TableCell className={classes.tableEmptyCell}></TableCell>
+                  {/* <TableCell className={classes.tableEmptyCell}></TableCell> */}
                   <TableCell className={classes.tableHeaderCell}>
                     نمبرشمار
                   </TableCell>
@@ -315,9 +314,9 @@ const PrintCauseList = (props) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("حاضری") ? (
                       <TableRow hover key={caseFile._id}>
-                        <TableCell className={classes.tableEmptyCell}>
+                        {/* <TableCell className={classes.tableEmptyCell}>
                           {""}
-                        </TableCell>
+                        </TableCell> */}
 
                         <TableCell
                           className={classes.tableCell}
@@ -398,9 +397,9 @@ const PrintCauseList = (props) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("شہادت") ? (
                       <TableRow hover key={caseFile._id}>
-                        <TableCell className={classes.tableEmptyCell}>
+                        {/* <TableCell className={classes.tableEmptyCell}>
                           {""}
-                        </TableCell>
+                        </TableCell> */}
 
                         <TableCell
                           className={classes.tableCell}
@@ -481,9 +480,9 @@ const PrintCauseList = (props) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("بحث") ? (
                       <TableRow hover key={caseFile._id}>
-                        <TableCell className={classes.tableEmptyCell}>
+                        {/* <TableCell className={classes.tableEmptyCell}>
                           {""}
-                        </TableCell>
+                        </TableCell> */}
 
                         <TableCell
                           className={classes.tableCell}
@@ -564,9 +563,9 @@ const PrintCauseList = (props) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("حکم") ? (
                       <TableRow hover key={caseFile._id}>
-                        <TableCell className={classes.tableEmptyCell}>
+                        {/* <TableCell className={classes.tableEmptyCell}>
                           {""}
-                        </TableCell>
+                        </TableCell> */}
 
                         <TableCell
                           className={classes.tableCell}
@@ -647,9 +646,9 @@ const PrintCauseList = (props) => {
                     !getSecondToLastElement(caseFile.causeListEntries)
                       .actionAbstract ? (
                       <TableRow hover key={caseFile._id}>
-                        <TableCell className={classes.tableEmptyCell}>
+                        {/* <TableCell className={classes.tableEmptyCell}>
                           {""}
-                        </TableCell>
+                        </TableCell> */}
 
                         <TableCell
                           className={classes.tableCell}

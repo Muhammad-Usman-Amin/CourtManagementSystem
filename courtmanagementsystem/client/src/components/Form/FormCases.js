@@ -39,6 +39,7 @@ import ClearAllIcon from "@material-ui/icons/ClearAll";
 import SaveIcon from "@material-ui/icons/Save";
 import { addDays } from "date-fns";
 
+
 const GreenCheckbox = withStyles({
   root: {
     color: green[400],
@@ -103,7 +104,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     currentId ? state.cases.find((c) => c._id === currentId) : null
   );
   const classes = useStyles();
-  const classes2 = useStyles2();
+  // const classes2 = useStyles2();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -504,6 +505,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     CR-027-Other PPC related cases(Not Listed in above
                     Categories)
                   </MenuItem>
+                  <MenuItem value={"CR-028-Financial Crimes-489-F PPC"}>
+                  CR-028-Financial Crimes-489-F PPC
+                  </MenuItem>
+
                 </Select>
               </FormControl>
             )}
@@ -750,15 +755,25 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value="">
                   <em>All Categories</em>
                 </MenuItem>
-                <MenuItem value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <Divider />
+
+                <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری، حاضری
                 </MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
-                <MenuItem value={"آدائیگی، حاضری"}>آدائیگی، حاضری</MenuItem>
-                <MenuItem value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
+                <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
+                <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
+                <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
+                <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
+                <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
+                <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
+                <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>ترمیمی عرضیدعویٰ</MenuItem>
+                <Divider />
+
+                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
                 <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
                 <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
                   بحث، رپورٹ اہل کمیشن
@@ -776,7 +791,11 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"جواب درخواست، بحث"}>
                   جواب درخواست، بحث
                 </MenuItem>
-                <MenuItem value={"تقرری وکیل، شہادت"}>
+                <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
+                <MenuItem value={"بحث یکطرفہ"}>بحث یکطرفہ</MenuItem>
+                <Divider />
+
+                <MenuItem className={classes.boldThis} value={"تقرری وکیل، شہادت"}>
                   تقرری وکیل، شہادت
                 </MenuItem>
                 <MenuItem value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
@@ -786,7 +805,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
-                <MenuItem value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
+                <Divider />
+
+                <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
+                <MenuItem value={"حکم بر کمیشن"}>حکم بر کمیشن</MenuItem>
                 <MenuItem value={"حکم بر مقدمہ"}>حکم بر مقدمہ</MenuItem>
                 <MenuItem value={"راضی نامہ، حکم"}>راضی نامہ، حکم</MenuItem>
               </Select>
