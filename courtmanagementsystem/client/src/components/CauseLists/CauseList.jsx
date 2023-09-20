@@ -125,7 +125,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     if (caseId) handleSubmit(nextDate);
   }, [nextDate]);
 
-  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 1));
+  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 0));
   const [serialNo, setSerialNo] = useState([]);
   let index = 0;
   // let sno = [];
