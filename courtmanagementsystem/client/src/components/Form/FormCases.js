@@ -62,7 +62,7 @@ const GreenRadio = withStyles({
 
 const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [institutionDate, setInstitutionDate] = useState(new Date());
-  const [nextDate, setNextDate] = useState(addDays(new Date(), 0));
+  const [nextDate, setNextDate] = useState(addDays(new Date(), 1));
   const [sameAsInstitutionDate, setSameAsInstitutiondate] = useState(false);
   const [caseData, setCaseData] = useState({
     // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
@@ -758,7 +758,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
+                <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
+                <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
                 <MenuItem value={"رپورٹ SHO، حاضری"}>رپورٹ SHO، حاضری</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
@@ -766,6 +769,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
+                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
                 <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
                 <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
                 <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>

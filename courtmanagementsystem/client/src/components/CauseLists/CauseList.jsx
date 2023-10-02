@@ -125,7 +125,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     if (caseId) handleSubmit(nextDate);
   }, [nextDate]);
 
-  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 0));
+  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 1));
   const [serialNo, setSerialNo] = useState([]);
   let index = 0;
   // let sno = [];
@@ -392,8 +392,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           >
                             <KeyboardDatePicker
                               // margin="normal"
-                              id="date-picker-dialog"
+                              id="date-picker-inline"
                               label=""
+                              variant="inline"
                               autoOk
                               format="dd/MM/yyyy"
                               value={
@@ -455,13 +456,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
+                <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
+                <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری، حاضری
                 </MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
+                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
                 <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
                 <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
                 <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
@@ -607,8 +612,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           >
                             <KeyboardDatePicker
                               // margin="normal"
-                              id="date-picker-dialog"
+                              id="date-picker-inline"
                               label=""
+                              variant="inline"
                               autoOk
                               format="dd/MM/yyyy"
                               value={
@@ -670,13 +676,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
+                <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
+                <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری، حاضری
                 </MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
+                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
                 <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
                 <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
                 <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
@@ -821,8 +831,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           >
                             <KeyboardDatePicker
                               // margin="normal"
-                              id="date-picker-dialog"
+                              id="date-picker-inline"
                               label=""
+                              variant="inline"
                               autoOk
                               format="dd/MM/yyyy"
                               value={
@@ -884,13 +895,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
+                <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
+                <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری، حاضری
                 </MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
+                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
                 <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
                 <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
                 <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
@@ -1035,8 +1050,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           >
                             <KeyboardDatePicker
                               // margin="normal"
-                              id="date-picker-dialog"
+                              id="date-picker-inline"
                               label=""
+                              variant="inline"
                               autoOk
                               format="dd/MM/yyyy"
                               value={
@@ -1098,13 +1114,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
+                <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
+                <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری، حاضری
                 </MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
+                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
                 <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
                 <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
                 <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
@@ -1248,8 +1268,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           >
                             <KeyboardDatePicker
                               // margin="normal"
-                              id="date-picker-dialog"
+                              id="date-picker-inline"
                               label=""
+                              variant="inline"
                               autoOk
                               format="dd/MM/yyyy"
                               value={
@@ -1311,13 +1332,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
+                <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
+                <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری، حاضری
                 </MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
+                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
                 <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
                 <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
                 <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
