@@ -456,57 +456,58 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"تقرری وکیل، حاضری"}>تقرری وکیل، حاضری</MenuItem>
                 <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
+                <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
+                <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
+                <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
+                <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
+                <MenuItem value={"تنقیحات، حاضری"}>تنقیحات</MenuItem>
+                <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
                 <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
+                <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
+                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
+                <MenuItem value={"نادرا رپورٹ، حاضری"}>نادرا رپورٹ</MenuItem>
+                <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
                 <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
+                <MenuItem value={"انتظار مسل، حاضری"}>انتظار مسل</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
+                <MenuItem value={"رپورٹ SHO، حاضری"}>رپورٹ SHO</MenuItem>
+                <MenuItem value={"بیان DFC, حاضری"}>بیان DFC</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری، حاضری
                 </MenuItem>
-                <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
-                <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
-                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
-                <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
-                <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
-                <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
-                <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
-                <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
                 <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>ترمیمی عرضیدعویٰ</MenuItem>
+                <MenuItem value={"حاضری، رپورٹ اہل کمیشن"}>
+                   رپورٹ اہل کمیشن
+                </MenuItem>
+                <MenuItem value={"حاضری، بیان اہل کمیشن"}>
+                   بیان اہل کمیشن
+                </MenuItem>
+                <MenuItem value={"حاضری، عزرات"}>
+                   عزرات
+                </MenuItem>
                 <Divider />
 
-                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
-                <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
-                <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
-                  بحث، رپورٹ اہل کمیشن
-                </MenuItem>
-                <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
-                <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
-                <MenuItem value={"تقرری وکیل، بحث"}>تقرری وکیل، بحث</MenuItem>
-                <MenuItem value={"راضی نامہ، بحث"}> راضی نامہ، بحث</MenuItem>
-                <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
-                <MenuItem value={"بحث بر مقدمہ"}>بحث بر مقدمہ</MenuItem>
-                <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
-                <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
-                <MenuItem value={"تنقیحات، بحث"}>تنقیحات، بحث</MenuItem>
-                <MenuItem value={"جواب دعویٰ، بحث"}>جواب دعویٰ، بحث</MenuItem>
-                <MenuItem value={"جواب درخواست، بحث"}>
-                  جواب درخواست، بحث
-                </MenuItem>
-                <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
-                <MenuItem value={"بحث یکطرفہ"}>بحث یکطرفہ</MenuItem>
-                <Divider />
-
-                <MenuItem className={classes.boldThis} value={"تقرری وکیل، شہادت"}>
-                  تقرری وکیل، شہادت
-                </MenuItem>
-                <MenuItem value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
+                <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
+                <Divider />
+
+                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
+                <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
+                <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
+                <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
+                <MenuItem value={"بحث بر مقدمہ"}>بحث بر مقدمہ</MenuItem>
+                <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
+                <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
+                <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
+                <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
@@ -676,57 +677,58 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"تقرری وکیل، حاضری"}>تقرری وکیل، حاضری</MenuItem>
                 <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
+                <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
+                <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
+                <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
+                <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
+                <MenuItem value={"تنقیحات، حاضری"}>تنقیحات</MenuItem>
+                <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
                 <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
+                <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
+                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
+                <MenuItem value={"نادرا رپورٹ، حاضری"}>نادرا رپورٹ</MenuItem>
+                <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
                 <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
+                <MenuItem value={"انتظار مسل، حاضری"}>انتظار مسل</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
+                <MenuItem value={"رپورٹ SHO، حاضری"}>رپورٹ SHO</MenuItem>
+                <MenuItem value={"بیان DFC, حاضری"}>بیان DFC</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری، حاضری
                 </MenuItem>
-                <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
-                <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
-                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
-                <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
-                <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
-                <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
-                <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
-                <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
                 <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>ترمیمی عرضیدعویٰ</MenuItem>
+                <MenuItem value={"حاضری، رپورٹ اہل کمیشن"}>
+                   رپورٹ اہل کمیشن
+                </MenuItem>
+                <MenuItem value={"حاضری، بیان اہل کمیشن"}>
+                   بیان اہل کمیشن
+                </MenuItem>
+                <MenuItem value={"حاضری، عزرات"}>
+                   عزرات
+                </MenuItem>
                 <Divider />
 
-                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
-                <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
-                <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
-                  بحث، رپورٹ اہل کمیشن
-                </MenuItem>
-                <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
-                <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
-                <MenuItem value={"تقرری وکیل، بحث"}>تقرری وکیل، بحث</MenuItem>
-                <MenuItem value={"راضی نامہ، بحث"}> راضی نامہ، بحث</MenuItem>
-                <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
-                <MenuItem value={"بحث بر مقدمہ"}>بحث بر مقدمہ</MenuItem>
-                <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
-                <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
-                <MenuItem value={"تنقیحات، بحث"}>تنقیحات، بحث</MenuItem>
-                <MenuItem value={"جواب دعویٰ، بحث"}>جواب دعویٰ، بحث</MenuItem>
-                <MenuItem value={"جواب درخواست، بحث"}>
-                  جواب درخواست، بحث
-                </MenuItem>
-                <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
-                <MenuItem value={"بحث یکطرفہ"}>بحث یکطرفہ</MenuItem>
-                <Divider />
-
-                <MenuItem className={classes.boldThis} value={"تقرری وکیل، شہادت"}>
-                  تقرری وکیل، شہادت
-                </MenuItem>
-                <MenuItem value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
+                <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
+                <Divider />
+
+                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
+                <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
+                <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
+                <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
+                <MenuItem value={"بحث بر مقدمہ"}>بحث بر مقدمہ</MenuItem>
+                <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
+                <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
+                <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
+                <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
@@ -895,57 +897,58 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"تقرری وکیل، حاضری"}>تقرری وکیل، حاضری</MenuItem>
                 <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
+                <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
+                <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
+                <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
+                <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
+                <MenuItem value={"تنقیحات، حاضری"}>تنقیحات</MenuItem>
+                <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
                 <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
+                <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
+                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
+                <MenuItem value={"نادرا رپورٹ، حاضری"}>نادرا رپورٹ</MenuItem>
+                <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
                 <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
+                <MenuItem value={"انتظار مسل، حاضری"}>انتظار مسل</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
+                <MenuItem value={"رپورٹ SHO، حاضری"}>رپورٹ SHO</MenuItem>
+                <MenuItem value={"بیان DFC, حاضری"}>بیان DFC</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری، حاضری
                 </MenuItem>
-                <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
-                <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
-                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
-                <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
-                <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
-                <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
-                <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
-                <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
                 <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>ترمیمی عرضیدعویٰ</MenuItem>
+                <MenuItem value={"حاضری، رپورٹ اہل کمیشن"}>
+                   رپورٹ اہل کمیشن
+                </MenuItem>
+                <MenuItem value={"حاضری، بیان اہل کمیشن"}>
+                   بیان اہل کمیشن
+                </MenuItem>
+                <MenuItem value={"حاضری، عزرات"}>
+                   عزرات
+                </MenuItem>
                 <Divider />
 
-                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
-                <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
-                <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
-                  بحث، رپورٹ اہل کمیشن
-                </MenuItem>
-                <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
-                <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
-                <MenuItem value={"تقرری وکیل، بحث"}>تقرری وکیل، بحث</MenuItem>
-                <MenuItem value={"راضی نامہ، بحث"}> راضی نامہ، بحث</MenuItem>
-                <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
-                <MenuItem value={"بحث بر مقدمہ"}>بحث بر مقدمہ</MenuItem>
-                <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
-                <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
-                <MenuItem value={"تنقیحات، بحث"}>تنقیحات، بحث</MenuItem>
-                <MenuItem value={"جواب دعویٰ، بحث"}>جواب دعویٰ، بحث</MenuItem>
-                <MenuItem value={"جواب درخواست، بحث"}>
-                  جواب درخواست، بحث
-                </MenuItem>
-                <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
-                <MenuItem value={"بحث یکطرفہ"}>بحث یکطرفہ</MenuItem>
-                <Divider />
-
-                <MenuItem className={classes.boldThis} value={"تقرری وکیل، شہادت"}>
-                  تقرری وکیل، شہادت
-                </MenuItem>
-                <MenuItem value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
+                <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
+                <Divider />
+
+                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
+                <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
+                <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
+                <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
+                <MenuItem value={"بحث بر مقدمہ"}>بحث بر مقدمہ</MenuItem>
+                <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
+                <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
+                <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
+                <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
@@ -1101,7 +1104,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               }}
                               label="Select Sub Type"
                             >
-                              <MenuItem value="">
+                             <MenuItem value="">
                   <em>Mostly Used</em>
                 </MenuItem>
                 <MenuItem value={"حاضری"}>حاضری</MenuItem>
@@ -1114,57 +1117,58 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"تقرری وکیل، حاضری"}>تقرری وکیل، حاضری</MenuItem>
                 <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
+                <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
+                <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
+                <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
+                <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
+                <MenuItem value={"تنقیحات، حاضری"}>تنقیحات</MenuItem>
+                <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
                 <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
+                <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
+                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
+                <MenuItem value={"نادرا رپورٹ، حاضری"}>نادرا رپورٹ</MenuItem>
+                <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
                 <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
+                <MenuItem value={"انتظار مسل، حاضری"}>انتظار مسل</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
+                <MenuItem value={"رپورٹ SHO، حاضری"}>رپورٹ SHO</MenuItem>
+                <MenuItem value={"بیان DFC, حاضری"}>بیان DFC</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری، حاضری
                 </MenuItem>
-                <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
-                <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
-                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
-                <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
-                <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
-                <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
-                <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
-                <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
                 <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>ترمیمی عرضیدعویٰ</MenuItem>
+                <MenuItem value={"حاضری، رپورٹ اہل کمیشن"}>
+                   رپورٹ اہل کمیشن
+                </MenuItem>
+                <MenuItem value={"حاضری، بیان اہل کمیشن"}>
+                   بیان اہل کمیشن
+                </MenuItem>
+                <MenuItem value={"حاضری، عزرات"}>
+                   عزرات
+                </MenuItem>
                 <Divider />
 
-                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
-                <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
-                <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
-                  بحث، رپورٹ اہل کمیشن
-                </MenuItem>
-                <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
-                <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
-                <MenuItem value={"تقرری وکیل، بحث"}>تقرری وکیل، بحث</MenuItem>
-                <MenuItem value={"راضی نامہ، بحث"}> راضی نامہ، بحث</MenuItem>
-                <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
-                <MenuItem value={"بحث بر مقدمہ"}>بحث بر مقدمہ</MenuItem>
-                <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
-                <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
-                <MenuItem value={"تنقیحات، بحث"}>تنقیحات، بحث</MenuItem>
-                <MenuItem value={"جواب دعویٰ، بحث"}>جواب دعویٰ، بحث</MenuItem>
-                <MenuItem value={"جواب درخواست، بحث"}>
-                  جواب درخواست، بحث
-                </MenuItem>
-                <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
-                <MenuItem value={"بحث یکطرفہ"}>بحث یکطرفہ</MenuItem>
-                <Divider />
-
-                <MenuItem className={classes.boldThis} value={"تقرری وکیل، شہادت"}>
-                  تقرری وکیل، شہادت
-                </MenuItem>
-                <MenuItem value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
+                <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
+                <Divider />
+
+                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
+                <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
+                <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
+                <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
+                <MenuItem value={"بحث بر مقدمہ"}>بحث بر مقدمہ</MenuItem>
+                <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
+                <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
+                <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
+                <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
@@ -1332,57 +1336,58 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"تقرری وکیل، حاضری"}>تقرری وکیل، حاضری</MenuItem>
                 <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
+                <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
+                <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
+                <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
+                <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
+                <MenuItem value={"تنقیحات، حاضری"}>تنقیحات</MenuItem>
+                <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
                 <MenuItem value={"فرد جرم، حاضری"}>فرد جرم، حاضری</MenuItem>
                 <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
+                <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
+                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
+                <MenuItem value={"نادرا رپورٹ، حاضری"}>نادرا رپورٹ</MenuItem>
+                <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
                 <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
+                <MenuItem value={"انتظار مسل، حاضری"}>انتظار مسل</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس، حاضری</MenuItem>
+                <MenuItem value={"رپورٹ SHO، حاضری"}>رپورٹ SHO</MenuItem>
+                <MenuItem value={"بیان DFC, حاضری"}>بیان DFC</MenuItem>
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری، حاضری
                 </MenuItem>
-                <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
-                <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
-                <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
-                <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
-                <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
-                <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
-                <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
-                <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
                 <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>ترمیمی عرضیدعویٰ</MenuItem>
+                <MenuItem value={"حاضری، رپورٹ اہل کمیشن"}>
+                   رپورٹ اہل کمیشن
+                </MenuItem>
+                <MenuItem value={"حاضری، بیان اہل کمیشن"}>
+                   بیان اہل کمیشن
+                </MenuItem>
+                <MenuItem value={"حاضری، عزرات"}>
+                   عزرات
+                </MenuItem>
                 <Divider />
 
-                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
-                <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
-                <MenuItem value={"بحث، رپورٹ اہل کمیشن"}>
-                  بحث، رپورٹ اہل کمیشن
-                </MenuItem>
-                <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
-                <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
-                <MenuItem value={"تقرری وکیل، بحث"}>تقرری وکیل، بحث</MenuItem>
-                <MenuItem value={"راضی نامہ، بحث"}> راضی نامہ، بحث</MenuItem>
-                <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
-                <MenuItem value={"بحث بر مقدمہ"}>بحث بر مقدمہ</MenuItem>
-                <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
-                <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
-                <MenuItem value={"تنقیحات، بحث"}>تنقیحات، بحث</MenuItem>
-                <MenuItem value={"جواب دعویٰ، بحث"}>جواب دعویٰ، بحث</MenuItem>
-                <MenuItem value={"جواب درخواست، بحث"}>
-                  جواب درخواست، بحث
-                </MenuItem>
-                <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
-                <MenuItem value={"بحث یکطرفہ"}>بحث یکطرفہ</MenuItem>
-                <Divider />
-
-                <MenuItem className={classes.boldThis} value={"تقرری وکیل، شہادت"}>
-                  تقرری وکیل، شہادت
-                </MenuItem>
-                <MenuItem value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
+                <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
+                <Divider />
+
+                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
+                <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
+                <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
+                <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
+                <MenuItem value={"بحث بر مقدمہ"}>بحث بر مقدمہ</MenuItem>
+                <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
+                <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
+                <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
+                <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
