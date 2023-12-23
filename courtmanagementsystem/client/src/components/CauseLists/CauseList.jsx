@@ -59,7 +59,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   // const [orderDate, setOrderDate] = useState(new Date("2023-06-19"));
-  const [orderDate, setOrderDate] = useState(new Date());
+  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 1));
+  const [orderDate, setOrderDate] = useState(dateCauseList);
+  useEffect(() => {
+    setOrderDate(dateCauseList);
+  }, [dateCauseList])
+  
 
   // const [nextDate, setNextDate] = useState(new Date());
   // const [caseData, setCaseData] = useState({
@@ -125,7 +130,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     if (caseId) handleSubmit(nextDate);
   }, [nextDate]);
 
-  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 1));
   const [serialNo, setSerialNo] = useState([]);
   let index = 0;
   // let sno = [];
@@ -392,8 +396,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           >
                             <KeyboardDatePicker
                               // margin="normal"
+                              disableToolbar
+                              label="Next Date"
                               id="date-picker-inline"
-                              label=""
                               variant="inline"
                               autoOk
                               format="dd/MM/yyyy"
@@ -614,7 +619,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             <KeyboardDatePicker
                               // margin="normal"
                               id="date-picker-inline"
-                              label=""
+                              disableToolbar
+                              label="Next Date"
                               variant="inline"
                               autoOk
                               format="dd/MM/yyyy"
@@ -834,7 +840,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             <KeyboardDatePicker
                               // margin="normal"
                               id="date-picker-inline"
-                              label=""
+                              disableToolbar
+                              label="Next Date"
                               variant="inline"
                               autoOk
                               format="dd/MM/yyyy"
@@ -1054,7 +1061,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             <KeyboardDatePicker
                               // margin="normal"
                               id="date-picker-inline"
-                              label=""
+                              disableToolbar
+                              label="Next Date"
                               variant="inline"
                               autoOk
                               format="dd/MM/yyyy"
@@ -1273,7 +1281,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             <KeyboardDatePicker
                               // margin="normal"
                               id="date-picker-inline"
-                              label=""
+                              disableToolbar
+                              label="Next Date"
                               variant="inline"
                               autoOk
                               format="dd/MM/yyyy"

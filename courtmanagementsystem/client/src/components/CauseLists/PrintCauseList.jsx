@@ -89,6 +89,14 @@ const useStyles = makeStyles((theme) =>
       fontWeight: "bold",
       padding: "20px",
     },
+    tableCaseTitle: {
+      fontSize: 14,
+      // fontFamily: "Alvi Nastaleeq Regular",
+      fontFamily: "Jameel Noori Nastaleeq",
+      // fontStyle: "",
+      fontWeight: "bold",
+      padding: "10px",
+    }
   })
 );
 
@@ -344,6 +352,7 @@ const PrintCauseList = (props) => {
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
+                          // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
                           style={{ fontSize: "auto" }}
                         >
@@ -427,6 +436,7 @@ const PrintCauseList = (props) => {
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
+                          // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
                           style={{ fontSize: "auto" }}
                         >
@@ -510,6 +520,7 @@ const PrintCauseList = (props) => {
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
+                          // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
                           style={{ fontSize: "auto" }}
                         >
@@ -593,6 +604,7 @@ const PrintCauseList = (props) => {
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
+                          // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
                           style={{ fontSize: "auto" }}
                         >
@@ -676,6 +688,7 @@ const PrintCauseList = (props) => {
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
+                          // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
                           style={{ fontSize: "auto" }}
                         >
