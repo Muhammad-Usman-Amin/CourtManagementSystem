@@ -207,7 +207,7 @@ const PrintCauseList = (props) => {
                     }}
                     className={classes.tableHeaderCell}
                   >
-                    بعدالت جناب شبیراحمد سِول جج/جوڈیشل مجسٹریٹ/علاقہ قاضی-II، ضلع دیر پائین بمقام تیمرگرہ
+                    بعدالت جناب زیب النساءعباسی              سِول جج /جج فیملی کورٹ/علاقہ قاضی-V  دیر پائین بمقام تیمرگرہ
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -284,6 +284,9 @@ const PrintCauseList = (props) => {
                     عنوان مقدمہ
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell} align="left">
+                    نوعیت
+                  </TableCell>
+                  <TableCell className={classes.tableHeaderCell} align="left">
                     کارروائی
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell} align="left">
@@ -345,10 +348,40 @@ const PrintCauseList = (props) => {
                         <TableCell className={classes.tableCell} align="left">
                           {!caseFile["Date of Institution "]
                             ? "null"
-                            : format?.(
+                            : (
+                              <>
+                              <span style={{ fontSize: '16px' }}>
+                              {format?.(
                                 parseISO(caseFile["Date of Institution "]),
                                 "dd-MM-yyy"
                               )}
+                              </span>
+                              <br />
+                              </>
+                    )}
+                          {!caseFile["Date of Transfer In"]
+                            ? ""
+                            :(
+                              <>                              
+                              <span style={{ fontSize: '16x' }}>
+                            {format?.(
+                                parseISO(caseFile["Date of Transfer In"]),
+                                "dd-MM-yyy"
+                              )}
+                              </span>
+                              <br />
+                            </>
+                            )}
+                          {!caseFile["Date of Other Institution"]
+                            ? ""
+                            :(                             
+                              <span style={{ fontSize: '16x' }}>
+                            {format?.(
+                                parseISO(caseFile["Date of Other Institution"]),
+                                "dd-MM-yyy"
+                              )}
+                              </span>
+                            )}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -359,6 +392,16 @@ const PrintCauseList = (props) => {
                           {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          // className={[classes.tableCell, classes.tableCaseTitle]}
+                          align="left"
+                          style={{ fontSize: "auto" }}
+                        >
+                          {caseFile.nature
+                            ? caseFile.nature
+                            : null}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
@@ -427,12 +470,42 @@ const PrintCauseList = (props) => {
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
-                          {!caseFile["Date of Institution "]
+                        {!caseFile["Date of Institution "]
                             ? "null"
-                            : format?.(
+                            : (
+                              <>
+                              <span style={{ fontSize: '16px' }}>
+                              {format?.(
                                 parseISO(caseFile["Date of Institution "]),
                                 "dd-MM-yyy"
                               )}
+                              </span>
+                              <br />
+                              </>
+                    )}
+                    {!caseFile["Date of Transfer In"]
+                            ? ""
+                            :(
+                              <>                              
+                              <span style={{ fontSize: '16x' }}>
+                            {format?.(
+                                parseISO(caseFile["Date of Transfer In"]),
+                                "dd-MM-yyy"
+                              )}
+                              </span>
+                              <br />
+                            </>
+                            )}
+                          {!caseFile["Date of Other Institution"]
+                            ? ""
+                            :(                             
+                              <span style={{ fontSize: '16x' }}>
+                            {format?.(
+                                parseISO(caseFile["Date of Other Institution"]),
+                                "dd-MM-yyy"
+                              )}
+                              </span>
+                            )}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -443,6 +516,16 @@ const PrintCauseList = (props) => {
                           {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          // className={[classes.tableCell, classes.tableCaseTitle]}
+                          align="left"
+                          style={{ fontSize: "auto" }}
+                        >
+                          {caseFile.nature
+                            ? caseFile.nature
+                            : null}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
@@ -511,12 +594,42 @@ const PrintCauseList = (props) => {
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
-                          {!caseFile["Date of Institution "]
+                        {!caseFile["Date of Institution "]
                             ? "null"
-                            : format?.(
+                            : (
+                              <>
+                              <span style={{ fontSize: '16px' }}>
+                              {format?.(
                                 parseISO(caseFile["Date of Institution "]),
                                 "dd-MM-yyy"
                               )}
+                              </span>
+                              <br />
+                              </>
+                    )}
+                    {!caseFile["Date of Transfer In"]
+                            ? ""
+                            :(
+                              <>                              
+                              <span style={{ fontSize: '16x' }}>
+                            {format?.(
+                                parseISO(caseFile["Date of Transfer In"]),
+                                "dd-MM-yyy"
+                              )}
+                              </span>
+                              <br />
+                            </>
+                            )}
+                          {!caseFile["Date of Other Institution"]
+                            ? ""
+                            :(                             
+                              <span style={{ fontSize: '16x' }}>
+                            {format?.(
+                                parseISO(caseFile["Date of Other Institution"]),
+                                "dd-MM-yyy"
+                              )}
+                              </span>
+                            )}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -527,6 +640,16 @@ const PrintCauseList = (props) => {
                           {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          // className={[classes.tableCell, classes.tableCaseTitle]}
+                          align="left"
+                          style={{ fontSize: "auto" }}
+                        >
+                          {caseFile.nature
+                            ? caseFile.nature
+                            : null}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
@@ -595,12 +718,42 @@ const PrintCauseList = (props) => {
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
-                          {!caseFile["Date of Institution "]
+                        {!caseFile["Date of Institution "]
                             ? "null"
-                            : format?.(
+                            : (
+                              <>
+                              <span style={{ fontSize: '16px' }}>
+                              {format?.(
                                 parseISO(caseFile["Date of Institution "]),
                                 "dd-MM-yyy"
                               )}
+                              </span>
+                              <br />
+                              </>
+                    )}
+                    {!caseFile["Date of Transfer In"]
+                            ? ""
+                            :(
+                              <>                              
+                              <span style={{ fontSize: '16x' }}>
+                            {format?.(
+                                parseISO(caseFile["Date of Transfer In"]),
+                                "dd-MM-yyy"
+                              )}
+                              </span>
+                              <br />
+                            </>
+                            )}
+                          {!caseFile["Date of Other Institution"]
+                            ? ""
+                            :(                             
+                              <span style={{ fontSize: '16x' }}>
+                            {format?.(
+                                parseISO(caseFile["Date of Other Institution"]),
+                                "dd-MM-yyy"
+                              )}
+                              </span>
+                            )}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -611,6 +764,16 @@ const PrintCauseList = (props) => {
                           {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          // className={[classes.tableCell, classes.tableCaseTitle]}
+                          align="left"
+                          style={{ fontSize: "auto" }}
+                        >
+                          {caseFile.nature
+                            ? caseFile.nature
+                            : null}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
@@ -648,7 +811,7 @@ const PrintCauseList = (props) => {
                     }}
                     className={classes.tableHeaderCell}
                   >
-                    متفرق
+                    
                   </TableCell>
                 </TableRow>
 
@@ -679,12 +842,29 @@ const PrintCauseList = (props) => {
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
-                          {!caseFile["Date of Institution "]
+                        {!caseFile["Date of Institution "]
                             ? "null"
-                            : format?.(
+                            : (
+                              <>
+                              <span style={{ fontSize: '16px' }}>
+                              {format?.(
                                 parseISO(caseFile["Date of Institution "]),
                                 "dd-MM-yyy"
                               )}
+                              </span>
+                              <br />
+                              </>
+                    )}
+                          {!caseFile["Date of Transfer In"]
+                            ? ""
+                            :(
+                              <span style={{ fontSize: '16x' }}>
+                            {format?.(
+                                parseISO(caseFile["Date of Transfer In"]),
+                                "dd-MM-yyy"
+                              )}
+                              </span>
+                            )}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}

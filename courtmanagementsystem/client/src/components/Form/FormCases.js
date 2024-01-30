@@ -90,6 +90,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     orderNumber: "",
     actionAbstract: "",
     orderDate: new Date(),
+    nature: "",
   });
 
   const handleDateChange = (date) => {
@@ -180,6 +181,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       orderNumber: "",
       actionAbstract: "",
       orderDate: new Date(),
+      nature: "",
     });
   };
 
@@ -233,7 +235,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             {selectedCaseType === "Civil" ? (
               <FormControl
                 fullWidth
@@ -513,7 +515,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               </FormControl>
             )}
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={3}>
             <TextField
               name="caseNumber"
               variant="outlined"
@@ -522,6 +524,18 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               value={caseData["Case No"]}
               onChange={(e) =>
                 setCaseData({ ...caseData, "Case No": e.target.value })
+              }
+            />
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <TextField
+              name="nature"
+              variant="outlined"
+              label="Case Nature (نوعیت)"
+              fullWidth
+              value={caseData.nature}
+              onChange={(e) =>
+                setCaseData({ ...caseData, nature: e.target.value })
               }
             />
           </Grid>
@@ -781,6 +795,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   طلبی انکوائری، حاضری
                 </MenuItem>
                 <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>ترمیمی عرضیدعویٰ</MenuItem>
+                <MenuItem value={" ترمیمی جواب دعویٰ، حاضری"}>ترمیمی جواب دعویٰ</MenuItem>
                 <MenuItem value={"حاضری، رپورٹ اہل کمیشن"}>
                    رپورٹ اہل کمیشن
                 </MenuItem>
@@ -790,18 +805,33 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"حاضری، عزرات"}>
                    عزرات
                 </MenuItem>
+                <MenuItem value={"مصالحت ابتدائی، حاضری"}>
+                مصالحت ابتدائی
+                </MenuItem>
+                <MenuItem value={"شیڈولنگ کانفرنس، حاضری"}>
+                شیڈولنگ کانفرنس
+                </MenuItem>
+                <MenuItem value="جواب الجواب، حاضری">
+                جواب الجواب
+                </MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
+                <MenuItem value={"شہادت مدعیہ"}>شہادت مدعیہ</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
+                <MenuItem  value={"شہادت سائیل"}>شہادت سائیل</MenuItem>
+                <MenuItem  value={"شہادت مسئول الیہ"}>شہادت مسئول الیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
+                <MenuItem value={"جرح بر گواہ، شہادت"}>جرح بر گواہ، شہادت</MenuItem>
+                <MenuItem value={"ہمراہ، شہادت"}>ہمراہ، شہادت</MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
+                <MenuItem value={"جواب و بحث"}>جواب و بحث</MenuItem>
                 <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
                 <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
                 <MenuItem value={"یکطرفہ بحث"}>یکطرفہ بحث</MenuItem>
@@ -810,6 +840,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
                 <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
                 <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
+                <MenuItem value={"مصالحت ثانی، بحث"}>
+                مصالحت ثانی
+                </MenuItem>
+                <MenuItem value={"ہمراہ، بحث"}>ہمراہ، بحث</MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
