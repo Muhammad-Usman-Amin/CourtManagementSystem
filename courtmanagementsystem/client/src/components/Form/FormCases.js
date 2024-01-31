@@ -80,7 +80,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     disposed: false,
     transferedOut: false,
     transferedIn: false,
-    AcquittalORConvictionFlag: "",
+    remandedRestored: false,
+    AcquittalORConviction: "",
     // "Disposal OR Transfer Out Flag": "",
     "Disposal Mode Flag": "", //used for contested, non-contested etc
     "Date of Transfer In": null,
@@ -171,7 +172,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       disposed: false,
       transferedOut: false,
       transferedIn: false,
-      AcquittalORConvictionFlag: "", //only for Criminal cases
+      remandedRestored: false,
+      AcquittalORConviction: "", //only for Criminal cases
       // "Disposal OR Transfer Out Flag": "",
       "Disposal Mode Flag": "", //used for contested, non-contested etc
       "Date of Transfer In": null,
@@ -872,25 +874,181 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
           {/* <Grid item xs={12} sm={12}> */}
           <Grid item container xs={12} sm={12} alignItems="center" spacing={1}>
             {/* <FormControl fullWidth component="fieldset"> */}
-            <Grid item xs={6} sm={4}>
+
+            <Grid item xs={6} sm={6}>
               <FormControlLabel
                 control={
-                  <GreenCheckbox
-                    checked={caseData.disposed}
+                  <Checkbox
+                    checked={caseData.remandedRestored}
+                    color="primary"
                     onChange={(e) =>
                       setCaseData({
                         ...caseData,
-                        disposed: e.target.checked,
-                        transferedOut: false,
+                        remandedRestored: e.target.checked
                       })
                     }
-                    name="disposed"
+                    name="remandedRestored"
                   />
                 }
-                label="Disposed"
+                label="Restored/Remanded"
               />
             </Grid>
-            <Grid item xs={6} sm={4}>
+            <Grid item xs={6} sm={3}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={caseData.transferedIn}
+                    color="primary"
+                    onChange={(e) =>
+                      setCaseData({
+                        ...caseData,
+                        transferedIn: e.target.checked,
+                      })
+                    }
+                    name="transferedIn"
+                  />
+                }
+                label="Transfered In"
+              />
+            </Grid>
+            <Grid item xs={6} sm={3}>
+            {caseData.transferedIn && (
+                  <>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+                    {/* <Grid container justifyContent="space-around"> */}
+                    {/* <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Institution Date"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                    }}
+                /> */}
+                    <KeyboardDatePicker
+                      // disableToolbar
+                      // variant="inline"
+                      // margin="normal"
+                      id="date-picker-inline"
+                      // id="date-picker-dialog"
+                      label="Date of Transfer In"
+                      autoOk
+                      format="dd/MM/yyyy"
+                      value={
+                        caseData["Date of Transfer In"]
+                          ? caseData["Date of Transfer In"]
+                          : null
+                      }
+                      onChange={(date) =>
+                        setCaseData({
+                          ...caseData,
+                          "Date of Transfer In": date,
+                        })
+                      }
+                      KeyboardButtonProps={{
+                        "aria-label": "change date of Transfer In",
+                      }}
+                    />
+                    {/* </Grid> */}
+                  </MuiPickersUtilsProvider>
+                  {/* </Container> */}
+                  </>
+                )}
+            </Grid>
+              <Grid container spacing={1} fullWidth>
+            {caseData.remandedRestored && (
+              <>
+
+              <Grid item xs={12} sm={3}>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+                    {/* <Grid container justifyContent="space-around"> */}
+                    {/* <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Institution Date"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                    }}
+                /> */}
+                    <KeyboardDatePicker
+                      // disableToolbar
+                      // variant="inline"
+                      // margin="normal"
+                      id="date-picker-inline"
+                      // id="date-picker-dialog"
+                      label="Date of other Institution"
+                      autoOk
+                      format="dd/MM/yyyy"
+                      value={
+                        caseData["Date of Other Institution"]
+                          ? caseData["Date of Other Institution"]
+                          : null
+                      }
+                      onChange={(date) =>
+                        setCaseData({
+                          ...caseData,
+                          "Date of Other Institution": date,
+                        })
+                      }
+                      KeyboardButtonProps={{
+                        "aria-label": "change date of other Institution",
+                      }}
+                    />
+                    {/* </Grid> */}
+                  </MuiPickersUtilsProvider>
+                  {/* </Container> */}
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Institution Flag
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={
+                        caseData["Institution Flag"]
+                          ? caseData["Institution Flag"]
+                          : setCaseData({
+                              ...caseData,
+                              "Institution Flag": "-",
+                            })
+                      }
+                      onChange={(e) => {
+                        setCaseData({
+                          ...caseData,
+                          "Institution Flag": e.target.value,
+                        });
+                      }}
+                      label="Institution Flag"
+                    >
+                      <MenuItem value="None">None</MenuItem>
+                      <MenuItem value={"Restored"}>
+                        Restored
+                      </MenuItem>
+                      <MenuItem value={"Remanded"}>
+                        Remanded
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                </>
+                )}
+                  </Grid>
+                
+                
+                
+
+            <Grid item xs={6} sm={3}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -909,29 +1067,81 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 label="Transfered Out"
               />
             </Grid>
-            <Grid item xs={6} sm={4}>
+            <Grid item xs={6} sm={3}>
+            {caseData.transferedOut && (
+                  <>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+                    {/* <Grid container justifyContent="space-around"> */}
+                    {/* <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Institution Date"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                    }}
+                /> */}
+                    <KeyboardDatePicker
+                      // disableToolbar
+                      // variant="inline"
+                      // margin="normal"
+                      id="date-picker-inline"
+                      // id="date-picker-dialog"
+                      label="Date of Transfer Out"
+                      autoOk
+                      format="dd/MM/yyyy"
+                      value={
+                        caseData["Date of Transfer Out"]
+                          ? caseData["Date of Transfer Out"]
+                          : null
+                      }
+                      onChange={(date) =>
+                        setCaseData({
+                          ...caseData,
+                          "Date of Transfer Out": date,
+                          "Disposal Mode Flag" : "Transfer Out"
+                        })
+                      }
+                      KeyboardButtonProps={{
+                        "aria-label": "change date of Transfer Out",
+                      }}
+                    />
+                    {/* </Grid> */}
+                  </MuiPickersUtilsProvider>
+                  {/* </Container> */}
+                  </>
+                )}
+            </Grid>
+
+            <Grid item xs={6} sm={6}>
               <FormControlLabel
                 control={
-                  <Checkbox
-                    checked={caseData.transferedIn}
-                    color="primary"
+                  <GreenCheckbox
+                    checked={caseData.disposed}
                     onChange={(e) =>
                       setCaseData({
                         ...caseData,
-                        transferedIn: e.target.checked,
+                        disposed: e.target.checked,
+                        transferedOut: false,
                       })
                     }
-                    name="transferedIn"
+                    name="disposed"
                   />
                 }
-                label="Transfered In"
+                label="Disposed"
               />
             </Grid>
             {/* </FormControl> */}
 
-            {caseData.disposed && (
-              <>
-                <Grid item xs={12} sm={2}>
+                {caseData.disposed && (<>
+                <Grid container justify="flex-end" spacing={1}>
+
+                
+                <Grid item xs={12} sm={3}>
                   <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
                     {/* <Grid container justifyContent="space-around"> */}
                     {/* <KeyboardDatePicker
@@ -975,7 +1185,6 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   </MuiPickersUtilsProvider>
                   {/* </Container> */}
                 </Grid>
-
                 <Grid item xs={12} sm={3}>
                   <FormControl fullWidth variant="outlined">
                     <InputLabel id="demo-simple-select-outlined-label">
@@ -1000,6 +1209,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                       }}
                       label="Disposal Mode Flag"
                     >
+
                       <MenuItem value=""></MenuItem>
                       <MenuItem value={"Contested-Trial Based"}>
                         Contested-Trial Based
@@ -1009,8 +1219,52 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                       </MenuItem>
                       <MenuItem value={"Uncontested"}>Uncontested</MenuItem>
                       <MenuItem value={"In Default"}>In Default</MenuItem>
+                      {caseData["Case Type"]=== 'Criminal' && <MenuItem value={"Pleadguilty"}>Pleadguilty</MenuItem>}
                     </Select>
                   </FormControl>
+                </Grid>
+                {caseData["Case Type"] === 'Criminal' && (
+
+                <Grid item xs={12} sm={7}>
+                <FormControl fullWidth variant="outlined">
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      In Case of Criminal Category Select Acquittal or Conviction or Others
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={
+                        caseData["AcquittalORConviction"]
+                          ? caseData["AcquittalORConviction"]
+                          : setCaseData({
+                              ...caseData,
+                              "AcquittalORConviction": "-",
+                            })
+                      }
+                      onChange={(e) => {
+                        setCaseData({
+                          ...caseData,
+                          "AcquittalORConviction": e.target.value,
+                        });
+                      }}
+                      label="In Case of Criminal Category Select Acquittal or Conviction or Others"
+                    >
+                      <MenuItem value="Not Applicable">Not Applicable</MenuItem>
+                      <MenuItem value="Conviction">Conviction</MenuItem>
+                      <MenuItem value="Acquittal-On Merit">Acquittal-On Merit</MenuItem>
+                      <MenuItem value="Acquittal-On Compromise">Acquittal-On Compromise</MenuItem>
+                      <MenuItem value="Acquittal-On Other Modes">Acquittal-On Other Modes</MenuItem>
+                      <MenuItem value="Acquittal-U/Sec 265K/249-A">Acquittal-U/Sec 265K/249-A</MenuItem>
+                      <MenuItem value="512 Cr.PC Completed">512 Cr.PC Completed</MenuItem>
+                      <MenuItem value="Proceedings Abated">Proceedings Abated</MenuItem>
+                      <MenuItem value="Cases Stopped U/Sec 249 Cr.PC">Cases Stopped U/Sec 249 Cr.PC</MenuItem>
+                      <MenuItem value="Adjourned Sine-Die">Adjourned Sine-Die</MenuItem>
+                      <MenuItem value="Accepted">Accepted</MenuItem>
+                      <MenuItem value="Dismissed">Dismissed</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                )}
                 </Grid>
               </>
             )}

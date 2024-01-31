@@ -42,6 +42,7 @@ export const createCase = async (req, res) => {
     orderDate: orderDate,
     orderNumber,
     nature,
+    AcquittalORConviction,
   } = body;
   console.log(caseTitle);
 
@@ -75,6 +76,7 @@ export const createCase = async (req, res) => {
     orderDate: orderDate,
     orderNumber: orderNumber,
     nature: nature,
+    AcquittalORConviction: AcquittalORConviction,
   });
 
   //   newCase.causeListEntries = [

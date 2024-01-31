@@ -25,7 +25,7 @@ const caseSchema = new mongoose.Schema({
   transferedIn: Boolean,
   // ["Disposal OR Transfer Out Flag"]: String, // this is the converted to disposed and transferOut key
   ["Disposal Mode Flag"]: String, //used for contested, non-contested etc
-  AcquittalORConvictionFlag: String, //only for Criminal cases
+  AcquittalORConviction: String, //only for Criminal cases
   ["Date of Transfer In"]: Date,
   ["Date of Other Institution"]: Date,
   ["Institution Flag"]: String, //used for restored, remanded flags

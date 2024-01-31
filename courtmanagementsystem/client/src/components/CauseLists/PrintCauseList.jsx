@@ -360,20 +360,20 @@ const PrintCauseList = (props) => {
                               </>
                     )}
                           {!caseFile["Date of Transfer In"]
-                            ? ""
+                            ? null
                             :(
                               <>                              
                               <span style={{ fontSize: '16x' }}>
-                            {format?.(
+                            {caseFile["Date of Transfer In"] ? format?.(
                                 parseISO(caseFile["Date of Transfer In"]),
                                 "dd-MM-yyy"
-                              )}
+                              ) : null}
                               </span>
                               <br />
                             </>
                             )}
                           {!caseFile["Date of Other Institution"]
-                            ? ""
+                            ? null
                             :(                             
                               <span style={{ fontSize: '16x' }}>
                             {format?.(
@@ -397,29 +397,29 @@ const PrintCauseList = (props) => {
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
-                          style={{ fontSize: "10px" , dir : 'ltr'}}
+                          style={{ fontSize: "16px" , dir : 'ltr'}}
                         >
                           {caseFile["Case Type"] === "Civil"
                             ? caseFile.nature
                             :(
                               <>
                               <span style={{ fontSize: "10px" }}>
-                            {format?.(
+                            {caseFile["FIR Date"] ? format?.(
                                 parseISO(caseFile["FIR Date"]),
                                 "dd-MM-yyy"
-                              )}
+                              ) : null}
                               </span>
                               <span>/</span>
                               <span style={{ fontSize: '10px' }}>
-                            {caseFile["FIR NO"]}
+                            {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
                               </span>
                               <span>،</span>
                               <span style={{ fontSize: '10px' }}>
-                            {caseFile.Thana}
+                            {caseFile.Thana ? caseFile.Thana : null}
                               </span>
                               <br/>
                               <span style={{ fontSize: '10px' }}>
-                            جرم:{caseFile.Section}
+                            جرم:{caseFile.Section ? caseFile.Section : null}
                               </span>
                             </>
                             )}
