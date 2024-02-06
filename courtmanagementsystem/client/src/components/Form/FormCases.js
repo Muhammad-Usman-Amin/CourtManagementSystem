@@ -62,7 +62,7 @@ const GreenRadio = withStyles({
 
 const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [institutionDate, setInstitutionDate] = useState(new Date());
-  const [nextDate, setNextDate] = useState(addDays(new Date(), 1));
+  const [nextDate, setNextDate] = useState(addDays(new Date(), 3));
   const [sameAsInstitutionDate, setSameAsInstitutiondate] = useState(false);
   const [caseData, setCaseData] = useState({
     // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
@@ -112,6 +112,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   useEffect(() => {
     setSelectedCaseType("Civil");
   }, []);
+  const [isDisposed, setIsDisposed] = useState(false);
+  const [isTransferOut, setIsTransferOut] = useState(false);
+  const [isTransferedIn, setIsTransferedIn] = useState(false);
+  const [isRemandedRestored, setIsRemandedRestored] = useState(false);
   useEffect(() => {
     // console.log(caseFile);
     // console.log('useEffect called');
@@ -121,6 +125,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       setNextDate(caseFile.nextDate ? caseFile.nextDate : nextDate);
       // console.log(selectedCaseType);
       setCaseData(caseFile);
+      caseFile['Date of Disposal Transfer Out'] ? setIsDisposed(true) : setIsDisposed(false);
+      caseFile['Date of Transfer In'] ? setIsTransferedIn(true) : setIsTransferedIn(false);
+      caseFile['Date of Other Institution'] ? setIsRemandedRestored(true) : setIsRemandedRestored(false);
+      caseFile['Disposal Mode Flag'] === 'Transfer Out' ? setIsTransferOut(true) : setIsTransferOut(false);
     }
   }, [caseFile]);
 
@@ -879,13 +887,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={caseData.remandedRestored}
+                    checked={isRemandedRestored}
                     color="primary"
                     onChange={(e) =>
-                      setCaseData({
+                      {setCaseData({
                         ...caseData,
                         remandedRestored: e.target.checked
-                      })
+                      }); setIsRemandedRestored(e.target.value)}
                     }
                     name="remandedRestored"
                   />
@@ -897,13 +905,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={caseData.transferedIn}
+                    checked={isTransferedIn}
                     color="primary"
                     onChange={(e) =>
-                      setCaseData({
+                      {setCaseData({
                         ...caseData,
                         transferedIn: e.target.checked,
-                      })
+                      }); setIsTransferedIn(e.target.value)}
                     }
                     name="transferedIn"
                   />
@@ -912,7 +920,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               />
             </Grid>
             <Grid item xs={6} sm={3}>
-            {caseData.transferedIn && (
+            {isTransferedIn && (
                   <>
                   <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
                     {/* <Grid container justifyContent="space-around"> */}
@@ -960,7 +968,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 )}
             </Grid>
               <Grid container spacing={1} fullWidth>
-            {caseData.remandedRestored && (
+            {isRemandedRestored && (
               <>
 
               <Grid item xs={12} sm={3}>
@@ -1052,14 +1060,14 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={caseData.transferedOut}
+                    checked={isTransferOut}
                     color="secondary"
                     onChange={(e) =>
-                      setCaseData({
+                      {setCaseData({
                         ...caseData,
                         transferedOut: e.target.checked,
                         disposed: false,
-                      })
+                      }); setIsTransferOut(e.target.value)}
                     }
                     name="transferedOut"
                   />
@@ -1068,7 +1076,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               />
             </Grid>
             <Grid item xs={6} sm={3}>
-            {caseData.transferedOut && (
+            {isTransferOut && (
                   <>
                   <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
                     {/* <Grid container justifyContent="space-around"> */}
@@ -1121,13 +1129,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               <FormControlLabel
                 control={
                   <GreenCheckbox
-                    checked={caseData.disposed}
+                    checked={isDisposed}
                     onChange={(e) =>
-                      setCaseData({
+                      {setCaseData({
                         ...caseData,
                         disposed: e.target.checked,
                         transferedOut: false,
-                      })
+                      }); setIsDisposed(e.target.value)}
                     }
                     name="disposed"
                   />
@@ -1137,9 +1145,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
             </Grid>
             {/* </FormControl> */}
 
-                {caseData.disposed && (<>
+                {isDisposed && (<>
                 <Grid container justify="flex-end" spacing={1}>
-
                 
                 <Grid item xs={12} sm={3}>
                   <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
