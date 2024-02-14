@@ -5,8 +5,25 @@ import express from "express";
 const router = express.Router();
 
 export const getCases = async (req, res) => {
+  // const query = req.query;
+
   try {
-    const cases = await Case.find();
+    // const cases = await Case.find();
+    const cases = await Case.find({ 
+      $and: [
+          { disposed: { $ne: true } }, //$ne means not equal to
+          { "Disposal OR Transfer Out Flag": { $nin: ["Disposed", "Transfer Out"] } } //$nin means not in array
+      ]
+  })
+  
+  // if(req.value === "Disposal"){
+  //   db.cases.find({
+  //     $or: [
+  //         { disposed: true },
+  //         { "Disposal OR Transfer Out Flag": { $in: ["Disposed", "Transfer Out"] } }
+  //     ]
+  // })
+  // }
 
     res.status(200).json(cases);
   } catch (error) {

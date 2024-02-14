@@ -59,7 +59,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   // const [orderDate, setOrderDate] = useState(new Date("2023-06-19"));
-  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 3));
+  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 2));
   const [orderDate, setOrderDate] = useState(dateCauseList);
   useEffect(() => {
     setOrderDate(dateCauseList);

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import EmployeeData from "../models/employeeData.js";
+import Case from "../models/case.js";
 import express, { query } from 'express';
 
 const router = express.Router();
@@ -7,9 +8,24 @@ const router = express.Router();
 
 
 export const getQueryData = async (req, res) => {
+    // Assuming req.query.month contains the month value (e.g., '02' for February)
+const desiredMonth = req.query.month; 
+
+// Querying documents where disposalDate is in the desired month
+if (desiredMonth){
+    Case.find({
+        $and: [
+            { disposed: true }, // Assuming you want to fetch only disposed cases
+            { "Disposal OR Transfer Out Flag": { $in: ["Disposed", "Transfer Out"] } }, // Assuming this is another condition
+            { $expr: { $eq: [{ $month: "$disposalDate" }, parseInt(desiredMonth)] } } // Extracting month from disposalDate and comparing with desired month
+        ]})
+        return res.status(200).json(data);
+    }
+
 
     const query = req.query;
     console.log(query.designation);
+    
 
     // try {
 

@@ -62,7 +62,7 @@ const GreenRadio = withStyles({
 
 const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [institutionDate, setInstitutionDate] = useState(new Date());
-  const [nextDate, setNextDate] = useState(addDays(new Date(), 3));
+  const [nextDate, setNextDate] = useState(addDays(new Date(), 2));
   const [sameAsInstitutionDate, setSameAsInstitutiondate] = useState(false);
   const [caseData, setCaseData] = useState({
     // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
@@ -82,7 +82,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     transferedIn: false,
     remandedRestored: false,
     AcquittalORConviction: "",
-    // "Disposal OR Transfer Out Flag": "",
+    "Disposal OR Transfer Out Flag": "",
     "Disposal Mode Flag": "", //used for contested, non-contested etc
     "Date of Transfer In": null,
     "Date of Other Institution": null,
@@ -92,6 +92,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     actionAbstract: "",
     orderDate: new Date(),
     nature: "",
+    isOtherNature: false,
   });
 
   const handleDateChange = (date) => {
@@ -116,6 +117,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [isTransferOut, setIsTransferOut] = useState(false);
   const [isTransferedIn, setIsTransferedIn] = useState(false);
   const [isRemandedRestored, setIsRemandedRestored] = useState(false);
+  const [isOtherNature, setIsOtherNature] = useState(false);
   useEffect(() => {
     // console.log(caseFile);
     // console.log('useEffect called');
@@ -129,6 +131,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       caseFile['Date of Transfer In'] ? setIsTransferedIn(true) : setIsTransferedIn(false);
       caseFile['Date of Other Institution'] ? setIsRemandedRestored(true) : setIsRemandedRestored(false);
       caseFile['Disposal Mode Flag'] === 'Transfer Out' ? setIsTransferOut(true) : setIsTransferOut(false);
+      caseFile.isOtherNature ? setIsOtherNature(true) : setIsOtherNature(false);
     }
   }, [caseFile]);
 
@@ -165,6 +168,11 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     setSelectedCaseType("Civil");
     // setCaseData({"Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '', "Date of Institution ": selectedDate ,  "Date of Disposal": '', isTransferedIn: false, "Date of Transfered In": Date});
     setInstitutionDate(new Date());
+    setIsDisposed(false);
+    setIsTransferOut(false);
+    setIsRemandedRestored(false);
+    setIsTransferedIn(false);
+    setIsOtherNature(false);
     setCaseData({
       "Case Title": "",
       urduTitle: "",
@@ -182,7 +190,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       transferedIn: false,
       remandedRestored: false,
       AcquittalORConviction: "", //only for Criminal cases
-      // "Disposal OR Transfer Out Flag": "",
+      "Disposal OR Transfer Out Flag": "",
       "Disposal Mode Flag": "", //used for contested, non-contested etc
       "Date of Transfer In": null,
       "Date of Other Institution": null,
@@ -192,6 +200,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       actionAbstract: "",
       orderDate: new Date(),
       nature: "",
+      isOtherNature: false,
     });
   };
 
@@ -537,17 +546,97 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               }
             />
           </Grid>
+
           <Grid item xs={12} sm={3}>
+          
+          {
+            isOtherNature ?
+            (
             <TextField
-              name="nature"
+              name="other nature"
               variant="outlined"
-              label="Case Nature (نوعیت)"
+              label="Other Nature"
               fullWidth
               value={caseData.nature}
               onChange={(e) =>
                 setCaseData({ ...caseData, nature: e.target.value })
               }
             />
+            )
+           :
+           (
+          <FormControl fullWidth variant="outlined">
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Case Nature (نوعیت)
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={caseData.nature}
+                      onChange={(e) => {
+                        setCaseData({
+                          ...caseData,
+                          nature: e.target.value,
+                        });
+                      }}
+                      label = "Case Nature (نوعیت)"
+                    >
+                      <MenuItem value="استقرارحق">استقرارحق</MenuItem>
+                      <MenuItem value="دِلاپانے">دِلاپانے</MenuItem>
+                      <MenuItem value="حکم امتناعی">حکم امتناعی</MenuItem>
+                      <MenuItem value="">دخلیابی</MenuItem>
+                      <MenuItem value="تنسیخ نکاح">تنسیخ نکاح</MenuItem>
+                      <MenuItem value="نان نفقہ">نان نفقہ</MenuItem>
+                      <MenuItem value="حق مہر">حق مہر</MenuItem>
+                      <MenuItem value="کزب النکاح">کزب النکاح</MenuItem>
+                      <MenuItem value="زن اشوئی">زن اشوئی</MenuItem>
+                      <MenuItem value="درخواست">درخواست</MenuItem>
+                      <MenuItem value="حضانت">حضانت</MenuItem>
+                      <MenuItem value="اِجراء">اِجراء</MenuItem>
+                      <MenuItem value="پرت">پرت</MenuItem>
+                      <MenuItem value="عزرداری">عزرداری</MenuItem>
+                      <MenuItem value="استغاثہ">استغاثہ</MenuItem>
+                      <MenuItem value="">
+                      <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isOtherNature}
+                    color="primary"
+                    onChange={(e) =>
+                      {setCaseData({
+                        ...caseData,
+                        isOtherNature: e.target.checked,
+                      }); setIsOtherNature(e.target.checked)}
+                    }
+                    name="isOtherNature"
+                  />
+                }
+                label="Other Nature"
+              />  
+                      </MenuItem>
+                      <MenuItem value=""></MenuItem>
+                    </Select>
+                  </FormControl>
+           ) 
+           }
+           
+           {/* <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isOtherNature}
+                    color="primary"
+                    onChange={(e) =>
+                      {setCaseData({
+                        ...caseData,
+                        isOtherNature: e.target.checked,
+                      }); setIsOtherNature(e.target.checked)}
+                    }
+                    name="isOtherNature"
+                  />
+                }
+                label="Other Nature"
+              />   */}
+                         
           </Grid>
           <Grid item xs={12} sm={2}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
@@ -566,8 +655,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     }}
                 /> */}
               <KeyboardDatePicker
-                // disableToolbar
-                // variant="inline"
+                disableToolbar
+                variant="inline"
                 // margin="normal"
                 id="date-picker-inline"
                 // id="date-picker-dialog"
@@ -711,7 +800,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 label="Order Date"
                 format="dd/MM/yyyy"
                 autoOk
-                value={caseData.orderDate ? caseData.orderDate : new Date()}
+                value={caseData.orderDate ? caseData.orderDate : institutionDate}
                 onChange={(date) =>
                   setCaseData({ ...caseData, orderDate: date })
                 }
@@ -724,14 +813,17 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               control={
                 <Checkbox
                   checked={sameAsInstitutionDate}
-                  onChange={(e) => setSameAsInstitutiondate(e.target.checked)}
+                  onChange={(e) => {
+                    setSameAsInstitutiondate(e.target.checked);
+                    setCaseData({...caseData, orderDate: institutionDate})
+                  }}
                   name="sameAsInstitutionDate"
                   color="primary"
                 />
               }
-              label="Order Date is Same as Institution Date?"
+              label="Same as Institution Date"
             />
-            <FormHelperText error>Check Box if apply!</FormHelperText>
+            {/* <FormHelperText error>Check Box if apply!</FormHelperText> */}
             {/* </Grid> */}
           </Grid>
 
@@ -893,7 +985,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                       {setCaseData({
                         ...caseData,
                         remandedRestored: e.target.checked
-                      }); setIsRemandedRestored(e.target.value)}
+                      }); setIsRemandedRestored(e.target.checked)}
                     }
                     name="remandedRestored"
                   />
@@ -911,7 +1003,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                       {setCaseData({
                         ...caseData,
                         transferedIn: e.target.checked,
-                      }); setIsTransferedIn(e.target.value)}
+                      }); setIsTransferedIn(e.target.checked)}
                     }
                     name="transferedIn"
                   />
@@ -1067,7 +1159,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         ...caseData,
                         transferedOut: e.target.checked,
                         disposed: false,
-                      }); setIsTransferOut(e.target.value)}
+                      }); setIsTransferOut(e.target.checked)}
                     }
                     name="transferedOut"
                   />
@@ -1111,7 +1203,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         setCaseData({
                           ...caseData,
                           "Date of Transfer Out": date,
-                          "Disposal Mode Flag" : "Transfer Out"
+                          "Disposal Mode Flag" : "Transfer Out",
+                          "Disposal OR Transfer Out Flag": "Transfer Out"
                         })
                       }
                       KeyboardButtonProps={{
@@ -1135,7 +1228,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         ...caseData,
                         disposed: e.target.checked,
                         transferedOut: false,
-                      }); setIsDisposed(e.target.value)}
+                      }); setIsDisposed(e.target.checked)}
                     }
                     name="disposed"
                   />
@@ -1212,6 +1305,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         setCaseData({
                           ...caseData,
                           "Disposal Mode Flag": e.target.value,
+                          "Disposal OR Transfer Out Flag": "Disposed"
                         });
                       }}
                       label="Disposal Mode Flag"
