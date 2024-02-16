@@ -586,6 +586,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                       <MenuItem value="حکم امتناعی">حکم امتناعی</MenuItem>
                       <MenuItem value="">دخلیابی</MenuItem>
                       <MenuItem value="تنسیخ نکاح">تنسیخ نکاح</MenuItem>
+                      <MenuItem value="کذب نکاح">کذب نکاح</MenuItem>
                       <MenuItem value="نان نفقہ">نان نفقہ</MenuItem>
                       <MenuItem value="حق مہر">حق مہر</MenuItem>
                       <MenuItem value="کزب النکاح">کزب النکاح</MenuItem>

@@ -17,12 +17,12 @@ import axios from 'axios';
 // const urlpqsp = 'http://192.168.43.52:5000/pqsp';
 
 // Court Network
-const url = 'http://192.168.1.101:5000/posts'; // (Court) this is accessible from local network i.e mobiles etc, the ip is wireless wifi's ipv4 address
-const urlCases = 'http://192.168.1.101:5000/cases';
-const urlEmployeeData = 'http://192.168.1.101:5000/employeeData';
-const urlQueryData = 'http://192.168.1.101:5000/api/queryData';
-const urlCauseLists = 'http://192.168.1.101:5000/api/causeLists';
-const urlpqsp = 'http://192.168.1.101:5000/pqsp';
+const url = 'http://192.168.1.103:5000/posts'; // (Court) this is accessible from local network i.e mobiles etc, the ip is wireless wifi's ipv4 address
+const urlCases = 'http://192.168.1.103:5000/cases';
+const urlEmployeeData = 'http://192.168.1.103:5000/employeeData';
+const urlQueryData = 'http://192.168.1.103:5000/api/queryData';
+const urlCauseLists = 'http://192.168.1.103:5000/api/causeLists';
+const urlpqsp = 'http://192.168.1.103:5000/pqsp';
 
 export const fetchPosts = () => axios.get(url);
 export const createPost = (newPost) => axios.post(url, newPost);
