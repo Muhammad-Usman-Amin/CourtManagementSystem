@@ -62,7 +62,7 @@ const GreenRadio = withStyles({
 
 const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [institutionDate, setInstitutionDate] = useState(new Date());
-  const [nextDate, setNextDate] = useState(addDays(new Date(), 2));
+  const [nextDate, setNextDate] = useState(addDays(new Date(), 1));
   const [sameAsInstitutionDate, setSameAsInstitutiondate] = useState(false);
   const [caseData, setCaseData] = useState({
     // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
@@ -592,6 +592,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                       <MenuItem value="کزب النکاح">کزب النکاح</MenuItem>
                       <MenuItem value="زن اشوئی">زن اشوئی</MenuItem>
                       <MenuItem value="درخواست">درخواست</MenuItem>
+                      <MenuItem value="منسوخی یکطرفہ">منسوخی یکطرفہ</MenuItem>
                       <MenuItem value="حضانت">حضانت</MenuItem>
                       <MenuItem value="اِجراء">اِجراء</MenuItem>
                       <MenuItem value="پرت">پرت</MenuItem>
