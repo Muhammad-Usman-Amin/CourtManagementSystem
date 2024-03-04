@@ -103,8 +103,10 @@ const useStyles = makeStyles((theme) =>
 const PrintCauseList = (props) => {
   // const nextDate = props.location.nextDate;
   const orderDate = props.location.state.orderDate;
+  // const dateCauseList = props.location.state.dateCauseList;
+
   console.log(orderDate);
-  const [dateCauseList, setDateCauseList] = useState(new Date());
+  const [dateCauseList, setDateCauseList] = useState(props.location.state.dateCauseList);
 
   const dispatch = useDispatch();
   const data = useSelector((state) => state.causeLists);
@@ -224,7 +226,16 @@ const PrintCauseList = (props) => {
                     >
                       <Grid item sm={4} className={classes.tableHeadTwo}>
                         {" بروز: "}
-                        {/* {data[0]?.orderDate */}
+                        {data &&
+                        dateCauseList.toLocaleDateString(
+                              "ur",
+                              {
+                                weekday: "long",
+                              }
+                            )}
+                      </Grid>
+                      {/* <Grid item sm={4} className={classes.tableHeadTwo}>
+                        {" بروز: "}
                         {data &&
                         new Date().toDateString() ===
                           new Date(data[0]?.orderDate).toDateString()
@@ -241,8 +252,13 @@ const PrintCauseList = (props) => {
                                 weekday: "long",
                               }
                             )}
-                      </Grid>
+                      </Grid> */}
                       <Grid item sm={4} className={classes.tableHeadTwo}>
+                        
+                        تاریخ:
+                        {data &&
+                          format((dateCauseList), "yyy-MM-dd")
+                        }
                         {/* <Typography
                     style={{
                       fontSize: 20,
@@ -250,7 +266,7 @@ const PrintCauseList = (props) => {
                       // fontStyle: "",
                       // fontWeight: "bold",
                     }}
-                  > */}
+                  > 
                         تاریخ:
                         {data &&
                         new Date().toDateString() ===
@@ -258,7 +274,7 @@ const PrintCauseList = (props) => {
                           ? format(parseISO(data[0].orderDate), "yyy-MM-dd")
                           : data &&
                             format(parseISO(data[0].nextDate), "yyy-MM-dd")}
-                        {/* </Typography> */}
+                         </Typography> */}
                       </Grid>
                       <Grid item sm={4} className={classes.tableHeadTwo}>
                         کل تعداد:

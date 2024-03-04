@@ -115,7 +115,8 @@ export default function CasesListTable({
                 Date Of Institution
               </TableCell>
               <TableCell align="left">Case Title</TableCell>
-              <TableCell align="left">Case Type</TableCell>
+              {/* <TableCell align="left">Case Type</TableCell> */}
+              <TableCell align="left">Action Abstract</TableCell>
               {/* <TableCell align="left">Institution Year</TableCell> */}
               <TableCell className={classes.dateValue} align="left">
                 Next Date
@@ -143,7 +144,8 @@ export default function CasesListTable({
                       )}
                 </TableCell>
                 <TableCell align="left">{row["Case Title"]}</TableCell>
-                <TableCell align="left">{row["Case Type"]}</TableCell>
+                {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
+                <TableCell align="left">{row.actionAbstract}</TableCell>
                 {/* <TableCell align="left">{row["Institution Year"]}</TableCell> */}
                 <TableCell
                   style={{ minWidth: "fit-content", whiteSpace: "nowrap" }}

@@ -252,6 +252,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
               state: {
                 nextDate: nextDate,
                 orderDate: orderDate,
+                dateCauseList: dateCauseList,
               },
             }}
           >
@@ -466,6 +467,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
                 <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
+                <MenuItem value={"پروفارمہ جات، حاضری"}>پروفارمہ جات</MenuItem>
                 <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
                 <MenuItem value={"تنقیحات، حاضری"}>تنقیحات</MenuItem>
                 <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
@@ -473,6 +475,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
                 <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
                 <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
+                <MenuItem value={"نیلامی، حاضری"}>نیلامی</MenuItem>
                 <MenuItem value={"نادرا رپورٹ، حاضری"}>نادرا رپورٹ</MenuItem>
                 <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
                 <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
@@ -485,18 +488,11 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>ترمیمی عرضیدعویٰ</MenuItem>
                 <MenuItem value={" ترمیمی جواب دعویٰ، حاضری"}>ترمیمی جواب دعویٰ</MenuItem>
-
                 <MenuItem value={"حاضری، رپورٹ اہل کمیشن"}>
                    رپورٹ اہل کمیشن
                 </MenuItem>
-                <MenuItem value={"حاضری، بیان اہل کمیشن"}>
-                   بیان اہل کمیشن
-                </MenuItem>
                 <MenuItem value={"حاضری، عزرات"}>
                    عزرات
-                </MenuItem>
-                <MenuItem value={"مصالحت ابتدائی، حاضری"}>
-                مصالحت ابتدائی
                 </MenuItem>
                 <MenuItem value={"شیڈولنگ کانفرنس، حاضری"}>
                 شیڈولنگ کانفرنس
@@ -509,15 +505,22 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
                 <MenuItem value={"شہادت مدعیہ"}>شہادت مدعیہ</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
+                <MenuItem value={"شہادت مدعا علیہا"}>شہادت مدعا علیہا</MenuItem>
+                <MenuItem value={"شہادت مدعیان"}>شہادت مدعیان</MenuItem>
+                <MenuItem value={"شہادت مدعاعلیہم"}>شہادت مدعا علیہم</MenuItem>
                 <MenuItem  value={"شہادت سائیل"}>شہادت سائیل</MenuItem>
                 <MenuItem  value={"شہادت مسئول الیہ"}>شہادت مسئول الیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
+                <MenuItem value={"جرح بر گواہان، شہادت"}>جرح بر گواہان، شہادت</MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
                 <MenuItem value={"جرح بر گواہ، شہادت"}>جرح بر گواہ، شہادت</MenuItem>
                 <MenuItem value={"ہمراہ، شہادت"}>ہمراہ، شہادت</MenuItem>
+                <MenuItem value={"بیان اہل کمیشن، شہادت"}>
+                   بیان اہل کمیشن
+                </MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
@@ -530,10 +533,14 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
                 <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
                 <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
+                <MenuItem value={"مصالحت ابتدائی، بحث"}>
+                مصالحت ابتدائی
+                </MenuItem>
                 <MenuItem value={"مصالحت ثانی، بحث"}>
                 مصالحت ثانی
                 </MenuItem>
                 <MenuItem value={"ہمراہ، بحث"}>ہمراہ، بحث</MenuItem>
+                <MenuItem value={"بحث بر رپورٹ"}>بحث بر رپورٹ</MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
@@ -709,6 +716,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
                 <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
+                <MenuItem value={"پروفارمہ جات، حاضری"}>پروفارمہ جات</MenuItem>
                 <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
                 <MenuItem value={"تنقیحات، حاضری"}>تنقیحات</MenuItem>
                 <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
@@ -716,6 +724,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
                 <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
                 <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
+                <MenuItem value={"نیلامی، حاضری"}>نیلامی</MenuItem>
                 <MenuItem value={"نادرا رپورٹ، حاضری"}>نادرا رپورٹ</MenuItem>
                 <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
                 <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
@@ -731,14 +740,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"حاضری، رپورٹ اہل کمیشن"}>
                    رپورٹ اہل کمیشن
                 </MenuItem>
-                <MenuItem value={"حاضری، بیان اہل کمیشن"}>
-                   بیان اہل کمیشن
-                </MenuItem>
                 <MenuItem value={"حاضری، عزرات"}>
                    عزرات
-                </MenuItem>
-                <MenuItem value={"مصالحت ابتدائی، حاضری"}>
-                مصالحت ابتدائی
                 </MenuItem>
                 <MenuItem value={"شیڈولنگ کانفرنس، حاضری"}>
                 شیڈولنگ کانفرنس
@@ -751,15 +754,22 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
                 <MenuItem value={"شہادت مدعیہ"}>شہادت مدعیہ</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
+                <MenuItem value={"شہادت مدعا علیہا"}>شہادت مدعا علیہا</MenuItem>
+                <MenuItem value={"شہادت مدعیان"}>شہادت مدعیان</MenuItem>
+                <MenuItem value={"شہادت مدعاعلیہم"}>شہادت مدعا علیہم</MenuItem>
                 <MenuItem  value={"شہادت سائیل"}>شہادت سائیل</MenuItem>
                 <MenuItem  value={"شہادت مسئول الیہ"}>شہادت مسئول الیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
+                <MenuItem value={"جرح بر گواہان، شہادت"}>جرح بر گواہان، شہادت</MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
                 <MenuItem value={"جرح بر گواہ، شہادت"}>جرح بر گواہ، شہادت</MenuItem>
                 <MenuItem value={"ہمراہ، شہادت"}>ہمراہ، شہادت</MenuItem>
+                <MenuItem value={"بیان اہل کمیشن، شہادت"}>
+                   بیان اہل کمیشن
+                </MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
@@ -772,10 +782,14 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
                 <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
                 <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
+                <MenuItem value={"مصالحت ابتدائی، بحث"}>
+                مصالحت ابتدائی
+                </MenuItem>
                 <MenuItem value={"مصالحت ثانی، بحث"}>
                 مصالحت ثانی
                 </MenuItem>
                 <MenuItem value={"ہمراہ، بحث"}>ہمراہ، بحث</MenuItem>
+                <MenuItem value={"بحث بر رپورٹ"}>بحث بر رپورٹ</MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
@@ -950,6 +964,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
                 <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
+                <MenuItem value={"پروفارمہ جات، حاضری"}>پروفارمہ جات</MenuItem>
                 <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
                 <MenuItem value={"تنقیحات، حاضری"}>تنقیحات</MenuItem>
                 <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
@@ -957,6 +972,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
                 <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
                 <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
+                <MenuItem value={"نیلامی، حاضری"}>نیلامی</MenuItem>
                 <MenuItem value={"نادرا رپورٹ، حاضری"}>نادرا رپورٹ</MenuItem>
                 <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
                 <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
@@ -972,14 +988,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"حاضری، رپورٹ اہل کمیشن"}>
                    رپورٹ اہل کمیشن
                 </MenuItem>
-                <MenuItem value={"حاضری، بیان اہل کمیشن"}>
-                   بیان اہل کمیشن
-                </MenuItem>
                 <MenuItem value={"حاضری، عزرات"}>
                    عزرات
-                </MenuItem>
-                <MenuItem value={"مصالحت ابتدائی، حاضری"}>
-                مصالحت ابتدائی
                 </MenuItem>
                 <MenuItem value={"شیڈولنگ کانفرنس، حاضری"}>
                 شیڈولنگ کانفرنس
@@ -992,15 +1002,22 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
                 <MenuItem value={"شہادت مدعیہ"}>شہادت مدعیہ</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
+                <MenuItem value={"شہادت مدعا علیہا"}>شہادت مدعا علیہا</MenuItem>
+                <MenuItem value={"شہادت مدعیان"}>شہادت مدعیان</MenuItem>
+                <MenuItem value={"شہادت مدعاعلیہم"}>شہادت مدعا علیہم</MenuItem>
                 <MenuItem  value={"شہادت سائیل"}>شہادت سائیل</MenuItem>
                 <MenuItem  value={"شہادت مسئول الیہ"}>شہادت مسئول الیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
+                <MenuItem value={"جرح بر گواہان، شہادت"}>جرح بر گواہان، شہادت</MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
                 <MenuItem value={"جرح بر گواہ، شہادت"}>جرح بر گواہ، شہادت</MenuItem>
                 <MenuItem value={"ہمراہ، شہادت"}>ہمراہ، شہادت</MenuItem>
+                <MenuItem value={"بیان اہل کمیشن، شہادت"}>
+                   بیان اہل کمیشن
+                </MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
@@ -1013,10 +1030,14 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
                 <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
                 <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
+                <MenuItem value={"مصالحت ابتدائی، بحث"}>
+                مصالحت ابتدائی
+                </MenuItem>
                 <MenuItem value={"مصالحت ثانی، بحث"}>
                 مصالحت ثانی
                 </MenuItem>
                 <MenuItem value={"ہمراہ، بحث"}>ہمراہ، بحث</MenuItem>
+                <MenuItem value={"بحث بر رپورٹ"}>بحث بر رپورٹ</MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
@@ -1191,6 +1212,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
                 <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
+                <MenuItem value={"پروفارمہ جات، حاضری"}>پروفارمہ جات</MenuItem>
                 <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
                 <MenuItem value={"تنقیحات، حاضری"}>تنقیحات</MenuItem>
                 <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
@@ -1198,6 +1220,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
                 <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
                 <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
+                <MenuItem value={"نیلامی، حاضری"}>نیلامی</MenuItem>
                 <MenuItem value={"نادرا رپورٹ، حاضری"}>نادرا رپورٹ</MenuItem>
                 <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
                 <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
@@ -1209,17 +1232,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   طلبی انکوائری، حاضری
                 </MenuItem>
                 <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>ترمیمی عرضیدعویٰ</MenuItem>
+                <MenuItem value={" ترمیمی جواب دعویٰ، حاضری"}>ترمیمی جواب دعویٰ</MenuItem>
                 <MenuItem value={"حاضری، رپورٹ اہل کمیشن"}>
                    رپورٹ اہل کمیشن
                 </MenuItem>
-                <MenuItem value={"حاضری، بیان اہل کمیشن"}>
-                   بیان اہل کمیشن
-                </MenuItem>
                 <MenuItem value={"حاضری، عزرات"}>
                    عزرات
-                </MenuItem>
-                <MenuItem value={"مصالحت ابتدائی، حاضری"}>
-                مصالحت ابتدائی
                 </MenuItem>
                 <MenuItem value={"شیڈولنگ کانفرنس، حاضری"}>
                 شیڈولنگ کانفرنس
@@ -1232,15 +1250,22 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
                 <MenuItem value={"شہادت مدعیہ"}>شہادت مدعیہ</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
+                <MenuItem value={"شہادت مدعا علیہا"}>شہادت مدعا علیہا</MenuItem>
+                <MenuItem value={"شہادت مدعیان"}>شہادت مدعیان</MenuItem>
+                <MenuItem value={"شہادت مدعاعلیہم"}>شہادت مدعا علیہم</MenuItem>
                 <MenuItem  value={"شہادت سائیل"}>شہادت سائیل</MenuItem>
                 <MenuItem  value={"شہادت مسئول الیہ"}>شہادت مسئول الیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
+                <MenuItem value={"جرح بر گواہان، شہادت"}>جرح بر گواہان، شہادت</MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
                 <MenuItem value={"جرح بر گواہ، شہادت"}>جرح بر گواہ، شہادت</MenuItem>
                 <MenuItem value={"ہمراہ، شہادت"}>ہمراہ، شہادت</MenuItem>
+                <MenuItem value={"بیان اہل کمیشن، شہادت"}>
+                   بیان اہل کمیشن
+                </MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
@@ -1253,10 +1278,14 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
                 <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
                 <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
+                <MenuItem value={"مصالحت ابتدائی، بحث"}>
+                مصالحت ابتدائی
+                </MenuItem>
                 <MenuItem value={"مصالحت ثانی، بحث"}>
                 مصالحت ثانی
                 </MenuItem>
                 <MenuItem value={"ہمراہ، بحث"}>ہمراہ، بحث</MenuItem>
+                <MenuItem value={"بحث بر رپورٹ"}>بحث بر رپورٹ</MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
@@ -1430,6 +1459,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
                 <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
                 <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
+                <MenuItem value={"پروفارمہ جات، حاضری"}>پروفارمہ جات</MenuItem>
                 <MenuItem value={"پروفارمہ ای، حاضری"}>پرفارمہ ای</MenuItem>
                 <MenuItem value={"تنقیحات، حاضری"}>تنقیحات</MenuItem>
                 <MenuItem value={"پروفارمہ سی، حاضری"}>پرفارمہ سی</MenuItem>
@@ -1437,6 +1467,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"فرد تعلیقہ، حاضری"}>فرد تعلیقہ، حاضری</MenuItem>
                 <MenuItem value={"راضی نامہ، حاضری"}>راضی نامہ</MenuItem>
                 <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
+                <MenuItem value={"نیلامی، حاضری"}>نیلامی</MenuItem>
                 <MenuItem value={"نادرا رپورٹ، حاضری"}>نادرا رپورٹ</MenuItem>
                 <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
                 <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
@@ -1452,14 +1483,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"حاضری، رپورٹ اہل کمیشن"}>
                    رپورٹ اہل کمیشن
                 </MenuItem>
-                <MenuItem value={"حاضری، بیان اہل کمیشن"}>
-                   بیان اہل کمیشن
-                </MenuItem>
                 <MenuItem value={"حاضری، عزرات"}>
                    عزرات
-                </MenuItem>
-                <MenuItem value={"مصالحت ابتدائی، حاضری"}>
-                مصالحت ابتدائی
                 </MenuItem>
                 <MenuItem value={"شیڈولنگ کانفرنس، حاضری"}>
                 شیڈولنگ کانفرنس
@@ -1472,15 +1497,22 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
                 <MenuItem value={"شہادت مدعیہ"}>شہادت مدعیہ</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
+                <MenuItem value={"شہادت مدعا علیہا"}>شہادت مدعا علیہا</MenuItem>
+                <MenuItem value={"شہادت مدعیان"}>شہادت مدعیان</MenuItem>
+                <MenuItem value={"شہادت مدعاعلیہم"}>شہادت مدعا علیہم</MenuItem>
                 <MenuItem  value={"شہادت سائیل"}>شہادت سائیل</MenuItem>
                 <MenuItem  value={"شہادت مسئول الیہ"}>شہادت مسئول الیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
+                <MenuItem value={"جرح بر گواہان، شہادت"}>جرح بر گواہان، شہادت</MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
                 <MenuItem value={"جرح بر گواہ، شہادت"}>جرح بر گواہ، شہادت</MenuItem>
                 <MenuItem value={"ہمراہ، شہادت"}>ہمراہ، شہادت</MenuItem>
+                <MenuItem value={"بیان اہل کمیشن، شہادت"}>
+                   بیان اہل کمیشن
+                </MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
@@ -1493,10 +1525,14 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"بحث، ریکارڈ"}>بحث، ریکارڈ</MenuItem>
                 <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
                 <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
+                <MenuItem value={"مصالحت ابتدائی، بحث"}>
+                مصالحت ابتدائی
+                </MenuItem>
                 <MenuItem value={"مصالحت ثانی، بحث"}>
                 مصالحت ثانی
                 </MenuItem>
                 <MenuItem value={"ہمراہ، بحث"}>ہمراہ، بحث</MenuItem>
+                <MenuItem value={"بحث بر رپورٹ"}>بحث بر رپورٹ</MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
