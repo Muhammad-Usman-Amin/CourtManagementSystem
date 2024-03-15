@@ -1204,14 +1204,14 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                       autoOk
                       format="dd/MM/yyyy"
                       value={
-                        caseData["Date of Transfer Out"]
-                          ? caseData["Date of Transfer Out"]
+                        caseData["Date of Disposal Transfer Out"]
+                          ? caseData["Date of Disposal Transfer Out"]
                           : null
                       }
                       onChange={(date) =>
                         setCaseData({
                           ...caseData,
-                          "Date of Transfer Out": date,
+                          "Date of Disposal Transfer Out": date,
                           "Disposal Mode Flag" : "Transfer Out",
                           "Disposal OR Transfer Out Flag": "Transfer Out"
                         })

@@ -8,13 +8,13 @@ export const getCases = async (req, res) => {
   // const query = req.query;
 
   try {
-    // const cases = await Case.find();
-    const cases = await Case.find({ 
-      $and: [
-          { disposed: { $ne: true } }, //$ne means not equal to
-          { "Disposal OR Transfer Out Flag": { $nin: ["Disposed", "Transfer Out"] } } //$nin means not in array
-      ]
-  })
+    const cases = await Case.find();
+  //   const cases = await Case.find({ 
+  //     $and: [
+  //         { disposed: { $ne: true } }, //$ne means not equal to
+  //         { "Disposal OR Transfer Out Flag": { $nin: ["Disposed", "Transfer Out"] } } //$nin means not in array
+  //     ]
+  // })
   
   // if(req.value === "Disposal"){
   //   db.cases.find({
