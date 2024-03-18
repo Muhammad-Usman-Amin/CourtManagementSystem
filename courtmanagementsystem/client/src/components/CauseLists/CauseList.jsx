@@ -500,6 +500,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value="جواب الجواب، حاضری">
                 جواب الجواب
                 </MenuItem>
+                <MenuItem value="شوکازنوٹس، حاضری">
+                شوکازنوٹس
+                </MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
@@ -749,6 +752,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value="جواب الجواب، حاضری">
                 جواب الجواب
                 </MenuItem>
+                <MenuItem value="شوکازنوٹس، حاضری">
+                شوکازنوٹس
+                </MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
@@ -996,6 +1002,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem value="جواب الجواب، حاضری">
                 جواب الجواب
+                </MenuItem>
+                <MenuItem value="شوکازنوٹس، حاضری">
+                شوکازنوٹس
                 </MenuItem>
                 <Divider />
 
@@ -1245,6 +1254,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value="جواب الجواب، حاضری">
                 جواب الجواب
                 </MenuItem>
+                <MenuItem value="شوکازنوٹس، حاضری">
+                شوکازنوٹس
+                </MenuItem>
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
@@ -1491,6 +1503,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem value="جواب الجواب، حاضری">
                 جواب الجواب
+                </MenuItem>
+                <MenuItem value="شوکازنوٹس، حاضری">
+                شوکازنوٹس
                 </MenuItem>
                 <Divider />
 
