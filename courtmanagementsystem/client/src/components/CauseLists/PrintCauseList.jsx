@@ -444,8 +444,8 @@ const PrintCauseList = (props) => {
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
-                            getSecondToLastElement(caseFile.causeListEntries)
-                              .actionAbstract}
+                            (getSecondToLastElement(caseFile.causeListEntries)
+                              .actionAbstract).replace("، حاضری", "")}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
@@ -570,7 +570,7 @@ const PrintCauseList = (props) => {
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
                             getSecondToLastElement(caseFile.causeListEntries)
-                              .actionAbstract}
+                              .actionAbstract.replace("، شہادت", "")}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
@@ -695,7 +695,7 @@ const PrintCauseList = (props) => {
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
                             getSecondToLastElement(caseFile.causeListEntries)
-                              .actionAbstract}
+                              .actionAbstract.replace("، بحث", "")}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
@@ -820,7 +820,7 @@ const PrintCauseList = (props) => {
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
                             getSecondToLastElement(caseFile.causeListEntries)
-                              .actionAbstract}
+                              .actionAbstract.replace("، حکم", "")}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&

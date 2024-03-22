@@ -462,6 +462,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"مختارنامہ، حاضری"}>مختارنامہ</MenuItem>
                 <MenuItem value={"تقرری وکیل، حاضری"}>تقرری وکیل، حاضری</MenuItem>
                 <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
@@ -714,6 +715,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"مختارنامہ، حاضری"}>مختارنامہ</MenuItem>
                 <MenuItem value={"تقرری وکیل، حاضری"}>تقرری وکیل، حاضری</MenuItem>
                 <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
@@ -965,6 +967,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"مختارنامہ، حاضری"}>مختارنامہ</MenuItem>
                 <MenuItem value={"تقرری وکیل، حاضری"}>تقرری وکیل، حاضری</MenuItem>
                 <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
@@ -1216,6 +1219,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"مختارنامہ، حاضری"}>مختارنامہ</MenuItem>
                 <MenuItem value={"تقرری وکیل، حاضری"}>تقرری وکیل، حاضری</MenuItem>
                 <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
@@ -1466,6 +1470,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <Divider />
 
                 <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem value={"مختارنامہ، حاضری"}>مختارنامہ</MenuItem>
                 <MenuItem value={"تقرری وکیل، حاضری"}>تقرری وکیل، حاضری</MenuItem>
                 <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
