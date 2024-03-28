@@ -1,44 +1,43 @@
-import React, { useEffect } from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
-import useStyles from './dashboard';
-import { Button } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Drawer from "@material-ui/core/Drawer";
+import Box from "@material-ui/core/Box";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import Badge from "@material-ui/core/Badge";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Link from "@material-ui/core/Link";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import { mainListItems, secondaryListItems } from "./listItems";
+import Chart from "./Chart";
+import Deposits from "./Deposits";
+import RecentCases from "./RecentCases";
+import useStyles from "./dashboard";
+import { Button } from "@material-ui/core";
+import { useSelector } from "react-redux";
 // import store from '../index';
 
-
 function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                District Judiciary Dir Lower
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://www.youtube.com/PlayU2U">
+        PlayU2U
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
 }
 
 const drawerWidth = 240;
@@ -123,46 +122,53 @@ const drawerWidth = 240;
 // }));
 
 export default function Dashboard({ onPageChange }) {
-    const classes = useStyles();
-    const employeeData = useSelector((state) => state.employeeData);
-    const cases = useSelector((state) => state.cases);
-    useEffect(() => {
-        onPageChange('Dashboard');
-    }, [onPageChange]);
+  const classes = useStyles();
+  const employeeData = useSelector((state) => state.employeeData);
+  const cases = useSelector((state) => state.cases);
+  useEffect(() => {
+    onPageChange("Dashboard");
+  }, [onPageChange]);
 
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-    return (
-        <React.Fragment>
-            <Grid container spacing={3} >
-                {/* Chart */}
-                <Grid item xs={12} md={8} lg={9}>
-                    <Paper className={fixedHeightPaper}>
-                        <Chart />
-                    </Paper>
-                </Grid>
-                {/* Recent Deposits */}
-                <Grid item xs={12} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper}>
-                        <Deposits />
-                    </Paper>
-                </Grid>
-                {/* Recent Orders */}
-                <Grid item xs={12}>
-                    <Paper className={classes.paper}>
-                        <Orders />
-                    </Paper>
-                </Grid>
-            </Grid>
-            <Grid item xs={6} md={6} >
-                <Button fullWidth variant='outlined' onClick={() => console.log(employeeData)}>employeeData</Button>
-                <Button fullWidth variant='outlined' onClick={() => console.log(cases)}>Cases Data</Button>
-                {/* <Button fullWidth variant='outlined' onClick={() => console.log(store.getState())}>Store State</Button> */}
-            </Grid>
-            <Box pt={4}>
-                <Copyright />
-            </Box>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <Grid container spacing={3}>
+        {/* Chart */}
+        <Grid item xs={12} md={8} lg={9}>
+          <Paper className={fixedHeightPaper}>
+            <Chart />
+          </Paper>
+        </Grid>
+        {/* Recent Deposits */}
+        <Grid item xs={12} md={4} lg={3}>
+          <Paper className={fixedHeightPaper}>
+            <Deposits />
+          </Paper>
+        </Grid>
+        {/* Recent Orders */}
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <RecentCases />
+          </Paper>
+        </Grid>
+      </Grid>
+      <Grid item xs={6} md={6}>
+        <Button
+          fullWidth
+          variant="outlined"
+          onClick={() => console.log(employeeData)}
+        >
+          employeeData
+        </Button>
+        <Button fullWidth variant="outlined" onClick={() => console.log(cases)}>
+          Cases Data
+        </Button>
+        {/* <Button fullWidth variant='outlined' onClick={() => console.log(store.getState())}>Store State</Button> */}
+      </Grid>
+      <Box pt={4}>
+        <Copyright />
+      </Box>
+    </React.Fragment>
+  );
 }
-

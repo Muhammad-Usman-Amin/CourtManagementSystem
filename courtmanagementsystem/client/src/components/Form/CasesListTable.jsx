@@ -145,7 +145,15 @@ export default function CasesListTable({
                 </TableCell>
                 <TableCell align="left">{row["Case Title"]}</TableCell>
                 {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
-                <TableCell align="left">{row.actionAbstract}</TableCell>
+                <TableCell
+                  align="left"
+                  style={{
+                    fontFamily: "Jameel Noori Nastaleeq",
+                    fontSize: 20,
+                  }}
+                >
+                  {row.actionAbstract}
+                </TableCell>
                 {/* <TableCell align="left">{row["Institution Year"]}</TableCell> */}
                 <TableCell
                   style={{ minWidth: "fit-content", whiteSpace: "nowrap" }}

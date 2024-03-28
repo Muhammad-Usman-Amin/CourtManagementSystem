@@ -24,25 +24,9 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
-import Chart from "./Chart";
-import Deposits from "./Deposits";
-import Orders from "./Orders";
 import useStyles from "./dashboard";
 import SettingsBrightnessIcon from "@material-ui/icons/SettingsBrightness";
 import Tooltip from "@material-ui/core/Tooltip";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        District Judiciary Dir Lower
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
   const classes = useStyles();
@@ -84,7 +68,7 @@ export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
             {title}
           </Typography>
 
-          <Tooltip title="Toggle Light/Dark them">
+          <Tooltip title="Toggle Light/Dark theme">
             <IconButton color="inherit" onClick={toggleThemeMode}>
               <Badge badgeContent={themeMode} color="secondary">
                 <SettingsBrightnessIcon />
@@ -93,7 +77,7 @@ export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
           </Tooltip>
 
           <IconButton color="inherit">
-            <Badge badgeContent={455} color="secondary">
+            <Badge badgeContent={13} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -113,7 +97,7 @@ export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List className={classes.cursorPointer}>{mainListItems}</List>
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>

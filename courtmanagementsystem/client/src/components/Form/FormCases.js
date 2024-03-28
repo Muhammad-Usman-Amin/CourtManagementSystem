@@ -39,7 +39,6 @@ import ClearAllIcon from "@material-ui/icons/ClearAll";
 import SaveIcon from "@material-ui/icons/Save";
 import { addDays } from "date-fns";
 
-
 const GreenCheckbox = withStyles({
   root: {
     color: green[400],
@@ -127,10 +126,18 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       setNextDate(caseFile.nextDate ? caseFile.nextDate : nextDate);
       // console.log(selectedCaseType);
       setCaseData(caseFile);
-      caseFile['Date of Disposal Transfer Out'] ? setIsDisposed(true) : setIsDisposed(false);
-      caseFile['Date of Transfer In'] ? setIsTransferedIn(true) : setIsTransferedIn(false);
-      caseFile['Date of Other Institution'] ? setIsRemandedRestored(true) : setIsRemandedRestored(false);
-      caseFile['Disposal Mode Flag'] === 'Transfer Out' ? setIsTransferOut(true) : setIsTransferOut(false);
+      caseFile["Date of Disposal Transfer Out"]
+        ? setIsDisposed(true)
+        : setIsDisposed(false);
+      caseFile["Date of Transfer In"]
+        ? setIsTransferedIn(true)
+        : setIsTransferedIn(false);
+      caseFile["Date of Other Institution"]
+        ? setIsRemandedRestored(true)
+        : setIsRemandedRestored(false);
+      caseFile["Disposal Mode Flag"] === "Transfer Out"
+        ? setIsTransferOut(true)
+        : setIsTransferOut(false);
       caseFile.isOtherNature ? setIsOtherNature(true) : setIsOtherNature(false);
     }
   }, [caseFile]);
@@ -528,9 +535,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     Categories)
                   </MenuItem>
                   <MenuItem value={"CR-028-Financial Crimes-489-F PPC"}>
-                  CR-028-Financial Crimes-489-F PPC
+                    CR-028-Financial Crimes-489-F PPC
                   </MenuItem>
-
                 </Select>
               </FormControl>
             )}
@@ -549,81 +555,76 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
           </Grid>
 
           <Grid item xs={12} sm={3}>
-          
-          {
-            isOtherNature ?
-            (
-            <TextField
-              name="other nature"
-              variant="outlined"
-              label="Other Nature"
-              fullWidth
-              value={caseData.nature}
-              onChange={(e) =>
-                setCaseData({ ...caseData, nature: e.target.value })
-              }
-            />
-            )
-           :
-           (
-          <FormControl fullWidth variant="outlined">
-                    <InputLabel id="demo-simple-select-outlined-label">
-                      Case Nature (نوعیت)
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={caseData.nature}
-                      onChange={(e) => {
-                        setCaseData({
-                          ...caseData,
-                          nature: e.target.value,
-                        });
-                      }}
-                      label = "Case Nature (نوعیت)"
-                    >
-                      <MenuItem value="استقرارحق">استقرارحق</MenuItem>
-                      <MenuItem value="دِلاپانے">دِلاپانے</MenuItem>
-                      <MenuItem value="حکم امتناعی">حکم امتناعی</MenuItem>
-                      <MenuItem value="دخلیابی">دخلیابی</MenuItem>
-                      <MenuItem value="تنسیخ نکاح">تنسیخ نکاح</MenuItem>
-                      <MenuItem value="کذب نکاح">کذب نکاح</MenuItem>
-                      <MenuItem value="نان نفقہ">نان نفقہ</MenuItem>
-                      <MenuItem value="حق مہر">حق مہر</MenuItem>
-                      <MenuItem value="کزب النکاح">کزب النکاح</MenuItem>
-                      <MenuItem value="زن اشوئی">زن اشوئی</MenuItem>
-                      <MenuItem value="درخواست">درخواست</MenuItem>
-                      <MenuItem value="منسوخی یکطرفہ">منسوخی یکطرفہ</MenuItem>
-                      <MenuItem value="حضانت">حضانت</MenuItem>
-                      <MenuItem value="اِجراء">اِجراء</MenuItem>
-                      <MenuItem value="پرت">پرت</MenuItem>
-                      <MenuItem value="عزرداری">عزرداری</MenuItem>
-                      <MenuItem value="استغاثہ">استغاثہ</MenuItem>
-                      <MenuItem value="">
-                      <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isOtherNature}
-                    color="primary"
-                    onChange={(e) =>
-                      {setCaseData({
-                        ...caseData,
-                        isOtherNature: e.target.checked,
-                      }); setIsOtherNature(e.target.checked)}
-                    }
-                    name="isOtherNature"
-                  />
-                }
+            {isOtherNature ? (
+              <TextField
+                name="other nature"
+                variant="outlined"
                 label="Other Nature"
-              />  
-                      </MenuItem>
-                      <MenuItem value=""></MenuItem>
-                    </Select>
-                  </FormControl>
-           ) 
-           }
-           
-           {/* <FormControlLabel
+                fullWidth
+                value={caseData.nature}
+                onChange={(e) =>
+                  setCaseData({ ...caseData, nature: e.target.value })
+                }
+              />
+            ) : (
+              <FormControl fullWidth variant="outlined">
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Case Nature (نوعیت)
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={caseData.nature}
+                  onChange={(e) => {
+                    setCaseData({
+                      ...caseData,
+                      nature: e.target.value,
+                    });
+                  }}
+                  label="Case Nature (نوعیت)"
+                >
+                  <MenuItem value="استقرارحق">استقرارحق</MenuItem>
+                  <MenuItem value="دِلاپانے">دِلاپانے</MenuItem>
+                  <MenuItem value="حکم امتناعی">حکم امتناعی</MenuItem>
+                  <MenuItem value="دخلیابی">دخلیابی</MenuItem>
+                  <MenuItem value="تنسیخ نکاح">تنسیخ نکاح</MenuItem>
+                  <MenuItem value="کذب نکاح">کذب نکاح</MenuItem>
+                  <MenuItem value="نان نفقہ">نان نفقہ</MenuItem>
+                  <MenuItem value="حق مہر">حق مہر</MenuItem>
+                  <MenuItem value="کزب النکاح">کزب النکاح</MenuItem>
+                  <MenuItem value="زن اشوئی">زن اشوئی</MenuItem>
+                  <MenuItem value="درخواست">درخواست</MenuItem>
+                  <MenuItem value="منسوخی یکطرفہ">منسوخی یکطرفہ</MenuItem>
+                  <MenuItem value="حضانت">حضانت</MenuItem>
+                  <MenuItem value="اِجراء">اِجراء</MenuItem>
+                  <MenuItem value="پرت">پرت</MenuItem>
+                  <MenuItem value="عزرداری">عزرداری</MenuItem>
+                  <MenuItem value="استغاثہ">استغاثہ</MenuItem>
+                  <MenuItem value="">
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={isOtherNature}
+                          color="primary"
+                          onChange={(e) => {
+                            setCaseData({
+                              ...caseData,
+                              isOtherNature: e.target.checked,
+                            });
+                            setIsOtherNature(e.target.checked);
+                          }}
+                          name="isOtherNature"
+                        />
+                      }
+                      label="Other Nature"
+                    />
+                  </MenuItem>
+                  <MenuItem value=""></MenuItem>
+                </Select>
+              </FormControl>
+            )}
+
+            {/* <FormControlLabel
                 control={
                   <Checkbox
                     checked={isOtherNature}
@@ -639,7 +640,6 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 }
                 label="Other Nature"
               />   */}
-                         
           </Grid>
           <Grid item xs={12} sm={2}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
@@ -803,7 +803,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 label="Order Date"
                 format="dd/MM/yyyy"
                 autoOk
-                value={caseData.orderDate ? caseData.orderDate : institutionDate}
+                value={
+                  caseData.orderDate ? caseData.orderDate : institutionDate
+                }
                 onChange={(date) =>
                   setCaseData({ ...caseData, orderDate: date })
                 }
@@ -818,7 +820,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   checked={sameAsInstitutionDate}
                   onChange={(e) => {
                     setSameAsInstitutiondate(e.target.checked);
-                    setCaseData({...caseData, orderDate: institutionDate})
+                    setCaseData({ ...caseData, orderDate: institutionDate });
                   }}
                   name="sameAsInstitutionDate"
                   color="primary"
@@ -876,13 +878,21 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <Divider />
 
-                <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>حاضری، ریکارڈ</MenuItem>
+                <MenuItem className={classes.boldThis} value={"حاضری، ریکارڈ"}>
+                  حاضری، ریکارڈ
+                </MenuItem>
                 <MenuItem value={"مختارنامہ، حاضری"}>مختارنامہ</MenuItem>
-                <MenuItem value={"تقرری وکیل، حاضری"}>تقرری وکیل، حاضری</MenuItem>
-                <MenuItem value={"حاضری، وکالت نامہ، حاضری"}>وکالت نامہ، حاضری</MenuItem>
+                <MenuItem value={"تقرری وکیل، حاضری"}>
+                  تقرری وکیل، حاضری
+                </MenuItem>
+                <MenuItem value={"حاضری، وکالت نامہ، حاضری"}>
+                  وکالت نامہ، حاضری
+                </MenuItem>
                 <MenuItem value={"وکالت نامہ، حاضری"}>وکالت نامہ</MenuItem>
                 <MenuItem value={"حاضری، اشتہار"}>حاضری، اشتہار</MenuItem>
-                <MenuItem value={"حاضری، جواب دعویٰ، حاضری"}>حاضری، جواب دعویٰ</MenuItem>
+                <MenuItem value={"حاضری، جواب دعویٰ، حاضری"}>
+                  حاضری، جواب دعویٰ
+                </MenuItem>
                 <MenuItem value={"جواب دعویٰ، حاضری"}>جواب دعویٰ</MenuItem>
                 <MenuItem value={"جواب درخواست، حاضری"}>جواب درخواست</MenuItem>
                 <MenuItem value={"پروفارمہ جات، حاضری"}>پروفارمہ جات</MenuItem>
@@ -895,7 +905,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"بیلف رپورٹ، حاضری"}>بیلف رپورٹ</MenuItem>
                 <MenuItem value={"نیلامی، حاضری"}>نیلامی</MenuItem>
                 <MenuItem value={"نادرا رپورٹ، حاضری"}>نادرا رپورٹ</MenuItem>
-                <MenuItem value={"بقایا آدائیگی، حاضری"}>بقایا آدائیگی</MenuItem>
+                <MenuItem value={"بقایا آدائیگی، حاضری"}>
+                  بقایا آدائیگی
+                </MenuItem>
                 <MenuItem value={"مزید کاروائی، حاضری"}>مزید کاروائی</MenuItem>
                 <MenuItem value={"انتظار مسل، حاضری"}>انتظار مسل</MenuItem>
                 <MenuItem value={"کمنٹس، حاضری"}>کمنٹس</MenuItem>
@@ -909,50 +921,54 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"طلبی انکوائری، حاضری"}>
                   طلبی انکوائری
                 </MenuItem>
-                <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>ترمیمی عرضیدعویٰ</MenuItem>
-                <MenuItem value={" ترمیمی جواب دعویٰ، حاضری"}>ترمیمی جواب دعویٰ</MenuItem>
+                <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>
+                  ترمیمی عرضیدعویٰ
+                </MenuItem>
+                <MenuItem value={" ترمیمی جواب دعویٰ، حاضری"}>
+                  ترمیمی جواب دعویٰ
+                </MenuItem>
                 <MenuItem value={"رپورٹ اہل کمیشن، حاضری"}>
-                   رپورٹ اہل کمیشن
+                  رپورٹ اہل کمیشن
                 </MenuItem>
-                <MenuItem value={"عزرات، حاضری"}>
-                   عزرات
-                </MenuItem>
+                <MenuItem value={"عزرات، حاضری"}>عزرات</MenuItem>
                 <MenuItem value={"شیڈولنگ کانفرنس، حاضری"}>
-                شیڈولنگ کانفرنس
+                  شیڈولنگ کانفرنس
                 </MenuItem>
-                <MenuItem value="جواب الجواب، حاضری">
-                جواب الجواب
-                </MenuItem>
-                <MenuItem value="شوکازنوٹس، حاضری">
-                شوکازنوٹس
-                </MenuItem>
+                <MenuItem value="جواب الجواب، حاضری">جواب الجواب</MenuItem>
+                <MenuItem value="شوکازنوٹس، حاضری">شوکازنوٹس</MenuItem>
                 <Divider />
 
-                <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>شہادت مدعی</MenuItem>
+                <MenuItem className={classes.boldThis} value={"شہادت مدعی"}>
+                  شہادت مدعی
+                </MenuItem>
                 <MenuItem value={"شہادت مدعیہ"}>شہادت مدعیہ</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہ"}>شہادت مدعا علیہ</MenuItem>
                 <MenuItem value={"شہادت مدعا علیہا"}>شہادت مدعا علیہا</MenuItem>
                 <MenuItem value={"شہادت مدعیان"}>شہادت مدعیان</MenuItem>
                 <MenuItem value={"شہادت مدعاعلیہم"}>شہادت مدعا علیہم</MenuItem>
-                <MenuItem  value={"شہادت سائیل"}>شہادت سائیل</MenuItem>
-                <MenuItem  value={"شہادت مسئول الیہ"}>شہادت مسئول الیہ</MenuItem>
+                <MenuItem value={"شہادت سائیل"}>شہادت سائیل</MenuItem>
+                <MenuItem value={"شہادت مسئول الیہ"}>شہادت مسئول الیہ</MenuItem>
                 <MenuItem value={"طلبیدہ گواہان، شہادت"}>
                   طلبیدہ گواہان، شہادت
                 </MenuItem>
-                <MenuItem value={"جرح بر گواہان، شہادت"}>جرح بر گواہان، شہادت</MenuItem>
+                <MenuItem value={"جرح بر گواہان، شہادت"}>
+                  جرح بر گواہان، شہادت
+                </MenuItem>
                 <MenuItem value={"شہادت استغاثہ"}>شہادت استغاثہ</MenuItem>
                 <MenuItem value={"یکطرفہ شہادت"}>یکطرفہ شہادت</MenuItem>
-                <MenuItem value={"جرح بر گواہ، شہادت"}>جرح بر گواہ، شہادت</MenuItem>
+                <MenuItem value={"جرح بر گواہ، شہادت"}>
+                  جرح بر گواہ، شہادت
+                </MenuItem>
                 <MenuItem value={"ہمراہ، شہادت"}>ہمراہ، شہادت</MenuItem>
                 <MenuItem value={"بیان اہل کمیشن، شہادت"}>
-                   بیان اہل کمیشن
+                  بیان اہل کمیشن
                 </MenuItem>
-                <MenuItem value={"راضی نامہ، شہادت"}>
-                   راضی نامہ
-                </MenuItem>
+                <MenuItem value={"راضی نامہ، شہادت"}>راضی نامہ</MenuItem>
                 <Divider />
 
-                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>ابتدائی بحث</MenuItem>
+                <MenuItem className={classes.boldThis} value={"ابتدائی بحث"}>
+                  ابتدائی بحث
+                </MenuItem>
                 <MenuItem value={"جواب و بحث"}>جواب و بحث</MenuItem>
                 <MenuItem value={"بحث بر درخواست"}>بحث بر درخواست</MenuItem>
                 <MenuItem value={"بحث بر نکتہ"}>بحث بر نکتہ</MenuItem>
@@ -963,19 +979,17 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem value={"بحث بر اپیل"}>بحث بر اپیل</MenuItem>
                 <MenuItem value={"بحث بر نگرانی"}>بحث بر نگرانی</MenuItem>
                 <MenuItem value={"مصالحت ابتدائی، بحث"}>
-                مصالحت ابتدائی
+                  مصالحت ابتدائی
                 </MenuItem>
-                <MenuItem value={"مصالحت ثانی، بحث"}>
-                مصالحت ثانی
-                </MenuItem>
+                <MenuItem value={"مصالحت ثانی، بحث"}>مصالحت ثانی</MenuItem>
                 <MenuItem value={"ہمراہ، بحث"}>ہمراہ، بحث</MenuItem>
                 <MenuItem value={"بحث بر رپورٹ"}>بحث بر رپورٹ</MenuItem>
-                <MenuItem value={"راضی نامہ، بحث"}>
-                   راضی نامہ
-                </MenuItem>
+                <MenuItem value={"راضی نامہ، بحث"}>راضی نامہ</MenuItem>
                 <Divider />
 
-                <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>حکم بر درخواست</MenuItem>
+                <MenuItem className={classes.boldThis} value={"حکم بر درخواست"}>
+                  حکم بر درخواست
+                </MenuItem>
                 <MenuItem value={"حکم بر کمیشن"}>حکم بر کمیشن</MenuItem>
                 <MenuItem value={"حکم بر مقدمہ"}>حکم بر مقدمہ</MenuItem>
                 <MenuItem value={"راضی نامہ، حکم"}>راضی نامہ، حکم</MenuItem>
@@ -1008,12 +1022,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <Checkbox
                     checked={isRemandedRestored}
                     color="primary"
-                    onChange={(e) =>
-                      {setCaseData({
+                    onChange={(e) => {
+                      setCaseData({
                         ...caseData,
-                        remandedRestored: e.target.checked
-                      }); setIsRemandedRestored(e.target.checked)}
-                    }
+                        remandedRestored: e.target.checked,
+                      });
+                      setIsRemandedRestored(e.target.checked);
+                    }}
                     name="remandedRestored"
                   />
                 }
@@ -1026,12 +1041,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <Checkbox
                     checked={isTransferedIn}
                     color="primary"
-                    onChange={(e) =>
-                      {setCaseData({
+                    onChange={(e) => {
+                      setCaseData({
                         ...caseData,
                         transferedIn: e.target.checked,
-                      }); setIsTransferedIn(e.target.checked)}
-                    }
+                      });
+                      setIsTransferedIn(e.target.checked);
+                    }}
                     name="transferedIn"
                   />
                 }
@@ -1039,8 +1055,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               />
             </Grid>
             <Grid item xs={6} sm={3}>
-            {isTransferedIn && (
-                  <>
+              {isTransferedIn && (
+                <>
                   <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
                     {/* <Grid container justifyContent="space-around"> */}
                     {/* <KeyboardDatePicker
@@ -1083,17 +1099,16 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     {/* </Grid> */}
                   </MuiPickersUtilsProvider>
                   {/* </Container> */}
-                  </>
-                )}
+                </>
+              )}
             </Grid>
-              <Grid container spacing={1} fullWidth>
-            {isRemandedRestored && (
-              <>
-
-              <Grid item xs={12} sm={3}>
-                  <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
-                    {/* <Grid container justifyContent="space-around"> */}
-                    {/* <KeyboardDatePicker
+            <Grid container spacing={1} fullWidth>
+              {isRemandedRestored && (
+                <>
+                  <Grid item xs={12} sm={3}>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+                      {/* <Grid container justifyContent="space-around"> */}
+                      {/* <KeyboardDatePicker
                     disableToolbar
                     variant="inline"
                     format="dd/MM/yyyy"
@@ -1106,74 +1121,67 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         'aria-label': 'change date',
                     }}
                 /> */}
-                    <KeyboardDatePicker
-                      // disableToolbar
-                      // variant="inline"
-                      // margin="normal"
-                      id="date-picker-inline"
-                      // id="date-picker-dialog"
-                      label="Date of other Institution"
-                      autoOk
-                      format="dd/MM/yyyy"
-                      value={
-                        caseData["Date of Other Institution"]
-                          ? caseData["Date of Other Institution"]
-                          : null
-                      }
-                      onChange={(date) =>
-                        setCaseData({
-                          ...caseData,
-                          "Date of Other Institution": date,
-                        })
-                      }
-                      KeyboardButtonProps={{
-                        "aria-label": "change date of other Institution",
-                      }}
-                    />
-                    {/* </Grid> */}
-                  </MuiPickersUtilsProvider>
-                  {/* </Container> */}
-                </Grid>
-                <Grid item xs={12} sm={3}>
-                  <FormControl fullWidth variant="outlined">
-                    <InputLabel id="demo-simple-select-outlined-label">
-                      Institution Flag
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={
-                        caseData["Institution Flag"]
-                          ? caseData["Institution Flag"]
-                          : setCaseData({
-                              ...caseData,
-                              "Institution Flag": "-",
-                            })
-                      }
-                      onChange={(e) => {
-                        setCaseData({
-                          ...caseData,
-                          "Institution Flag": e.target.value,
-                        });
-                      }}
-                      label="Institution Flag"
-                    >
-                      <MenuItem value="None">None</MenuItem>
-                      <MenuItem value={"Restored"}>
-                        Restored
-                      </MenuItem>
-                      <MenuItem value={"Remanded"}>
-                        Remanded
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                </>
-                )}
+                      <KeyboardDatePicker
+                        // disableToolbar
+                        // variant="inline"
+                        // margin="normal"
+                        id="date-picker-inline"
+                        // id="date-picker-dialog"
+                        label="Date of other Institution"
+                        autoOk
+                        format="dd/MM/yyyy"
+                        value={
+                          caseData["Date of Other Institution"]
+                            ? caseData["Date of Other Institution"]
+                            : null
+                        }
+                        onChange={(date) =>
+                          setCaseData({
+                            ...caseData,
+                            "Date of Other Institution": date,
+                          })
+                        }
+                        KeyboardButtonProps={{
+                          "aria-label": "change date of other Institution",
+                        }}
+                      />
+                      {/* </Grid> */}
+                    </MuiPickersUtilsProvider>
+                    {/* </Container> */}
                   </Grid>
-                
-                
-                
+                  <Grid item xs={12} sm={3}>
+                    <FormControl fullWidth variant="outlined">
+                      <InputLabel id="demo-simple-select-outlined-label">
+                        Institution Flag
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        value={
+                          caseData["Institution Flag"]
+                            ? caseData["Institution Flag"]
+                            : setCaseData({
+                                ...caseData,
+                                "Institution Flag": "-",
+                              })
+                        }
+                        onChange={(e) => {
+                          setCaseData({
+                            ...caseData,
+                            "Institution Flag": e.target.value,
+                          });
+                        }}
+                        label="Institution Flag"
+                      >
+                        <MenuItem value="None">None</MenuItem>
+                        <MenuItem value={"Restored"}>Restored</MenuItem>
+                        <MenuItem value={"Remanded"}>Remanded</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </>
+              )}
+            </Grid>
 
             <Grid item xs={6} sm={3}>
               <FormControlLabel
@@ -1181,13 +1189,14 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <Checkbox
                     checked={isTransferOut}
                     color="secondary"
-                    onChange={(e) =>
-                      {setCaseData({
+                    onChange={(e) => {
+                      setCaseData({
                         ...caseData,
                         transferedOut: e.target.checked,
                         disposed: false,
-                      }); setIsTransferOut(e.target.checked)}
-                    }
+                      });
+                      setIsTransferOut(e.target.checked);
+                    }}
                     name="transferedOut"
                   />
                 }
@@ -1195,8 +1204,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               />
             </Grid>
             <Grid item xs={6} sm={3}>
-            {isTransferOut && (
-                  <>
+              {isTransferOut && (
+                <>
                   <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
                     {/* <Grid container justifyContent="space-around"> */}
                     {/* <KeyboardDatePicker
@@ -1230,8 +1239,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         setCaseData({
                           ...caseData,
                           "Date of Disposal Transfer Out": date,
-                          "Disposal Mode Flag" : "Transfer Out",
-                          "Disposal OR Transfer Out Flag": "Transfer Out"
+                          "Disposal Mode Flag": "Transfer Out",
+                          "Disposal OR Transfer Out Flag": "Transfer Out",
                         })
                       }
                       KeyboardButtonProps={{
@@ -1241,8 +1250,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     {/* </Grid> */}
                   </MuiPickersUtilsProvider>
                   {/* </Container> */}
-                  </>
-                )}
+                </>
+              )}
             </Grid>
 
             <Grid item xs={6} sm={6}>
@@ -1250,13 +1259,14 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 control={
                   <GreenCheckbox
                     checked={isDisposed}
-                    onChange={(e) =>
-                      {setCaseData({
+                    onChange={(e) => {
+                      setCaseData({
                         ...caseData,
                         disposed: e.target.checked,
                         transferedOut: false,
-                      }); setIsDisposed(e.target.checked)}
-                    }
+                      });
+                      setIsDisposed(e.target.checked);
+                    }}
                     name="disposed"
                   />
                 }
@@ -1265,13 +1275,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
             </Grid>
             {/* </FormControl> */}
 
-                {isDisposed && (<>
+            {isDisposed && (
+              <>
                 <Grid container justify="flex-end" spacing={1}>
-                
-                <Grid item xs={12} sm={3}>
-                  <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
-                    {/* <Grid container justifyContent="space-around"> */}
-                    {/* <KeyboardDatePicker
+                  <Grid item xs={12} sm={3}>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+                      {/* <Grid container justifyContent="space-around"> */}
+                      {/* <KeyboardDatePicker
                     disableToolbar
                     variant="inline"
                     format="dd/MM/yyyy"
@@ -1284,115 +1294,134 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         'aria-label': 'change date',
                     }}
                 /> */}
-                    <KeyboardDatePicker
-                      // disableToolbar
-                      // variant="inline"
-                      // margin="normal"
-                      id="date-picker-inline"
-                      // id="date-picker-dialog"
-                      label="Disposed Date"
-                      autoOk
-                      format="dd/MM/yyyy"
-                      value={
-                        caseData["Date of Disposal Transfer Out"]
-                          ? caseData["Date of Disposal Transfer Out"]
-                          : null
-                      }
-                      onChange={(date) =>
-                        setCaseData({
-                          ...caseData,
-                          "Date of Disposal Transfer Out": date,
-                        })
-                      }
-                      KeyboardButtonProps={{
-                        "aria-label": "change date of disposal",
-                      }}
-                    />
-                    {/* </Grid> */}
-                  </MuiPickersUtilsProvider>
-                  {/* </Container> */}
-                </Grid>
-                <Grid item xs={12} sm={3}>
-                  <FormControl fullWidth variant="outlined">
-                    <InputLabel id="demo-simple-select-outlined-label">
-                      Disposal Mode Flag
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={
-                        caseData["Disposal Mode Flag"]
-                          ? caseData["Disposal Mode Flag"]
-                          : setCaseData({
+                      <KeyboardDatePicker
+                        // disableToolbar
+                        // variant="inline"
+                        // margin="normal"
+                        id="date-picker-inline"
+                        // id="date-picker-dialog"
+                        label="Disposed Date"
+                        autoOk
+                        format="dd/MM/yyyy"
+                        value={
+                          caseData["Date of Disposal Transfer Out"]
+                            ? caseData["Date of Disposal Transfer Out"]
+                            : null
+                        }
+                        onChange={(date) =>
+                          setCaseData({
+                            ...caseData,
+                            "Date of Disposal Transfer Out": date,
+                          })
+                        }
+                        KeyboardButtonProps={{
+                          "aria-label": "change date of disposal",
+                        }}
+                      />
+                      {/* </Grid> */}
+                    </MuiPickersUtilsProvider>
+                    {/* </Container> */}
+                  </Grid>
+                  <Grid item xs={12} sm={3}>
+                    <FormControl fullWidth variant="outlined">
+                      <InputLabel id="demo-simple-select-outlined-label">
+                        Disposal Mode Flag
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        value={
+                          caseData["Disposal Mode Flag"]
+                            ? caseData["Disposal Mode Flag"]
+                            : setCaseData({
+                                ...caseData,
+                                "Disposal Mode Flag": "-",
+                              })
+                        }
+                        onChange={(e) => {
+                          setCaseData({
+                            ...caseData,
+                            "Disposal Mode Flag": e.target.value,
+                            "Disposal OR Transfer Out Flag": "Disposed",
+                          });
+                        }}
+                        label="Disposal Mode Flag"
+                      >
+                        <MenuItem value=""></MenuItem>
+                        <MenuItem value={"Contested-Trial Based"}>
+                          Contested-Trial Based
+                        </MenuItem>
+                        <MenuItem value={"Contested-Non Trial Based"}>
+                          Contested-Non Trial Based
+                        </MenuItem>
+                        <MenuItem value={"Uncontested"}>Uncontested</MenuItem>
+                        <MenuItem value={"In Default"}>In Default</MenuItem>
+                        {caseData["Case Type"] === "Criminal" && (
+                          <MenuItem value={"Pleadguilty"}>Pleadguilty</MenuItem>
+                        )}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  {caseData["Case Type"] === "Criminal" && (
+                    <Grid item xs={12} sm={7}>
+                      <FormControl fullWidth variant="outlined">
+                        <InputLabel id="demo-simple-select-outlined-label">
+                          In Case of Criminal Category Select Acquittal or
+                          Conviction or Others
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-outlined-label"
+                          id="demo-simple-select-outlined"
+                          value={
+                            caseData["AcquittalORConviction"]
+                              ? caseData["AcquittalORConviction"]
+                              : setCaseData({
+                                  ...caseData,
+                                  AcquittalORConviction: "-",
+                                })
+                          }
+                          onChange={(e) => {
+                            setCaseData({
                               ...caseData,
-                              "Disposal Mode Flag": "-",
-                            })
-                      }
-                      onChange={(e) => {
-                        setCaseData({
-                          ...caseData,
-                          "Disposal Mode Flag": e.target.value,
-                          "Disposal OR Transfer Out Flag": "Disposed"
-                        });
-                      }}
-                      label="Disposal Mode Flag"
-                    >
-
-                      <MenuItem value=""></MenuItem>
-                      <MenuItem value={"Contested-Trial Based"}>
-                        Contested-Trial Based
-                      </MenuItem>
-                      <MenuItem value={"Contested-Non Trial Based"}>
-                        Contested-Non Trial Based
-                      </MenuItem>
-                      <MenuItem value={"Uncontested"}>Uncontested</MenuItem>
-                      <MenuItem value={"In Default"}>In Default</MenuItem>
-                      {caseData["Case Type"]=== 'Criminal' && <MenuItem value={"Pleadguilty"}>Pleadguilty</MenuItem>}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                {caseData["Case Type"] === 'Criminal' && (
-
-                <Grid item xs={12} sm={7}>
-                <FormControl fullWidth variant="outlined">
-                    <InputLabel id="demo-simple-select-outlined-label">
-                      In Case of Criminal Category Select Acquittal or Conviction or Others
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={
-                        caseData["AcquittalORConviction"]
-                          ? caseData["AcquittalORConviction"]
-                          : setCaseData({
-                              ...caseData,
-                              "AcquittalORConviction": "-",
-                            })
-                      }
-                      onChange={(e) => {
-                        setCaseData({
-                          ...caseData,
-                          "AcquittalORConviction": e.target.value,
-                        });
-                      }}
-                      label="In Case of Criminal Category Select Acquittal or Conviction or Others"
-                    >
-                      <MenuItem value="Not Applicable">Not Applicable</MenuItem>
-                      <MenuItem value="Conviction">Conviction</MenuItem>
-                      <MenuItem value="Acquittal-On Merit">Acquittal-On Merit</MenuItem>
-                      <MenuItem value="Acquittal-On Compromise">Acquittal-On Compromise</MenuItem>
-                      <MenuItem value="Acquittal-On Other Modes">Acquittal-On Other Modes</MenuItem>
-                      <MenuItem value="Acquittal-U/Sec 265K/249-A">Acquittal-U/Sec 265K/249-A</MenuItem>
-                      <MenuItem value="512 Cr.PC Completed">512 Cr.PC Completed</MenuItem>
-                      <MenuItem value="Proceedings Abated">Proceedings Abated</MenuItem>
-                      <MenuItem value="Cases Stopped U/Sec 249 Cr.PC">Cases Stopped U/Sec 249 Cr.PC</MenuItem>
-                      <MenuItem value="Adjourned Sine-Die">Adjourned Sine-Die</MenuItem>
-                      <MenuItem value="Accepted">Accepted</MenuItem>
-                      <MenuItem value="Dismissed">Dismissed</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                )}
+                              AcquittalORConviction: e.target.value,
+                            });
+                          }}
+                          label="In Case of Criminal Category Select Acquittal or Conviction or Others"
+                        >
+                          <MenuItem value="Not Applicable">
+                            Not Applicable
+                          </MenuItem>
+                          <MenuItem value="Conviction">Conviction</MenuItem>
+                          <MenuItem value="Acquittal-On Merit">
+                            Acquittal-On Merit
+                          </MenuItem>
+                          <MenuItem value="Acquittal-On Compromise">
+                            Acquittal-On Compromise
+                          </MenuItem>
+                          <MenuItem value="Acquittal-On Other Modes">
+                            Acquittal-On Other Modes
+                          </MenuItem>
+                          <MenuItem value="Acquittal-U/Sec 265K/249-A">
+                            Acquittal-U/Sec 265K/249-A
+                          </MenuItem>
+                          <MenuItem value="512 Cr.PC Completed">
+                            512 Cr.PC Completed
+                          </MenuItem>
+                          <MenuItem value="Proceedings Abated">
+                            Proceedings Abated
+                          </MenuItem>
+                          <MenuItem value="Cases Stopped U/Sec 249 Cr.PC">
+                            Cases Stopped U/Sec 249 Cr.PC
+                          </MenuItem>
+                          <MenuItem value="Adjourned Sine-Die">
+                            Adjourned Sine-Die
+                          </MenuItem>
+                          <MenuItem value="Accepted">Accepted</MenuItem>
+                          <MenuItem value="Dismissed">Dismissed</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  )}
                 </Grid>
               </>
             )}

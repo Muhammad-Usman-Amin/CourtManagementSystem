@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import reducers from "./reducers";
-import "./fonts/Alvi Nastaleeq Regular.ttf";
+// import "./fonts/Alvi Nastaleeq Regular.ttf";
 import "./fonts/fonts.css";
 
 import App from "./App";

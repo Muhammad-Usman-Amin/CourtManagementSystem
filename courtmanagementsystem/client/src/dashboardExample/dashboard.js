@@ -78,4 +78,7 @@ export default makeStyles((theme) => ({
     fixedHeight: {
         height: 240,
     },
+    cursorPointer: {
+        cursor: "pointer",
+      },
 }));
