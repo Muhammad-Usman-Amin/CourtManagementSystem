@@ -22,7 +22,7 @@ export default function Deposits() {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Total Cases</Title>
+      <Title>Total Pending Cases</Title>
       <Typography component="p" variant="h2">
         {cases?.length}
       </Typography>

@@ -1,56 +1,60 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 import EmployeeData from "../models/employeeData.js";
 import Case from "../models/case.js";
-import express, { query } from 'express';
+import express, { query } from "express";
 
 const router = express.Router();
 
-
-
 export const getQueryData = async (req, res) => {
-    // Assuming req.query.month contains the month value (e.g., '02' for February)
-const desiredMonth = req.query.month; 
+  // Assuming req.query.month contains the month value (e.g., '02' for February)
+  const desiredMonth = req.query.month;
 
-// Querying documents where disposalDate is in the desired month
-if (desiredMonth){
+  // Querying documents where disposalDate is in the desired month
+  if (desiredMonth) {
     Case.find({
-        $and: [
-            { disposed: true }, // Assuming you want to fetch only disposed cases
-            { "Disposal OR Transfer Out Flag": { $in: ["Disposed", "Transfer Out"] } }, // Assuming this is another condition
-            { $expr: { $eq: [{ $month: "$disposalDate" }, parseInt(desiredMonth)] } } // Extracting month from disposalDate and comparing with desired month
-        ]})
-        return res.status(200).json(data);
-    }
+      $and: [
+        { disposed: true }, // Assuming you want to fetch only disposed cases
+        {
+          "Disposal OR Transfer Out Flag": {
+            $in: ["Disposed", "Transfer Out"],
+          },
+        }, // Assuming this is another condition
+        {
+          $expr: { $eq: [{ $month: "$disposalDate" }, parseInt(desiredMonth)] },
+        }, // Extracting month from disposalDate and comparing with desired month
+      ],
+    });
+    return res.status(200).json(data);
+  }
 
+  const query = req.query;
+  console.log(query.designation);
 
-    const query = req.query;
-    console.log(query.designation);
-    
+  // try {
 
-    // try {
+  // const employeesData = await EmployeeData.find();
 
-    // const employeesData = await EmployeeData.find();
+  // const query = await EmployeeData.find({ designation: query.designation })
+  // .sort({ dateOfDesignation: 1 });
 
-    // const query = await EmployeeData.find({ designation: query.designation })
-    // .sort({ dateOfDesignation: 1 });
-
-    EmployeeData.find({ designation: query.designation })
-        .sort({ dateOfInitialAppointment: 1 }).exec((err, data) => {
-            if (err) {
-                // console.error('Error fetching data:', err);
-                res.status(404).json({ message: err.message });
-                // Handle the error appropriately
-                return;
-            }
-            // console.log(query);
-            // res.status(200).json(employeesData);
-            // } catch (error) {
-            //     res.status(404).json({ message: error.message });
-            // }
-            // console.log('Fetched data:', data);
-            return res.status(200).json(data);
-        });
-}
+  EmployeeData.find({ designation: query.designation })
+    .sort({ dateOfInitialAppointment: 1 })
+    .exec((err, data) => {
+      if (err) {
+        // console.error('Error fetching data:', err);
+        res.status(404).json({ message: err.message });
+        // Handle the error appropriately
+        return;
+      }
+      // console.log(query);
+      // res.status(200).json(employeesData);
+      // } catch (error) {
+      //     res.status(404).json({ message: error.message });
+      // }
+      // console.log('Fetched data:', data);
+      return res.status(200).json(data);
+    });
+};
 
 // export const createEmployeeData = async (req, res) => {
 
@@ -95,10 +99,8 @@ if (desiredMonth){
 
 //     // const { orderDate, orderNumber, nextDate, actionAbstract } = req.body;
 
-
 //     // const theCase = await EmployeeData.findById(id);
 //     // let updatedCase = null;
-
 
 //     // const lastCase = theCase.causeListEntries.toObject();
 //     // const cEntry = lastCase[lastCase.length - 1];
@@ -106,9 +108,8 @@ if (desiredMonth){
 
 //     // if (new Date(theCase.orderDate).toDateString() === new Date().toDateString()) {
 
-//     //     //$set query  
+//     //     //$set query
 //     //     // console.log("$set Query");
-
 
 //     //     if (orderNumber || orderNumber === '') {
 //     //         // console.log("1 order number: " + orderNumber);

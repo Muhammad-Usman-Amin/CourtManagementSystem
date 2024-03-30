@@ -15,13 +15,16 @@ import FolderIcon from "@material-ui/icons/Folder";
 import ListAltRoundedIcon from "@material-ui/icons/ListAltRounded";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Tooltip from "@material-ui/core/Tooltip";
-import Zoom from '@material-ui/core/Zoom';
-
-  
+import Zoom from "@material-ui/core/Zoom";
 
 export const mainListItems = (
   <div>
-    <Tooltip title="Dashboard" arrow TransitionComponent={Zoom} placement="right">
+    <Tooltip
+      title="Dashboard"
+      arrow
+      TransitionComponent={Zoom}
+      placement="right"
+    >
       <ListItem button component={Link} to="/">
         <ListItemIcon>
           <DashboardIcon />
@@ -30,7 +33,12 @@ export const mainListItems = (
       </ListItem>
     </Tooltip>
 
-    <Tooltip title="Add New Case" arrow TransitionComponent={Zoom} placement="right">
+    <Tooltip
+      title="Add New Case"
+      arrow
+      TransitionComponent={Zoom}
+      placement="right"
+    >
       <ListItem button component={Link} to="/FormCases">
         <ListItemIcon>
           <CreateNewFolderIcon />
@@ -39,7 +47,12 @@ export const mainListItems = (
       </ListItem>
     </Tooltip>
 
-    <Tooltip title="CauseList" arrow TransitionComponent={Zoom}>
+    <Tooltip
+      title="CauseList"
+      arrow
+      TransitionComponent={Zoom}
+      placement="right"
+    >
       <ListItem button component={Link} to="/CauseLists">
         <ListItemIcon>
           <ListAltRoundedIcon />
@@ -48,7 +61,7 @@ export const mainListItems = (
       </ListItem>
     </Tooltip>
 
-    <Tooltip title="Cases" arrow TransitionComponent={Zoom}>
+    <Tooltip title="Cases" arrow TransitionComponent={Zoom} placement="right">
       <ListItem button component={Link} to="/CasesListTable">
         <ListItemIcon>
           {/* <PeopleIcon /> */}
@@ -58,7 +71,12 @@ export const mainListItems = (
       </ListItem>
     </Tooltip>
 
-    <Tooltip title="Add New Employee" arrow TransitionComponent={Zoom}>
+    <Tooltip
+      title="Add New Employee"
+      arrow
+      TransitionComponent={Zoom}
+      placement="right"
+    >
       <ListItem button component={Link} to="/FormEmployeeData">
         <ListItemIcon>
           <PersonAddIcon />
@@ -67,7 +85,12 @@ export const mainListItems = (
       </ListItem>
     </Tooltip>
 
-    <Tooltip title="Employee Data" arrow TransitionComponent={Zoom}>
+    <Tooltip
+      title="Employee Data"
+      arrow
+      TransitionComponent={Zoom}
+      placement="right"
+    >
       <ListItem button component={Link} to="/EmployeeListTable">
         <ListItemIcon>
           <BarChartIcon />
@@ -75,14 +98,19 @@ export const mainListItems = (
         <ListItemText primary="Employee Reports" />
       </ListItem>
     </Tooltip>
-<Tooltip title="Courts List" arrow TransitionComponent={Zoom}>
-    <ListItem button component={Link} to="/CourtList">
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Court List" />
-    </ListItem>
-</Tooltip>
+    <Tooltip
+      title="Courts List"
+      arrow
+      TransitionComponent={Zoom}
+      placement="right"
+    >
+      <ListItem button component={Link} to="/CourtList">
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Court List" />
+      </ListItem>
+    </Tooltip>
   </div>
 );
 

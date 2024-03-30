@@ -153,7 +153,7 @@ export default function Dashboard({ onPageChange }) {
           </Paper>
         </Grid>
       </Grid>
-      <Grid item xs={6} md={6}>
+      {/* <Grid item xs={6} md={6}>
         <Button
           fullWidth
           variant="outlined"
@@ -164,8 +164,8 @@ export default function Dashboard({ onPageChange }) {
         <Button fullWidth variant="outlined" onClick={() => console.log(cases)}>
           Cases Data
         </Button>
-        {/* <Button fullWidth variant='outlined' onClick={() => console.log(store.getState())}>Store State</Button> */}
-      </Grid>
+        {/* <Button fullWidth variant='outlined' onClick={() => console.log(store.getState())}>Store State</Button>
+      </Grid>*/}
       <Box pt={4}>
         <Copyright />
       </Box>

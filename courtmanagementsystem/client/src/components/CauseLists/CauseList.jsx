@@ -48,6 +48,11 @@ const useStyles = makeStyles({
   boldThis: {
     fontWeight: "bold",
   },
+  uFont: {
+    fontFamily: "Jameel Noori Nastaleeq",
+    fontSize: 20,
+    direction: "rtl",
+  },
 });
 
 const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
@@ -58,7 +63,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   // const [orderDate, setOrderDate] = useState(new Date("2023-06-19"));
-  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 1));
+  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 0));
   const [orderDate, setOrderDate] = useState(dateCauseList);
   useEffect(() => {
     setOrderDate(dateCauseList);
@@ -197,7 +202,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   return (
     <>
       <Grid justify="space-between" container spacing={1} alignItems="center">
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={2}>
           <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
             <KeyboardDatePicker
               // margin="normal"
@@ -218,7 +223,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
             />
           </MuiPickersUtilsProvider>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={2}>
           <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
             <KeyboardDatePicker
               // margin="normal"
@@ -259,7 +264,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
           <Divider orientation="vertical" flexItem />
         </Grid>
 
-        <Grid item xs={12} sm={3} container justify="flex-end">
+        <Grid item xs={12} sm={4} container justify="space-between">
+          <Typography
+            style={{ textAlign: "left", direction: "ltr", fontSize: '1.2rem' }}
+            className={[classes.boldThis]}
+          >
+            Day:{" "}
+            {dateCauseList.toLocaleDateString("en-US", { weekday: "long" })} |{" "}
+            {dateCauseList.toLocaleDateString("ur", {
+              weekday: "long",
+            })}
+          </Typography>
           {!cases.length && (
             <Typography>
               Searching Cases for....
@@ -267,7 +282,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
             </Typography>
           )}
           {cases.length && (
-            <Typography>Total Cases : {cases.length}</Typography>
+            <Typography style={{  fontSize: '1.2rem' }}
+            className={[classes.boldThis]}>Total Cases : {cases.length}</Typography>
           )}
         </Grid>
         <Grid item xs={12} style={{ marginBottom: "8px" }}>
@@ -286,27 +302,65 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
               size="small"
               className={classes.table}
               aria-label="CauseList table"
+              dir="rtl"
+              style={{ border: "2px solid lightblue" }}
             >
               <TableHead>
                 <TableRow>
-                  <TableCell style={{ maxWidth: 5 }}>نمبر شمار</TableCell>
-                  <TableCell align="right">Case No</TableCell>
-                  <TableCell align="center" style={{ minWidth: 100 }}>
-                    Institution
+                  <TableCell
+                    style={{ direction: "rtl" }}
+                    className={[classes.uFont, classes.boldThis]}
+                  >
+                    نمبرشمار
                   </TableCell>
-                  <TableCell style={{ minWidth: 130 }} align="center">
-                    Title
+                  <TableCell
+                    className={[classes.uFont, classes.boldThis]}
+                    style={{ textAlign: "center" }}
+                  >
+                    مقدمہ نمبر
                   </TableCell>
-                  <TableCell align="center">Action</TableCell>
-                  <TableCell align="center">Previous Date</TableCell>
-                  <TableCell align="center" style={{ maxWidth: 10 }}>
+                  <TableCell
+                    className={[classes.uFont, classes.boldThis]}
+                    align="center"
+                    style={{ minWidth: 100 }}
+                  >
+                    تاریخ رجوعہ
+                  </TableCell>
+                  <TableCell
+                    className={[classes.uFont, classes.boldThis]}
+                    style={{ minWidth: 130 }}
+                    align="center"
+                  >
+                    عنوان
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    className={[classes.uFont, classes.boldThis]}
+                  >
+                    کاروائی
+                  </TableCell>
+                  <TableCell
+                    className={[classes.uFont, classes.boldThis]}
+                    align="center"
+                  >
+                    سابقہ تاریخ
+                  </TableCell>
+                  {/* <TableCell align="center" style={{ maxWidth: 10 }}>
                     Order No
+                  </TableCell> */}
+                  <TableCell
+                    className={[classes.uFont, classes.boldThis]}
+                    align="left"
+                    style={{ direction: "rtl", width: "200px" }}
+                  >
+                    آئیندہ تاریخ پیشی
                   </TableCell>
-                  <TableCell style={{ minWidth: 80 }} align="left">
-                    Next Date
-                  </TableCell>
-                  <TableCell style={{ minWidth: 140 }} align="center">
-                    Action Abstract
+                  <TableCell
+                    className={[classes.uFont, classes.boldThis]}
+                    style={{ minWidth: 140 }}
+                    align="center"
+                  >
+                    خلاصہ کاروائی
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -321,6 +375,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       // fontFamily: "Alvi Nastaleeq Regular",
                       fontStyle: "",
                       fontWeight: "bold",
+                      backgroundColor: "lightblue",
                     }}
                   >
                     حاضری
@@ -334,8 +389,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("حاضری") ? (
                       <TableRow key={caseFile._id}>
-                        <TableCell>{serialNo[index++]}</TableCell>
-                        <TableCell align="right">
+                        <TableCell align="right">{serialNo[index++]}</TableCell>
+                        <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell align="right">
@@ -344,10 +399,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             "dd-MM-yyy"
                           )}
                         </TableCell>
-                        <TableCell align="center">
-                          {caseFile["Case Title"]}
+                        <TableCell
+                          align="center"
+                          style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
+                            fontSize: 18,
+                          }}
+                        >
+                          {/* {caseFile["Case Title"]} */}
+                          {caseFile.urduTitle}
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell
+                          align="center"
+                          style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
+                            fontSize: 20,
+                            direction: "rtl",
+                          }}
+                        >
                           {caseFile.causeListEntries &&
                             getSecondToLastElement(caseFile.causeListEntries)
                               .actionAbstract}
@@ -363,7 +432,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               "dd-MM-yyy"
                             )}
                         </TableCell>
-                        <TableCell align="center">
+                        {/* <TableCell align="center">
                           <TextField
                             name="Order No"
                             variant="outlined"
@@ -387,8 +456,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               });
                             }}
                           />
-                        </TableCell>
-                        <TableCell>
+                        </TableCell> */}
+                        <TableCell
+                          style={{
+                            direction: "ltr",
+                          }}
+                        >
                           <MuiPickersUtilsProvider
                             utils={DateFnsUtils}
                             fullWidth
@@ -420,16 +493,26 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             />
                           </MuiPickersUtilsProvider>
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell
+                          align="center"
+                          style={{
+                            direction: "rtl",
+                          }}
+                        >
                           <FormControl
                             fullWidth
                             variant="outlined"
                             className={classes.formControl}
                           >
-                            <InputLabel id="demo-simple-select-outlined-label">
-                              خلاصہ کارواءی
+                            <InputLabel
+                              className={classes.uFont}
+                              id="demo-simple-select-outlined-label"
+                            >
+                              خلاصہ کاروائی
                             </InputLabel>
                             <Select
+                              align="center"
+                              className={classes.uFont}
                               labelId="demo-simple-select-outlined-label"
                               id="demo-simple-select-outlined"
                               value={
@@ -445,234 +528,458 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                   actionAbstract: e.target.value,
                                 });
                               }}
-                              label="Select Sub Type"
+                              label="خلاصہ کاروائی"
                             >
-                              <MenuItem value="">
+                              <MenuItem
+                                value=""
+                                style={{ backgroundColor: "lightgray" }}
+                              >
                                 <em>Mostly Used</em>
                               </MenuItem>
-                              <MenuItem value={"حاضری"}>حاضری</MenuItem>
-                              <MenuItem value={"بحث"}>بحث</MenuItem>
-                              <MenuItem value={"شہادت"}>شہادت</MenuItem>
-                              <MenuItem value={"حکم"}>حکم</MenuItem>
-                              <MenuItem value="">
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری"}
+                              >
+                                حاضری
+                              </MenuItem>
+                              <MenuItem className={classes.uFont} value={"بحث"}>
+                                بحث
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت"}
+                              >
+                                شہادت
+                              </MenuItem>
+                              <MenuItem className={classes.uFont} value={"حکم"}>
+                                حکم
+                              </MenuItem>
+                              <MenuItem
+                                value=""
+                                style={{ backgroundColor: "lightgrey" }}
+                              >
                                 <em>All Categories</em>
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
                                 حاضری، ریکارڈ
                               </MenuItem>
-                              <MenuItem value={"مختارنامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مختارنامہ، حاضری"}
+                              >
                                 مختارنامہ
                               </MenuItem>
-                              <MenuItem value={"تقرری وکیل، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تقرری وکیل، حاضری"}
+                              >
                                 تقرری وکیل، حاضری
                               </MenuItem>
-                              <MenuItem value={"حاضری، وکالت نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، وکالت نامہ، حاضری"}
+                              >
                                 وکالت نامہ، حاضری
                               </MenuItem>
-                              <MenuItem value={"وکالت نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"وکالت نامہ، حاضری"}
+                              >
                                 وکالت نامہ
                               </MenuItem>
-                              <MenuItem value={"حاضری، اشتہار"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، اشتہار"}
+                              >
                                 حاضری، اشتہار
                               </MenuItem>
-                              <MenuItem value={"حاضری، جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، جواب دعویٰ، حاضری"}
+                              >
                                 حاضری، جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب دعویٰ، حاضری"}
+                              >
                                 جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"جواب درخواست، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب درخواست، حاضری"}
+                              >
                                 جواب درخواست
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ جات، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ جات، حاضری"}
+                              >
                                 پروفارمہ جات
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ ای، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ ای، حاضری"}
+                              >
                                 پرفارمہ ای
                               </MenuItem>
-                              <MenuItem value={"تنقیحات، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تنقیحات، حاضری"}
+                              >
                                 تنقیحات
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ سی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ سی، حاضری"}
+                              >
                                 پرفارمہ سی
                               </MenuItem>
-                              <MenuItem value={"فرد جرم، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"فرد جرم، حاضری"}
+                              >
                                 فرد جرم
                               </MenuItem>
-                              <MenuItem value={"فرد تعلیقہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"فرد تعلیقہ، حاضری"}
+                              >
                                 فرد تعلیقہ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، حاضری"}
+                              >
                                 راضی نامہ
                               </MenuItem>
-                              <MenuItem value={"بیلف رپورٹ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیلف رپورٹ، حاضری"}
+                              >
                                 بیلف رپورٹ
                               </MenuItem>
-                              <MenuItem value={"نیلامی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"نیلامی، حاضری"}
+                              >
                                 نیلامی
                               </MenuItem>
-                              <MenuItem value={"نادرا رپورٹ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"نادرا رپورٹ، حاضری"}
+                              >
                                 نادرا رپورٹ
                               </MenuItem>
-                              <MenuItem value={"بقایا آدائیگی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بقایا آدائیگی، حاضری"}
+                              >
                                 بقایا آدائیگی
                               </MenuItem>
-                              <MenuItem value={"مزید کاروائی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مزید کاروائی، حاضری"}
+                              >
                                 مزید کاروائی
                               </MenuItem>
-                              <MenuItem value={"انتظار مسل، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"انتظار مسل، حاضری"}
+                              >
                                 انتظار مسل
                               </MenuItem>
-                              <MenuItem value={"کمنٹس، حاضری"}>کمنٹس</MenuItem>
-                              <MenuItem value={"رپورٹ SHO، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"کمنٹس، حاضری"}
+                              >
+                                کمنٹس
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"رپورٹ SHO، حاضری"}
+                              >
                                 رپورٹ SHO
                               </MenuItem>
-                              <MenuItem value={"بیان DFC, حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان DFC, حاضری"}
+                              >
                                 بیان DFC
                               </MenuItem>
-                              <MenuItem value={"طلبی انکوائری، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"طلبی انکوائری، حاضری"}
+                              >
                                 طلبی انکوائری، حاضری
                               </MenuItem>
-                              <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" ترمیمی عرضیدعویٰ، حاضری"}
+                              >
                                 ترمیمی عرضیدعویٰ
                               </MenuItem>
-                              <MenuItem value={" ترمیمی جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" ترمیمی جواب دعویٰ، حاضری"}
+                              >
                                 ترمیمی جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"حاضری، رپورٹ اہل کمیشن"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، رپورٹ اہل کمیشن"}
+                              >
                                 رپورٹ اہل کمیشن
                               </MenuItem>
-                              <MenuItem value={"حاضری، عزرات"}>عزرات</MenuItem>
-                              <MenuItem value={"شیڈولنگ کانفرنس، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، عزرات"}
+                              >
+                                عزرات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شیڈولنگ کانفرنس، حاضری"}
+                              >
                                 شیڈولنگ کانفرنس
                               </MenuItem>
-                              <MenuItem value="جواب الجواب، حاضری">
+                              <MenuItem
+                                className={classes.uFont}
+                                value="جواب الجواب، حاضری"
+                              >
                                 جواب الجواب
                               </MenuItem>
-                              <MenuItem value="شوکازنوٹس، حاضری">
+                              <MenuItem
+                                className={classes.uFont}
+                                value="شوکازنوٹس، حاضری"
+                              >
                                 شوکازنوٹس
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
                                 شہادت مدعی
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعیہ"}
+                              >
                                 شہادت مدعیہ
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعا علیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعا علیہ"}
+                              >
                                 شہادت مدعا علیہ
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعا علیہا"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعا علیہا"}
+                              >
                                 شہادت مدعا علیہا
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعیان"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعیان"}
+                              >
                                 شہادت مدعیان
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعاعلیہم"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعاعلیہم"}
+                              >
                                 شہادت مدعا علیہم
                               </MenuItem>
-                              <MenuItem value={"شہادت سائیل"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت سائیل"}
+                              >
                                 شہادت سائیل
                               </MenuItem>
-                              <MenuItem value={"شہادت مسئول الیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مسئول الیہ"}
+                              >
                                 شہادت مسئول الیہ
                               </MenuItem>
-                              <MenuItem value={"طلبیدہ گواہان، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"طلبیدہ گواہان، شہادت"}
+                              >
                                 طلبیدہ گواہان، شہادت
                               </MenuItem>
-                              <MenuItem value={"جرح بر گواہان، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جرح بر گواہان، شہادت"}
+                              >
                                 جرح بر گواہان، شہادت
                               </MenuItem>
-                              <MenuItem value={"شہادت استغاثہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت استغاثہ"}
+                              >
                                 شہادت استغاثہ
                               </MenuItem>
-                              <MenuItem value={"یکطرفہ شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"یکطرفہ شہادت"}
+                              >
                                 یکطرفہ شہادت
                               </MenuItem>
-                              <MenuItem value={"جرح بر گواہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جرح بر گواہ، شہادت"}
+                              >
                                 جرح بر گواہ، شہادت
                               </MenuItem>
-                              <MenuItem value={"ہمراہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، شہادت"}
+                              >
                                 ہمراہ، شہادت
                               </MenuItem>
-                              <MenuItem value={"بیان اہل کمیشن، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان اہل کمیشن، شہادت"}
+                              >
                                 بیان اہل کمیشن
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، شہادت"}
+                              >
                                 راضی نامہ
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{
+                                  backgroundColor: "lightsalmon",
+                                }}
                                 value={"ابتدائی بحث"}
                               >
                                 ابتدائی بحث
                               </MenuItem>
-                              <MenuItem value={"جواب و بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب و بحث"}
+                              >
                                 جواب و بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر درخواست"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر درخواست"}
+                              >
                                 بحث بر درخواست
                               </MenuItem>
-                              <MenuItem value={"بحث بر نکتہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر نکتہ"}
+                              >
                                 بحث بر نکتہ
                               </MenuItem>
-                              <MenuItem value={"یکطرفہ بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"یکطرفہ بحث"}
+                              >
                                 یکطرفہ بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر مقدمہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر مقدمہ"}
+                              >
                                 بحث بر مقدمہ
                               </MenuItem>
-                              <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
-                              <MenuItem value={"بحث، ریکارڈ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بقایا بحث"}
+                              >
+                                بقایا بحث
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث، ریکارڈ"}
+                              >
                                 بحث، ریکارڈ
                               </MenuItem>
-                              <MenuItem value={"بحث بر اپیل"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر اپیل"}
+                              >
                                 بحث بر اپیل
                               </MenuItem>
-                              <MenuItem value={"بحث بر نگرانی"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر نگرانی"}
+                              >
                                 بحث بر نگرانی
                               </MenuItem>
-                              <MenuItem value={"مصالحت ابتدائی، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مصالحت ابتدائی، بحث"}
+                              >
                                 مصالحت ابتدائی
                               </MenuItem>
-                              <MenuItem value={"مصالحت ثانی، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مصالحت ثانی، بحث"}
+                              >
                                 مصالحت ثانی
                               </MenuItem>
-                              <MenuItem value={"ہمراہ، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، بحث"}
+                              >
                                 ہمراہ، بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر رپورٹ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر رپورٹ"}
+                              >
                                 بحث بر رپورٹ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، بحث"}
+                              >
                                 راضی نامہ
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
                                 حکم بر درخواست
                               </MenuItem>
-                              <MenuItem value={"حکم بر کمیشن"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم بر کمیشن"}
+                              >
                                 حکم بر کمیشن
                               </MenuItem>
-                              <MenuItem value={"حکم بر مقدمہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم بر مقدمہ"}
+                              >
                                 حکم بر مقدمہ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، حکم"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، حکم"}
+                              >
                                 راضی نامہ، حکم
                               </MenuItem>
                             </Select>
@@ -695,6 +1002,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       // fontFamily: "Alvi Nastaleeq Regular",
                       fontStyle: "",
                       fontWeight: "bold",
+                      backgroundColor: "lightgreen",
                     }}
                   >
                     شہادت
@@ -708,12 +1016,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("شہادت") ? (
                       <TableRow key={caseFile._id}>
-                        <TableCell component="th" scope="row">
+                        <TableCell component="th" scope="row" align="right">
                           {/* {cases.indexOf(caseFile) + 1} */}
                           {/* {serialNo} */}
                           {serialNo[index++]}
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell align="right">
@@ -722,10 +1030,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             "dd-MM-yyy"
                           )}
                         </TableCell>
-                        <TableCell align="center">
-                          {caseFile["Case Title"]}
+                        <TableCell
+                          align="center"
+                          style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
+                            fontSize: 18,
+                          }}
+                        >
+                          {/* {caseFile["Case Title"]} */}
+                          {caseFile.urduTitle}
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell
+                          align="center"
+                          style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
+                            fontSize: 20,
+                          }}
+                        >
                           {caseFile.causeListEntries &&
                             getSecondToLastElement(caseFile.causeListEntries)
                               .actionAbstract}
@@ -741,7 +1062,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               "dd-MM-yyy"
                             )}
                         </TableCell>
-                        <TableCell align="center">
+                        {/* <TableCell align="center">
                           <TextField
                             name="Order No"
                             variant="outlined"
@@ -765,8 +1086,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               });
                             }}
                           />
-                        </TableCell>
-                        <TableCell>
+                        </TableCell> */}
+                        <TableCell
+                          style={{
+                            direction: "ltr",
+                          }}
+                        >
                           <MuiPickersUtilsProvider
                             utils={DateFnsUtils}
                             fullWidth
@@ -804,10 +1129,15 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             variant="outlined"
                             className={classes.formControl}
                           >
-                            <InputLabel id="demo-simple-select-outlined-label">
-                              خلاصہ کارواءی
+                            <InputLabel
+                              className={classes.uFont}
+                              id="demo-simple-select-outlined-label"
+                            >
+                              خلاصہ کاروائی
                             </InputLabel>
                             <Select
+                              align="center"
+                              className={classes.uFont}
                               labelId="demo-simple-select-outlined-label"
                               id="demo-simple-select-outlined"
                               value={
@@ -823,243 +1153,458 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                   actionAbstract: e.target.value,
                                 });
                               }}
-                              label="Select Sub Type"
+                              label="خلاصہ کاروائی"
                             >
-                              <MenuItem value="">
+                              <MenuItem
+                                value=""
+                                style={{ backgroundColor: "lightgray" }}
+                              >
                                 <em>Mostly Used</em>
                               </MenuItem>
-                              <MenuItem value={"حاضری"}>حاضری</MenuItem>
-                              <MenuItem value={"بحث"}>بحث</MenuItem>
-                              <MenuItem value={"شہادت"}>شہادت</MenuItem>
-                              <MenuItem value={"حکم"}>حکم</MenuItem>
-                              <MenuItem value="">
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری"}
+                              >
+                                حاضری
+                              </MenuItem>
+                              <MenuItem className={classes.uFont} value={"بحث"}>
+                                بحث
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت"}
+                              >
+                                شہادت
+                              </MenuItem>
+                              <MenuItem className={classes.uFont} value={"حکم"}>
+                                حکم
+                              </MenuItem>
+                              <MenuItem
+                                value=""
+                                style={{ backgroundColor: "lightgrey" }}
+                              >
                                 <em>All Categories</em>
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
                                 حاضری، ریکارڈ
                               </MenuItem>
-                              <MenuItem value={"مختارنامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مختارنامہ، حاضری"}
+                              >
                                 مختارنامہ
                               </MenuItem>
-                              <MenuItem value={"تقرری وکیل، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تقرری وکیل، حاضری"}
+                              >
                                 تقرری وکیل، حاضری
                               </MenuItem>
-                              <MenuItem value={"حاضری، وکالت نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، وکالت نامہ، حاضری"}
+                              >
                                 وکالت نامہ، حاضری
                               </MenuItem>
-                              <MenuItem value={"وکالت نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"وکالت نامہ، حاضری"}
+                              >
                                 وکالت نامہ
                               </MenuItem>
-                              <MenuItem value={"حاضری، اشتہار"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، اشتہار"}
+                              >
                                 حاضری، اشتہار
                               </MenuItem>
-                              <MenuItem value={"حاضری، جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، جواب دعویٰ، حاضری"}
+                              >
                                 حاضری، جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب دعویٰ، حاضری"}
+                              >
                                 جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"جواب درخواست، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب درخواست، حاضری"}
+                              >
                                 جواب درخواست
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ جات، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ جات، حاضری"}
+                              >
                                 پروفارمہ جات
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ ای، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ ای، حاضری"}
+                              >
                                 پرفارمہ ای
                               </MenuItem>
-                              <MenuItem value={"تنقیحات، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تنقیحات، حاضری"}
+                              >
                                 تنقیحات
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ سی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ سی، حاضری"}
+                              >
                                 پرفارمہ سی
                               </MenuItem>
-                              <MenuItem value={"فرد جرم، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"فرد جرم، حاضری"}
+                              >
                                 فرد جرم
                               </MenuItem>
-                              <MenuItem value={"فرد تعلیقہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"فرد تعلیقہ، حاضری"}
+                              >
                                 فرد تعلیقہ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، حاضری"}
+                              >
                                 راضی نامہ
                               </MenuItem>
-                              <MenuItem value={"بیلف رپورٹ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیلف رپورٹ، حاضری"}
+                              >
                                 بیلف رپورٹ
                               </MenuItem>
-                              <MenuItem value={"نیلامی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"نیلامی، حاضری"}
+                              >
                                 نیلامی
                               </MenuItem>
-                              <MenuItem value={"نادرا رپورٹ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"نادرا رپورٹ، حاضری"}
+                              >
                                 نادرا رپورٹ
                               </MenuItem>
-                              <MenuItem value={"بقایا آدائیگی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بقایا آدائیگی، حاضری"}
+                              >
                                 بقایا آدائیگی
                               </MenuItem>
-                              <MenuItem value={"مزید کاروائی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مزید کاروائی، حاضری"}
+                              >
                                 مزید کاروائی
                               </MenuItem>
-                              <MenuItem value={"انتظار مسل، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"انتظار مسل، حاضری"}
+                              >
                                 انتظار مسل
                               </MenuItem>
-                              <MenuItem value={"کمنٹس، حاضری"}>کمنٹس</MenuItem>
-                              <MenuItem value={"رپورٹ، حاضری SHO"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"کمنٹس، حاضری"}
+                              >
+                                کمنٹس
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"رپورٹ SHO، حاضری"}
+                              >
                                 رپورٹ SHO
                               </MenuItem>
-                              <MenuItem value={"رپورٹ SHO، حاضری"}>
-                                رپورٹ، حاضری SHO
-                              </MenuItem>
-                              <MenuItem value={"بیان DFC, حاضری"}>
-                                بیان، حاضری DFC
-                              </MenuItem>
-                              <MenuItem value={"بیان، حاضری DFC"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان DFC, حاضری"}
+                              >
                                 بیان DFC
                               </MenuItem>
-                              <MenuItem value={"حاضری، طلبی انکوائری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"طلبی انکوائری، حاضری"}
+                              >
                                 طلبی انکوائری، حاضری
                               </MenuItem>
-                              <MenuItem value={"طلبی انکوائری، حاضری"}>
-                                طلبی انکوائری
-                              </MenuItem>
-                              <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" ترمیمی عرضیدعویٰ، حاضری"}
+                              >
                                 ترمیمی عرضیدعویٰ
                               </MenuItem>
-                              <MenuItem value={" ترمیمی جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" ترمیمی جواب دعویٰ، حاضری"}
+                              >
                                 ترمیمی جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"رپورٹ اہل کمیشن، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، رپورٹ اہل کمیشن"}
+                              >
                                 رپورٹ اہل کمیشن
                               </MenuItem>
-                              <MenuItem value={"عزرات، حاضری"}>عزرات</MenuItem>
-                              <MenuItem value={"شیڈولنگ کانفرنس، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، عزرات"}
+                              >
+                                عزرات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شیڈولنگ کانفرنس، حاضری"}
+                              >
                                 شیڈولنگ کانفرنس
                               </MenuItem>
-                              <MenuItem value="جواب الجواب، حاضری">
+                              <MenuItem
+                                className={classes.uFont}
+                                value="جواب الجواب، حاضری"
+                              >
                                 جواب الجواب
                               </MenuItem>
-                              <MenuItem value="شوکازنوٹس، حاضری">
+                              <MenuItem
+                                className={classes.uFont}
+                                value="شوکازنوٹس، حاضری"
+                              >
                                 شوکازنوٹس
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
                                 شہادت مدعی
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعیہ"}
+                              >
                                 شہادت مدعیہ
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعا علیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعا علیہ"}
+                              >
                                 شہادت مدعا علیہ
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعا علیہا"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعا علیہا"}
+                              >
                                 شہادت مدعا علیہا
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعیان"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعیان"}
+                              >
                                 شہادت مدعیان
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعاعلیہم"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعاعلیہم"}
+                              >
                                 شہادت مدعا علیہم
                               </MenuItem>
-                              <MenuItem value={"شہادت سائیل"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت سائیل"}
+                              >
                                 شہادت سائیل
                               </MenuItem>
-                              <MenuItem value={"شہادت مسئول الیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مسئول الیہ"}
+                              >
                                 شہادت مسئول الیہ
                               </MenuItem>
-                              <MenuItem value={"طلبیدہ گواہان، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"طلبیدہ گواہان، شہادت"}
+                              >
                                 طلبیدہ گواہان، شہادت
                               </MenuItem>
-                              <MenuItem value={"جرح بر گواہان، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جرح بر گواہان، شہادت"}
+                              >
                                 جرح بر گواہان، شہادت
                               </MenuItem>
-                              <MenuItem value={"شہادت استغاثہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت استغاثہ"}
+                              >
                                 شہادت استغاثہ
                               </MenuItem>
-                              <MenuItem value={"یکطرفہ شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"یکطرفہ شہادت"}
+                              >
                                 یکطرفہ شہادت
                               </MenuItem>
-                              <MenuItem value={"جرح بر گواہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جرح بر گواہ، شہادت"}
+                              >
                                 جرح بر گواہ، شہادت
                               </MenuItem>
-                              <MenuItem value={"ہمراہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، شہادت"}
+                              >
                                 ہمراہ، شہادت
                               </MenuItem>
-                              <MenuItem value={"بیان اہل کمیشن، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان اہل کمیشن، شہادت"}
+                              >
                                 بیان اہل کمیشن
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، شہادت"}
+                              >
                                 راضی نامہ
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{
+                                  backgroundColor: "lightsalmon",
+                                }}
                                 value={"ابتدائی بحث"}
                               >
                                 ابتدائی بحث
                               </MenuItem>
-                              <MenuItem value={"جواب و بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب و بحث"}
+                              >
                                 جواب و بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر درخواست"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر درخواست"}
+                              >
                                 بحث بر درخواست
                               </MenuItem>
-                              <MenuItem value={"بحث بر نکتہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر نکتہ"}
+                              >
                                 بحث بر نکتہ
                               </MenuItem>
-                              <MenuItem value={"یکطرفہ بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"یکطرفہ بحث"}
+                              >
                                 یکطرفہ بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر مقدمہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر مقدمہ"}
+                              >
                                 بحث بر مقدمہ
                               </MenuItem>
-                              <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
-                              <MenuItem value={"بحث، ریکارڈ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بقایا بحث"}
+                              >
+                                بقایا بحث
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث، ریکارڈ"}
+                              >
                                 بحث، ریکارڈ
                               </MenuItem>
-                              <MenuItem value={"بحث بر اپیل"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر اپیل"}
+                              >
                                 بحث بر اپیل
                               </MenuItem>
-                              <MenuItem value={"بحث بر نگرانی"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر نگرانی"}
+                              >
                                 بحث بر نگرانی
                               </MenuItem>
-                              <MenuItem value={"مصالحت ابتدائی، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مصالحت ابتدائی، بحث"}
+                              >
                                 مصالحت ابتدائی
                               </MenuItem>
-                              <MenuItem value={"مصالحت ثانی، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مصالحت ثانی، بحث"}
+                              >
                                 مصالحت ثانی
                               </MenuItem>
-                              <MenuItem value={"ہمراہ، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، بحث"}
+                              >
                                 ہمراہ، بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر رپورٹ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر رپورٹ"}
+                              >
                                 بحث بر رپورٹ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، بحث"}
+                              >
                                 راضی نامہ
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
                                 حکم بر درخواست
                               </MenuItem>
-                              <MenuItem value={"حکم بر کمیشن"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم بر کمیشن"}
+                              >
                                 حکم بر کمیشن
                               </MenuItem>
-                              <MenuItem value={"حکم بر مقدمہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم بر مقدمہ"}
+                              >
                                 حکم بر مقدمہ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، حکم"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، حکم"}
+                              >
                                 راضی نامہ، حکم
                               </MenuItem>
                             </Select>
@@ -1081,6 +1626,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       // fontFamily: "Alvi Nastaleeq Regular",
                       fontStyle: "",
                       fontWeight: "bold",
+                      backgroundColor: "lightsalmon",
                     }}
                   >
                     بحث
@@ -1094,12 +1640,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("بحث") ? (
                       <TableRow key={caseFile._id}>
-                        <TableCell component="th" scope="row">
+                        <TableCell component="th" scope="row" align="right">
                           {/* {setSerialNo(serialNo + 1)} */}
                           {/* {serialNo} */}
                           {serialNo[index++]}
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell align="right">
@@ -1108,10 +1654,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             "dd-MM-yyy"
                           )}
                         </TableCell>
-                        <TableCell align="center">
-                          {caseFile["Case Title"]}
+                        <TableCell
+                          align="center"
+                          style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
+                            fontSize: 18,
+                          }}
+                        >
+                          {/* {caseFile["Case Title"]} */}
+                          {caseFile.urduTitle}
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell
+                          align="center"
+                          style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
+                            fontSize: 20,
+                          }}
+                        >
                           {caseFile.causeListEntries &&
                             getSecondToLastElement(caseFile.causeListEntries)
                               .actionAbstract}
@@ -1127,7 +1686,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               "dd-MM-yyy"
                             )}
                         </TableCell>
-                        <TableCell align="center">
+                        {/* <TableCell align="center">
                           <TextField
                             name="Order No"
                             variant="outlined"
@@ -1151,8 +1710,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               });
                             }}
                           />
-                        </TableCell>
-                        <TableCell>
+                        </TableCell> */}
+                        <TableCell
+                          style={{
+                            direction: "ltr",
+                          }}
+                        >
                           <MuiPickersUtilsProvider
                             utils={DateFnsUtils}
                             fullWidth
@@ -1190,10 +1753,15 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             variant="outlined"
                             className={classes.formControl}
                           >
-                            <InputLabel id="demo-simple-select-outlined-label">
-                              خلاصہ کارواءی
+                            <InputLabel
+                              className={classes.uFont}
+                              id="demo-simple-select-outlined-label"
+                            >
+                              خلاصہ کاروائی
                             </InputLabel>
                             <Select
+                              align="center"
+                              className={classes.uFont}
                               labelId="demo-simple-select-outlined-label"
                               id="demo-simple-select-outlined"
                               value={
@@ -1209,243 +1777,458 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                   actionAbstract: e.target.value,
                                 });
                               }}
-                              label="Select Sub Type"
+                              label="خلاصہ کاروائی"
                             >
-                              <MenuItem value="">
+                              <MenuItem
+                                value=""
+                                style={{ backgroundColor: "lightgray" }}
+                              >
                                 <em>Mostly Used</em>
                               </MenuItem>
-                              <MenuItem value={"حاضری"}>حاضری</MenuItem>
-                              <MenuItem value={"بحث"}>بحث</MenuItem>
-                              <MenuItem value={"شہادت"}>شہادت</MenuItem>
-                              <MenuItem value={"حکم"}>حکم</MenuItem>
-                              <MenuItem value="">
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری"}
+                              >
+                                حاضری
+                              </MenuItem>
+                              <MenuItem className={classes.uFont} value={"بحث"}>
+                                بحث
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت"}
+                              >
+                                شہادت
+                              </MenuItem>
+                              <MenuItem className={classes.uFont} value={"حکم"}>
+                                حکم
+                              </MenuItem>
+                              <MenuItem
+                                value=""
+                                style={{ backgroundColor: "lightgrey" }}
+                              >
                                 <em>All Categories</em>
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
                                 حاضری، ریکارڈ
                               </MenuItem>
-                              <MenuItem value={"مختارنامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مختارنامہ، حاضری"}
+                              >
                                 مختارنامہ
                               </MenuItem>
-                              <MenuItem value={"تقرری وکیل، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تقرری وکیل، حاضری"}
+                              >
                                 تقرری وکیل، حاضری
                               </MenuItem>
-                              <MenuItem value={"حاضری، وکالت نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، وکالت نامہ، حاضری"}
+                              >
                                 وکالت نامہ، حاضری
                               </MenuItem>
-                              <MenuItem value={"وکالت نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"وکالت نامہ، حاضری"}
+                              >
                                 وکالت نامہ
                               </MenuItem>
-                              <MenuItem value={"حاضری، اشتہار"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، اشتہار"}
+                              >
                                 حاضری، اشتہار
                               </MenuItem>
-                              <MenuItem value={"حاضری، جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، جواب دعویٰ، حاضری"}
+                              >
                                 حاضری، جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب دعویٰ، حاضری"}
+                              >
                                 جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"جواب درخواست، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب درخواست، حاضری"}
+                              >
                                 جواب درخواست
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ جات، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ جات، حاضری"}
+                              >
                                 پروفارمہ جات
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ ای، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ ای، حاضری"}
+                              >
                                 پرفارمہ ای
                               </MenuItem>
-                              <MenuItem value={"تنقیحات، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تنقیحات، حاضری"}
+                              >
                                 تنقیحات
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ سی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ سی، حاضری"}
+                              >
                                 پرفارمہ سی
                               </MenuItem>
-                              <MenuItem value={"فرد جرم، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"فرد جرم، حاضری"}
+                              >
                                 فرد جرم
                               </MenuItem>
-                              <MenuItem value={"فرد تعلیقہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"فرد تعلیقہ، حاضری"}
+                              >
                                 فرد تعلیقہ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، حاضری"}
+                              >
                                 راضی نامہ
                               </MenuItem>
-                              <MenuItem value={"بیلف رپورٹ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیلف رپورٹ، حاضری"}
+                              >
                                 بیلف رپورٹ
                               </MenuItem>
-                              <MenuItem value={"نیلامی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"نیلامی، حاضری"}
+                              >
                                 نیلامی
                               </MenuItem>
-                              <MenuItem value={"نادرا رپورٹ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"نادرا رپورٹ، حاضری"}
+                              >
                                 نادرا رپورٹ
                               </MenuItem>
-                              <MenuItem value={"بقایا آدائیگی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بقایا آدائیگی، حاضری"}
+                              >
                                 بقایا آدائیگی
                               </MenuItem>
-                              <MenuItem value={"مزید کاروائی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مزید کاروائی، حاضری"}
+                              >
                                 مزید کاروائی
                               </MenuItem>
-                              <MenuItem value={"انتظار مسل، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"انتظار مسل، حاضری"}
+                              >
                                 انتظار مسل
                               </MenuItem>
-                              <MenuItem value={"کمنٹس، حاضری"}>کمنٹس</MenuItem>
-                              <MenuItem value={"رپورٹ، حاضری SHO"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"کمنٹس، حاضری"}
+                              >
+                                کمنٹس
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"رپورٹ SHO، حاضری"}
+                              >
                                 رپورٹ SHO
                               </MenuItem>
-                              <MenuItem value={"رپورٹ SHO، حاضری"}>
-                                رپورٹ، حاضری SHO
-                              </MenuItem>
-                              <MenuItem value={"بیان DFC, حاضری"}>
-                                بیان، حاضری DFC
-                              </MenuItem>
-                              <MenuItem value={"بیان، حاضری DFC"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان DFC, حاضری"}
+                              >
                                 بیان DFC
                               </MenuItem>
-                              <MenuItem value={"حاضری، طلبی انکوائری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"طلبی انکوائری، حاضری"}
+                              >
                                 طلبی انکوائری، حاضری
                               </MenuItem>
-                              <MenuItem value={"طلبی انکوائری، حاضری"}>
-                                طلبی انکوائری
-                              </MenuItem>
-                              <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" ترمیمی عرضیدعویٰ، حاضری"}
+                              >
                                 ترمیمی عرضیدعویٰ
                               </MenuItem>
-                              <MenuItem value={" ترمیمی جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" ترمیمی جواب دعویٰ، حاضری"}
+                              >
                                 ترمیمی جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"رپورٹ اہل کمیشن، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، رپورٹ اہل کمیشن"}
+                              >
                                 رپورٹ اہل کمیشن
                               </MenuItem>
-                              <MenuItem value={"عزرات، حاضری"}>عزرات</MenuItem>
-                              <MenuItem value={"شیڈولنگ کانفرنس، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، عزرات"}
+                              >
+                                عزرات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شیڈولنگ کانفرنس، حاضری"}
+                              >
                                 شیڈولنگ کانفرنس
                               </MenuItem>
-                              <MenuItem value="جواب الجواب، حاضری">
+                              <MenuItem
+                                className={classes.uFont}
+                                value="جواب الجواب، حاضری"
+                              >
                                 جواب الجواب
                               </MenuItem>
-                              <MenuItem value="شوکازنوٹس، حاضری">
+                              <MenuItem
+                                className={classes.uFont}
+                                value="شوکازنوٹس، حاضری"
+                              >
                                 شوکازنوٹس
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
                                 شہادت مدعی
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعیہ"}
+                              >
                                 شہادت مدعیہ
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعا علیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعا علیہ"}
+                              >
                                 شہادت مدعا علیہ
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعا علیہا"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعا علیہا"}
+                              >
                                 شہادت مدعا علیہا
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعیان"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعیان"}
+                              >
                                 شہادت مدعیان
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعاعلیہم"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعاعلیہم"}
+                              >
                                 شہادت مدعا علیہم
                               </MenuItem>
-                              <MenuItem value={"شہادت سائیل"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت سائیل"}
+                              >
                                 شہادت سائیل
                               </MenuItem>
-                              <MenuItem value={"شہادت مسئول الیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مسئول الیہ"}
+                              >
                                 شہادت مسئول الیہ
                               </MenuItem>
-                              <MenuItem value={"طلبیدہ گواہان، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"طلبیدہ گواہان، شہادت"}
+                              >
                                 طلبیدہ گواہان، شہادت
                               </MenuItem>
-                              <MenuItem value={"جرح بر گواہان، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جرح بر گواہان، شہادت"}
+                              >
                                 جرح بر گواہان، شہادت
                               </MenuItem>
-                              <MenuItem value={"شہادت استغاثہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت استغاثہ"}
+                              >
                                 شہادت استغاثہ
                               </MenuItem>
-                              <MenuItem value={"یکطرفہ شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"یکطرفہ شہادت"}
+                              >
                                 یکطرفہ شہادت
                               </MenuItem>
-                              <MenuItem value={"جرح بر گواہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جرح بر گواہ، شہادت"}
+                              >
                                 جرح بر گواہ، شہادت
                               </MenuItem>
-                              <MenuItem value={"ہمراہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، شہادت"}
+                              >
                                 ہمراہ، شہادت
                               </MenuItem>
-                              <MenuItem value={"بیان اہل کمیشن، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان اہل کمیشن، شہادت"}
+                              >
                                 بیان اہل کمیشن
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، شہادت"}
+                              >
                                 راضی نامہ
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{
+                                  backgroundColor: "lightsalmon",
+                                }}
                                 value={"ابتدائی بحث"}
                               >
                                 ابتدائی بحث
                               </MenuItem>
-                              <MenuItem value={"جواب و بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب و بحث"}
+                              >
                                 جواب و بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر درخواست"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر درخواست"}
+                              >
                                 بحث بر درخواست
                               </MenuItem>
-                              <MenuItem value={"بحث بر نکتہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر نکتہ"}
+                              >
                                 بحث بر نکتہ
                               </MenuItem>
-                              <MenuItem value={"یکطرفہ بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"یکطرفہ بحث"}
+                              >
                                 یکطرفہ بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر مقدمہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر مقدمہ"}
+                              >
                                 بحث بر مقدمہ
                               </MenuItem>
-                              <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
-                              <MenuItem value={"بحث، ریکارڈ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بقایا بحث"}
+                              >
+                                بقایا بحث
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث، ریکارڈ"}
+                              >
                                 بحث، ریکارڈ
                               </MenuItem>
-                              <MenuItem value={"بحث بر اپیل"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر اپیل"}
+                              >
                                 بحث بر اپیل
                               </MenuItem>
-                              <MenuItem value={"بحث بر نگرانی"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر نگرانی"}
+                              >
                                 بحث بر نگرانی
                               </MenuItem>
-                              <MenuItem value={"مصالحت ابتدائی، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مصالحت ابتدائی، بحث"}
+                              >
                                 مصالحت ابتدائی
                               </MenuItem>
-                              <MenuItem value={"مصالحت ثانی، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مصالحت ثانی، بحث"}
+                              >
                                 مصالحت ثانی
                               </MenuItem>
-                              <MenuItem value={"ہمراہ، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، بحث"}
+                              >
                                 ہمراہ، بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر رپورٹ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر رپورٹ"}
+                              >
                                 بحث بر رپورٹ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، بحث"}
+                              >
                                 راضی نامہ
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
                                 حکم بر درخواست
                               </MenuItem>
-                              <MenuItem value={"حکم بر کمیشن"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم بر کمیشن"}
+                              >
                                 حکم بر کمیشن
                               </MenuItem>
-                              <MenuItem value={"حکم بر مقدمہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم بر مقدمہ"}
+                              >
                                 حکم بر مقدمہ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، حکم"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، حکم"}
+                              >
                                 راضی نامہ، حکم
                               </MenuItem>
                             </Select>
@@ -1466,6 +2249,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       // fontFamily: "Alvi Nastaleeq Regular",
                       fontStyle: "",
                       fontWeight: "bold",
+                      backgroundColor: "lightcoral",
                     }}
                     colSpan={9}
                   >
@@ -1480,12 +2264,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("حکم") ? (
                       <TableRow key={caseFile._id}>
-                        <TableCell component="th" scope="row">
+                        <TableCell component="th" scope="row" align="right">
                           {/* {cases.indexOf(caseFile) + 1} */}
                           {/* {serialNo} */}
                           {serialNo[index++]}
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell align="right">
@@ -1494,10 +2278,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             "dd-MM-yyy"
                           )}
                         </TableCell>
-                        <TableCell align="center">
-                          {caseFile["Case Title"]}
+                        <TableCell
+                          align="center"
+                          style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
+                            fontSize: 18,
+                          }}
+                        >
+                          {/* {caseFile["Case Title"]} */}
+                          {caseFile.urduTitle}
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell
+                          align="center"
+                          style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
+                            fontSize: 20,
+                          }}
+                        >
                           {caseFile.causeListEntries &&
                             getSecondToLastElement(caseFile.causeListEntries)
                               .actionAbstract}
@@ -1513,7 +2310,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               "dd-MM-yyy"
                             )}
                         </TableCell>
-                        <TableCell align="center">
+                        {/* <TableCell align="center">
                           <TextField
                             name="Order No"
                             variant="outlined"
@@ -1538,8 +2335,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               });
                             }}
                           />
-                        </TableCell>
-                        <TableCell>
+                        </TableCell> */}
+                        <TableCell
+                          style={{
+                            direction: "ltr",
+                          }}
+                        >
                           <MuiPickersUtilsProvider
                             utils={DateFnsUtils}
                             fullWidth
@@ -1577,10 +2378,15 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             variant="outlined"
                             className={classes.formControl}
                           >
-                            <InputLabel id="demo-simple-select-outlined-label">
-                              خلاصہ کارواءی
+                            <InputLabel
+                              className={classes.uFont}
+                              id="demo-simple-select-outlined-label"
+                            >
+                              خلاصہ کاروائی
                             </InputLabel>
                             <Select
+                              align="center"
+                              className={classes.uFont}
                               labelId="demo-simple-select-outlined-label"
                               id="demo-simple-select-outlined"
                               value={
@@ -1596,243 +2402,458 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                   actionAbstract: e.target.value,
                                 });
                               }}
-                              label="Select Sub Type"
+                              label="خلاصہ کاروائی"
                             >
-                              <MenuItem value="">
+                              <MenuItem
+                                value=""
+                                style={{ backgroundColor: "lightgray" }}
+                              >
                                 <em>Mostly Used</em>
                               </MenuItem>
-                              <MenuItem value={"حاضری"}>حاضری</MenuItem>
-                              <MenuItem value={"بحث"}>بحث</MenuItem>
-                              <MenuItem value={"شہادت"}>شہادت</MenuItem>
-                              <MenuItem value={"حکم"}>حکم</MenuItem>
-                              <MenuItem value="">
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری"}
+                              >
+                                حاضری
+                              </MenuItem>
+                              <MenuItem className={classes.uFont} value={"بحث"}>
+                                بحث
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت"}
+                              >
+                                شہادت
+                              </MenuItem>
+                              <MenuItem className={classes.uFont} value={"حکم"}>
+                                حکم
+                              </MenuItem>
+                              <MenuItem
+                                value=""
+                                style={{ backgroundColor: "lightgrey" }}
+                              >
                                 <em>All Categories</em>
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
                                 حاضری، ریکارڈ
                               </MenuItem>
-                              <MenuItem value={"مختارنامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مختارنامہ، حاضری"}
+                              >
                                 مختارنامہ
                               </MenuItem>
-                              <MenuItem value={"تقرری وکیل، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تقرری وکیل، حاضری"}
+                              >
                                 تقرری وکیل، حاضری
                               </MenuItem>
-                              <MenuItem value={"حاضری، وکالت نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، وکالت نامہ، حاضری"}
+                              >
                                 وکالت نامہ، حاضری
                               </MenuItem>
-                              <MenuItem value={"وکالت نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"وکالت نامہ، حاضری"}
+                              >
                                 وکالت نامہ
                               </MenuItem>
-                              <MenuItem value={"حاضری، اشتہار"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، اشتہار"}
+                              >
                                 حاضری، اشتہار
                               </MenuItem>
-                              <MenuItem value={"حاضری، جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، جواب دعویٰ، حاضری"}
+                              >
                                 حاضری، جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب دعویٰ، حاضری"}
+                              >
                                 جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"جواب درخواست، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب درخواست، حاضری"}
+                              >
                                 جواب درخواست
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ جات، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ جات، حاضری"}
+                              >
                                 پروفارمہ جات
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ ای، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ ای، حاضری"}
+                              >
                                 پرفارمہ ای
                               </MenuItem>
-                              <MenuItem value={"تنقیحات، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تنقیحات، حاضری"}
+                              >
                                 تنقیحات
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ سی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ سی، حاضری"}
+                              >
                                 پرفارمہ سی
                               </MenuItem>
-                              <MenuItem value={"فرد جرم، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"فرد جرم، حاضری"}
+                              >
                                 فرد جرم
                               </MenuItem>
-                              <MenuItem value={"فرد تعلیقہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"فرد تعلیقہ، حاضری"}
+                              >
                                 فرد تعلیقہ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، حاضری"}
+                              >
                                 راضی نامہ
                               </MenuItem>
-                              <MenuItem value={"بیلف رپورٹ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیلف رپورٹ، حاضری"}
+                              >
                                 بیلف رپورٹ
                               </MenuItem>
-                              <MenuItem value={"نیلامی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"نیلامی، حاضری"}
+                              >
                                 نیلامی
                               </MenuItem>
-                              <MenuItem value={"نادرا رپورٹ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"نادرا رپورٹ، حاضری"}
+                              >
                                 نادرا رپورٹ
                               </MenuItem>
-                              <MenuItem value={"بقایا آدائیگی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بقایا آدائیگی، حاضری"}
+                              >
                                 بقایا آدائیگی
                               </MenuItem>
-                              <MenuItem value={"مزید کاروائی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مزید کاروائی، حاضری"}
+                              >
                                 مزید کاروائی
                               </MenuItem>
-                              <MenuItem value={"انتظار مسل، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"انتظار مسل، حاضری"}
+                              >
                                 انتظار مسل
                               </MenuItem>
-                              <MenuItem value={"کمنٹس، حاضری"}>کمنٹس</MenuItem>
-                              <MenuItem value={"رپورٹ، حاضری SHO"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"کمنٹس، حاضری"}
+                              >
+                                کمنٹس
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"رپورٹ SHO، حاضری"}
+                              >
                                 رپورٹ SHO
                               </MenuItem>
-                              <MenuItem value={"رپورٹ SHO، حاضری"}>
-                                رپورٹ، حاضری SHO
-                              </MenuItem>
-                              <MenuItem value={"بیان DFC, حاضری"}>
-                                بیان، حاضری DFC
-                              </MenuItem>
-                              <MenuItem value={"بیان، حاضری DFC"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان DFC, حاضری"}
+                              >
                                 بیان DFC
                               </MenuItem>
-                              <MenuItem value={"حاضری، طلبی انکوائری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"طلبی انکوائری، حاضری"}
+                              >
                                 طلبی انکوائری، حاضری
                               </MenuItem>
-                              <MenuItem value={"طلبی انکوائری، حاضری"}>
-                                طلبی انکوائری
-                              </MenuItem>
-                              <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" ترمیمی عرضیدعویٰ، حاضری"}
+                              >
                                 ترمیمی عرضیدعویٰ
                               </MenuItem>
-                              <MenuItem value={" ترمیمی جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" ترمیمی جواب دعویٰ، حاضری"}
+                              >
                                 ترمیمی جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"رپورٹ اہل کمیشن، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، رپورٹ اہل کمیشن"}
+                              >
                                 رپورٹ اہل کمیشن
                               </MenuItem>
-                              <MenuItem value={"عزرات، حاضری"}>عزرات</MenuItem>
-                              <MenuItem value={"شیڈولنگ کانفرنس، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، عزرات"}
+                              >
+                                عزرات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شیڈولنگ کانفرنس، حاضری"}
+                              >
                                 شیڈولنگ کانفرنس
                               </MenuItem>
-                              <MenuItem value="جواب الجواب، حاضری">
+                              <MenuItem
+                                className={classes.uFont}
+                                value="جواب الجواب، حاضری"
+                              >
                                 جواب الجواب
                               </MenuItem>
-                              <MenuItem value="شوکازنوٹس، حاضری">
+                              <MenuItem
+                                className={classes.uFont}
+                                value="شوکازنوٹس، حاضری"
+                              >
                                 شوکازنوٹس
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
                                 شہادت مدعی
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعیہ"}
+                              >
                                 شہادت مدعیہ
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعا علیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعا علیہ"}
+                              >
                                 شہادت مدعا علیہ
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعا علیہا"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعا علیہا"}
+                              >
                                 شہادت مدعا علیہا
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعیان"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعیان"}
+                              >
                                 شہادت مدعیان
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعاعلیہم"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعاعلیہم"}
+                              >
                                 شہادت مدعا علیہم
                               </MenuItem>
-                              <MenuItem value={"شہادت سائیل"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت سائیل"}
+                              >
                                 شہادت سائیل
                               </MenuItem>
-                              <MenuItem value={"شہادت مسئول الیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مسئول الیہ"}
+                              >
                                 شہادت مسئول الیہ
                               </MenuItem>
-                              <MenuItem value={"طلبیدہ گواہان، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"طلبیدہ گواہان، شہادت"}
+                              >
                                 طلبیدہ گواہان، شہادت
                               </MenuItem>
-                              <MenuItem value={"جرح بر گواہان، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جرح بر گواہان، شہادت"}
+                              >
                                 جرح بر گواہان، شہادت
                               </MenuItem>
-                              <MenuItem value={"شہادت استغاثہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت استغاثہ"}
+                              >
                                 شہادت استغاثہ
                               </MenuItem>
-                              <MenuItem value={"یکطرفہ شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"یکطرفہ شہادت"}
+                              >
                                 یکطرفہ شہادت
                               </MenuItem>
-                              <MenuItem value={"جرح بر گواہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جرح بر گواہ، شہادت"}
+                              >
                                 جرح بر گواہ، شہادت
                               </MenuItem>
-                              <MenuItem value={"ہمراہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، شہادت"}
+                              >
                                 ہمراہ، شہادت
                               </MenuItem>
-                              <MenuItem value={"بیان اہل کمیشن، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان اہل کمیشن، شہادت"}
+                              >
                                 بیان اہل کمیشن
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، شہادت"}
+                              >
                                 راضی نامہ
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{
+                                  backgroundColor: "lightsalmon",
+                                }}
                                 value={"ابتدائی بحث"}
                               >
                                 ابتدائی بحث
                               </MenuItem>
-                              <MenuItem value={"جواب و بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب و بحث"}
+                              >
                                 جواب و بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر درخواست"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر درخواست"}
+                              >
                                 بحث بر درخواست
                               </MenuItem>
-                              <MenuItem value={"بحث بر نکتہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر نکتہ"}
+                              >
                                 بحث بر نکتہ
                               </MenuItem>
-                              <MenuItem value={"یکطرفہ بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"یکطرفہ بحث"}
+                              >
                                 یکطرفہ بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر مقدمہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر مقدمہ"}
+                              >
                                 بحث بر مقدمہ
                               </MenuItem>
-                              <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
-                              <MenuItem value={"بحث، ریکارڈ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بقایا بحث"}
+                              >
+                                بقایا بحث
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث، ریکارڈ"}
+                              >
                                 بحث، ریکارڈ
                               </MenuItem>
-                              <MenuItem value={"بحث بر اپیل"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر اپیل"}
+                              >
                                 بحث بر اپیل
                               </MenuItem>
-                              <MenuItem value={"بحث بر نگرانی"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر نگرانی"}
+                              >
                                 بحث بر نگرانی
                               </MenuItem>
-                              <MenuItem value={"مصالحت ابتدائی، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مصالحت ابتدائی، بحث"}
+                              >
                                 مصالحت ابتدائی
                               </MenuItem>
-                              <MenuItem value={"مصالحت ثانی، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مصالحت ثانی، بحث"}
+                              >
                                 مصالحت ثانی
                               </MenuItem>
-                              <MenuItem value={"ہمراہ، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، بحث"}
+                              >
                                 ہمراہ، بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر رپورٹ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر رپورٹ"}
+                              >
                                 بحث بر رپورٹ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، بحث"}
+                              >
                                 راضی نامہ
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
                                 حکم بر درخواست
                               </MenuItem>
-                              <MenuItem value={"حکم بر کمیشن"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم بر کمیشن"}
+                              >
                                 حکم بر کمیشن
                               </MenuItem>
-                              <MenuItem value={"حکم بر مقدمہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم بر مقدمہ"}
+                              >
                                 حکم بر مقدمہ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، حکم"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، حکم"}
+                              >
                                 راضی نامہ، حکم
                               </MenuItem>
                             </Select>
@@ -1854,6 +2875,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       // fontFamily: "Alvi Nastaleeq Regular",
                       fontStyle: "",
                       fontWeight: "bold",
+                      backgroundColor: "lightblue",
                     }}
                   >
                     متفرق
@@ -1866,12 +2888,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     !getSecondToLastElementCategory(caseFile.causeListEntries)
                       .actionAbstract ? (
                       <TableRow key={caseFile._id}>
-                        <TableCell component="th" scope="row">
+                        <TableCell component="th" scope="row" align="right">
                           {/* {cases.indexOf(caseFile) + 1} */}
                           {/* {serialNo} */}
                           {serialNo[index++]}
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell align="right">
@@ -1880,10 +2902,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             "dd-MM-yyy"
                           )}
                         </TableCell>
-                        <TableCell align="center">
-                          {caseFile["Case Title"]}
+                        <TableCell
+                          align="center"
+                          style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
+                            fontSize: 18,
+                          }}
+                        >
+                          {/* {caseFile["Case Title"]} */}
+                          {caseFile.urduTitle}
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell
+                          align="center"
+                          style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
+                            fontSize: 20,
+                          }}
+                        >
                           {caseFile.causeListEntries &&
                             getSecondToLastElement(caseFile.causeListEntries)
                               .actionAbstract}
@@ -1899,7 +2934,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               "dd-MM-yyy"
                             )}
                         </TableCell>
-                        <TableCell align="center">
+                        {/* <TableCell align="center">
                           <TextField
                             name="Order No"
                             variant="outlined"
@@ -1924,8 +2959,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               });
                             }}
                           />
-                        </TableCell>
-                        <TableCell>
+                        </TableCell> */}
+                        <TableCell
+                          style={{
+                            direction: "ltr",
+                          }}
+                        >
                           <MuiPickersUtilsProvider
                             utils={DateFnsUtils}
                             fullWidth
@@ -1963,10 +3002,15 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             variant="outlined"
                             className={classes.formControl}
                           >
-                            <InputLabel id="demo-simple-select-outlined-label">
-                              خلاصہ کارواءی
+                            <InputLabel
+                              className={classes.uFont}
+                              id="demo-simple-select-outlined-label"
+                            >
+                              خلاصہ کاروائی
                             </InputLabel>
                             <Select
+                              align="center"
+                              className={classes.uFont}
                               labelId="demo-simple-select-outlined-label"
                               id="demo-simple-select-outlined"
                               value={
@@ -1982,243 +3026,458 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                   actionAbstract: e.target.value,
                                 });
                               }}
-                              label="Select Sub Type"
+                              label="خلاصہ کاروائی"
                             >
-                              <MenuItem value="">
+                              <MenuItem
+                                value=""
+                                style={{ backgroundColor: "lightgray" }}
+                              >
                                 <em>Mostly Used</em>
                               </MenuItem>
-                              <MenuItem value={"حاضری"}>حاضری</MenuItem>
-                              <MenuItem value={"بحث"}>بحث</MenuItem>
-                              <MenuItem value={"شہادت"}>شہادت</MenuItem>
-                              <MenuItem value={"حکم"}>حکم</MenuItem>
-                              <MenuItem value="">
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری"}
+                              >
+                                حاضری
+                              </MenuItem>
+                              <MenuItem className={classes.uFont} value={"بحث"}>
+                                بحث
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت"}
+                              >
+                                شہادت
+                              </MenuItem>
+                              <MenuItem className={classes.uFont} value={"حکم"}>
+                                حکم
+                              </MenuItem>
+                              <MenuItem
+                                value=""
+                                style={{ backgroundColor: "lightgrey" }}
+                              >
                                 <em>All Categories</em>
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
                                 حاضری، ریکارڈ
                               </MenuItem>
-                              <MenuItem value={"مختارنامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مختارنامہ، حاضری"}
+                              >
                                 مختارنامہ
                               </MenuItem>
-                              <MenuItem value={"تقرری وکیل، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تقرری وکیل، حاضری"}
+                              >
                                 تقرری وکیل، حاضری
                               </MenuItem>
-                              <MenuItem value={"حاضری، وکالت نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، وکالت نامہ، حاضری"}
+                              >
                                 وکالت نامہ، حاضری
                               </MenuItem>
-                              <MenuItem value={"وکالت نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"وکالت نامہ، حاضری"}
+                              >
                                 وکالت نامہ
                               </MenuItem>
-                              <MenuItem value={"حاضری، اشتہار"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، اشتہار"}
+                              >
                                 حاضری، اشتہار
                               </MenuItem>
-                              <MenuItem value={"حاضری، جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، جواب دعویٰ، حاضری"}
+                              >
                                 حاضری، جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب دعویٰ، حاضری"}
+                              >
                                 جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"جواب درخواست، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب درخواست، حاضری"}
+                              >
                                 جواب درخواست
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ جات، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ جات، حاضری"}
+                              >
                                 پروفارمہ جات
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ ای، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ ای، حاضری"}
+                              >
                                 پرفارمہ ای
                               </MenuItem>
-                              <MenuItem value={"تنقیحات، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تنقیحات، حاضری"}
+                              >
                                 تنقیحات
                               </MenuItem>
-                              <MenuItem value={"پروفارمہ سی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"پروفارمہ سی، حاضری"}
+                              >
                                 پرفارمہ سی
                               </MenuItem>
-                              <MenuItem value={"فرد جرم، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"فرد جرم، حاضری"}
+                              >
                                 فرد جرم
                               </MenuItem>
-                              <MenuItem value={"فرد تعلیقہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"فرد تعلیقہ، حاضری"}
+                              >
                                 فرد تعلیقہ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، حاضری"}
+                              >
                                 راضی نامہ
                               </MenuItem>
-                              <MenuItem value={"بیلف رپورٹ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیلف رپورٹ، حاضری"}
+                              >
                                 بیلف رپورٹ
                               </MenuItem>
-                              <MenuItem value={"نیلامی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"نیلامی، حاضری"}
+                              >
                                 نیلامی
                               </MenuItem>
-                              <MenuItem value={"نادرا رپورٹ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"نادرا رپورٹ، حاضری"}
+                              >
                                 نادرا رپورٹ
                               </MenuItem>
-                              <MenuItem value={"بقایا آدائیگی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بقایا آدائیگی، حاضری"}
+                              >
                                 بقایا آدائیگی
                               </MenuItem>
-                              <MenuItem value={"مزید کاروائی، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مزید کاروائی، حاضری"}
+                              >
                                 مزید کاروائی
                               </MenuItem>
-                              <MenuItem value={"انتظار مسل، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"انتظار مسل، حاضری"}
+                              >
                                 انتظار مسل
                               </MenuItem>
-                              <MenuItem value={"کمنٹس، حاضری"}>کمنٹس</MenuItem>
-                              <MenuItem value={"رپورٹ، حاضری SHO"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"کمنٹس، حاضری"}
+                              >
+                                کمنٹس
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"رپورٹ SHO، حاضری"}
+                              >
                                 رپورٹ SHO
                               </MenuItem>
-                              <MenuItem value={"رپورٹ SHO، حاضری"}>
-                                رپورٹ، حاضری SHO
-                              </MenuItem>
-                              <MenuItem value={"بیان DFC, حاضری"}>
-                                بیان، حاضری DFC
-                              </MenuItem>
-                              <MenuItem value={"بیان، حاضری DFC"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان DFC, حاضری"}
+                              >
                                 بیان DFC
                               </MenuItem>
-                              <MenuItem value={"حاضری، طلبی انکوائری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"طلبی انکوائری، حاضری"}
+                              >
                                 طلبی انکوائری، حاضری
                               </MenuItem>
-                              <MenuItem value={"طلبی انکوائری، حاضری"}>
-                                طلبی انکوائری
-                              </MenuItem>
-                              <MenuItem value={" ترمیمی عرضیدعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" ترمیمی عرضیدعویٰ، حاضری"}
+                              >
                                 ترمیمی عرضیدعویٰ
                               </MenuItem>
-                              <MenuItem value={" ترمیمی جواب دعویٰ، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" ترمیمی جواب دعویٰ، حاضری"}
+                              >
                                 ترمیمی جواب دعویٰ
                               </MenuItem>
-                              <MenuItem value={"رپورٹ اہل کمیشن، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، رپورٹ اہل کمیشن"}
+                              >
                                 رپورٹ اہل کمیشن
                               </MenuItem>
-                              <MenuItem value={"عزرات، حاضری"}>عزرات</MenuItem>
-                              <MenuItem value={"شیڈولنگ کانفرنس، حاضری"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، عزرات"}
+                              >
+                                عزرات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شیڈولنگ کانفرنس، حاضری"}
+                              >
                                 شیڈولنگ کانفرنس
                               </MenuItem>
-                              <MenuItem value="جواب الجواب، حاضری">
+                              <MenuItem
+                                className={classes.uFont}
+                                value="جواب الجواب، حاضری"
+                              >
                                 جواب الجواب
                               </MenuItem>
-                              <MenuItem value="شوکازنوٹس، حاضری">
+                              <MenuItem
+                                className={classes.uFont}
+                                value="شوکازنوٹس، حاضری"
+                              >
                                 شوکازنوٹس
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
                                 شہادت مدعی
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعیہ"}
+                              >
                                 شہادت مدعیہ
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعا علیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعا علیہ"}
+                              >
                                 شہادت مدعا علیہ
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعا علیہا"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعا علیہا"}
+                              >
                                 شہادت مدعا علیہا
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعیان"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعیان"}
+                              >
                                 شہادت مدعیان
                               </MenuItem>
-                              <MenuItem value={"شہادت مدعاعلیہم"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مدعاعلیہم"}
+                              >
                                 شہادت مدعا علیہم
                               </MenuItem>
-                              <MenuItem value={"شہادت سائیل"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت سائیل"}
+                              >
                                 شہادت سائیل
                               </MenuItem>
-                              <MenuItem value={"شہادت مسئول الیہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت مسئول الیہ"}
+                              >
                                 شہادت مسئول الیہ
                               </MenuItem>
-                              <MenuItem value={"طلبیدہ گواہان، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"طلبیدہ گواہان، شہادت"}
+                              >
                                 طلبیدہ گواہان، شہادت
                               </MenuItem>
-                              <MenuItem value={"جرح بر گواہان، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جرح بر گواہان، شہادت"}
+                              >
                                 جرح بر گواہان، شہادت
                               </MenuItem>
-                              <MenuItem value={"شہادت استغاثہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"شہادت استغاثہ"}
+                              >
                                 شہادت استغاثہ
                               </MenuItem>
-                              <MenuItem value={"یکطرفہ شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"یکطرفہ شہادت"}
+                              >
                                 یکطرفہ شہادت
                               </MenuItem>
-                              <MenuItem value={"جرح بر گواہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جرح بر گواہ، شہادت"}
+                              >
                                 جرح بر گواہ، شہادت
                               </MenuItem>
-                              <MenuItem value={"ہمراہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، شہادت"}
+                              >
                                 ہمراہ، شہادت
                               </MenuItem>
-                              <MenuItem value={"بیان اہل کمیشن، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان اہل کمیشن، شہادت"}
+                              >
                                 بیان اہل کمیشن
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، شہادت"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، شہادت"}
+                              >
                                 راضی نامہ
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{
+                                  backgroundColor: "lightsalmon",
+                                }}
                                 value={"ابتدائی بحث"}
                               >
                                 ابتدائی بحث
                               </MenuItem>
-                              <MenuItem value={"جواب و بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"جواب و بحث"}
+                              >
                                 جواب و بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر درخواست"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر درخواست"}
+                              >
                                 بحث بر درخواست
                               </MenuItem>
-                              <MenuItem value={"بحث بر نکتہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر نکتہ"}
+                              >
                                 بحث بر نکتہ
                               </MenuItem>
-                              <MenuItem value={"یکطرفہ بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"یکطرفہ بحث"}
+                              >
                                 یکطرفہ بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر مقدمہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر مقدمہ"}
+                              >
                                 بحث بر مقدمہ
                               </MenuItem>
-                              <MenuItem value={"بقایا بحث"}>بقایا بحث</MenuItem>
-                              <MenuItem value={"بحث، ریکارڈ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بقایا بحث"}
+                              >
+                                بقایا بحث
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث، ریکارڈ"}
+                              >
                                 بحث، ریکارڈ
                               </MenuItem>
-                              <MenuItem value={"بحث بر اپیل"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر اپیل"}
+                              >
                                 بحث بر اپیل
                               </MenuItem>
-                              <MenuItem value={"بحث بر نگرانی"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر نگرانی"}
+                              >
                                 بحث بر نگرانی
                               </MenuItem>
-                              <MenuItem value={"مصالحت ابتدائی، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مصالحت ابتدائی، بحث"}
+                              >
                                 مصالحت ابتدائی
                               </MenuItem>
-                              <MenuItem value={"مصالحت ثانی، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مصالحت ثانی، بحث"}
+                              >
                                 مصالحت ثانی
                               </MenuItem>
-                              <MenuItem value={"ہمراہ، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، بحث"}
+                              >
                                 ہمراہ، بحث
                               </MenuItem>
-                              <MenuItem value={"بحث بر رپورٹ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بحث بر رپورٹ"}
+                              >
                                 بحث بر رپورٹ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، بحث"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، بحث"}
+                              >
                                 راضی نامہ
                               </MenuItem>
                               <Divider />
 
                               <MenuItem
-                                className={classes.boldThis}
+                                className={[classes.boldThis, classes.uFont]}
+                                style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
                                 حکم بر درخواست
                               </MenuItem>
-                              <MenuItem value={"حکم بر کمیشن"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم بر کمیشن"}
+                              >
                                 حکم بر کمیشن
                               </MenuItem>
-                              <MenuItem value={"حکم بر مقدمہ"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم بر مقدمہ"}
+                              >
                                 حکم بر مقدمہ
                               </MenuItem>
-                              <MenuItem value={"راضی نامہ، حکم"}>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"راضی نامہ، حکم"}
+                              >
                                 راضی نامہ، حکم
                               </MenuItem>
                             </Select>
