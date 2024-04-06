@@ -7,7 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { Button, CircularProgress } from "@material-ui/core";
+import { Button, CircularProgress, TextField } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
@@ -23,7 +23,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  AppBar, Tab, Tabs
 } from "@material-ui/core";
+import TabPanel from "./TabPanel";
 
 // import { getEmployeeData } from './actions/employeeData';
 // import { parseISO } from 'date-fns/parseISO';
@@ -49,7 +51,6 @@ const useStyles = makeStyles({
 //     createData('Cupcake', 305, 3.7, 67, 4.3),
 //     createData('Gingerbread', 356, 16.0, 49, 3.9),
 // ];
-
 export default function CasesListTable({
   currentId,
   setCurrentId,
@@ -73,6 +74,13 @@ export default function CasesListTable({
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
+  
+    const [selectedTab, setSelectedTab] = useState(0);
+  
+    const handleChange = (event, newValue) => {
+      setSelectedTab(newValue);
+    };
+
   const handleDelete = (id) => {
     setSelectedRow(id);
     setOpenDeleteDialog(true);
@@ -93,7 +101,18 @@ export default function CasesListTable({
     <CircularProgress />
   ) : (
     <>
-      <TableContainer component={Paper}>
+    
+    <div>
+      <AppBar position="static">
+        <Tabs centered value={selectedTab} onChange={handleChange} aria-label="Case tabs">
+          <Tab label="Pending Cases" />
+          <Tab label="All Cases" />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={selectedTab} index={0}>
+        {/* Render your Pending Cases table component here */}
+        {/* <PendingCasesTable /> */}
+        <TableContainer component={Paper}>
         <Table
           ref={tableRef}
           stickyHeader
@@ -146,7 +165,7 @@ export default function CasesListTable({
                 <TableCell align="left">{row["Case Title"]}</TableCell>
                 {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
                 <TableCell
-                  align="left"
+                  align="right"
                   style={{
                     fontFamily: "Jameel Noori Nastaleeq",
                     fontSize: 20,
@@ -223,8 +242,8 @@ export default function CasesListTable({
           <DialogTitle id="alert-dialog-title">Confirm Delete</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Are you sure you want to delete this item:{" "}
-              {selectedRow && selectedRow.name}?
+              Are you sure you want to delete this item
+              {selectedRow && selectedRow.urduTitle}?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -241,6 +260,16 @@ export default function CasesListTable({
           </DialogActions>
         </Dialog>
       </div>
+      </TabPanel>
+      <TabPanel value={selectedTab} index={1}>
+        {/* Render your All Cases table component here */}
+        {/* <AllCasesTable /> */}
+        All Cases
+      </TabPanel>
+    </div>
+
+
+      
     </>
   );
 }

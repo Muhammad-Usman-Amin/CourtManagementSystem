@@ -9,6 +9,7 @@ export const getCases = async (req, res) => {
 
   try {
     const cases = await Case.find();
+    
   //   const cases = await Case.find({ 
   //     $and: [
   //         { disposed: { $ne: true } }, //$ne means not equal to

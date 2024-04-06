@@ -6,6 +6,7 @@ const urlCases = 'http://localhost:5000/cases';
 const urlEmployeeData = 'http://localhost:5000/employeeData';
 const urlQueryData = 'http://localhost:5000/api/queryData';
 const urlCauseLists = 'http://localhost:5000/api/causeLists';
+const urlControlCenter = 'http://localhost:5000/api/controlCenter';
 // const urlQueryData = 'http://localhost:5000/employeeData/api/queryData';
 // const urlpqsp = 'http://localhost:5000/pqsp';
 
@@ -35,6 +36,11 @@ export const createCase = (newCase) => axios.post(urlCases, newCase);
 export const updateCase = (id, updatedCase) => axios.patch(`${urlCases}/${id}`, updatedCase);
 export const deleteCase = (id) => axios.delete(`${urlCases}/${id}`);
 export const likeCase = (id) => axios.patch(`${urlCases}/${id}/likeCase`);
+
+export const fetchControlCenter = () => axios.get(urlControlCenter);
+export const createControlCenter = (newControlCenter) => axios.post(urlControlCenter, newControlCenter);
+export const updateControlCenter = (id, updatedControlCenter) => axios.patch(`${urlControlCenter}/${id}`, updatedControlCenter);
+export const deleteControlCenter = (id) => axios.delete(`${urlControlCenter}/${id}`);
 
 export const fetchEmployeeData = () => axios.get(urlEmployeeData);
 export const createEmployeeData = (newEmployeeFile) => axios.post(urlEmployeeData, newEmployeeFile);

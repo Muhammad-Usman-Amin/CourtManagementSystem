@@ -11,6 +11,7 @@ import employeeDataRoutes from "./routes/employeeData.js";
 import pqspRoutes from "./routes/pqsp.js";
 import queryData from "./routes/queryData.js";
 import causeLists from "./routes/causeLists.js";
+import controlCenter from "./routes/controlCenter.js";
 
 const app = express();
 dotenv.config();
@@ -25,6 +26,7 @@ app.use("/employeeData", employeeDataRoutes);
 app.use("/pqsp", pqspRoutes);
 app.use("/api/queryData", queryData);
 app.use("/api/causeLists", causeLists);
+app.use("/api/controlCenter", controlCenter);
 
 // console.log(new Date());
 // let st = new Date('04-Jun-2004');

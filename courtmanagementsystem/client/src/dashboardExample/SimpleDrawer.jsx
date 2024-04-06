@@ -68,6 +68,13 @@ export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
             {title}
           </Typography>
 
+          <Tooltip title="Control Center">
+            <IconButton color="inherit" >
+              <Badge badgeContent={themeMode} color="secondary">
+                <SettingsBrightnessIcon />
+              </Badge>
+            </IconButton>
+          </Tooltip>
           <Tooltip title="Toggle Light/Dark theme">
             <IconButton color="inherit" onClick={toggleThemeMode}>
               <Badge badgeContent={themeMode} color="secondary">

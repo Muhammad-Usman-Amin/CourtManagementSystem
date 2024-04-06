@@ -5,5 +5,6 @@ export const FETCH_ALL = 'FETCH_ALL';
 export const LIKE = 'LIKE';
 export const QUERY = 'QUERY';
 export const FETCH_ALL_CAUSE_LIST = 'FETCH_ALL_CAUSE_LIST';
+export const CREATE_CONTROL_CENTER = 'CREATE_CONTROL_CENTER';
 
 export const FETCH_ALL_EMPLOYEE_DATA = 'FETCH_ALL_EMPLOYEE_DATA';

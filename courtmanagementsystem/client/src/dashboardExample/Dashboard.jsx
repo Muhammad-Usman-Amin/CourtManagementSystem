@@ -26,6 +26,7 @@ import useStyles from "./dashboard";
 import { Button } from "@material-ui/core";
 import { useSelector } from "react-redux";
 // import store from '../index';
+import TextField from '@material-ui/core/TextField';
 
 function Copyright() {
   return (
@@ -39,7 +40,17 @@ function Copyright() {
     </Typography>
   );
 }
+// function openFindWindow() {
+//   const event = new KeyboardEvent('keydown', {
+//     ctrlKey: true,
+//     key: 'f',
+//     shiftKey: false,
+//     altKey: false,
+//     metaKey: false,
+//   });
 
+//   document.dispatchEvent(event);
+// }
 const drawerWidth = 240;
 
 // const useStyles = makeStyles((theme) => ({
@@ -153,6 +164,7 @@ export default function Dashboard({ onPageChange }) {
           </Paper>
         </Grid>
       </Grid>
+
       {/* <Grid item xs={6} md={6}>
         <Button
           fullWidth
@@ -166,6 +178,7 @@ export default function Dashboard({ onPageChange }) {
         </Button>
         {/* <Button fullWidth variant='outlined' onClick={() => console.log(store.getState())}>Store State</Button>
       </Grid>*/}
+      {/* <Button fullWidth variant="outlined" onClick={openFindWindow}>Open Find Window</Button> */}
       <Box pt={4}>
         <Copyright />
       </Box>

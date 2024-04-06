@@ -32,8 +32,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import useStyles from "./styles";
-import useStyles2 from "../../dashboardExample/dashboard";
-import Container from "@material-ui/core/Container";
+// import useStyles2 from "../../dashboardExample/dashboard";
+// import Container from "@material-ui/core/Container";
 import { createCase, updateCase } from "../../actions/cases";
 import ClearAllIcon from "@material-ui/icons/ClearAll";
 import SaveIcon from "@material-ui/icons/Save";
@@ -59,45 +59,31 @@ const GreenRadio = withStyles({
   checked: {},
 })((props) => <Radio color="default" {...props} />);
 
-const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
-  const [institutionDate, setInstitutionDate] = useState(new Date());
-  const [nextDate, setNextDate] = useState(addDays(new Date(), 1));
-  const [sameAsInstitutionDate, setSameAsInstitutiondate] = useState(false);
-  const [caseData, setCaseData] = useState({
-    // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
-    "Case Title": "",
-    urduTitle: "",
-    "Case No": "",
-    "Case Type": "Civil",
-    "Category Per PQS": "",
-    "FIR NO": "",
-    "FIR Date": null,
-    Thana: "",
-    Section: "",
-    "Date of Institution ": institutionDate,
-    "Date of Disposal Transfer Out": null,
-    disposed: false,
-    transferedOut: false,
-    transferedIn: false,
-    remandedRestored: false,
-    AcquittalORConviction: "",
-    "Disposal OR Transfer Out Flag": "",
-    "Disposal Mode Flag": "", //used for contested, non-contested etc
-    "Date of Transfer In": null,
-    "Date of Other Institution": null,
-    "Institution Flag": "", // used for Remander, Restored flags
-    nextDate: nextDate,
-    orderNumber: "",
-    actionAbstract: "",
-    orderDate: new Date(),
-    nature: "",
-    isOtherNature: false,
+const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
+  const [poData, setPoData] = useState({
+    presidingOfficer: "",
+    causeListName: "",
+    judgecategory: "",
+    courtNumber: "",
+    stationDistrict: "",
+    courtStatus: "",
+//Monthly Data
+    statementMonth: null,
+    totalDays: "",
+    totalSundays: "",
+    leaves: "",
+    otherHolidays: "",
+    nonJudicialWorkingDays: "",
+    noOfStrikesDays: "",
+    netJudicialWorkingDays: "",
+    incumbencyStatus: "",
+    quartelrlyBacklogClearanceTarget: "",
   });
 
   const handleDateChange = (date) => {
     setInstitutionDate(date);
 
-    setCaseData({ ...caseData, "Date of Institution ": date });
+    setPoData({ ...poData, "Date of Institution ": date });
     // console.log(caseData["Date of Institution "]);
   };
 
@@ -125,7 +111,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       setInstitutionDate(caseFile["Date of Institution "]);
       setNextDate(caseFile.nextDate ? caseFile.nextDate : nextDate);
       // console.log(selectedCaseType);
-      setCaseData(caseFile);
+      setPoData(caseFile);
       caseFile["Date of Disposal Transfer Out"]
         ? setIsDisposed(true)
         : setIsDisposed(false);
@@ -154,18 +140,18 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     e.preventDefault();
 
     if (currentId) {
-      dispatch(updateCase(currentId, caseData));
+      dispatch(updateCase(currentId, poData));
     } else {
       if (selectedCaseType === "Civil") {
-        setCaseData({
-          ...caseData,
+        setPoData({
+          ...poData,
           "FIR NO": "",
           Thana: "",
           Section: "",
         });
-        dispatch(createCase(caseData));
+        dispatch(createCase(poData));
       } else {
-        dispatch(createCase(caseData));
+        dispatch(createCase(poData));
       }
     }
     clear();
@@ -180,7 +166,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     setIsRemandedRestored(false);
     setIsTransferedIn(false);
     setIsOtherNature(false);
-    setCaseData({
+    setPoData({
       "Case Title": "",
       urduTitle: "",
       "Case No": "",
@@ -236,11 +222,11 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 row
                 aria-label="Case Type"
                 name="caseType"
-                value={caseData["Case Type"]}
+                value={poData["Case Type"]}
                 onChange={(e) => {
                   setSelectedCaseType(e.target.value);
-                  setCaseData({
-                    ...caseData,
+                  setPoData({
+                    ...poData,
                     "Case Type": e.target.value,
                     "Category Per PQS": "",
                   });
@@ -275,10 +261,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={caseData["Category Per PQS"]}
+                  value={poData["Category Per PQS"]}
                   onChange={(e) =>
-                    setCaseData({
-                      ...caseData,
+                    setPoData({
+                      ...poData,
                       "Category Per PQS": e.target.value,
                     })
                   }
@@ -418,10 +404,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={caseData["Category Per PQS"]}
+                  value={poData["Category Per PQS"]}
                   onChange={(e) =>
-                    setCaseData({
-                      ...caseData,
+                    setPoData({
+                      ...poData,
                       "Category Per PQS": e.target.value,
                     })
                   }
@@ -547,9 +533,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               variant="outlined"
               label="Case Number"
               fullWidth
-              value={caseData["Case No"]}
+              value={poData["Case No"]}
               onChange={(e) =>
-                setCaseData({ ...caseData, "Case No": e.target.value })
+                setPoData({ ...poData, "Case No": e.target.value })
               }
             />
           </Grid>
@@ -561,9 +547,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 variant="outlined"
                 label="Other Nature"
                 fullWidth
-                value={caseData.nature}
+                value={poData.nature}
                 onChange={(e) =>
-                  setCaseData({ ...caseData, nature: e.target.value })
+                  setPoData({ ...poData, nature: e.target.value })
                 }
               />
             ) : (
@@ -572,72 +558,34 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   Case Nature (نوعیت)
                 </InputLabel>
                 <Select
-                  className={classes.uFont}
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={caseData.nature}
+                  value={poData.nature}
                   onChange={(e) => {
-                    setCaseData({
-                      ...caseData,
+                    setPoData({
+                      ...poData,
                       nature: e.target.value,
                     });
                   }}
                   label="Case Nature (نوعیت)"
                 >
-                  <MenuItem className={classes.uFont} value="استقرارحق">
-                    استقرارحق
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="دِلاپانے">
-                    دِلاپانے
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="حکم امتناعی">
-                    حکم امتناعی
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="حکم عدولی">
-                    حکم عدولی
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="دخلیابی">
-                    دخلیابی
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="تنسیخ نکاح">
-                    تنسیخ نکاح
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="کذب نکاح">
-                    کذب نکاح
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="نان نفقہ">
-                    نان نفقہ
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="حق مہر">
-                    حق مہر
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="کزب النکاح">
-                    کزب النکاح
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="زن اشوئی">
-                    زن اشوئی
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="درخواست">
-                    درخواست
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="منسوخی یکطرفہ">
-                    منسوخی یکطرفہ
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="حضانت">
-                    حضانت
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="اِجراء">
-                    اِجراء
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="پرت">
-                    پرت
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="عزرداری">
-                    عزرداری
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="استغاثہ">
-                    استغاثہ
-                  </MenuItem>
+                  <MenuItem value="استقرارحق">استقرارحق</MenuItem>
+                  <MenuItem value="دِلاپانے">دِلاپانے</MenuItem>
+                  <MenuItem value="حکم امتناعی">حکم امتناعی</MenuItem>
+                  <MenuItem value="دخلیابی">دخلیابی</MenuItem>
+                  <MenuItem value="تنسیخ نکاح">تنسیخ نکاح</MenuItem>
+                  <MenuItem value="کذب نکاح">کذب نکاح</MenuItem>
+                  <MenuItem value="نان نفقہ">نان نفقہ</MenuItem>
+                  <MenuItem value="حق مہر">حق مہر</MenuItem>
+                  <MenuItem value="کزب النکاح">کزب النکاح</MenuItem>
+                  <MenuItem value="زن اشوئی">زن اشوئی</MenuItem>
+                  <MenuItem value="درخواست">درخواست</MenuItem>
+                  <MenuItem value="منسوخی یکطرفہ">منسوخی یکطرفہ</MenuItem>
+                  <MenuItem value="حضانت">حضانت</MenuItem>
+                  <MenuItem value="اِجراء">اِجراء</MenuItem>
+                  <MenuItem value="پرت">پرت</MenuItem>
+                  <MenuItem value="عزرداری">عزرداری</MenuItem>
+                  <MenuItem value="استغاثہ">استغاثہ</MenuItem>
                   <MenuItem value="">
                     <FormControlLabel
                       control={
@@ -645,8 +593,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                           checked={isOtherNature}
                           color="primary"
                           onChange={(e) => {
-                            setCaseData({
-                              ...caseData,
+                            setPoData({
+                              ...poData,
                               isOtherNature: e.target.checked,
                             });
                             setIsOtherNature(e.target.checked);
@@ -719,22 +667,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     <TextField name='institutionDate' variant='outlined' label='Institution Date' fullWidth value={caseData.institutionDate} onChange={(e) => setCaseData({ ...caseData, institutionDate: e.target.value })} /> */}
           <Grid item xs={12} sm={5}>
             <TextField
-              className={classes.uFont}
-              inputProps={{
-                style: {
-                  textAlign: "center",
-                  fontSize: 22,
-                  fontFamily: "Jameel Noori Nastaleeq",
-                },
-              }}
-              InputLabelProps={{ style: { textAlign: "right" } }}
               name="urduTitle"
               variant="outlined"
               label="Urdu Title"
               fullWidth
-              value={caseData.urduTitle ? caseData.urduTitle : ""}
+              value={poData.urduTitle ? poData.urduTitle : ""}
               onChange={(e) =>
-                setCaseData({ ...caseData, urduTitle: e.target.value })
+                setPoData({ ...poData, urduTitle: e.target.value })
               }
             />
           </Grid>
@@ -744,9 +683,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               variant="outlined"
               label="Title"
               fullWidth
-              value={caseData["Case Title"]}
+              value={poData["Case Title"]}
               onChange={(e) =>
-                setCaseData({ ...caseData, "Case Title": e.target.value })
+                setPoData({ ...poData, "Case Title": e.target.value })
               }
             />
           </Grid>
@@ -763,12 +702,12 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     format="dd/MM/yyyy"
                     autoOk
                     value={
-                      caseData["FIR Date"]
-                        ? caseData["FIR Date"]
+                      poData["FIR Date"]
+                        ? poData["FIR Date"]
                         : institutionDate
                     }
                     onChange={(date) =>
-                      setCaseData({ ...caseData, "FIR Date": date })
+                      setPoData({ ...poData, "FIR Date": date })
                     }
                     KeyboardButtonProps={{
                       "aria-label": "change date",
@@ -782,9 +721,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   variant="outlined"
                   label="FIR Number"
                   fullWidth
-                  value={caseData["FIR NO"]}
+                  value={poData["FIR NO"]}
                   onChange={(e) =>
-                    setCaseData({ ...caseData, "FIR NO": e.target.value })
+                    setPoData({ ...poData, "FIR NO": e.target.value })
                   }
                 />
               </Grid>
@@ -794,9 +733,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   variant="outlined"
                   label="Under Section/s"
                   fullWidth
-                  value={caseData.Section}
+                  value={poData.Section}
                   onChange={(e) =>
-                    setCaseData({ ...caseData, Section: e.target.value })
+                    setPoData({ ...poData, Section: e.target.value })
                   }
                 />
               </Grid>
@@ -806,9 +745,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   variant="outlined"
                   label="Police Station Name"
                   fullWidth
-                  value={caseData.Thana}
+                  value={poData.Thana}
                   onChange={(e) =>
-                    setCaseData({ ...caseData, Thana: e.target.value })
+                    setPoData({ ...poData, Thana: e.target.value })
                   }
                 />
               </Grid>
@@ -825,12 +764,12 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 format="dd/MM/yyyy"
                 autoOk
                 value={
-                  caseData.nextDate
-                    ? caseData.nextDate
-                    : setCaseData({ ...caseData, nextDate: nextDate })
+                  poData.nextDate
+                    ? poData.nextDate
+                    : setPoData({ ...poData, nextDate: nextDate })
                 }
                 onChange={(date) =>
-                  setCaseData({ ...caseData, nextDate: date })
+                  setPoData({ ...poData, nextDate: date })
                 }
                 KeyboardButtonProps={{
                   "aria-label": "change date",
@@ -851,10 +790,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 format="dd/MM/yyyy"
                 autoOk
                 value={
-                  caseData.orderDate ? caseData.orderDate : institutionDate
+                  poData.orderDate ? poData.orderDate : institutionDate
                 }
                 onChange={(date) =>
-                  setCaseData({ ...caseData, orderDate: date })
+                  setPoData({ ...poData, orderDate: date })
                 }
                 KeyboardButtonProps={{
                   "aria-label": "change date",
@@ -867,7 +806,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   checked={sameAsInstitutionDate}
                   onChange={(e) => {
                     setSameAsInstitutiondate(e.target.checked);
-                    setCaseData({ ...caseData, orderDate: institutionDate });
+                    setPoData({ ...poData, orderDate: institutionDate });
                   }}
                   name="sameAsInstitutionDate"
                   color="primary"
@@ -885,31 +824,28 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               variant="outlined"
               label="Order Number"
               fullWidth
-              value={caseData.orderNumber}
+              value={poData.orderNumber}
               onChange={(e) =>
-                setCaseData({ ...caseData, orderNumber: e.target.value })
+                setPoData({ ...poData, orderNumber: e.target.value })
               }
             />
           </Grid>
           <Grid item xs={12} sm={3}>
             <FormControl fullWidth variant="outlined">
-              <InputLabel
-                id="demo-simple-select-outlined-label"
-                className={classes.uFont}
-              >
-                خلاصہ کاروائی
+              <InputLabel id="demo-simple-select-outlined-label" className={classes.uFont}>
+              خلاصہ کاروائی
               </InputLabel>
               <Select
-                className={classes.uFont}
+              className={classes.uFont}
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
                 value={
-                  caseData.actionAbstract
-                    ? caseData.actionAbstract
-                    : setCaseData({ ...caseData, actionAbstract: "حاضری" })
+                  poData.actionAbstract
+                    ? poData.actionAbstract
+                    : setPoData({ ...poData, actionAbstract: "حاضری" })
                 }
                 onChange={(e) => {
-                  setCaseData({ ...caseData, actionAbstract: e.target.value });
+                  setPoData({ ...poData, actionAbstract: e.target.value });
                   // setActionAbstract({
                   //   orderDate: new Date(),
                   //   actionAbstract: e.target.value,
@@ -989,6 +925,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 >
                   پرفارمہ ای
                 </MenuItem>
+                <MenuItem className={classes.uFont} value={"تنقیحات، حاضری"}>
+                  تنقیحات
+                </MenuItem>
                 <MenuItem
                   className={classes.uFont}
                   value={"پروفارمہ سی، حاضری"}
@@ -1006,12 +945,6 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"بیلف رپورٹ، حاضری"}>
                   بیلف رپورٹ
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"حاضری، بیلف رپورٹ، حاضری"}
-                >
-                  حاضری، بیلف رپورٹ
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"نیلامی، حاضری"}>
                   نیلامی
@@ -1066,12 +999,6 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem
                   className={classes.uFont}
-                  value={" ترمیمی جواب درخواست، حاضری"}
-                >
-                  ترمیمی جواب درخواست
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
                   value={"حاضری، رپورٹ اہل کمیشن"}
                 >
                   رپورٹ اہل کمیشن
@@ -1099,9 +1026,6 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   value={"شہادت مدعی"}
                 >
                   شہادت مدعی
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"تنقیحات، شہادت"}>
-                  تنقیحات
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"شہادت مدعیہ"}>
                   شہادت مدعیہ
@@ -1264,8 +1188,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     checked={isRemandedRestored}
                     color="primary"
                     onChange={(e) => {
-                      setCaseData({
-                        ...caseData,
+                      setPoData({
+                        ...poData,
                         remandedRestored: e.target.checked,
                       });
                       setIsRemandedRestored(e.target.checked);
@@ -1283,8 +1207,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     checked={isTransferedIn}
                     color="primary"
                     onChange={(e) => {
-                      setCaseData({
-                        ...caseData,
+                      setPoData({
+                        ...poData,
                         transferedIn: e.target.checked,
                       });
                       setIsTransferedIn(e.target.checked);
@@ -1323,13 +1247,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                       autoOk
                       format="dd/MM/yyyy"
                       value={
-                        caseData["Date of Transfer In"]
-                          ? caseData["Date of Transfer In"]
+                        poData["Date of Transfer In"]
+                          ? poData["Date of Transfer In"]
                           : null
                       }
                       onChange={(date) =>
-                        setCaseData({
-                          ...caseData,
+                        setPoData({
+                          ...poData,
                           "Date of Transfer In": date,
                         })
                       }
@@ -1372,13 +1296,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         autoOk
                         format="dd/MM/yyyy"
                         value={
-                          caseData["Date of Other Institution"]
-                            ? caseData["Date of Other Institution"]
+                          poData["Date of Other Institution"]
+                            ? poData["Date of Other Institution"]
                             : null
                         }
                         onChange={(date) =>
-                          setCaseData({
-                            ...caseData,
+                          setPoData({
+                            ...poData,
                             "Date of Other Institution": date,
                           })
                         }
@@ -1399,16 +1323,16 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
                         value={
-                          caseData["Institution Flag"]
-                            ? caseData["Institution Flag"]
-                            : setCaseData({
-                                ...caseData,
+                          poData["Institution Flag"]
+                            ? poData["Institution Flag"]
+                            : setPoData({
+                                ...poData,
                                 "Institution Flag": "-",
                               })
                         }
                         onChange={(e) => {
-                          setCaseData({
-                            ...caseData,
+                          setPoData({
+                            ...poData,
                             "Institution Flag": e.target.value,
                           });
                         }}
@@ -1431,8 +1355,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     checked={isTransferOut}
                     color="secondary"
                     onChange={(e) => {
-                      setCaseData({
-                        ...caseData,
+                      setPoData({
+                        ...poData,
                         transferedOut: e.target.checked,
                         disposed: false,
                       });
@@ -1472,13 +1396,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                       autoOk
                       format="dd/MM/yyyy"
                       value={
-                        caseData["Date of Disposal Transfer Out"]
-                          ? caseData["Date of Disposal Transfer Out"]
+                        poData["Date of Disposal Transfer Out"]
+                          ? poData["Date of Disposal Transfer Out"]
                           : null
                       }
                       onChange={(date) =>
-                        setCaseData({
-                          ...caseData,
+                        setPoData({
+                          ...poData,
                           "Date of Disposal Transfer Out": date,
                           "Disposal Mode Flag": "Transfer Out",
                           "Disposal OR Transfer Out Flag": "Transfer Out",
@@ -1501,8 +1425,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <GreenCheckbox
                     checked={isDisposed}
                     onChange={(e) => {
-                      setCaseData({
-                        ...caseData,
+                      setPoData({
+                        ...poData,
                         disposed: e.target.checked,
                         transferedOut: false,
                       });
@@ -1545,13 +1469,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         autoOk
                         format="dd/MM/yyyy"
                         value={
-                          caseData["Date of Disposal Transfer Out"]
-                            ? caseData["Date of Disposal Transfer Out"]
+                          poData["Date of Disposal Transfer Out"]
+                            ? poData["Date of Disposal Transfer Out"]
                             : null
                         }
                         onChange={(date) =>
-                          setCaseData({
-                            ...caseData,
+                          setPoData({
+                            ...poData,
                             "Date of Disposal Transfer Out": date,
                           })
                         }
@@ -1572,16 +1496,16 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
                         value={
-                          caseData["Disposal Mode Flag"]
-                            ? caseData["Disposal Mode Flag"]
-                            : setCaseData({
-                                ...caseData,
+                          poData["Disposal Mode Flag"]
+                            ? poData["Disposal Mode Flag"]
+                            : setPoData({
+                                ...poData,
                                 "Disposal Mode Flag": "-",
                               })
                         }
                         onChange={(e) => {
-                          setCaseData({
-                            ...caseData,
+                          setPoData({
+                            ...poData,
                             "Disposal Mode Flag": e.target.value,
                             "Disposal OR Transfer Out Flag": "Disposed",
                           });
@@ -1597,13 +1521,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         </MenuItem>
                         <MenuItem value={"Uncontested"}>Uncontested</MenuItem>
                         <MenuItem value={"In Default"}>In Default</MenuItem>
-                        {caseData["Case Type"] === "Criminal" && (
+                        {poData["Case Type"] === "Criminal" && (
                           <MenuItem value={"Pleadguilty"}>Pleadguilty</MenuItem>
                         )}
                       </Select>
                     </FormControl>
                   </Grid>
-                  {caseData["Case Type"] === "Criminal" && (
+                  {poData["Case Type"] === "Criminal" && (
                     <Grid item xs={12} sm={7}>
                       <FormControl fullWidth variant="outlined">
                         <InputLabel id="demo-simple-select-outlined-label">
@@ -1614,16 +1538,16 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                           labelId="demo-simple-select-outlined-label"
                           id="demo-simple-select-outlined"
                           value={
-                            caseData["AcquittalORConviction"]
-                              ? caseData["AcquittalORConviction"]
-                              : setCaseData({
-                                  ...caseData,
+                            poData["AcquittalORConviction"]
+                              ? poData["AcquittalORConviction"]
+                              : setPoData({
+                                  ...poData,
                                   AcquittalORConviction: "-",
                                 })
                           }
                           onChange={(e) => {
-                            setCaseData({
-                              ...caseData,
+                            setPoData({
+                              ...poData,
                               AcquittalORConviction: e.target.value,
                             });
                           }}
@@ -1724,7 +1648,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   );
 };
 
-export default FormCases;
+export default ControlCenter;
 
 // import React from 'react';
 // import Grid from '@material-ui/core/Grid';

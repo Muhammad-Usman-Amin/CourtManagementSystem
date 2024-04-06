@@ -266,7 +266,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
         <Grid item xs={12} sm={4} container justify="space-between">
           <Typography
-            style={{ textAlign: "left", direction: "ltr", fontSize: '1.2rem' }}
+            style={{ textAlign: "left", direction: "ltr", fontSize: "1.2rem" }}
             className={[classes.boldThis]}
           >
             Day:{" "}
@@ -282,8 +282,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
             </Typography>
           )}
           {cases.length && (
-            <Typography style={{  fontSize: '1.2rem' }}
-            className={[classes.boldThis]}>Total Cases : {cases.length}</Typography>
+            <Typography
+              style={{ fontSize: "1.2rem" }}
+              className={[classes.boldThis]}
+            >
+              Total Cases : {cases.length}
+            </Typography>
           )}
         </Grid>
         <Grid item xs={12} style={{ marginBottom: "8px" }}>
@@ -403,7 +407,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           align="center"
                           style={{
                             fontFamily: "Jameel Noori Nastaleeq",
-                            fontSize: 18,
+                            fontSize: 24,
                           }}
                         >
                           {/* {caseFile["Case Title"]} */}
@@ -631,12 +635,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
-                                value={"تنقیحات، حاضری"}
-                              >
-                                تنقیحات
-                              </MenuItem>
-                              <MenuItem
-                                className={classes.uFont}
                                 value={"پروفارمہ سی، حاضری"}
                               >
                                 پرفارمہ سی
@@ -664,6 +662,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"بیلف رپورٹ، حاضری"}
                               >
                                 بیلف رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، بیلف رپورٹ، حاضری"}
+                              >
+                                حاضری، بیلف رپورٹ
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -733,6 +737,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={" ترمیمی جواب درخواست، حاضری"}
+                              >
+                                ترمیمی جواب درخواست
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"حاضری، رپورٹ اہل کمیشن"}
                               >
                                 رپورٹ اہل کمیشن
@@ -769,6 +779,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"شہادت مدعی"}
                               >
                                 شہادت مدعی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تنقیحات، شہادت"}
+                              >
+                                تنقیحات
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -1034,7 +1050,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           align="center"
                           style={{
                             fontFamily: "Jameel Noori Nastaleeq",
-                            fontSize: 18,
+                            fontSize: 24,
                           }}
                         >
                           {/* {caseFile["Case Title"]} */}
@@ -1256,12 +1272,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
-                                value={"تنقیحات، حاضری"}
-                              >
-                                تنقیحات
-                              </MenuItem>
-                              <MenuItem
-                                className={classes.uFont}
                                 value={"پروفارمہ سی، حاضری"}
                               >
                                 پرفارمہ سی
@@ -1289,6 +1299,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"بیلف رپورٹ، حاضری"}
                               >
                                 بیلف رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، بیلف رپورٹ، حاضری"}
+                              >
+                                حاضری، بیلف رپورٹ
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -1358,6 +1374,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={" ترمیمی جواب درخواست، حاضری"}
+                              >
+                                ترمیمی جواب درخواست
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"حاضری، رپورٹ اہل کمیشن"}
                               >
                                 رپورٹ اہل کمیشن
@@ -1394,6 +1416,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"شہادت مدعی"}
                               >
                                 شہادت مدعی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تنقیحات، شہادت"}
+                              >
+                                تنقیحات
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -1658,7 +1686,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           align="center"
                           style={{
                             fontFamily: "Jameel Noori Nastaleeq",
-                            fontSize: 18,
+                            fontSize: 24,
                           }}
                         >
                           {/* {caseFile["Case Title"]} */}
@@ -1880,12 +1908,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
-                                value={"تنقیحات، حاضری"}
-                              >
-                                تنقیحات
-                              </MenuItem>
-                              <MenuItem
-                                className={classes.uFont}
                                 value={"پروفارمہ سی، حاضری"}
                               >
                                 پرفارمہ سی
@@ -1913,6 +1935,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"بیلف رپورٹ، حاضری"}
                               >
                                 بیلف رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، بیلف رپورٹ، حاضری"}
+                              >
+                                حاضری، بیلف رپورٹ
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -1982,6 +2010,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={" ترمیمی جواب درخواست، حاضری"}
+                              >
+                                ترمیمی جواب درخواست
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"حاضری، رپورٹ اہل کمیشن"}
                               >
                                 رپورٹ اہل کمیشن
@@ -2018,6 +2052,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"شہادت مدعی"}
                               >
                                 شہادت مدعی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تنقیحات، شہادت"}
+                              >
+                                تنقیحات
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -2282,7 +2322,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           align="center"
                           style={{
                             fontFamily: "Jameel Noori Nastaleeq",
-                            fontSize: 18,
+                            fontSize: 24,
                           }}
                         >
                           {/* {caseFile["Case Title"]} */}
@@ -2505,12 +2545,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
-                                value={"تنقیحات، حاضری"}
-                              >
-                                تنقیحات
-                              </MenuItem>
-                              <MenuItem
-                                className={classes.uFont}
                                 value={"پروفارمہ سی، حاضری"}
                               >
                                 پرفارمہ سی
@@ -2538,6 +2572,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"بیلف رپورٹ، حاضری"}
                               >
                                 بیلف رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، بیلف رپورٹ، حاضری"}
+                              >
+                                حاضری، بیلف رپورٹ
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -2607,6 +2647,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={" ترمیمی جواب درخواست، حاضری"}
+                              >
+                                ترمیمی جواب درخواست
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"حاضری، رپورٹ اہل کمیشن"}
                               >
                                 رپورٹ اہل کمیشن
@@ -2643,6 +2689,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"شہادت مدعی"}
                               >
                                 شہادت مدعی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تنقیحات، شہادت"}
+                              >
+                                تنقیحات
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -2906,7 +2958,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           align="center"
                           style={{
                             fontFamily: "Jameel Noori Nastaleeq",
-                            fontSize: 18,
+                            fontSize: 24,
                           }}
                         >
                           {/* {caseFile["Case Title"]} */}
@@ -3129,12 +3181,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
-                                value={"تنقیحات، حاضری"}
-                              >
-                                تنقیحات
-                              </MenuItem>
-                              <MenuItem
-                                className={classes.uFont}
                                 value={"پروفارمہ سی، حاضری"}
                               >
                                 پرفارمہ سی
@@ -3162,6 +3208,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"بیلف رپورٹ، حاضری"}
                               >
                                 بیلف رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حاضری، بیلف رپورٹ، حاضری"}
+                              >
+                                حاضری، بیلف رپورٹ
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -3231,6 +3283,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={" ترمیمی جواب درخواست، حاضری"}
+                              >
+                                ترمیمی جواب درخواست
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"حاضری، رپورٹ اہل کمیشن"}
                               >
                                 رپورٹ اہل کمیشن
@@ -3267,6 +3325,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"شہادت مدعی"}
                               >
                                 شہادت مدعی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تنقیحات، شہادت"}
+                              >
+                                تنقیحات
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
