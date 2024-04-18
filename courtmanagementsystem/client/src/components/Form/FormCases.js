@@ -572,7 +572,6 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   Case Nature (نوعیت)
                 </InputLabel>
                 <Select
-                disabled={caseData["Case Type"] === 'Criminal' ? true : false}
                   className={classes.uFont}
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
@@ -585,11 +584,36 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   }}
                   label="Case Nature (نوعیت)"
                 >
+                <MenuItem value="">
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={isOtherNature}
+                          color="primary"
+                          onChange={(e) => {
+                            setCaseData({
+                              ...caseData,
+                              isOtherNature: e.target.checked,
+                            });
+                            setIsOtherNature(e.target.checked);
+                          }}
+                          name="isOtherNature"
+                        />
+                      }
+                      label="Other Nature"
+                    />
+                  </MenuItem>
                   <MenuItem className={classes.uFont} value="استقرارحق">
                     استقرارحق
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="دِلاپانے">
                     دِلاپانے
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="حتمی ڈگری">
+                    حتمی ڈگری
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="دعویٰ ہرجانہ">
+                      دعویٰ ہرجانہ
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="حکم امتناعی">
                     حکم امتناعی
@@ -621,6 +645,18 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem className={classes.uFont} value="درخواست">
                     درخواست
                   </MenuItem>
+                  <MenuItem className={classes.uFont} value="ضمانت">
+                    ضمانت
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="سپرداری">
+                    سپرداری
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="کاروائی 514">
+                    کاروائی 514
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="کاروائی 512">
+                    کاروائی 512
+                  </MenuItem>
                   <MenuItem className={classes.uFont} value="منسوخی یکطرفہ">
                     منسوخی یکطرفہ
                   </MenuItem>
@@ -639,25 +675,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem className={classes.uFont} value="استغاثہ">
                     استغاثہ
                   </MenuItem>
-                  <MenuItem value="">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isOtherNature}
-                          color="primary"
-                          onChange={(e) => {
-                            setCaseData({
-                              ...caseData,
-                              isOtherNature: e.target.checked,
-                            });
-                            setIsOtherNature(e.target.checked);
-                          }}
-                          name="isOtherNature"
-                        />
-                      }
-                      label="Other Nature"
-                    />
-                  </MenuItem>
+                  
                   <MenuItem value=""></MenuItem>
                 </Select>
               </FormControl>
