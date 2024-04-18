@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) =>
       margin: theme.spacing(1),
       borderCollapse: "collapse",
       maxWidth: "8.5in",
-      minHeight: '14in',
-      // maxHeight: "13in",
+      // minHeight: '14in', //causes issue
+      maxHeight: "14in",
       // margin: "0 auto",
       // minWidth: 650,
       // width: "100%",
