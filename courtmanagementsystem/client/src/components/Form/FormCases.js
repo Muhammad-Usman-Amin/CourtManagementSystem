@@ -642,6 +642,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     <FormControlLabel
                       control={
                         <Checkbox
+                        disabled={caseData["Case Type"] === 'Criminal' ? true : false}
                           checked={isOtherNature}
                           color="primary"
                           onChange={(e) => {
