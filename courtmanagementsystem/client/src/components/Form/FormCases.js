@@ -572,6 +572,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   Case Nature (نوعیت)
                 </InputLabel>
                 <Select
+                disabled={caseData["Case Type"] === 'Criminal' ? true : false}
                   className={classes.uFont}
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
@@ -642,7 +643,6 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                        disabled={caseData["Case Type"] === 'Criminal' ? true : false}
                           checked={isOtherNature}
                           color="primary"
                           onChange={(e) => {
