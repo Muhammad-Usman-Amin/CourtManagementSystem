@@ -27,9 +27,27 @@ import { mainListItems, secondaryListItems } from "./listItems";
 import useStyles from "./dashboard";
 import SettingsBrightnessIcon from "@material-ui/icons/SettingsBrightness";
 import Tooltip from "@material-ui/core/Tooltip";
+import EventSeatIcon from "@material-ui/icons/EventSeat";
+
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import ControlCenter from "../components/Form/ControlCenter";
+import CancelIcon from "@material-ui/icons/Cancel";
+import { colors } from "@material-ui/core";
 
 export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
   const classes = useStyles();
+
+  const [openModal, setOpenModal] = React.useState(false);
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -69,9 +87,9 @@ export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
           </Typography>
 
           <Tooltip title="Control Center">
-            <IconButton color="inherit" >
-              <Badge badgeContent={themeMode} color="secondary">
-                <SettingsBrightnessIcon />
+            <IconButton color="inherit" onClick={handleOpenModal}>
+              <Badge badgeContent={"CJV"} color="secondary">
+                <EventSeatIcon />
               </Badge>
             </IconButton>
           </Tooltip>
@@ -82,12 +100,13 @@ export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
               </Badge>
             </IconButton>
           </Tooltip>
-
-          <IconButton color="inherit">
-            <Badge badgeContent={13} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <Tooltip title="Notifications">
+            <IconButton color="inherit">
+              <Badge badgeContent={13} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
 
@@ -108,6 +127,50 @@ export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>
+      <div>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={openModal}
+          onClose={handleCloseModal}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={openModal}>
+            <div className={classes.paperModel}>
+              <Grid
+                container
+                spacing={2}
+                alignContent="center"
+                justify="space-between"
+              >
+                <Grid item xs={11} sm={11}>
+                  <h2 id="transition-modal-title">Control Panel</h2>
+                </Grid>
+                <Grid
+                  item
+                  xs={1}
+                  sm={1}
+                  container
+                  justify="flex-end"
+                  alignItems="center"
+                >
+                  <Tooltip title="Close">
+                    <IconButton color="inherit" onClick={handleCloseModal}>
+                      <CancelIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
+              </Grid>
+              <ControlCenter />
+            </div>
+          </Fade>
+        </Modal>
+      </div>
     </div>
   );
 }

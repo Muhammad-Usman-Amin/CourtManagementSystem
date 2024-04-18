@@ -37,7 +37,9 @@ import useStyles from "./styles";
 import { createCase, updateCase } from "../../actions/cases";
 import ClearAllIcon from "@material-ui/icons/ClearAll";
 import SaveIcon from "@material-ui/icons/Save";
-import { addDays } from "date-fns";
+// import { addDays } from "date-fns";
+import Input from '@material-ui/core/Input';
+
 
 const GreenCheckbox = withStyles({
   root: {
@@ -59,11 +61,12 @@ const GreenRadio = withStyles({
   checked: {},
 })((props) => <Radio color="default" {...props} />);
 
-const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
+const ControlCenter = ({ currentId, setCurrentId }) => {
   const [poData, setPoData] = useState({
     presidingOfficer: "",
     causeListName: "",
-    judgecategory: "",
+    designation: "",
+    judgeCategory: "",
     courtNumber: "",
     stationDistrict: "",
     courtStatus: "",
@@ -81,10 +84,7 @@ const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
   });
 
   const handleDateChange = (date) => {
-    setInstitutionDate(date);
-
-    setPoData({ ...poData, "Date of Institution ": date });
-    // console.log(caseData["Date of Institution "]);
+    setPoData({ ...poData, statementMonth: date });
   };
 
   const [selectedCaseType, setSelectedCaseType] = useState("Civil");
@@ -94,6 +94,20 @@ const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
   const classes = useStyles();
   // const classes2 = useStyles2();
   const dispatch = useDispatch();
+
+  const [courtNo, setCourtNo] = React.useState(1);
+
+  const handleBlur = () => {
+    if (courtNo < 0) {
+      setCourtNo(0);
+    } else if (courtNo > 50) {
+      setCourtNo(50);
+    }
+  };
+
+  const handleCourtNumberChange = (event) => {
+    setCourtNo(event.target.value === '' ? '' : Number(event.target.value));
+  };
 
   useEffect(() => {
     setSelectedCaseType("Civil");
@@ -108,8 +122,8 @@ const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
     // console.log('useEffect called');
     if (caseFile) {
       setSelectedCaseType(caseFile["Case Type"]);
-      setInstitutionDate(caseFile["Date of Institution "]);
-      setNextDate(caseFile.nextDate ? caseFile.nextDate : nextDate);
+      // setInstitutionDate(caseFile["Date of Institution "]);
+      // setNextDate(caseFile.nextDate ? caseFile.nextDate : nextDate);
       // console.log(selectedCaseType);
       setPoData(caseFile);
       caseFile["Date of Disposal Transfer Out"]
@@ -128,13 +142,13 @@ const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
     }
   }, [caseFile]);
 
-  useEffect(() => {
-    onPageChange(() =>
-      currentId
-        ? `Editing Case "${caseFile["Case Title"]}"`
-        : "Creating New Case"
-    );
-  }, [onPageChange]);
+  // useEffect(() => {
+  //   onPageChange(() =>
+  //     currentId
+  //       ? `Editing Case "${caseFile["Case Title"]}"`
+  //       : "Creating New Case"
+  //   );
+  // }, [onPageChange]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -160,7 +174,7 @@ const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
     setCurrentId(null);
     setSelectedCaseType("Civil");
     // setCaseData({"Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '', "Date of Institution ": selectedDate ,  "Date of Disposal": '', isTransferedIn: false, "Date of Transfered In": Date});
-    setInstitutionDate(new Date());
+    // setInstitutionDate(new Date());
     setIsDisposed(false);
     setIsTransferOut(false);
     setIsRemandedRestored(false);
@@ -188,14 +202,14 @@ const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
       "Date of Transfer In": null,
       "Date of Other Institution": null,
       "Institution Flag": "", //used for Remanded, Restored flags
-      nextDate: nextDate,
+      // nextDate: nextDate,
       orderNumber: "",
       actionAbstract: "",
       orderDate: new Date(),
       nature: "",
       isOtherNature: false,
     });
-    setSameAsInstitutiondate(false);
+    // setSameAsInstitutiondate(false);
   };
 
   return (
@@ -211,423 +225,175 @@ const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
         </Typography> */}
 
         <Grid container spacing={2} alignContent="center" justify="center">
-          <Grid item xs={12} sm={2}>
-            <FormControl fullWidth component="fieldset">
-              <FormLabel component="legend">
-                {/* <br /> */}
-                Case Type
-              </FormLabel>
-              <RadioGroup
-                required
-                row
-                aria-label="Case Type"
-                name="caseType"
-                value={poData["Case Type"]}
-                onChange={(e) => {
-                  setSelectedCaseType(e.target.value);
-                  setPoData({
-                    ...poData,
-                    "Case Type": e.target.value,
-                    "Category Per PQS": "",
-                  });
-                }}
-              >
-                <FormControlLabel
-                  checked={selectedCaseType === "Civil"}
-                  value="Civil"
-                  control={<GreenRadio />}
-                  label="Civil"
-                />
-                <FormControlLabel
-                  checked={selectedCaseType === "Criminal"}
-                  value="Criminal"
-                  control={<Radio />}
-                  label="Criminal"
-                />
-              </RadioGroup>
-            </FormControl>
-          </Grid>
 
           <Grid item xs={12} sm={4}>
-            {selectedCaseType === "Civil" ? (
               <FormControl
                 fullWidth
                 variant="outlined"
                 className={classes.formControl}
               >
                 <InputLabel id="demo-simple-select-outlined-label">
-                  Select Sub Type
+                  Presiding Officer
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={poData["Category Per PQS"]}
+                  value={poData.presidingOfficer}
                   onChange={(e) =>
                     setPoData({
                       ...poData,
-                      "Category Per PQS": e.target.value,
+                      presidingOfficer: e.target.value,
                     })
                   }
-                  label="Select Sub Type"
+                  label="Presiding Officer"
                 >
-                  <MenuItem value="">
-                    <em>Mostly Used</em>
-                  </MenuItem>
-                  <MenuItem value={"Civil-002-Civil Suit"}>Suit</MenuItem>
-                  <MenuItem value={"Civil-022-Civil Appeals"}>
-                    Civil Appeal
-                  </MenuItem>
-                  <MenuItem value={"Civil-025-Family Appeals"}>
-                    Family Appeal
-                  </MenuItem>
-                  <MenuItem value={"Civil-027-Civil Appeals against Orders"}>
-                    MCA
-                  </MenuItem>
-
-                  <MenuItem value="">
-                    <em>All Categories</em>
-                  </MenuItem>
-                  <MenuItem
-                    value={"Civil-001-Civil Suits (Original Jurisdiction)"}
-                  >
-                    Civil-001 Civil Suits (Original Jurisdiction)
-                  </MenuItem>
-                  {/* <MenuItem value={"Civil-002-Civil Suit"}>
-                    Civil-002 Civil Suit
-                  </MenuItem> */}
-                  <MenuItem value={"Civil-003-Suits under Order 37 CPC"}>
-                    Civil-003 Suits under Order 37 CPC
-                  </MenuItem>
-                  <MenuItem value={"Civil-004-Custody of Minors"}>
-                    Civil-004 Custody of Minors
-                  </MenuItem>
-                  <MenuItem value={"Civil-005-Defamation"}>
-                    Civil-005 Defamation
-                  </MenuItem>
-                  <MenuItem value={"Civil-006-Family Court Cases"}>
-                    Civil-006 Family Court Cases
-                  </MenuItem>
-                  <MenuItem value={"Civil-007-Succession Cases"}>
-                    Civil-007 Succession Cases
-                  </MenuItem>
-                  <MenuItem value={"Civil-008-Guardianship Cases"}>
-                    Civil-008 Guardianship Cases
-                  </MenuItem>
-                  <MenuItem value={"Civil-009-Land Acquisition Cases"}>
-                    Civil-009 Land Acquisition Cases
-                  </MenuItem>
-                  <MenuItem value={"Civil-010-Rent Cases"}>
-                    Civil-010 Rent Cases
-                  </MenuItem>
-                  <MenuItem
-                    value={
-                      "Civil-011-Proceeding under KP Mental Health Act 2017"
-                    }
-                  >
-                    Civil-011 Proceeding under KP Mental Health Act 2017
-                  </MenuItem>
-                  <MenuItem value={"Civil-012-Tribunal Cases"}>
-                    Civil-012 Tribunal Cases
-                  </MenuItem>
-                  <MenuItem value={"Civil-013-Small Claims"}>
-                    Civil-013 Small Claims
-                  </MenuItem>
-                  <MenuItem
-                    value={
-                      "Civil-014-Execution in which periodic payments are made"
-                    }
-                  >
-                    Civil-014 Execution in which periodic payments are made
-                  </MenuItem>
-                  <MenuItem value={"Civil-015-Execution Petitions"}>
-                    Civil-015 Execution Petitions
-                  </MenuItem>
-                  <MenuItem value={"Civil-016-Cases under other laws"}>
-                    Civil-016 Cases under other laws
-                  </MenuItem>
-                  <MenuItem value={"Civil-017-Others"}>
-                    Civil-017 Others
-                  </MenuItem>
-                  <MenuItem value={"Civil-018-Other Civil Misc Applications"}>
-                    Civil-018-Other Civil Misc Applications
-                  </MenuItem>
-                  <MenuItem
-                    value={"Civil-019-Application under section 12(2) CPC"}
-                  >
-                    Civil-019 Application under section 12(2) CPC
-                  </MenuItem>
-                  <MenuItem value={"Civil-020-Review Petition"}>
-                    Civil-020 Review Petition
-                  </MenuItem>
-                  <MenuItem value={"Civil-021-Objection Petitions"}>
-                    Civil-021 Objection Petitions
-                  </MenuItem>
-                  {/* <MenuItem value={"Civil-022-Civil Appeals"}>
-                    Civil-022 Civil Appeals */}
-                  {/* </MenuItem> */}
-                  <MenuItem value={"Civil-023-Civil Revisions"}>
-                    Civil-023 Civil Revisions
-                  </MenuItem>
-                  <MenuItem
-                    value={"Civil-024-Guardianship and Succession Appeals"}
-                  >
-                    Civil-024 Guardianship and Succession Appeals
-                  </MenuItem>
-                  {/* <MenuItem value={"Civil-025-Family Appeals"}>
-                    Civil-025 Family Appeals
-                  </MenuItem> */}
-                  <MenuItem value={"Civil-026-Rent Appeals"}>
-                    Civil-026 Rent Appeals
-                  </MenuItem>
-                  {/* <MenuItem value={"Civil-027-Civil Appeals against Order"}>
-                    Civil-027 Civil Appeals against Order
-                  </MenuItem> */}
-                  <MenuItem value={"Civil-028-Insolvency Cases"}>
-                    Civil-028 Insolvency Cases
-                  </MenuItem>
-                  <MenuItem
-                    value={"Civil-029-Execution Petition Against Government"}
-                  >
-                    Civil-029 Execution Petition Against Government
-                  </MenuItem>
+                  <MenuItem value={"PHC0813-90-1:Ms. Zaib Un Nisa Abbasi"}>PHC0813-90-1:Ms. Zaib Un Nisa Abbasi</MenuItem>
+                  <MenuItem value={"PHC0747-87-1:Mr. Abdul Sattar Khan"}>PHC0747-87-1:Mr. Abdul Sattar Khan</MenuItem>
+                  <MenuItem value={"PHC0693-90-1:Mr. Imran Ahmad"}>PHC0693-90-1:Mr. Imran Ahmad</MenuItem>
+                  <MenuItem value={"PHC0745-93-1:Mr. Abdul Basit"}>PHC0745-93-1:Mr. Abdul Basit</MenuItem>
+                  <MenuItem value={"PHC0290-73-1:Mr. Amin Said"}>PHC0290-73-1:Mr. Amin Said</MenuItem>
+                  <MenuItem value={"PHC0750-92-1:Mr. Ahmad Daniyal Tanoli"}>PHC0750-92-1:Mr. Ahmad Daniyal Tanoli</MenuItem>
+                  <MenuItem value={"PHC0797-92-1:Mr. Shabeer Ahmad"}>PHC0797-92-1:Mr. Shabeer Ahmad</MenuItem>
+                  {/* <MenuItem value={""}></MenuItem> */}
                 </Select>
               </FormControl>
-            ) : (
-              <FormControl
-                fullWidth
-                variant="outlined"
-                className={classes.formControl}
-              >
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Select Sub Type
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={poData["Category Per PQS"]}
-                  onChange={(e) =>
-                    setPoData({
-                      ...poData,
-                      "Category Per PQS": e.target.value,
-                    })
-                  }
-                  label="Select Sub Type"
-                >
-                  <MenuItem value="">
-                    <em>Mostly Used</em>
-                  </MenuItem>
-                  <MenuItem value={"CR-001-Homicide"}>
-                    Homicide Session Case
-                  </MenuItem>
-                  <MenuItem value={"CR-011-Norcotics Substances"}>
-                    CNSA Case
-                  </MenuItem>
-                  <MenuItem value={"CR-020-Bail Applications"}>
-                    BA, BBA, BCA, CrMisc
-                  </MenuItem>
-                  <MenuItem value="">
-                    <em>All Categories</em>
-                  </MenuItem>
-                  {/* <MenuItem value={"CR-001-Homicide"}>CR-001 Homicide</MenuItem> */}
-                  <MenuItem value={"CR-002-Attempt to Murder"}>
-                    CR-002 Attempt to Murder
-                  </MenuItem>
-                  <MenuItem value={"CR-003-Cases triable u/s 30 Cr.PC"}>
-                    CR-003 Cases triable u/s 30 Cr.PC
-                  </MenuItem>
-                  <MenuItem value={"CR-004-Hurt Cases"}>
-                    CR-004 Hurt Cases
-                  </MenuItem>
-                  <MenuItem value={"CR-005-Abduction/Kidnapping"}>
-                    CR-005 Abduction/Kidnapping
-                  </MenuItem>
-                  <MenuItem value={"CR-006-Arms & Amunation"}>
-                    CR-006 Arms & Amunation
-                  </MenuItem>
-                  <MenuItem value={"CR-007-Hudood Laws"}>
-                    CR-007 Hudood Laws
-                  </MenuItem>
-                  <MenuItem value={"CR-008-Financial Crimes"}>
-                    CR-008 Financial Crimes
-                  </MenuItem>
-                  <MenuItem value={"CR-009-Foreigner Act"}>
-                    CR-009 Foreigner Act
-                  </MenuItem>
-                  <MenuItem value={"CR-010-Complaint Cases"}>
-                    CR-010 Complaint Cases
-                  </MenuItem>
-                  {/* <MenuItem value={"CR-011-Narcotics Substances"}>
-                    CR-011 Narcotics Substances
-                  </MenuItem> */}
-                  <MenuItem value={"CR-012-Habeas Corpus (491 Cr.PC.)"}>
-                    CR-012 Habeas Corpus (491 Cr.PC.)
-                  </MenuItem>
-                  <MenuItem value={"CR-013-Offences against Children"}>
-                    CR-013 Offences against Children
-                  </MenuItem>
-                  <MenuItem value={"CR-014-Offences Against Property"}>
-                    CR-014 Offences Against Property
-                  </MenuItem>
-                  <MenuItem value={"CR-015-Sexual Offences"}>
-                    CR-015 Sexual Offences
-                  </MenuItem>
-                  <MenuItem value={"CR-016-Minor Offences"}>
-                    CR-016 Minor Offences
-                  </MenuItem>
-                  <MenuItem value={"CR-017-Proceedings u/s 514 Cr. P.C"}>
-                    CR-017 Proceedings u/s 514 Cr. P.C
-                  </MenuItem>
-                  <MenuItem
-                    value={
-                      "CR-018-Proceedings Under Section 133 and 145 Cr. P.C"
-                    }
-                  >
-                    CR-018 Proceedings Under Section 133 and 145 Cr. P.C
-                  </MenuItem>
-                  <MenuItem value={"CR-019-Security Proceedings u/s 107/51"}>
-                    CR-019 Security Proceedings u/s 107/51
-                  </MenuItem>
-                  <MenuItem value={"CR-020-Bail Applications"}>
-                    CR-020 Bail Applications
-                  </MenuItem>
-                  <MenuItem value={"CR-021-Other Criminal Misc. Applications"}>
-                    CR-021 Other Criminal Misc. Applications
-                  </MenuItem>
-                  <MenuItem
-                    value={
-                      "CR-022-Case under Forest Laws, Motor Vehicle Laws, Food Law"
-                    }
-                  >
-                    CR-022 Case under Forest Laws, Motor Vehicle Laws, Food Law
-                  </MenuItem>
-                  <MenuItem value={"CR-023-Other Local and Special Laws"}>
-                    CR-023 Other Local and Special Laws
-                  </MenuItem>
-                  <MenuItem value={"CR-024-Cases under other laws"}>
-                    CR-024 Cases under other laws
-                  </MenuItem>
-                  <MenuItem value={"CR-025-Criminal Appeals"}>
-                    CR-025 Criminal Appeals
-                  </MenuItem>
-                  <MenuItem value={"CR-026-Criminal Revisions"}>
-                    CR-026 Criminal Revisions
-                  </MenuItem>
-                  <MenuItem
-                    value={
-                      "CR-027-Other PPC related cases(Not Listed in above Categories)"
-                    }
-                  >
-                    CR-027-Other PPC related cases(Not Listed in above
-                    Categories)
-                  </MenuItem>
-                  <MenuItem value={"CR-028-Financial Crimes-489-F PPC"}>
-                    CR-028-Financial Crimes-489-F PPC
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            )}
           </Grid>
-          <Grid item xs={12} sm={3}>
+
+          <Grid item xs={12} sm={8}>
             <TextField
-              name="caseNumber"
+              className={classes.uFont}
+              inputProps={{
+                style: {
+                  textAlign: "center",
+                  fontSize: 22,
+                  fontFamily: "Jameel Noori Nastaleeq",
+                },
+              }}
+              InputLabelProps={{ style: { textAlign: "right" } }}
+              name="causeListName"
               variant="outlined"
-              label="Case Number"
+              label="Cause List Name"
               fullWidth
-              value={poData["Case No"]}
+              value={poData.causeListName ? poData.causeListName : ""}
               onChange={(e) =>
-                setPoData({ ...poData, "Case No": e.target.value })
+                setPoData({ ...poData, causeListName: e.target.value })
               }
             />
           </Grid>
 
-          <Grid item xs={12} sm={3}>
-            {isOtherNature ? (
-              <TextField
-                name="other nature"
-                variant="outlined"
-                label="Other Nature"
+          <Grid item xs={12} sm={4}>
+              <FormControl
                 fullWidth
-                value={poData.nature}
-                onChange={(e) =>
-                  setPoData({ ...poData, nature: e.target.value })
-                }
-              />
-            ) : (
-              <FormControl fullWidth variant="outlined">
+                variant="outlined"
+                className={classes.formControl}
+              >
                 <InputLabel id="demo-simple-select-outlined-label">
-                  Case Nature (نوعیت)
+                  Designation
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={poData.nature}
-                  onChange={(e) => {
+                  value={poData.designation}
+                  onChange={(e) =>
                     setPoData({
                       ...poData,
-                      nature: e.target.value,
-                    });
-                  }}
-                  label="Case Nature (نوعیت)"
+                      designation: e.target.value,
+                    })
+                  }
+                  label="Designation"
                 >
-                  <MenuItem value="استقرارحق">استقرارحق</MenuItem>
-                  <MenuItem value="دِلاپانے">دِلاپانے</MenuItem>
-                  <MenuItem value="حکم امتناعی">حکم امتناعی</MenuItem>
-                  <MenuItem value="دخلیابی">دخلیابی</MenuItem>
-                  <MenuItem value="تنسیخ نکاح">تنسیخ نکاح</MenuItem>
-                  <MenuItem value="کذب نکاح">کذب نکاح</MenuItem>
-                  <MenuItem value="نان نفقہ">نان نفقہ</MenuItem>
-                  <MenuItem value="حق مہر">حق مہر</MenuItem>
-                  <MenuItem value="کزب النکاح">کزب النکاح</MenuItem>
-                  <MenuItem value="زن اشوئی">زن اشوئی</MenuItem>
-                  <MenuItem value="درخواست">درخواست</MenuItem>
-                  <MenuItem value="منسوخی یکطرفہ">منسوخی یکطرفہ</MenuItem>
-                  <MenuItem value="حضانت">حضانت</MenuItem>
-                  <MenuItem value="اِجراء">اِجراء</MenuItem>
-                  <MenuItem value="پرت">پرت</MenuItem>
-                  <MenuItem value="عزرداری">عزرداری</MenuItem>
-                  <MenuItem value="استغاثہ">استغاثہ</MenuItem>
-                  <MenuItem value="">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isOtherNature}
-                          color="primary"
-                          onChange={(e) => {
-                            setPoData({
-                              ...poData,
-                              isOtherNature: e.target.checked,
-                            });
-                            setIsOtherNature(e.target.checked);
-                          }}
-                          name="isOtherNature"
-                        />
-                      }
-                      label="Other Nature"
-                    />
-                  </MenuItem>
-                  <MenuItem value=""></MenuItem>
+                  <MenuItem value={"District & Sessions Judge"}>District & Sessions Judge</MenuItem>
+                  <MenuItem value={"Addl: District & Sessions Judge"}>Addl: District & Sessions Judge</MenuItem>
+                  <MenuItem value={"Senior Civil Judge (Judicial) \ Judicial Magistrate"}>Senior Civil Judge (Judicial) \ Judicial Magistrate</MenuItem>
+                  <MenuItem value={"Senior Civil Judge (Admin) \ Judicial Magistrate"}>Senior Civil Judge (Admin) \ Judicial Magistrate</MenuItem>
+                  <MenuItem value={"Civil Judge/Judicial Magistrate"}>Civil Judge/Judicial Magistrate</MenuItem>
                 </Select>
               </FormControl>
-            )}
-
-            {/* <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isOtherNature}
-                    color="primary"
-                    onChange={(e) =>
-                      {setCaseData({
-                        ...caseData,
-                        isOtherNature: e.target.checked,
-                      }); setIsOtherNature(e.target.checked)}
-                    }
-                    name="isOtherNature"
-                  />
-                }
-                label="Other Nature"
-              />   */}
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={4}>
+              <FormControl
+                fullWidth
+                variant="outlined"
+                className={classes.formControl}
+              >
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Judge Category
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={poData.judgeCategory}
+                  onChange={(e) =>
+                    setPoData({
+                      ...poData,
+                      judgeCategory: e.target.value,
+                    })
+                  }
+                  label="Judge Category"
+                >
+                  <MenuItem value={"District & Sessions Judge (Both Civil and Criminal Matter)"}>District & Sessions Judge (Both Civil and Criminal Matter)</MenuItem>
+                  <MenuItem value={"District Judge (Exclusive Civil Matter)"}>District Judge (Exclusive Civil Matter)</MenuItem>
+                  <MenuItem value={"Sessions Judge (Exclusive Criminal Matter)"}>Sessions Judge (Exclusive Criminal Matter)</MenuItem>
+                  <MenuItem value={"Addl: District & Sessions Judge (Both Civil and Criminal Matter)"}>Addl: District & Sessions Judge (Both Civil and Criminal Matter)</MenuItem>
+                  <MenuItem value={"Addl: District & Sessions Judge (Exclusive Criminal Matter)"}>"Addl: District & Sessions Judge (Exclusive Criminal Matter)</MenuItem>
+                  <MenuItem value={"Addl: District & Sessions Judge (Exclusive Civil Matter)"}>Addl: District & Sessions Judge (Exclusive Civil Matter)</MenuItem>
+                  <MenuItem value={"Senior Civil Judge (Judicial) (Both Civil and Criminal Matter)"}>Senior Civil Judge (Judicial) (Both Civil and Criminal Matter)</MenuItem>
+                  <MenuItem value={"Senior Civil Judge (Admin) (Both Civil and Criminal Matter)"}>Senior Civil Judge (Admin) (Both Civil and Criminal Matter)</MenuItem>
+                  <MenuItem value={"Senior Civil Judge (Admin) (Exclusive Civil Matter)"}>Senior Civil Judge (Admin) (Exclusive Civil Matter)</MenuItem>
+                  <MenuItem value={"Senior Civil Judge (Judicial) (Exclusive Civil Matter)"}>Senior Civil Judge (Judicial) (Exclusive Civil Matter)</MenuItem>
+                  <MenuItem value={"Civil Judge/Judicial Magistrate (Both Civil and Criminal Matter)"}>Civil Judge/Judicial Magistrate (Both Civil and Criminal Matter)</MenuItem>
+                  <MenuItem value={"Civil Judge (Exclusive Civil Matter)"}>Civil Judge (Exclusive Civil Matter)</MenuItem>
+                  <MenuItem value={"Judicial Magistrate (Exclusive Criminal Matter)"}>Judicial Magistrate (Exclusive Criminal Matter)</MenuItem>
+                  <MenuItem value={"Senior Civil Judge (Admin)\JM (Exclusive Criminal Matter)"}>Senior Civil Judge (Admin)\JM (Exclusive Criminal Matter)</MenuItem>
+                  <MenuItem value={"Senior Civil Judge (Judicial)\JM (Exclusive Criminal Matter)"}>Senior Civil Judge (Judicial)\JM (Exclusive Criminal Matter)</MenuItem>
+                </Select>
+              </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+              <FormControl
+                fullWidth
+                variant="outlined"
+                className={classes.formControl}
+              >
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Court Number
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={poData.courtNumber}
+                  onChange={(e) =>
+                    setPoData({
+                      ...poData,
+                      courtNumber: e.target.value,
+                    })
+                  }
+                  label="Court Number"
+                >
+                  <MenuItem value="DSJ-1">DSJ-1</MenuItem>
+                  <MenuItem value="ASJ-1">ASJ-1</MenuItem>
+                  <MenuItem value="ADJ-1">ADJ-1</MenuItem>
+                  <MenuItem value="ADSJ-1">ADSJ-1</MenuItem>
+                  <MenuItem value="SCJ">SCJ</MenuItem>
+                  <MenuItem value="CJ/JM-1">CJ/JM-1</MenuItem>
+                  <MenuItem value="CJ/JM-2">CJ/JM-2</MenuItem>
+                  <MenuItem value="CJ/JM-3">CJ/JM-3</MenuItem>
+                  <MenuItem value="CJ/JM-4">CJ/JM-4</MenuItem>
+                  <MenuItem value="CJ/JM-5">CJ/JM-5</MenuItem>
+                  <MenuItem value="CJ/JM-6">CJ/JM-6</MenuItem>
+                  <MenuItem value="CJ-1">CJ-1</MenuItem>
+                  <MenuItem value="CJ-2">CJ-2</MenuItem>
+                  <MenuItem value="CJ-3">CJ-3</MenuItem>
+                  <MenuItem value="CJ-4">CJ-4</MenuItem>
+                  <MenuItem value="CJ-5">CJ-5</MenuItem>
+                  <MenuItem value="CJ-6">CJ-6</MenuItem>
+                </Select>
+              </FormControl>
+          </Grid>
+
+          
+          <Grid item xs={12} sm={3}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
               {/* <Grid container justifyContent="space-around"> */}
               {/* <KeyboardDatePicker
@@ -649,10 +415,10 @@ const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
                 // margin="normal"
                 id="date-picker-inline"
                 // id="date-picker-dialog"
-                label="Original Institution Date"
+                label="Statement for the Month of"
                 autoOk
                 format="dd/MM/yyyy"
-                value={institutionDate}
+                // value={institutionDate}
                 onChange={handleDateChange}
                 KeyboardButtonProps={{
                   "aria-label": "change date",
@@ -663,134 +429,19 @@ const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
             {/* </Container> */}
           </Grid>
 
-          {/* <Container fullwidth>
-                    <TextField name='institutionDate' variant='outlined' label='Institution Date' fullWidth value={caseData.institutionDate} onChange={(e) => setCaseData({ ...caseData, institutionDate: e.target.value })} /> */}
-          <Grid item xs={12} sm={5}>
-            <TextField
-              name="urduTitle"
-              variant="outlined"
-              label="Urdu Title"
-              fullWidth
-              value={poData.urduTitle ? poData.urduTitle : ""}
-              onChange={(e) =>
-                setPoData({ ...poData, urduTitle: e.target.value })
-              }
-            />
-          </Grid>
-          <Grid item xs={12} sm={5}>
-            <TextField
-              name="title"
-              variant="outlined"
-              label="Title"
-              fullWidth
-              value={poData["Case Title"]}
-              onChange={(e) =>
-                setPoData({ ...poData, "Case Title": e.target.value })
-              }
-            />
-          </Grid>
-
-          {selectedCaseType === "Criminal" && (
-            <>
-              <Grid item xs={12} sm={3}>
-                {/* <TextField name='FIRdate' variant='outlined' label='FIR Date' fullWidth value={caseData["FIR Date"]} onChange={(e) => setCaseData({ ...caseData, "FIR Date": e.target.value })} /> */}
-                <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
-                  <KeyboardDatePicker
-                    // margin="normal"
-                    id="date-picker-dialog"
-                    label="FIR Date"
-                    format="dd/MM/yyyy"
-                    autoOk
-                    value={
-                      poData["FIR Date"]
-                        ? poData["FIR Date"]
-                        : institutionDate
-                    }
-                    onChange={(date) =>
-                      setPoData({ ...poData, "FIR Date": date })
-                    }
-                    KeyboardButtonProps={{
-                      "aria-label": "change date",
-                    }}
-                  />
-                </MuiPickersUtilsProvider>
-              </Grid>
-              <Grid item xs={12} sm={2}>
-                <TextField
-                  name="FIR"
-                  variant="outlined"
-                  label="FIR Number"
-                  fullWidth
-                  value={poData["FIR NO"]}
-                  onChange={(e) =>
-                    setPoData({ ...poData, "FIR NO": e.target.value })
-                  }
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  name="underSection"
-                  variant="outlined"
-                  label="Under Section/s"
-                  fullWidth
-                  value={poData.Section}
-                  onChange={(e) =>
-                    setPoData({ ...poData, Section: e.target.value })
-                  }
-                />
-              </Grid>
-              <Grid item xs={12} sm={3}>
-                <TextField
-                  name="policeStation"
-                  variant="outlined"
-                  label="Police Station Name"
-                  fullWidth
-                  value={poData.Thana}
-                  onChange={(e) =>
-                    setPoData({ ...poData, Thana: e.target.value })
-                  }
-                />
-              </Grid>
-            </>
-          )}
-
-          <Grid item xs={12} sm={3}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                id="date-picker-inline"
-                label="Next Date"
-                format="dd/MM/yyyy"
-                autoOk
-                value={
-                  poData.nextDate
-                    ? poData.nextDate
-                    : setPoData({ ...poData, nextDate: nextDate })
-                }
-                onChange={(date) =>
-                  setPoData({ ...poData, nextDate: date })
-                }
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
-              />
-            </MuiPickersUtilsProvider>
-          </Grid>
-
           <Grid item xs={12} sm={4}>
             {/* <Grid container alignItems="center"> */}
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
               <KeyboardDatePicker
-                disabled={sameAsInstitutionDate}
+                // disabled={sameAsInstitutionDate}
                 disableToolbar
                 variant="inline"
                 id="date-picker-inline-order-date"
                 label="Order Date"
                 format="dd/MM/yyyy"
                 autoOk
-                value={
-                  poData.orderDate ? poData.orderDate : institutionDate
+                value={null
+                  // poData.orderDate ? poData.orderDate : institutionDate
                 }
                 onChange={(date) =>
                   setPoData({ ...poData, orderDate: date })
@@ -803,11 +454,11 @@ const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={sameAsInstitutionDate}
-                  onChange={(e) => {
-                    setSameAsInstitutiondate(e.target.checked);
-                    setPoData({ ...poData, orderDate: institutionDate });
-                  }}
+                  // checked={sameAsInstitutionDate}
+                  // onChange={(e) => {
+                  //   setSameAsInstitutiondate(e.target.checked);
+                  //   setPoData({ ...poData, orderDate: institutionDate });
+                  // }}
                   name="sameAsInstitutionDate"
                   color="primary"
                 />
@@ -817,362 +468,7 @@ const ControlCenter = ({ currentId, setCurrentId, onPageChange }) => {
             {/* <FormHelperText error>Check Box if apply!</FormHelperText> */}
             {/* </Grid> */}
           </Grid>
-
-          <Grid item xs={12} sm={2}>
-            <TextField
-              name="Order Number"
-              variant="outlined"
-              label="Order Number"
-              fullWidth
-              value={poData.orderNumber}
-              onChange={(e) =>
-                setPoData({ ...poData, orderNumber: e.target.value })
-              }
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel id="demo-simple-select-outlined-label" className={classes.uFont}>
-              خلاصہ کاروائی
-              </InputLabel>
-              <Select
-              className={classes.uFont}
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
-                value={
-                  poData.actionAbstract
-                    ? poData.actionAbstract
-                    : setPoData({ ...poData, actionAbstract: "حاضری" })
-                }
-                onChange={(e) => {
-                  setPoData({ ...poData, actionAbstract: e.target.value });
-                  // setActionAbstract({
-                  //   orderDate: new Date(),
-                  //   actionAbstract: e.target.value,
-                  // });
-                }}
-                label="خلاصہ کاروائی"
-              >
-                <MenuItem value="" style={{ backgroundColor: "lightgray" }}>
-                  <em>Mostly Used</em>
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"حاضری"}>
-                  حاضری
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"بحث"}>
-                  بحث
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"شہادت"}>
-                  شہادت
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"حکم"}>
-                  حکم
-                </MenuItem>
-                <MenuItem value="" style={{ backgroundColor: "lightgrey" }}>
-                  <em>All Categories</em>
-                </MenuItem>
-                <Divider />
-
-                <MenuItem
-                  className={[classes.boldThis, classes.uFont]}
-                  style={{ backgroundColor: "lightblue" }}
-                  value={"حاضری، ریکارڈ"}
-                >
-                  حاضری، ریکارڈ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"مختارنامہ، حاضری"}>
-                  مختارنامہ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"تقرری وکیل، حاضری"}>
-                  تقرری وکیل، حاضری
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"حاضری، وکالت نامہ، حاضری"}
-                >
-                  وکالت نامہ، حاضری
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"وکالت نامہ، حاضری"}>
-                  وکالت نامہ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"حاضری، اشتہار"}>
-                  حاضری، اشتہار
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"حاضری، جواب دعویٰ، حاضری"}
-                >
-                  حاضری، جواب دعویٰ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"جواب دعویٰ، حاضری"}>
-                  جواب دعویٰ
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"جواب درخواست، حاضری"}
-                >
-                  جواب درخواست
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"پروفارمہ جات، حاضری"}
-                >
-                  پروفارمہ جات
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"پروفارمہ ای، حاضری"}
-                >
-                  پرفارمہ ای
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"تنقیحات، حاضری"}>
-                  تنقیحات
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"پروفارمہ سی، حاضری"}
-                >
-                  پرفارمہ سی
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"فرد جرم، حاضری"}>
-                  فرد جرم
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"فرد تعلیقہ، حاضری"}>
-                  فرد تعلیقہ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"راضی نامہ، حاضری"}>
-                  راضی نامہ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"بیلف رپورٹ، حاضری"}>
-                  بیلف رپورٹ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"نیلامی، حاضری"}>
-                  نیلامی
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"نادرا رپورٹ، حاضری"}
-                >
-                  نادرا رپورٹ
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"بقایا آدائیگی، حاضری"}
-                >
-                  بقایا آدائیگی
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"مزید کاروائی، حاضری"}
-                >
-                  مزید کاروائی
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"انتظار مسل، حاضری"}>
-                  انتظار مسل
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"کمنٹس، حاضری"}>
-                  کمنٹس
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"رپورٹ SHO، حاضری"}>
-                  رپورٹ SHO
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"بیان DFC, حاضری"}>
-                  بیان DFC
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"طلبی انکوائری، حاضری"}
-                >
-                  طلبی انکوائری، حاضری
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={" ترمیمی عرضیدعویٰ، حاضری"}
-                >
-                  ترمیمی عرضیدعویٰ
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={" ترمیمی جواب دعویٰ، حاضری"}
-                >
-                  ترمیمی جواب دعویٰ
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"حاضری، رپورٹ اہل کمیشن"}
-                >
-                  رپورٹ اہل کمیشن
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"حاضری، عزرات"}>
-                  عزرات
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"شیڈولنگ کانفرنس، حاضری"}
-                >
-                  شیڈولنگ کانفرنس
-                </MenuItem>
-                <MenuItem className={classes.uFont} value="جواب الجواب، حاضری">
-                  جواب الجواب
-                </MenuItem>
-                <MenuItem className={classes.uFont} value="شوکازنوٹس، حاضری">
-                  شوکازنوٹس
-                </MenuItem>
-                <Divider />
-
-                <MenuItem
-                  className={[classes.boldThis, classes.uFont]}
-                  style={{ backgroundColor: "lightgreen" }}
-                  value={"شہادت مدعی"}
-                >
-                  شہادت مدعی
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"شہادت مدعیہ"}>
-                  شہادت مدعیہ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"شہادت مدعا علیہ"}>
-                  شہادت مدعا علیہ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"شہادت مدعا علیہا"}>
-                  شہادت مدعا علیہا
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"شہادت مدعیان"}>
-                  شہادت مدعیان
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"شہادت مدعاعلیہم"}>
-                  شہادت مدعا علیہم
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"شہادت سائیل"}>
-                  شہادت سائیل
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"شہادت مسئول الیہ"}>
-                  شہادت مسئول الیہ
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"طلبیدہ گواہان، شہادت"}
-                >
-                  طلبیدہ گواہان، شہادت
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"جرح بر گواہان، شہادت"}
-                >
-                  جرح بر گواہان، شہادت
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"شہادت استغاثہ"}>
-                  شہادت استغاثہ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"یکطرفہ شہادت"}>
-                  یکطرفہ شہادت
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"جرح بر گواہ، شہادت"}
-                >
-                  جرح بر گواہ، شہادت
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"ہمراہ، شہادت"}>
-                  ہمراہ، شہادت
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"بیان اہل کمیشن، شہادت"}
-                >
-                  بیان اہل کمیشن
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"راضی نامہ، شہادت"}>
-                  راضی نامہ
-                </MenuItem>
-                <Divider />
-
-                <MenuItem
-                  className={[classes.boldThis, classes.uFont]}
-                  style={{
-                    backgroundColor: "lightsalmon",
-                  }}
-                  value={"ابتدائی بحث"}
-                >
-                  ابتدائی بحث
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"جواب و بحث"}>
-                  جواب و بحث
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"بحث بر درخواست"}>
-                  بحث بر درخواست
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"بحث بر نکتہ"}>
-                  بحث بر نکتہ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"یکطرفہ بحث"}>
-                  یکطرفہ بحث
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"بحث بر مقدمہ"}>
-                  بحث بر مقدمہ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"بقایا بحث"}>
-                  بقایا بحث
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"بحث، ریکارڈ"}>
-                  بحث، ریکارڈ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"بحث بر اپیل"}>
-                  بحث بر اپیل
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"بحث بر نگرانی"}>
-                  بحث بر نگرانی
-                </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"مصالحت ابتدائی، بحث"}
-                >
-                  مصالحت ابتدائی
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"مصالحت ثانی، بحث"}>
-                  مصالحت ثانی
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"ہمراہ، بحث"}>
-                  ہمراہ، بحث
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"بحث بر رپورٹ"}>
-                  بحث بر رپورٹ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"راضی نامہ، بحث"}>
-                  راضی نامہ
-                </MenuItem>
-                <Divider />
-
-                <MenuItem
-                  className={[classes.boldThis, classes.uFont]}
-                  style={{ backgroundColor: "lightcoral" }}
-                  value={"حکم بر درخواست"}
-                >
-                  حکم بر درخواست
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"حکم بر کمیشن"}>
-                  حکم بر کمیشن
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"حکم بر مقدمہ"}>
-                  حکم بر مقدمہ
-                </MenuItem>
-                <MenuItem className={classes.uFont} value={"راضی نامہ، حکم"}>
-                  راضی نامہ، حکم
-                </MenuItem>
-              </Select>
-            </FormControl>
-
-            {/* <TextField
-              name="Action Abstract"
-              variant="outlined"
-              label="Action Abstract"
-              fullWidth
-              value={caseData.actionAbstract}
-              onChange={(e) =>
-                setCaseData({ ...caseData, actionAbstract: e.target.value })
-              }
-            /> */}
-          </Grid>
-
+          
           <Grid item xs={12} sm={12}>
             <Divider></Divider>
           </Grid>

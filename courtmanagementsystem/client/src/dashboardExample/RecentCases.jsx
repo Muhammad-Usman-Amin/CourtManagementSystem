@@ -102,7 +102,7 @@ export default function RecentCases() {
                 {row.nature}
               </TableCell>
               <TableCell>
-                {format(parseISO(row.nextDate), "dd-MM-yyy")}
+                {row.nextDate && format(parseISO(row.nextDate), "dd-MM-yyy")}
               </TableCell>
               {/* <TableCell>{row.paymentMethod}</TableCell>
                             <TableCell align="right">{row.amount}</TableCell> */}
