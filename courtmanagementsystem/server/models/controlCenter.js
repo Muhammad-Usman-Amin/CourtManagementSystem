@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const poSchema = new mongoose.Schema({
   presidingOfficer: String,
   causeListName: String,
-  judgecategory: String,
+  judgeCategory: String,
   courtNumber: String,
   stationDistrict: String,
   courtStatus: String,  //use for Regular, CPC, FamilyCourt etc

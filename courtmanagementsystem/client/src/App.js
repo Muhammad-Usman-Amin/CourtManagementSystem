@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Container,
-  AppBar,
-  Typography,
-  Grow,
-  Grid,
   CssBaseline,
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
@@ -12,12 +8,12 @@ import { useDispatch } from "react-redux";
 // import { getPosts } from './actions/posts';
 import { getCases } from "./actions/cases";
 import { getEmployeeData } from "./actions/employeeData.js";
-import courtLogo from "./images/courtLogo.png";
+// import courtLogo from "./images/courtLogo.png";
 // import Posts from './components/Posts/Posts';
 import Cases from "./components/Cases/Cases";
 // import CauseList from './components/CauseLists/CauseList';
 // import Form from './components/Form/Form';
-import makeStyles from "./styles";
+// import makeStyles from "./styles";
 import Dashboard from "./dashboardExample/Dashboard.jsx";
 import SimpleDrawer from "./dashboardExample/SimpleDrawer.jsx";
 import CauseList from "./components/CauseLists/CauseList.jsx";
@@ -36,9 +32,10 @@ import useStyles from "./dashboardExample/dashboard";
 import Error404Screen from "./screens/Error404Screen";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { lightTheme, darkTheme } from "./theme";
+import { getControlCenter } from "./actions/controlCenter.js";
 
 const App = () => {
-  const classes = makeStyles();
+  // const classes = makeStyles();
   const classes2 = useStyles();
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
@@ -50,6 +47,7 @@ const App = () => {
   useEffect(() => {
     dispatch(getEmployeeData());
     dispatch(getCases());
+    dispatch(getControlCenter());
   }, [currentId, dispatch]);
 
   const [themeMode, setThemeMode] = useState("Light"); // 'day' or 'night'

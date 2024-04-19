@@ -7,16 +7,16 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { Button, CircularProgress, TextField } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { deleteEmployeeData, getQueryData } from "../../actions/employeeData";
+// import { deleteEmployeeData, getQueryData } from "../../actions/employeeData";
 import { useDispatch } from "react-redux";
 import { format, parseISO } from "date-fns";
-import { useReactToPrint } from "react-to-print";
-import { deleteCase, likeCase } from "../../actions/cases";
+// import { useReactToPrint } from "react-to-print";
+import { deleteCase } from "../../actions/cases";
 import {
   Dialog,
   DialogActions,
@@ -58,18 +58,18 @@ export default function CasesListTable({
 }) {
   const tableRef = React.useRef();
 
-  const handlePrint = useReactToPrint({
-    content: () => tableRef.current,
-  });
+  // const handlePrint = useReactToPrint({
+  //   content: () => tableRef.current,
+  // });
 
   const cases = useSelector((state) => state.cases);
-  const queryData = useSelector((state) => state.queryData);
+  // const queryData = useSelector((state) => state.queryData);
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
     setCurrentId(null);
     onPageChange("Cases List");
-  }, [onPageChange]);
+  }, [onPageChange, setCurrentId]);
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);

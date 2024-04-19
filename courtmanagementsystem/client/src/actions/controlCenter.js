@@ -1,4 +1,4 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL_CONTROL_CENTER, CREATE_CONTROL_CENTER, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Actions creators
@@ -7,25 +7,25 @@ export const getControlCenter = () => async (dispatch) => {
     let datam = null;
     try {
         const { data } = await api.fetchControlCenter();
-        dispatch({ type: FETCH_ALL, payload: data });
+        dispatch({ type: FETCH_ALL_CONTROL_CENTER, payload: data });
         datam = data;
     } catch (error) {
         console.log(error);
     }
     // console.log("Cases Action result:");
-    // console.log(datam);
+    console.log(datam);
 };
-export const createCase = (caseFile) => async (dispatch) => {
+export const createControlCenter = (caseFile) => async (dispatch) => {
     // console.log(caseFile);
     try {
-        const { data } = await api.createCase(caseFile);
-        dispatch({ type: CREATE, payload: data });
+        const { data } = await api.createControlCenter(caseFile);
+        dispatch({ type: CREATE_CONTROL_CENTER, payload: data });
     } catch (error) {
         console.log(error);
     }
 };
 
-export const updateCase = (id, caseFile) => async (dispatch) => {
+export const updateControlCenter = (id, caseFile) => async (dispatch) => {
     try {
         // console.log(id);
         const { data } = await api.updateCase(id, caseFile);
@@ -36,7 +36,7 @@ export const updateCase = (id, caseFile) => async (dispatch) => {
     }
 };
 
-export const deleteCase = (id) => async (dispatch) => {
+export const deleteControlCenter = (id) => async (dispatch) => {
     try {
         await api.deleteCase(id);
 
@@ -46,7 +46,7 @@ export const deleteCase = (id) => async (dispatch) => {
     }
 }
 
-export const likeCase = (id) => async (dispatch) => {
+export const likeControlCenter = (id) => async (dispatch) => {
     try {
         const { data } = await api.likeCase(id);
 

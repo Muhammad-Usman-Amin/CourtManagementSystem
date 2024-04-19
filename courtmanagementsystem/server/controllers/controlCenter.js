@@ -22,7 +22,7 @@ export const createPoData = async (req, res) => {
   const {
     presidingOfficer,
     causeListName,
-    judgecategory,
+    judgeCategory,
     courtNumber,
     stationDistrict,
     courtStatus, //use for Regular, CPC, FamilyCourt etc
@@ -41,7 +41,7 @@ export const createPoData = async (req, res) => {
   const newPoData = new poData({
     presidingOfficer,
     causeListName,
-    judgecategory,
+    judgeCategory,
     courtNumber,
     stationDistrict,
     courtStatus, //use for Regular, CPC, FamilyCourt etc

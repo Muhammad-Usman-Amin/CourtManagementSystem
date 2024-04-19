@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import {
@@ -26,14 +26,14 @@ import {
   Checkbox,
   FormHelperText,
 } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
-import { withStyles } from "@material-ui/core/styles";
+// import { green } from "@material-ui/core/colors";
+// import { withStyles } from "@material-ui/core/styles";
 // import FileBase from 'react-file-base64';
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import useStyles from "./styles";
-import useStyles2 from "../../dashboardExample/dashboard";
-import Container from "@material-ui/core/Container";
+// import useStyles2 from "../../dashboardExample/dashboard";
+// import Container from "@material-ui/core/Container";
 // import { createCase, updateCase } from '../../actions/cases';
 import {
   createEmployeeData,
@@ -47,15 +47,15 @@ import ClearAllIcon from "@material-ui/icons/ClearAll";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 
-const GreenRadio = withStyles({
-  root: {
-    color: green[400],
-    "&$checked": {
-      color: green[600],
-    },
-  },
-  checked: {},
-})((props) => <Radio color="default" {...props} />);
+// const GreenRadio = withStyles({
+//   root: {
+//     color: green[400],
+//     "&$checked": {
+//       color: green[600],
+//     },
+//   },
+//   checked: {},
+// })((props) => <Radio color="default" {...props} />);
 
 const FormEmployeeData = ({ currentId, setCurrentId, onPageChange }) => {
   const employeeFile = useSelector((state) =>
@@ -107,7 +107,7 @@ const FormEmployeeData = ({ currentId, setCurrentId, onPageChange }) => {
     onPageChange(() =>
       currentId ? `Edit Employee "${employeeFile.name}"` : "Add New Employee"
     );
-  }, [onPageChange]);
+  }, [onPageChange,currentId, employeeFile]);
   // const formikContext = useContext(FormikContext);
   // useEffect(() => {
   //     if (employeeFile) {
@@ -1660,7 +1660,7 @@ export default FormEmployeeData;
 //     </Select>
 // </FormControl>
 
-{
+
   /* <FormControl fullWidth component="fieldset">
                         <FormLabel component="legend"><br />Case Type</FormLabel>
                         <RadioGroup required row aria-label="Case Type" name="caseType" value={employeeData["Case Type"]} onChange={e => { setSelectedCaseType(e.target.value); setEmployeeData({ ...employeeData, "Case Type": e.target.value, "Category Per PQS": ''  }); }}>
@@ -1722,7 +1722,7 @@ export default FormEmployeeData;
                             <TextField name='policeStation' variant='outlined' label='Police Station Name' fullWidth value={employeeData.Thana} onChange={(e) => setEmployeeData({ ...employeeData, Thana: e.target.value })} />
                         </>
                     } */
-}
+
 //                 <Button fullWidth className={classes.buttonSubmit} variant='contained' color='primary' size='large' type='submit'>Submit</Button>
 //                 <Button fullWidth variant='contained' color='secondary' size='small' onClick={clear} >Clear</Button>
 //             </form>

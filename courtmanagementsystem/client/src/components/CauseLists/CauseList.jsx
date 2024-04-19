@@ -7,7 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { TextField, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
@@ -21,9 +21,9 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import {
-  FormControlLabel,
+  // FormControlLabel,
   FormControl,
-  FormLabel,
+  // FormLabel,
   Select,
   MenuItem,
   InputLabel,
@@ -38,7 +38,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { updateCase } from "../../actions/cases";
 import { getCauseList } from "../../actions/causeLists";
-import useStyles2 from "../../dashboardExample/dashboard";
+// import useStyles2 from "../../dashboardExample/dashboard";
 import { addDays } from "date-fns";
 
 const useStyles = makeStyles({
@@ -56,7 +56,7 @@ const useStyles = makeStyles({
 });
 
 const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
-  const classes2 = useStyles2();
+  // const classes2 = useStyles2();
   // const cases = useSelector((state) => state.cases);
   const cases = useSelector((state) => state.causeLists);
   // console.log(cases);
@@ -73,7 +73,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   // const [caseData, setCaseData] = useState({
   //   orderDate: new Date(), orderNumber: '', nextDate: nextDate, actionAbstract: '',
   // });
-  const [orderNumber, setOrderNumber] = useState({
+  const [orderNumber] = useState({
     orderDate: orderDate,
     orderNumber: "",
   });
@@ -138,7 +138,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   // let sno = [];
   useEffect(() => {
     dispatch(getCauseList({ dateCauseList: dateCauseList }));
-  }, [dateCauseList]);
+  }, [dispatch, dateCauseList]);
 
   useEffect(() => {
     dispatch(getCauseList({ dateCauseList: dateCauseList }));

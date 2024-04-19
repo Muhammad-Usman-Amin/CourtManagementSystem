@@ -10,7 +10,7 @@ import {
 import {
   TextField,
   Button,
-  Typography,
+  // Typography,
   Paper,
   Radio,
   RadioGroup,
@@ -23,7 +23,7 @@ import {
   Grid,
   Box,
   Checkbox,
-  FormHelperText,
+  // FormHelperText,
   Divider,
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
@@ -32,8 +32,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import useStyles from "./styles";
-import useStyles2 from "../../dashboardExample/dashboard";
-import Container from "@material-ui/core/Container";
+// import useStyles2 from "../../dashboardExample/dashboard";
+// import Container from "@material-ui/core/Container";
 import { createCase, updateCase } from "../../actions/cases";
 import ClearAllIcon from "@material-ui/icons/ClearAll";
 import SaveIcon from "@material-ui/icons/Save";
@@ -117,6 +117,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [isTransferedIn, setIsTransferedIn] = useState(false);
   const [isRemandedRestored, setIsRemandedRestored] = useState(false);
   const [isOtherNature, setIsOtherNature] = useState(false);
+
   useEffect(() => {
     // console.log(caseFile);
     // console.log('useEffect called');
@@ -148,7 +149,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
         ? `Editing Case "${caseFile["Case Title"]}"`
         : "Creating New Case"
     );
-  }, [onPageChange]);
+  }, [onPageChange, currentId, caseFile]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -584,7 +585,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   }}
                   label="Case Nature (نوعیت)"
                 >
-                <MenuItem value="">
+                  <MenuItem value="">
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -613,7 +614,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                     حتمی ڈگری
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="دعویٰ ہرجانہ">
-                      دعویٰ ہرجانہ
+                    دعویٰ ہرجانہ
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="حکم امتناعی">
                     حکم امتناعی

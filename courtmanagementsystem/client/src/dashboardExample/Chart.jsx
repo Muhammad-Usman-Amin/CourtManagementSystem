@@ -18,13 +18,13 @@ function createData(date, cases) {
 }
 
 // Example data
-const casesData = [
-  { id: 1, name: "Case 1", institutionDate: "2024-03-01" },
-  { id: 2, name: "Case 2", institutionDate: "2024-03-01" },
-  { id: 3, name: "Case 3", institutionDate: "2024-03-02" },
-  { id: 4, name: "Case 4", institutionDate: "2024-03-02" },
-  { id: 5, name: "Case 5", institutionDate: "2024-03-02" },
-];
+// const casesData = [
+//   { id: 1, name: "Case 1", institutionDate: "2024-03-01" },
+//   { id: 2, name: "Case 2", institutionDate: "2024-03-01" },
+//   { id: 3, name: "Case 3", institutionDate: "2024-03-02" },
+//   { id: 4, name: "Case 4", institutionDate: "2024-03-02" },
+//   { id: 5, name: "Case 5", institutionDate: "2024-03-02" },
+// ];
 
 // Process data to find number of cases instituted on each day
 // const casesByDate = casesData.reduce((acc, cur) => {
@@ -44,23 +44,23 @@ const casesData = [
 
 // console.log(result);
 
-const data = [
-  createData("1 Mar", 2),
-  createData("2 Mar", 3),
-  createData("3 Mar", 1),
-  createData("4 Mar", 0),
-  createData("5 Mar", 5),
-  createData("6 Mar", 4),
-  createData("7 Mar", 2),
-  createData("8 Mar", 2),
-  createData("9 Mar", 3),
-  createData("10 Mar", 5),
-  createData("11 Mar", 0),
-  createData("12 Mar", 2),
-  createData("13 Mar", 3),
-  createData("14 Mar", 5),
-  createData("15 Mar", 1),
-];
+// const data = [
+//   createData("1 Mar", 2),
+//   createData("2 Mar", 3),
+//   createData("3 Mar", 1),
+//   createData("4 Mar", 0),
+//   createData("5 Mar", 5),
+//   createData("6 Mar", 4),
+//   createData("7 Mar", 2),
+//   createData("8 Mar", 2),
+//   createData("9 Mar", 3),
+//   createData("10 Mar", 5),
+//   createData("11 Mar", 0),
+//   createData("12 Mar", 2),
+//   createData("13 Mar", 3),
+//   createData("14 Mar", 5),
+//   createData("15 Mar", 1),
+// ];
 
 export default function Chart() {
   const theme = useTheme();
@@ -90,7 +90,7 @@ export default function Chart() {
     Cases: casesByDate[date],
   }));
 
-  console.log(result);
+  // console.log(result);
 
   return (
     <React.Fragment>

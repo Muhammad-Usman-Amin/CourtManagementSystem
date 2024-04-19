@@ -1,15 +1,15 @@
 import express from "express";
 import {
-  getPoData,
+  getPoData, createPoData, updatePoData
 } from "../controllers/controlCenter.js";
 
 const router = express.Router();
 
-// directory to localhost:5000/cases
+// directory to localhost:5000/controlCenter
 
 router.get("/", getPoData);
-// router.post("/", createCase);
-// router.patch("/:id", updateCase);
+router.post("/", createPoData);
+router.patch("/:id", updatePoData);
 // router.delete("/:id", deleteCase);
 // router.patch("/:id/likeCase", likeCase);
 

@@ -4,12 +4,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Title from "./Title";
 import { useSelector } from "react-redux";
-import { format, parseISO } from "date-fns";
+import { format} from "date-fns";
 import { Link } from "react-router-dom";
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+// function preventDefault(event) {
+//   event.preventDefault();
+// }
 
 const useStyles = makeStyles({
   depositContext: {

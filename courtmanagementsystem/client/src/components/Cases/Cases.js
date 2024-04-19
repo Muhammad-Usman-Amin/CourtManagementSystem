@@ -4,12 +4,12 @@ import { Grid, CircularProgress } from '@material-ui/core';
 
 import Case from './Case/Case';
 import makeStyles from './styles';
-import useStyles2 from '../../dashboardExample/dashboard';
-import Container from '@material-ui/core/Container';
+// import useStyles2 from '../../dashboardExample/dashboard';
+// import Container from '@material-ui/core/Container';
 
 const Cases = ({ setCurrentId }) => {
     const classes = makeStyles();
-    const classes2 = useStyles2();
+    // const classes2 = useStyles2();
     const cases = useSelector((state) => state.cases);
 
     // console.log(cases);

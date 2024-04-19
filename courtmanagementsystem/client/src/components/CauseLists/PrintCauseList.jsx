@@ -107,7 +107,7 @@ const PrintCauseList = (props) => {
   // const dateCauseList = props.location.state.dateCauseList;
 
   console.log(orderDate);
-  const [dateCauseList, setDateCauseList] = useState(
+  const [dateCauseList] = useState(
     props.location.state.dateCauseList
   );
 
@@ -124,7 +124,7 @@ const PrintCauseList = (props) => {
       setSerialNo((prevArray) => [...prevArray, i]);
     }
     console.log(data);
-  }, []);
+  }, [data, dateCauseList, dispatch]);
 
   const classes = useStyles();
   const tableRef = React.useRef();

@@ -1,4 +1,4 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, CREATE_CONTROL_CENTER } from '../constants/actionTypes';
+import { FETCH_ALL_CONTROL_CENTER, UPDATE, DELETE, LIKE, CREATE_CONTROL_CENTER } from '../constants/actionTypes';
 
 export default (controlCenter = [], action) => {
     switch (action.type) {
@@ -7,7 +7,7 @@ export default (controlCenter = [], action) => {
         case UPDATE:
         case LIKE:
             return controlCenter.map((caseFile) => caseFile._id === action.payload._id ? action.payload : caseFile);
-        case FETCH_ALL:
+        case FETCH_ALL_CONTROL_CENTER:
             return action.payload;
         case CREATE_CONTROL_CENTER:
             return [...controlCenter, action.payload];
