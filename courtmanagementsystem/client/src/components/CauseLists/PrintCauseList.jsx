@@ -598,9 +598,37 @@ const PrintCauseList = (props) => {
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
-                          style={{ fontSize: "auto" }}
+                          style={{
+                            fontSize: "16px",
+                            direction: "ltr",
+                            lineHeight: 0.6,
+                          }}
                         >
-                          {caseFile.nature ? caseFile.nature : null}
+                          {caseFile["Case Type"] === "Civil" ? (
+                            caseFile.nature
+                          ) : (
+                            <>
+                              {/* <span style={{ fontSize: "10px" }}>
+                            {caseFile["FIR Date"] ? format?.(
+                                parseISO(caseFile["FIR Date"]),
+                                "dd-MM-yyy"
+                              ) : null}
+                              </span>
+                              <span>/</span> */}
+                              <span style={{ fontSize: "10px" }}>
+                                علت:
+                                {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
+                              </span>
+                              <span>،</span>
+                              <span style={{ fontSize: "10px" }}>
+                                تھانہ:{caseFile.Thana ? caseFile.Thana : null}
+                              </span>
+                              <br />
+                              <span style={{ fontSize: "10px" }}>
+                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              </span>
+                            </>
+                          )}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
@@ -725,9 +753,37 @@ const PrintCauseList = (props) => {
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
-                          style={{ fontSize: "auto" }}
+                          style={{
+                            fontSize: "16px",
+                            direction: "ltr",
+                            lineHeight: 0.6,
+                          }}
                         >
-                          {caseFile.nature ? caseFile.nature : null}
+                          {caseFile["Case Type"] === "Civil" ? (
+                            caseFile.nature
+                          ) : (
+                            <>
+                              {/* <span style={{ fontSize: "10px" }}>
+                            {caseFile["FIR Date"] ? format?.(
+                                parseISO(caseFile["FIR Date"]),
+                                "dd-MM-yyy"
+                              ) : null}
+                              </span>
+                              <span>/</span> */}
+                              <span style={{ fontSize: "10px" }}>
+                                علت:
+                                {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
+                              </span>
+                              <span>،</span>
+                              <span style={{ fontSize: "10px" }}>
+                                تھانہ:{caseFile.Thana ? caseFile.Thana : null}
+                              </span>
+                              <br />
+                              <span style={{ fontSize: "10px" }}>
+                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              </span>
+                            </>
+                          )}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
@@ -852,9 +908,37 @@ const PrintCauseList = (props) => {
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
-                          style={{ fontSize: "auto" }}
+                          style={{
+                            fontSize: "16px",
+                            direction: "ltr",
+                            lineHeight: 0.6,
+                          }}
                         >
-                          {caseFile.nature ? caseFile.nature : null}
+                          {caseFile["Case Type"] === "Civil" ? (
+                            caseFile.nature
+                          ) : (
+                            <>
+                              {/* <span style={{ fontSize: "10px" }}>
+                            {caseFile["FIR Date"] ? format?.(
+                                parseISO(caseFile["FIR Date"]),
+                                "dd-MM-yyy"
+                              ) : null}
+                              </span>
+                              <span>/</span> */}
+                              <span style={{ fontSize: "10px" }}>
+                                علت:
+                                {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
+                              </span>
+                              <span>،</span>
+                              <span style={{ fontSize: "10px" }}>
+                                تھانہ:{caseFile.Thana ? caseFile.Thana : null}
+                              </span>
+                              <br />
+                              <span style={{ fontSize: "10px" }}>
+                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              </span>
+                            </>
+                          )}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
@@ -955,6 +1039,42 @@ const PrintCauseList = (props) => {
                           {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          // className={[classes.tableCell, classes.tableCaseTitle]}
+                          align="left"
+                          style={{
+                            fontSize: "16px",
+                            direction: "ltr",
+                            lineHeight: 0.6,
+                          }}
+                        >
+                          {caseFile["Case Type"] === "Civil" ? (
+                            caseFile.nature
+                          ) : (
+                            <>
+                              {/* <span style={{ fontSize: "10px" }}>
+                            {caseFile["FIR Date"] ? format?.(
+                                parseISO(caseFile["FIR Date"]),
+                                "dd-MM-yyy"
+                              ) : null}
+                              </span>
+                              <span>/</span> */}
+                              <span style={{ fontSize: "10px" }}>
+                                علت:
+                                {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
+                              </span>
+                              <span>،</span>
+                              <span style={{ fontSize: "10px" }}>
+                                تھانہ:{caseFile.Thana ? caseFile.Thana : null}
+                              </span>
+                              <br />
+                              <span style={{ fontSize: "10px" }}>
+                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              </span>
+                            </>
+                          )}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&

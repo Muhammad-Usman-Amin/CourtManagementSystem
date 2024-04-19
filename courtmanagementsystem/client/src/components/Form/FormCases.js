@@ -675,8 +675,6 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem className={classes.uFont} value="استغاثہ">
                     استغاثہ
                   </MenuItem>
-                  
-                  <MenuItem value=""></MenuItem>
                 </Select>
               </FormControl>
             )}
