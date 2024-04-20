@@ -4,16 +4,16 @@ import * as api from '../api';
 // Actions creators
 export const getControlCenter = () => async (dispatch) => {
     // console.log('getCases Called');
-    let datam = null;
+    // let datam = null;
     try {
         const { data } = await api.fetchControlCenter();
         dispatch({ type: FETCH_ALL_CONTROL_CENTER, payload: data });
-        datam = data;
+        // datam = data;
     } catch (error) {
         console.log(error);
     }
     // console.log("Cases Action result:");
-    console.log(datam);
+    // console.log(datam[0]);
 };
 export const createControlCenter = (caseFile) => async (dispatch) => {
     // console.log(caseFile);

@@ -6,10 +6,11 @@ const router = express.Router();
 
 export const getPoData = async (req, res) => {
   // const query = req.query;
+  console.log('getpodata called');
 
   try {
-    const poData = await poData.find();
-    res.status(200).json(poData);
+    const poDataFile = await poData.find();
+    res.status(200).json(poDataFile);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -22,6 +23,7 @@ export const createPoData = async (req, res) => {
   const {
     presidingOfficer,
     causeListName,
+    designation,
     judgeCategory,
     courtNumber,
     stationDistrict,
@@ -41,6 +43,7 @@ export const createPoData = async (req, res) => {
   const newPoData = new poData({
     presidingOfficer,
     causeListName,
+    designation,
     judgeCategory,
     courtNumber,
     stationDistrict,

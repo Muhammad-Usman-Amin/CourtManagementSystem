@@ -84,7 +84,7 @@ export default function RecentCases() {
         </TableHead>
         <TableBody>
           {lastFiveEntries.map((row) => (
-            <TableRow key={row.id}>
+            <TableRow key={row._id}>
               <TableCell component="th" scope="row">
                 {i++}
               </TableCell>

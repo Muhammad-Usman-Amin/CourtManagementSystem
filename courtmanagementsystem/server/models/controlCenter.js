@@ -3,11 +3,12 @@ import mongoose from "mongoose";
 const poSchema = new mongoose.Schema({
   presidingOfficer: String,
   causeListName: String,
+  designation: String,
   judgeCategory: String,
   courtNumber: String,
   stationDistrict: String,
   courtStatus: String,  //use for Regular, CPC, FamilyCourt etc
-  monthlyData: {
+  monthlyData: [{
     statementMonth: Date,
     totalDays: String,
     totalSundays: String,
@@ -18,10 +19,9 @@ const poSchema = new mongoose.Schema({
     netJudicialWorkingDays: String,
     incumbencyStatus: String,
     quartelrlyBacklogClearanceTarget: String,
-  }
-  
+  }]
 });
 
-const poData = mongoose.model("poData", poSchema, "poData");
+const poData = mongoose.model("poFile", poSchema, "poData");
 
 export default poData;

@@ -25,6 +25,7 @@ import {
   Checkbox,
   // FormHelperText,
   Divider,
+  CircularProgress
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
@@ -36,12 +37,14 @@ import useStyles from "./styles";
 // import Container from "@material-ui/core/Container";
 import {
   createControlCenter,
+  getControlCenter,
   updateControlCenter,
 } from "../../actions/controlCenter";
 // import ClearAllIcon from "@material-ui/icons/ClearAll";
 import SaveIcon from "@material-ui/icons/Save";
 // import { addDays } from "date-fns";
 // import Input from "@material-ui/core/Input";
+
 
 const GreenCheckbox = withStyles({
   root: {
@@ -64,6 +67,7 @@ const GreenCheckbox = withStyles({
 // })((props) => <Radio color="default" {...props} />);
 
 const ControlCenter = ({ currentId, setCurrentId }) => {
+  
   const [poData, setPoData] = useState({
     presidingOfficer: "",
     causeListName: "",
@@ -93,20 +97,25 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
   // const poFile = useSelector((state) =>
   //   currentId ? state.controlCenter.find((c) => c._id === currentId) : state.controlCenter.data
   // );
-  const poFile = useSelector((state) => state.controlCenter.data);
-console.log(poFile);
+  const poFile = useSelector((state) => state.controlCenter);
+  console.log(poFile);
   useEffect(() => {
     // console.log(caseFile);
     // console.log('useEffect called');
     if (poFile) {
       // console.log(selectedCaseType);
-      setPoData(poFile);
+      setPoData(poFile[0]);
+      console.log(poFile[0]);
     }
   }, [poFile]);
 
   const classes = useStyles();
   // const classes2 = useStyles2();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getControlCenter());
+  }, [dispatch]);
 
   // useEffect(() => {
   //   setSelectedCaseType("Civil");
@@ -174,7 +183,9 @@ console.log(poFile);
   // setSameAsInstitutiondate(false);
   // };
 
-  return (
+  return !poFile.length ? (
+    <CircularProgress />
+  ) : (
     <Paper className={classes.paper}>
       <form
         autoComplete="off"
@@ -199,7 +210,7 @@ console.log(poFile);
               <Select
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
-                value={poData.presidingOfficer}
+                value={poData.presidingOfficer ? poData.presidingOfficer : ""}
                 onChange={(e) =>
                   setPoData({
                     ...poData,
@@ -208,6 +219,7 @@ console.log(poFile);
                 }
                 label="Presiding Officer"
               >
+                <MenuItem value="">Select Any</MenuItem>
                 <MenuItem value={"PHC0813-90-1:Ms. Zaib Un Nisa Abbasi"}>
                   PHC0813-90-1:Ms. Zaib Un Nisa Abbasi
                 </MenuItem>
@@ -482,7 +494,9 @@ console.log(poFile);
                 label="Statement for the Month of"
                 autoOk
                 format="dd/MM/yyyy"
-                // value={institutionDate}
+                value={
+                  poData.statementMonth ? poData.statementMonth : new Date()
+                }
                 onChange={handleDateChange}
                 KeyboardButtonProps={{
                   "aria-label": "change date",
