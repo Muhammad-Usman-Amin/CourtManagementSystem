@@ -28,27 +28,7 @@ export const createPoData = async (req, res) => {
     courtNumber,
     stationDistrict,
     courtStatus, //use for Regular, CPC, FamilyCourt etc
-    statementMonth,
-    totalDays,
-    totalSundays,
-    leaves,
-    otherHolidays,
-    nonJudicialWorkingDays,
-    noOfStrikesDays,
-    netJudicialWorkingDays,
-    incumbencyStatus,
-    quartelrlyBacklogClearanceTarget,
-  } = body;
-
-  const newPoData = new poData({
-    presidingOfficer,
-    causeListName,
-    designation,
-    judgeCategory,
-    courtNumber,
-    stationDistrict,
-    courtStatus, //use for Regular, CPC, FamilyCourt etc
-    monthlyData: {
+    monthlyData: [{
       statementMonth,
       totalDays,
       totalSundays,
@@ -59,7 +39,29 @@ export const createPoData = async (req, res) => {
       netJudicialWorkingDays,
       incumbencyStatus,
       quartelrlyBacklogClearanceTarget,
-    },
+    }]
+  } = body;
+
+  const newPoData = new poData({
+    presidingOfficer,
+    causeListName,
+    designation,
+    judgeCategory,
+    courtNumber,
+    stationDistrict,
+    courtStatus, //use for Regular, CPC, FamilyCourt etc
+    monthlyData: [{
+      statementMonth,
+      totalDays,
+      totalSundays,
+      leaves,
+      otherHolidays,
+      nonJudicialWorkingDays,
+      noOfStrikesDays,
+      netJudicialWorkingDays,
+      incumbencyStatus,
+      quartelrlyBacklogClearanceTarget,
+    }],
   });
 
   try {

@@ -5,6 +5,7 @@ import {
   MuiPickersUtilsProvider,
   // KeyboardTimePicker,
   KeyboardDatePicker,
+  DatePicker,
 } from "@material-ui/pickers";
 
 import {
@@ -12,9 +13,9 @@ import {
   Button,
   // Typography,
   Paper,
-  Radio,
+  // Radio,
   // RadioGroup,
-  FormControlLabel,
+  // FormControlLabel,
   FormControl,
   // FormLabel,
   Select,
@@ -22,13 +23,13 @@ import {
   InputLabel,
   Grid,
   Box,
-  Checkbox,
+  // Checkbox,
   // FormHelperText,
   Divider,
-  CircularProgress
+  CircularProgress,
 } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
-import { withStyles } from "@material-ui/core/styles";
+// import { green } from "@material-ui/core/colors";
+// import { withStyles } from "@material-ui/core/styles";
 // import FileBase from 'react-file-base64';
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -45,16 +46,15 @@ import SaveIcon from "@material-ui/icons/Save";
 // import { addDays } from "date-fns";
 // import Input from "@material-ui/core/Input";
 
-
-const GreenCheckbox = withStyles({
-  root: {
-    color: green[400],
-    "&$checked": {
-      color: green[600],
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);
+// const GreenCheckbox = withStyles({
+//   root: {
+//     color: green[400],
+//     "&$checked": {
+//       color: green[600],
+//     },
+//   },
+//   checked: {},
+// })((props) => <Checkbox color="default" {...props} />);
 
 // const GreenRadio = withStyles({
 //   root: {
@@ -67,7 +67,6 @@ const GreenCheckbox = withStyles({
 // })((props) => <Radio color="default" {...props} />);
 
 const ControlCenter = ({ currentId, setCurrentId }) => {
-  
   const [poData, setPoData] = useState({
     presidingOfficer: "",
     causeListName: "",
@@ -76,21 +75,24 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
     courtNumber: "",
     stationDistrict: "",
     courtStatus: "",
-    //Monthly Data
-    statementMonth: null,
-    totalDays: "",
-    totalSundays: "",
-    leaves: "",
-    otherHolidays: "",
-    nonJudicialWorkingDays: "",
-    noOfStrikesDays: "",
-    netJudicialWorkingDays: "",
-    incumbencyStatus: "",
-    quartelrlyBacklogClearanceTarget: "",
+    monthlyData: [
+      {
+        statementMonth: Date,
+        totalDays: "",
+        totalSundays: "",
+        leaves: "",
+        otherHolidays: "",
+        nonJudicialWorkingDays: "",
+        noOfStrikesDays: "",
+        netJudicialWorkingDays: "",
+        incumbencyStatus: "",
+        quartelrlyBacklogClearanceTarget: "",
+      },
+    ],
   });
 
   const handleDateChange = (date) => {
-    setPoData({ ...poData, statementMonth: date });
+    setPoData({ ...poData, monthlyData:{statementMonth: date }});
   };
 
   // const [selectedCaseType, setSelectedCaseType] = useState("Civil");
@@ -98,14 +100,20 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
   //   currentId ? state.controlCenter.find((c) => c._id === currentId) : state.controlCenter.data
   // );
   const poFile = useSelector((state) => state.controlCenter);
-  console.log(poFile);
+
+  // const [selectedDate, setSelectedDate] = useState(null);
+
+  // const handleDateChangep = (date) => {
+  //   setSelectedDate(date);
+  // };
+  // console.log(poFile);
   useEffect(() => {
     // console.log(caseFile);
     // console.log('useEffect called');
     if (poFile) {
       // console.log(selectedCaseType);
       setPoData(poFile[0]);
-      console.log(poFile[0]);
+      console.log(poData);
     }
   }, [poFile]);
 
@@ -210,7 +218,7 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
               <Select
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
-                value={poData.presidingOfficer ? poData.presidingOfficer : ""}
+                value={poData.presidingOfficer}
                 onChange={(e) =>
                   setPoData({
                     ...poData,
@@ -469,6 +477,10 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
             </FormControl>
           </Grid>
 
+          <Grid item xs={12} sm={12}>
+            <Divider></Divider>
+          </Grid>
+
           <Grid item xs={12} sm={3}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
               {/* <Grid container justifyContent="space-around"> */}
@@ -486,6 +498,8 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
                     }}
                 /> */}
               <KeyboardDatePicker
+                // views={['year', 'month']}
+                views={["month"]}
                 disableToolbar
                 variant="inline"
                 // margin="normal"
@@ -493,9 +507,12 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
                 // id="date-picker-dialog"
                 label="Statement for the Month of"
                 autoOk
-                format="dd/MM/yyyy"
+                format="MMMM yyyy"
                 value={
-                  poData.statementMonth ? poData.statementMonth : new Date()
+                  poData.monthlyData[0].statementMonth
+                    ? poData.monthlyData[0].statementMonth
+                    : new Date()
+                  // poData.statementMonth ? poData.statementMonth : new Date()
                 }
                 onChange={handleDateChange}
                 KeyboardButtonProps={{
@@ -507,9 +524,32 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
             {/* </Container> */}
           </Grid>
 
-          <Grid item xs={12} sm={12}>
-            <Divider></Divider>
-          </Grid>
+          {/* <Grid item>
+          <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+            <DatePicker
+              views={["year", "month"]}
+              label="Select Month and Year"
+              value={selectedDate}
+              onChange={handleDateChangep}
+              inputVariant="outlined"
+              renderInput={(props) => (
+                <TextField
+                  {...props}
+                  variant="outlined"
+                  InputProps={{ ...props.InputProps, readOnly: true }}
+                  value={
+                    selectedDate
+                      ? selectedDate.toLocaleDateString("en-US", {
+                          month: "long",
+                          year: "numeric",
+                        })
+                      : ""
+                  }
+                />
+              )}
+            />
+            </MuiPickersUtilsProvider>
+          </Grid> */}
 
           <Box component="div" mt={4} style={{ flexGrow: 1 }}>
             <Grid container spacing={1}>
