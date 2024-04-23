@@ -1092,9 +1092,18 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   className={classes.uFont}
                   value={"حاضری، رپورٹ اہل کمیشن"}
                 >
+                  حاضری، رپورٹ اہل کمیشن
+                </MenuItem>
+                <MenuItem
+                  className={classes.uFont}
+                  value={"رپورٹ اہل کمیشن، حاضری"}
+                >
                   رپورٹ اہل کمیشن
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"حاضری، عزرات"}>
+                  حاضری، عزرات
+                </MenuItem>
+                <MenuItem className={classes.uFont} value={"عزرات، حاضری"}>
                   عزرات
                 </MenuItem>
                 <MenuItem
@@ -1245,6 +1254,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"حکم بر کمیشن"}>
                   حکم بر کمیشن
+                </MenuItem>
+                <MenuItem className={classes.uFont} value={"حکم یکطرفہ"}>
+                  حکم یکطرفہ
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"حکم بر مقدمہ"}>
                   حکم بر مقدمہ

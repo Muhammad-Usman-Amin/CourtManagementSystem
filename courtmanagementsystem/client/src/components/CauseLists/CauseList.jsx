@@ -745,11 +745,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 className={classes.uFont}
                                 value={"حاضری، رپورٹ اہل کمیشن"}
                               >
+                                حاضری، رپورٹ اہل کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"رپورٹ اہل کمیشن، حاضری"}
+                              >
                                 رپورٹ اہل کمیشن
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
                                 value={"حاضری، عزرات"}
+                              >
+                                حاضری، عزرات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"عزرات، حاضری"}
                               >
                                 عزرات
                               </MenuItem>
@@ -985,6 +997,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"حکم بر کمیشن"}
                               >
                                 حکم بر کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم یکطرفہ"}
+                              >
+                                حکم یکطرفہ
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -1382,11 +1400,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 className={classes.uFont}
                                 value={"حاضری، رپورٹ اہل کمیشن"}
                               >
+                                حاضری، رپورٹ اہل کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"رپورٹ اہل کمیشن، حاضری"}
+                              >
                                 رپورٹ اہل کمیشن
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
                                 value={"حاضری، عزرات"}
+                              >
+                                حاضری، عزرات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"عزرات، حاضری"}
                               >
                                 عزرات
                               </MenuItem>
@@ -1622,6 +1652,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"حکم بر کمیشن"}
                               >
                                 حکم بر کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم یکطرفہ"}
+                              >
+                                حکم یکطرفہ
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -2018,11 +2054,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 className={classes.uFont}
                                 value={"حاضری، رپورٹ اہل کمیشن"}
                               >
+                                حاضری، رپورٹ اہل کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"رپورٹ اہل کمیشن، حاضری"}
+                              >
                                 رپورٹ اہل کمیشن
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
                                 value={"حاضری، عزرات"}
+                              >
+                                حاضری، عزرات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"عزرات، حاضری"}
                               >
                                 عزرات
                               </MenuItem>
@@ -2258,6 +2306,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"حکم بر کمیشن"}
                               >
                                 حکم بر کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم یکطرفہ"}
+                              >
+                                حکم یکطرفہ
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -2655,11 +2709,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 className={classes.uFont}
                                 value={"حاضری، رپورٹ اہل کمیشن"}
                               >
+                                حاضری، رپورٹ اہل کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"رپورٹ اہل کمیشن، حاضری"}
+                              >
                                 رپورٹ اہل کمیشن
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
                                 value={"حاضری، عزرات"}
+                              >
+                                حاضری، عزرات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"عزرات، حاضری"}
                               >
                                 عزرات
                               </MenuItem>
@@ -2895,6 +2961,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"حکم بر کمیشن"}
                               >
                                 حکم بر کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم یکطرفہ"}
+                              >
+                                حکم یکطرفہ
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -3291,11 +3363,23 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 className={classes.uFont}
                                 value={"حاضری، رپورٹ اہل کمیشن"}
                               >
+                                حاضری، رپورٹ اہل کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"رپورٹ اہل کمیشن، حاضری"}
+                              >
                                 رپورٹ اہل کمیشن
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
                                 value={"حاضری، عزرات"}
+                              >
+                                حاضری، عزرات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"عزرات، حاضری"}
                               >
                                 عزرات
                               </MenuItem>
@@ -3531,6 +3615,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"حکم بر کمیشن"}
                               >
                                 حکم بر کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"حکم یکطرفہ"}
+                              >
+                                حکم یکطرفہ
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
