@@ -5,28 +5,31 @@ import {
   MuiPickersUtilsProvider,
   // KeyboardTimePicker,
   KeyboardDatePicker,
-  DatePicker,
+  // DatePicker,
 } from "@material-ui/pickers";
 
 import {
   TextField,
+  Container,
   Button,
   // Typography,
   Paper,
   // Radio,
   // RadioGroup,
-  // FormControlLabel,
+  FormControlLabel,
   FormControl,
-  // FormLabel,
+  FormLabel,
   Select,
   MenuItem,
   InputLabel,
   Grid,
   Box,
-  // Checkbox,
+  Checkbox,
   // FormHelperText,
   Divider,
-  CircularProgress,
+  // CircularProgress,
+  Typography,
+  makeStyles,
 } from "@material-ui/core";
 // import { green } from "@material-ui/core/colors";
 // import { withStyles } from "@material-ui/core/styles";
@@ -43,6 +46,7 @@ import {
 } from "../../actions/controlCenter";
 // import ClearAllIcon from "@material-ui/icons/ClearAll";
 import SaveIcon from "@material-ui/icons/Save";
+import EditIcon from "@material-ui/icons/Edit";
 // import { addDays } from "date-fns";
 // import Input from "@material-ui/core/Input";
 
@@ -66,7 +70,24 @@ import SaveIcon from "@material-ui/icons/Save";
 //   checked: {},
 // })((props) => <Radio color="default" {...props} />);
 
-const ControlCenter = ({ currentId, setCurrentId }) => {
+const useStyles2 = makeStyles((theme) => ({
+  paper: {
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    borderRadius: theme.shape.borderRadius,
+  },
+  heading: {
+    marginBottom: theme.spacing(2),
+  },
+}));
+
+const ControlCenter = () => {
+  const classes2 = useStyles2();
+  const [editView, setEditView] = useState(false);
+  const [currentId, setCurrentId] = useState(null);
+
   const [poData, setPoData] = useState({
     presidingOfficer: "",
     causeListName: "",
@@ -74,7 +95,7 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
     judgeCategory: "",
     courtNumber: "",
     stationDistrict: "",
-    courtStatus: "",
+    courtStatus: [],
     monthlyData: [
       {
         statementMonth: Date,
@@ -91,18 +112,34 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
     ],
   });
 
-  const handleDateChange = (date) => {
-    setPoData({ ...poData, monthlyData:{statementMonth: date }});
-  };
-
   // const [selectedCaseType, setSelectedCaseType] = useState("Civil");
   // const poFile = useSelector((state) =>
   //   currentId ? state.controlCenter.find((c) => c._id === currentId) : state.controlCenter.data
   // );
   const poFile = useSelector((state) => state.controlCenter);
 
-  // const [selectedDate, setSelectedDate] = useState(null);
+  const getCurrentMonthYear = (date) => {
+    const currentDate = new Date(date);
+    const month = currentDate.toLocaleString("en-US", { month: "long" });
+    const year = currentDate.getFullYear();
+    return `${month} ${year}`;
+  };
+  const [monthlyDate, setMonthlyDate] = useState(
+    getCurrentMonthYear(new Date())
+  );
 
+  const handleDateChange = (date) => {
+    setMonthlyDate(date);
+    setPoData({
+      ...poData,
+      monthlyData: [
+        ...poData.monthlyData,
+        { statementMonth: getCurrentMonthYear(date) },
+      ],
+    });
+  };
+  console.log(poData);
+  console.log(monthlyDate);
   // const handleDateChangep = (date) => {
   //   setSelectedDate(date);
   // };
@@ -110,10 +147,12 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
   useEffect(() => {
     // console.log(caseFile);
     // console.log('useEffect called');
-    if (poFile) {
-      // console.log(selectedCaseType);
+    if (poFile.length) {
+      console.log(poFile);
       setPoData(poFile[0]);
       console.log(poData);
+    } else {
+      setEditView(true);
     }
   }, [poFile]);
 
@@ -137,16 +176,40 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
   //   );
   // }, [onPageChange]);
 
+  const [courtStatus, setCourtStatus] = useState({
+    Regular: false,
+    CPC: false,
+    MCTC: false,
+    MTMC: false,
+    MCAC: false,
+    specialCourt: false,
+    GBV: false,
+    antiRapeOrd: false,
+    familyCourt: false,
+    rentCourt: false,
+    campCourt: false,
+  });
+
+  const handleChange = (event) => {
+    const { name, checked } = event.target;
+    setCourtStatus({ ...courtStatus, [name]: checked });
+    setPoData({...poData, courtStatus})
+    console.log(courtStatus);
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (currentId) {
       dispatch(updateControlCenter(currentId, poData));
+      setCurrentId(null);
     } else {
       {
         dispatch(createControlCenter(poData));
       }
     }
+    setEditView(false);
     // clear();
   };
   // const clear = () => {
@@ -191,8 +254,86 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
   // setSameAsInstitutiondate(false);
   // };
 
-  return !poFile.length ? (
-    <CircularProgress />
+  return !editView ? (
+    <>
+      <Container>
+        {/* <Typography variant="h4" gutterBottom className={classes2.heading}>
+        Court Details
+      </Typography> */}
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={4}>
+            <Paper elevation={3} variant="outlined" className={classes2.paper}>
+              <Typography variant="h6">Presiding Officer:</Typography>
+              <Typography>{poData.presidingOfficer}</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            <Paper elevation={3} variant="outlined" className={classes2.paper}>
+              <Typography variant="h6">Cause List Name:</Typography>
+              <Typography
+                style={{
+                  textAlign: "center",
+                  fontSize: 22,
+                  fontFamily: "Jameel Noori Nastaleeq",
+                  direction: "rtl",
+                }}
+              >
+                {poData.causeListName}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper elevation={3} variant="outlined" className={classes2.paper}>
+              <Typography variant="h6">Designation:</Typography>
+              <Typography>{poData.designation}</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper elevation={3} variant="outlined" className={classes2.paper}>
+              <Typography variant="h6">Judge Category:</Typography>
+              <Typography>{poData.judgeCategory}</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper elevation={3} variant="outlined" className={classes2.paper}>
+              <Typography variant="h6">Court Number:</Typography>
+              <Typography>{poData.courtNumber}</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper elevation={3} variant="outlined" className={classes2.paper}>
+              <Typography variant="h6">Station District:</Typography>
+              <Typography>{poData.stationDistrict}</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper elevation={3} variant="outlined" className={classes2.paper}>
+              <Typography variant="h6">Court Status:</Typography>
+              <Typography>{poData.courtStatus}</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Button
+              size="large"
+              color="primary"
+              fullWidth
+              // component={Link}
+              // to="/FormCases"
+              variant="contained"
+              style={{ borderRadius: 50 }}
+              startIcon={<EditIcon />}
+              onClick={() => {
+                setCurrentId(poData._id);
+                setEditView(true);
+                // console.log(currentId);
+              }}
+            >
+              Edit
+            </Button>
+          </Grid>
+        </Grid>
+      </Container>
+    </>
   ) : (
     <Paper className={classes.paper}>
       <form
@@ -218,7 +359,7 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
               <Select
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
-                value={poData.presidingOfficer}
+                value={poData.presidingOfficer ? poData.presidingOfficer : ""}
                 onChange={(e) =>
                   setPoData({
                     ...poData,
@@ -276,7 +417,7 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={5}>
             <FormControl
               fullWidth
               variant="outlined"
@@ -319,7 +460,7 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={7}>
             <FormControl
               fullWidth
               variant="outlined"
@@ -477,6 +618,82 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
             </FormControl>
           </Grid>
 
+          <Grid item xs={12} sm={8}>
+            <FormControl
+              fullWidth
+              variant="outlined"
+              className={classes.formControl}
+            >
+              <InputLabel id="demo-simple-select-outlined-label">
+                Station / District
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={poData.stationDistrict}
+                onChange={(e) =>
+                  setPoData({
+                    ...poData,
+                    stationDistrict: e.target.value,
+                  })
+                }
+                label="Station / District"
+              >
+                <MenuItem value="Lower Dir - Balambat">
+                  Lower Dir - Balambat
+                </MenuItem>
+                <MenuItem value="Lower Dir - Timergara">
+                  Lower Dir - Timergara
+                </MenuItem>
+                <MenuItem value="Lower Dir - Chakdara">
+                  Lower Dir - Chakdara
+                </MenuItem>
+                <MenuItem value="Lower Dir - Samarbagh">
+                  Lower Dir - Samarbagh
+                </MenuItem>
+                <MenuItem value="Lower Dir - Lal Qilla">
+                  Lower Dir - Lal Qilla
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={12}>
+            <FormControl component="fieldset">
+              <legend>Court Status</legend>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={courtStatus.Regular}
+                    onChange={handleChange}
+                    name="Regular"
+                  />
+                }
+                label="Regular"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={courtStatus.CPC}
+                    onChange={handleChange}
+                    name="CPC"
+                  />
+                }
+                label="CPC"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={courtStatus.MCTC}
+                    onChange={handleChange}
+                    name="MCTC"
+                  />
+                }
+                label="MCTC"
+              />
+            </FormControl>
+          </Grid>
+
           <Grid item xs={12} sm={12}>
             <Divider></Divider>
           </Grid>
@@ -509,9 +726,7 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
                 autoOk
                 format="MMMM yyyy"
                 value={
-                  poData.monthlyData[0].statementMonth
-                    ? poData.monthlyData[0].statementMonth
-                    : new Date()
+                  monthlyDate
                   // poData.statementMonth ? poData.statementMonth : new Date()
                 }
                 onChange={handleDateChange}
@@ -551,7 +766,7 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
             </MuiPickersUtilsProvider>
           </Grid> */}
 
-          <Box component="div" mt={4} style={{ flexGrow: 1 }}>
+          <Box component="div" mt={4} style={{ width: '100%', display: 'block' }}>
             <Grid container spacing={1}>
               <Grid item xs={12} sm={12}>
                 <Button
@@ -566,19 +781,6 @@ const ControlCenter = ({ currentId, setCurrentId }) => {
                   SAVE
                 </Button>
               </Grid>
-
-              {/* <Grid item xs={12} sm={4}>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  // onClick={clear}
-                  startIcon={<ClearAllIcon />}
-                >
-                  Clear All
-                </Button>
-              </Grid> */}
             </Grid>
           </Box>
         </Grid>

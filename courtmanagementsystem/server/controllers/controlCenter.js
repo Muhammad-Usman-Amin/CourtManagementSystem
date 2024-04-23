@@ -17,9 +17,8 @@ export const getPoData = async (req, res) => {
 };
 
 export const createPoData = async (req, res) => {
-
   const { body } = req;
-  // console.log(body);
+  let monthlyDataFile = null;
   const {
     presidingOfficer,
     causeListName,
@@ -28,19 +27,31 @@ export const createPoData = async (req, res) => {
     courtNumber,
     stationDistrict,
     courtStatus, //use for Regular, CPC, FamilyCourt etc
-    monthlyData: [{
-      statementMonth,
-      totalDays,
-      totalSundays,
-      leaves,
-      otherHolidays,
-      nonJudicialWorkingDays,
-      noOfStrikesDays,
-      netJudicialWorkingDays,
-      incumbencyStatus,
-      quartelrlyBacklogClearanceTarget,
-    }]
+    monthlyData,
+    // monthlyData: [{
+    //   statementMonth,
+    //   totalDays,
+    //   totalSundays,
+    //   leaves,
+    //   otherHolidays,
+    //   nonJudicialWorkingDays,
+    //   noOfStrikesDays,
+    //   netJudicialWorkingDays,
+    //   incumbencyStatus,
+    //   quartelrlyBacklogClearanceTarget,
+    // }]
   } = body;
+
+  try {
+    const poDataFile = await poData.find();
+    monthlyDataFile = poDataFile.monthlyData.toObject();
+    console.log(monthlyDataFile);
+    
+  } catch (error) {
+    res.status(409).json({ error });
+  }
+
+  // console.log(body);
 
   const newPoData = new poData({
     presidingOfficer,
@@ -50,18 +61,20 @@ export const createPoData = async (req, res) => {
     courtNumber,
     stationDistrict,
     courtStatus, //use for Regular, CPC, FamilyCourt etc
-    monthlyData: [{
-      statementMonth,
-      totalDays,
-      totalSundays,
-      leaves,
-      otherHolidays,
-      nonJudicialWorkingDays,
-      noOfStrikesDays,
-      netJudicialWorkingDays,
-      incumbencyStatus,
-      quartelrlyBacklogClearanceTarget,
-    }],
+    monthlyData
+    // monthlyData: [
+    //   {
+    //   statementMonth,
+    //   totalDays,
+    //   totalSundays,
+    //   leaves,
+    //   otherHolidays,
+    //   nonJudicialWorkingDays,
+    //   noOfStrikesDays,
+    //   netJudicialWorkingDays,
+    //   incumbencyStatus,
+    //   quartelrlyBacklogClearanceTarget,
+    // }],
   });
 
   try {

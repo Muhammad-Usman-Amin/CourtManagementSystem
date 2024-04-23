@@ -25,10 +25,10 @@ export const createControlCenter = (caseFile) => async (dispatch) => {
     }
 };
 
-export const updateControlCenter = (id, caseFile) => async (dispatch) => {
+export const updateControlCenter = (id, poFile) => async (dispatch) => {
     try {
         // console.log(id);
-        const { data } = await api.updateCase(id, caseFile);
+        const { data } = await api.updateControlCenter(id, poFile);
 
         dispatch({ type: UPDATE, payload: data });
     } catch (error) {
