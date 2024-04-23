@@ -95,7 +95,21 @@ const ControlCenter = () => {
     judgeCategory: "",
     courtNumber: "",
     stationDistrict: "",
-    courtStatus: [],
+    courtStatus: [
+      {
+        Regular: false,
+        CPC: false,
+        MCTC: false,
+        MTMC: false,
+        MCAC: false,
+        specialCourt: false,
+        GBV: false,
+        antiRapeOrd: false,
+        familyCourt: false,
+        rentCourt: false,
+        campCourt: false,
+      },
+    ],
     monthlyData: [
       {
         statementMonth: Date,
@@ -110,6 +124,20 @@ const ControlCenter = () => {
         quartelrlyBacklogClearanceTarget: "",
       },
     ],
+  });
+
+  const [cStatus, setCourtStatus] = useState({
+    Regular: false,
+    CPC: false,
+    MCTC: false,
+    MTMC: false,
+    MCAC: false,
+    specialCourt: false,
+    GBV: false,
+    antiRapeOrd: false,
+    familyCourt: false,
+    rentCourt: false,
+    campCourt: false,
   });
 
   // const [selectedCaseType, setSelectedCaseType] = useState("Civil");
@@ -138,8 +166,8 @@ const ControlCenter = () => {
       ],
     });
   };
-  console.log(poData);
-  console.log(monthlyDate);
+  // console.log(poData);
+  // console.log(monthlyDate);
   // const handleDateChangep = (date) => {
   //   setSelectedDate(date);
   // };
@@ -150,6 +178,12 @@ const ControlCenter = () => {
     if (poFile.length) {
       console.log(poFile);
       setPoData(poFile[0]);
+
+      console.log(poData.courtStatus[0]);
+      setCourtStatus(poData.courtStatus[0]);
+
+      console.log(cStatus);
+      console.log(cStatus.Regular);
       console.log(poData);
     } else {
       setEditView(true);
@@ -176,32 +210,26 @@ const ControlCenter = () => {
   //   );
   // }, [onPageChange]);
 
-  const [courtStatus, setCourtStatus] = useState({
-    Regular: false,
-    CPC: false,
-    MCTC: false,
-    MTMC: false,
-    MCAC: false,
-    specialCourt: false,
-    GBV: false,
-    antiRapeOrd: false,
-    familyCourt: false,
-    rentCourt: false,
-    campCourt: false,
-  });
-
-  const handleChange = (event) => {
+  const handleCourtStatusChnage = (event) => {
     const { name, checked } = event.target;
-    setCourtStatus({ ...courtStatus, [name]: checked });
-    setPoData({...poData, courtStatus})
-    console.log(courtStatus);
+    // console.log(name +"-"+ checked);
+    // setCourtStatus({ ...cStatus, [name]: checked });
+    setCourtStatus(prevState => ({
+      ...prevState,
+      [name]: checked
+    }));
+    console.log(cStatus);
+    setPoData({ ...poData, courtStatus: [...poData.courtStatus, cStatus] });
+    console.log(poData.courtStatus);
+    // console.log(cStatus);
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (currentId) {
+      console.log("update dispatch: ");
+      console.log(poData);
       dispatch(updateControlCenter(currentId, poData));
       setCurrentId(null);
     } else {
@@ -309,7 +337,7 @@ const ControlCenter = () => {
           <Grid item xs={12} sm={6}>
             <Paper elevation={3} variant="outlined" className={classes2.paper}>
               <Typography variant="h6">Court Status:</Typography>
-              <Typography>{poData.courtStatus}</Typography>
+              <Typography>court status</Typography>
             </Paper>
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -664,8 +692,8 @@ const ControlCenter = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={courtStatus.Regular}
-                    onChange={handleChange}
+                    checked={cStatus?.Regular ? cStatus.Regular : false}
+                    onChange={handleCourtStatusChnage}
                     name="Regular"
                   />
                 }
@@ -674,22 +702,12 @@ const ControlCenter = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={courtStatus.CPC}
-                    onChange={handleChange}
+                    checked={cStatus?.CPC ? cStatus.CPC : false}
+                    onChange={handleCourtStatusChnage}
                     name="CPC"
                   />
                 }
                 label="CPC"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={courtStatus.MCTC}
-                    onChange={handleChange}
-                    name="MCTC"
-                  />
-                }
-                label="MCTC"
               />
             </FormControl>
           </Grid>
@@ -766,7 +784,11 @@ const ControlCenter = () => {
             </MuiPickersUtilsProvider>
           </Grid> */}
 
-          <Box component="div" mt={4} style={{ width: '100%', display: 'block' }}>
+          <Box
+            component="div"
+            mt={4}
+            style={{ width: "100%", display: "block" }}
+          >
             <Grid container spacing={1}>
               <Grid item xs={12} sm={12}>
                 <Button

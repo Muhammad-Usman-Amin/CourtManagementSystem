@@ -619,12 +619,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem className={classes.uFont} value="حکم امتناعی">
                     حکم امتناعی
                   </MenuItem>
-                  <MenuItem className={classes.uFont} value="حکم عدولی">
-                    حکم عدولی
+                  <MenuItem className={classes.uFont} value="12(2)">
+                  12(2)
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="دخلیابی">
                     دخلیابی
                   </MenuItem>
+                  <Divider/>
                   <MenuItem className={classes.uFont} value="تنسیخ نکاح">
                     تنسیخ نکاح
                   </MenuItem>
@@ -643,6 +644,10 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem className={classes.uFont} value="زن اشوئی">
                     زن اشوئی
                   </MenuItem>
+                  <MenuItem className={classes.uFont} value="حکم عدولی">
+                    حکم عدولی
+                  </MenuItem>
+                  <Divider/>
                   <MenuItem className={classes.uFont} value="درخواست">
                     درخواست
                   </MenuItem>
@@ -664,17 +669,22 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem className={classes.uFont} value="حضانت">
                     حضانت
                   </MenuItem>
+                  <Divider/>
                   <MenuItem className={classes.uFont} value="اِجراء">
                     اِجراء
-                  </MenuItem>
-                  <MenuItem className={classes.uFont} value="پرت">
-                    پرت
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="عزرداری">
                     عزرداری
                   </MenuItem>
+                  <MenuItem className={classes.uFont} value="پرت">
+                    پرت
+                  </MenuItem>
+                  <Divider/>
                   <MenuItem className={classes.uFont} value="استغاثہ">
                     استغاثہ
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="فوجداری">
+                    فوجداری
                   </MenuItem>
                 </Select>
               </FormControl>
