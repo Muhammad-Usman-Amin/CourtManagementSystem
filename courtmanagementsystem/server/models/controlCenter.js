@@ -7,7 +7,7 @@ const poSchema = new mongoose.Schema({
   judgeCategory: String,
   courtNumber: String,
   stationDistrict: String,
-  courtStatus: [{
+  courtStatus: {
     Regular: Boolean,
     CPC: Boolean,
     MCTC: Boolean,
@@ -19,7 +19,7 @@ const poSchema = new mongoose.Schema({
     familyCourt: Boolean,
     rentCourt: Boolean,
     campCourt: Boolean,
-  }],  //use for Regular, CPC, FamilyCourt etc
+  },  //use for Regular, CPC, FamilyCourt etc
   monthlyData: [{
     statementMonth: Date,
     totalDays: String,

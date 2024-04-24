@@ -113,6 +113,8 @@ const PrintCauseList = (props) => {
 
   const dispatch = useDispatch();
   const data = useSelector((state) => state.causeLists);
+  const controlPanel = useSelector((state) => state.controlCenter);
+
 
   let index = 0;
   const [serialNo, setSerialNo] = useState([]);
@@ -212,8 +214,9 @@ const PrintCauseList = (props) => {
                     }}
                     className={classes.tableHeaderCell}
                   >
-                    بعدالت جناب زیب النساءعباسی سِول جج /جج فیملی کورٹ/علاقہ
-                    قاضی-V دیر پائین بمقام تیمرگرہ
+                  {controlPanel[0].causeListName}
+                    {/* بعدالت جناب زیب النساءعباسی سِول جج /جج فیملی کورٹ/علاقہ
+                    قاضی-V دیر پائین بمقام تیمرگرہ */}
                   </TableCell>
                 </TableRow>
                 <TableRow>

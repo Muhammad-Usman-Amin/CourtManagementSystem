@@ -50,6 +50,10 @@ const App = () => {
     dispatch(getControlCenter());
   }, [currentId, dispatch]);
 
+  // useEffect(() => {
+  //   dispatch(getControlCenter());
+  // },[]);
+
   const [themeMode, setThemeMode] = useState("Light"); // 'day' or 'night'
   const toggleThemeMode = () => {
     setThemeMode((prevMode) => (prevMode === "Light" ? "Dark" : "Light"));

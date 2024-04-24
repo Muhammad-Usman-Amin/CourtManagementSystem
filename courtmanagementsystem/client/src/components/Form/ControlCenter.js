@@ -84,6 +84,8 @@ const useStyles2 = makeStyles((theme) => ({
 }));
 
 const ControlCenter = () => {
+  const dispatch = useDispatch();
+  const poFile = useSelector((state) => state.controlCenter);
   const classes2 = useStyles2();
   const [editView, setEditView] = useState(false);
   const [currentId, setCurrentId] = useState(null);
@@ -95,21 +97,19 @@ const ControlCenter = () => {
     judgeCategory: "",
     courtNumber: "",
     stationDistrict: "",
-    courtStatus: [
-      {
-        Regular: false,
-        CPC: false,
-        MCTC: false,
-        MTMC: false,
-        MCAC: false,
-        specialCourt: false,
-        GBV: false,
-        antiRapeOrd: false,
-        familyCourt: false,
-        rentCourt: false,
-        campCourt: false,
-      },
-    ],
+    courtStatus: {
+      Regular: false,
+      CPC: false,
+      MCTC: false,
+      MTMC: false,
+      MCAC: false,
+      specialCourt: false,
+      GBV: false,
+      antiRapeOrd: false,
+      familyCourt: false,
+      rentCourt: false,
+      campCourt: false,
+    },
     monthlyData: [
       {
         statementMonth: Date,
@@ -144,7 +144,6 @@ const ControlCenter = () => {
   // const poFile = useSelector((state) =>
   //   currentId ? state.controlCenter.find((c) => c._id === currentId) : state.controlCenter.data
   // );
-  const poFile = useSelector((state) => state.controlCenter);
 
   const getCurrentMonthYear = (date) => {
     const currentDate = new Date(date);
@@ -176,15 +175,16 @@ const ControlCenter = () => {
     // console.log(caseFile);
     // console.log('useEffect called');
     if (poFile.length) {
-      console.log(poFile);
+      // console.log(poFile);
       setPoData(poFile[0]);
+      setCourtStatus(poFile[0].courtStatus);
 
-      console.log(poData.courtStatus[0]);
-      setCourtStatus(poData.courtStatus[0]);
+      // console.log(poData.courtStatus);
+      // setCourtStatus(poData.courtStatus);
 
-      console.log(cStatus);
-      console.log(cStatus.Regular);
-      console.log(poData);
+      // console.log(cStatus);
+      // console.log(cStatus.Regular);
+      // console.log(poData);
     } else {
       setEditView(true);
     }
@@ -192,7 +192,6 @@ const ControlCenter = () => {
 
   const classes = useStyles();
   // const classes2 = useStyles2();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getControlCenter());
@@ -214,22 +213,27 @@ const ControlCenter = () => {
     const { name, checked } = event.target;
     // console.log(name +"-"+ checked);
     // setCourtStatus({ ...cStatus, [name]: checked });
-    setCourtStatus(prevState => ({
+    setCourtStatus((prevState) => ({
       ...prevState,
-      [name]: checked
+      [name]: checked,
     }));
-    console.log(cStatus);
-    setPoData({ ...poData, courtStatus: [...poData.courtStatus, cStatus] });
-    console.log(poData.courtStatus);
+    // console.log(cStatus);
+    // setPoData({ ...poData, courtStatus: cStatus });
     // console.log(cStatus);
   };
+  useEffect(() => {
+    // This block of code will run whenever cStatus changes
+    // Copy the updated cStatus to poData.courtStatus
+    setPoData({ ...poData, courtStatus: cStatus });
+    // console.log(poData.courtStatus);
+  }, [cStatus]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (currentId) {
-      console.log("update dispatch: ");
-      console.log(poData);
+      // console.log("update dispatch: ");
+      // console.log(poData);
       dispatch(updateControlCenter(currentId, poData));
       setCurrentId(null);
     } else {
@@ -334,10 +338,140 @@ const ControlCenter = () => {
               <Typography>{poData.stationDistrict}</Typography>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
             <Paper elevation={3} variant="outlined" className={classes2.paper}>
               <Typography variant="h6">Court Status:</Typography>
-              <Typography>court status</Typography>
+              <FormControl component="fieldset">
+                <Grid container>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        checked={cStatus?.Regular ? cStatus.Regular : false}
+                        onChange={handleCourtStatusChnage}
+                        name="Regular"
+                      />
+                    }
+                    label="Regular"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        checked={cStatus?.CPC ? cStatus.CPC : false}
+                        onChange={handleCourtStatusChnage}
+                        name="CPC"
+                      />
+                    }
+                    label="CPC"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        checked={cStatus?.MCTC ? cStatus.MCTC : false}
+                        onChange={handleCourtStatusChnage}
+                        name="MCTC"
+                      />
+                    }
+                    label="MCTC"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        checked={cStatus?.MTMC ? cStatus.MTMC : false}
+                        onChange={handleCourtStatusChnage}
+                        name="MTMC"
+                      />
+                    }
+                    label="MTMC"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        checked={cStatus?.MCAC ? cStatus.MCAC : false}
+                        onChange={handleCourtStatusChnage}
+                        name="MCAC"
+                      />
+                    }
+                    label="MCAC"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        checked={
+                          cStatus?.specialCourt ? cStatus.specialCourt : false
+                        }
+                        onChange={handleCourtStatusChnage}
+                        name="specialCourt"
+                      />
+                    }
+                    label="Special Court"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        checked={cStatus?.GBV ? cStatus.GBV : false}
+                        onChange={handleCourtStatusChnage}
+                        name="GBV"
+                      />
+                    }
+                    label="GBV"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        checked={
+                          cStatus?.antiRapeOrd ? cStatus.antiRapeOrd : false
+                        }
+                        onChange={handleCourtStatusChnage}
+                        name="antiRapeOrd"
+                      />
+                    }
+                    label="Anti Rape Ord"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        checked={
+                          cStatus?.familyCourt ? cStatus.familyCourt : false
+                        }
+                        onChange={handleCourtStatusChnage}
+                        name="familyCourt"
+                      />
+                    }
+                    label="Family Court"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        checked={cStatus?.rentCourt ? cStatus.rentCourt : false}
+                        onChange={handleCourtStatusChnage}
+                        name="rentCourt"
+                      />
+                    }
+                    label="Rent Court"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled
+                        checked={cStatus?.campCourt ? cStatus.campCourt : false}
+                        onChange={handleCourtStatusChnage}
+                        name="campCourt"
+                      />
+                    }
+                    label="Camp Court"
+                  />
+                </Grid>
+              </FormControl>
             </Paper>
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -689,26 +823,124 @@ const ControlCenter = () => {
           <Grid item xs={12} sm={12}>
             <FormControl component="fieldset">
               <legend>Court Status</legend>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={cStatus?.Regular ? cStatus.Regular : false}
-                    onChange={handleCourtStatusChnage}
-                    name="Regular"
-                  />
-                }
-                label="Regular"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={cStatus?.CPC ? cStatus.CPC : false}
-                    onChange={handleCourtStatusChnage}
-                    name="CPC"
-                  />
-                }
-                label="CPC"
-              />
+              <Grid container>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={cStatus?.Regular ? cStatus.Regular : false}
+                      onChange={handleCourtStatusChnage}
+                      name="Regular"
+                    />
+                  }
+                  label="Regular"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={cStatus?.CPC ? cStatus.CPC : false}
+                      onChange={handleCourtStatusChnage}
+                      name="CPC"
+                    />
+                  }
+                  label="CPC"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={cStatus?.MCTC ? cStatus.MCTC : false}
+                      onChange={handleCourtStatusChnage}
+                      name="MCTC"
+                    />
+                  }
+                  label="MCTC"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={cStatus?.MTMC ? cStatus.MTMC : false}
+                      onChange={handleCourtStatusChnage}
+                      name="MTMC"
+                    />
+                  }
+                  label="MTMC"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={cStatus?.MCAC ? cStatus.MCAC : false}
+                      onChange={handleCourtStatusChnage}
+                      name="MCAC"
+                    />
+                  }
+                  label="MCAC"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={
+                        cStatus?.specialCourt ? cStatus.specialCourt : false
+                      }
+                      onChange={handleCourtStatusChnage}
+                      name="specialCourt"
+                    />
+                  }
+                  label="Special Court"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={cStatus?.GBV ? cStatus.GBV : false}
+                      onChange={handleCourtStatusChnage}
+                      name="GBV"
+                    />
+                  }
+                  label="GBV"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={
+                        cStatus?.antiRapeOrd ? cStatus.antiRapeOrd : false
+                      }
+                      onChange={handleCourtStatusChnage}
+                      name="antiRapeOrd"
+                    />
+                  }
+                  label="Anti Rape Ord"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={
+                        cStatus?.familyCourt ? cStatus.familyCourt : false
+                      }
+                      onChange={handleCourtStatusChnage}
+                      name="familyCourt"
+                    />
+                  }
+                  label="Family Court"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={cStatus?.rentCourt ? cStatus.rentCourt : false}
+                      onChange={handleCourtStatusChnage}
+                      name="rentCourt"
+                    />
+                  }
+                  label="Rent Court"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={cStatus?.campCourt ? cStatus.campCourt : false}
+                      onChange={handleCourtStatusChnage}
+                      name="campCourt"
+                    />
+                  }
+                  label="Camp Court"
+                />
+              </Grid>
             </FormControl>
           </Grid>
 

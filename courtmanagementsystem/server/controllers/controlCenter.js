@@ -88,8 +88,7 @@ export const createPoData = async (req, res) => {
 export const updatePoData = async (req, res) => {
   const { id } = req.params;
   const poDataFile = req.body; // for PO data updating usage
-  console.log("podata body: "+poDataFile);
-  const cStatus = req.body.cStatus;
+  // console.log("podata body: "+poDataFile);
   // console.log(caseFile);
 
   if (!mongoose.Types.ObjectId.isValid(id))
@@ -97,7 +96,7 @@ export const updatePoData = async (req, res) => {
 
   const updatedPoDataFile = await poData.findByIdAndUpdate(
     id,
-    { ...poDataFile, courtStatus: [cStatus], id },
+    { ...poDataFile, id },
     { new: true }
   );
   res.json(updatedPoDataFile);
