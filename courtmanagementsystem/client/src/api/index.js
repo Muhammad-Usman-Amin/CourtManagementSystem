@@ -31,7 +31,7 @@ export const updatePost = (id, updatedPost) => axios.patch(`${url}/${id}`, updat
 export const deletePost = (id) => axios.delete(`${url}/${id}`);
 export const likePost = (id) => axios.patch(`${url}/${id}/likePost`);
 
-export const fetchCases = () => axios.get(urlCases);
+export const fetchCases = (params) => axios.get(urlCases, {params: params});
 export const createCase = (newCase) => axios.post(urlCases, newCase);
 export const updateCase = (id, updatedCase) => axios.patch(`${urlCases}/${id}`, updatedCase);
 export const deleteCase = (id) => axios.delete(`${urlCases}/${id}`);

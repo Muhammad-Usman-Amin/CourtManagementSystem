@@ -5,26 +5,33 @@ import express from "express";
 const router = express.Router();
 
 export const getCases = async (req, res) => {
-  // const query = req.query;
+  const query = req.query;
 
   try {
-    const cases = await Case.find();
+    // console.log(query);
+    let cases;
+    if(query.reqQuery === "All"){
+      cases = await Case.find();
+    }
+
+    if(query.reqQuery === "Pending"){
+        cases = await Case.find({
+          $and: [
+              { disposed: { $ne: true } }, //$ne means not equal to
+              { "Disposal OR Transfer Out Flag": { $nin: ["Disposed", "Transfer Out"] } } //$nin means not in array
+          ]
+      })
+    }
     
-  //   const cases = await Case.find({ 
-  //     $and: [
-  //         { disposed: { $ne: true } }, //$ne means not equal to
-  //         { "Disposal OR Transfer Out Flag": { $nin: ["Disposed", "Transfer Out"] } } //$nin means not in array
-  //     ]
-  // })
-  
-  // if(req.value === "Disposal"){
-  //   db.cases.find({
-  //     $or: [
-  //         { disposed: true },
-  //         { "Disposal OR Transfer Out Flag": { $in: ["Disposed", "Transfer Out"] } }
-  //     ]
-  // })
-  // }
+    if(query.reqQuery === "Disposed"){
+        cases = await Case.find({
+          $or: [
+              { disposed: true },
+              { "Disposal OR Transfer Out Flag": { $in: ["Disposed", "Transfer Out"] } }
+          ]
+      })
+      // }
+    }
 
     res.status(200).json(cases);
   } catch (error) {
@@ -37,7 +44,7 @@ export const createCase = async (req, res) => {
   // const newCase = new Case({ title, caseNumber, caseType, caseSubType, FIR, FIRdate, UnderSection, policeStation, institutionDate, disposalDate, isTransferedIn });
 
   const { body } = req;
-  console.log(body);
+  // console.log(body);
   const {
     ["Case Title"]: caseTitle,
     urduTitle: urduTitle,
@@ -62,7 +69,7 @@ export const createCase = async (req, res) => {
     nature,
     AcquittalORConviction,
   } = body;
-  console.log(caseTitle);
+  // console.log(caseTitle);
 
   const newCase = new Case({
     ["Case Title"]: caseTitle,
@@ -123,7 +130,9 @@ export const updateCase = async (req, res) => {
     return res.status(404).send("No post with that ID");
 
   const { orderDate, orderNumber, nextDate, actionAbstract } = req.body; //for causeList usage
-
+  // console.log(new Date().toISOString().split("T")[0]);
+  //console.log(orderDate); // prints 2024-04-28T04:20:00.000Z
+  //console.log(new Date(orderDate).toISOString().split("T")[0]); // prints 2024-04-28
   const theCase = await Case.findById(id);
   let updatedCase = null;
 
@@ -141,7 +150,7 @@ export const updateCase = async (req, res) => {
   // console.log(lastCauseListEntry);
 
   if (caseFile["Case Title"] || caseFile["Case Title"] === "") {
-    console.log("Title if executed");
+    // console.log("Title if executed");
     if (
       theCase.causeListEntries.length > 0 &&
       new Date(orderDate).toDateString() ===

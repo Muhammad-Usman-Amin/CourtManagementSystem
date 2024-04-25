@@ -2,13 +2,14 @@ import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionType
 import * as api from '../api';
 
 // Actions creators
-export const getCases = () => async (dispatch) => {
+export const getCases = (params) => async (dispatch) => {
     // console.log('getCases Called');
-    let datam = null;
+    // let datam = null;
+    // console.log(getQuery);
     try {
-        const { data } = await api.fetchCases();
+        const { data } = await api.fetchCases(params);
         dispatch({ type: FETCH_ALL, payload: data });
-        datam = data;
+        // datam = data;
     } catch (error) {
         console.log(error);
     }

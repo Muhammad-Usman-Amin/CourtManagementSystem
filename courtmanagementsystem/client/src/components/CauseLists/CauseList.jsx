@@ -149,7 +149,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
       // setSerialNo((oldArray) => [...oldArray, i]);
       setSerialNo((prevArray) => [...prevArray, i]);
     }
-    console.log(serialNo);
+    // console.log(serialNo);
   }, [cases]);
   useEffect(() => {
     for (let i = 1; i <= cases.length; i++) {
@@ -157,7 +157,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
       // setSerialNo((oldArray) => [...oldArray, i]);
       setSerialNo((prevArray) => [...prevArray, i]);
     }
-    console.log(serialNo);
+    // console.log(serialNo);
   }, [dateCauseList]);
 
   function getSecondToLastElementCategory(array) {

@@ -134,8 +134,8 @@ const drawerWidth = 240;
 
 export default function Dashboard({ onPageChange }) {
   const classes = useStyles();
-  const employeeData = useSelector((state) => state.employeeData);
-  const cases = useSelector((state) => state.cases);
+  // const employeeData = useSelector((state) => state.employeeData);
+  // const cases = useSelector((state) => state.cases);
   useEffect(() => {
     onPageChange("Dashboard");
   }, [onPageChange]);

@@ -46,7 +46,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getEmployeeData());
-    dispatch(getCases());
+    dispatch(getCases({reqQuery:"All"}));
     dispatch(getControlCenter());
   }, [currentId, dispatch]);
 

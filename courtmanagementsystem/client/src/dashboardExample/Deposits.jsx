@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect } from "react";
 import MuiLink from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -6,6 +6,8 @@ import Title from "./Title";
 import { useSelector } from "react-redux";
 import { format} from "date-fns";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getCases } from "../actions/cases";
 
 // function preventDefault(event) {
 //   event.preventDefault();
@@ -17,7 +19,14 @@ const useStyles = makeStyles({
   },
 });
 
+
+
 export default function Deposits() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCases({reqQuery:"Pending"}));
+  }, [dispatch]);
+
   const cases = useSelector((state) => state.cases);
   const classes = useStyles();
   return (

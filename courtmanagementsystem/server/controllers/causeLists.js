@@ -7,10 +7,11 @@ const router = express.Router();
 
 export const getCauseList = async (req, res) => {
   const { dateCauseList } = req.query;
-  console.log(dateCauseList);
+  // console.log(dateCauseList);
   //   console.log(new Date(dateCauseList).toDateString());
   //   const date = new Date(dateCauseList).toDateString();
   const selectedDate = new Date(dateCauseList);
+  // console.log(new Date().toISOString().split("T")[0]); //prints 2024-04-25
   //   const today = new Date(dateCauseList);
   //   today.setUTCHours(0, 0, 0, 0);
   //   console.log(selectedDate);
@@ -58,6 +59,9 @@ export const getCauseList = async (req, res) => {
           ],
         },
       },
+      // { //currently not working (will figure out later)
+      //   causeListDates: {$in: [selectedDate.toISOString()]}, // Check if the date exists in the causeListDates array
+      // },
     ],
   };
 
