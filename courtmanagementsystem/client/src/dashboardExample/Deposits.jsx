@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { format} from "date-fns";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getCases } from "../actions/cases";
+import { getPendingCases } from "../actions/cases";
 
 // function preventDefault(event) {
 //   event.preventDefault();
@@ -23,17 +23,18 @@ const useStyles = makeStyles({
 
 export default function Deposits() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getCases({reqQuery:"Pending"}));
-  }, [dispatch]);
 
-  const cases = useSelector((state) => state.cases);
+  useEffect(() => {
+    dispatch(getPendingCases({reqQuery:"Pending"}));
+  }, []);
+  
+  const pendingCases = useSelector((state) => state.pendingCases);
   const classes = useStyles();
   return (
     <React.Fragment>
       <Title>Total Pending Cases</Title>
       <Typography component="p" variant="h2">
-        {cases?.length}
+        {pendingCases?.length}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         as of {format(Date.now(), "dd MMMM, yyy")}

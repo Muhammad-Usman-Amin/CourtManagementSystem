@@ -26,50 +26,90 @@ export const getCauseList = async (req, res) => {
 
   // const today = new Date(); // Assuming today's date
 
-  const query = {
-    $or: [
-      //   { orderDate: { $eq: selectedDate } }, // this won't work because string are not same due to time
-      //   { nextDate: { $eq: selectedDate } },
+  // const query = {
+  //   $or: [
+  //     //   { orderDate: { $eq: selectedDate } }, // this won't work because string are not same due to time
+  //     //   { nextDate: { $eq: selectedDate } },
+  //     {
+  //       $expr: {
+  //         $eq: [
+  //           {
+  //             $dateToString: {
+  //               format: "%Y-%m-%d",
+  //               date: "$orderDate",
+  //               timezone: "+05:00",
+  //             },
+  //           },
+  //           selectedDate.toISOString().split("T")[0],
+  //         ],
+  //       },
+  //     },
+  //     {
+  //       $expr: {
+  //         $eq: [
+  //           {
+  //             $dateToString: {
+  //               format: "%Y-%m-%d",
+  //               date: "$nextDate",
+  //               timezone: "+05:00",
+  //             },
+  //           },
+  //           selectedDate.toISOString().split("T")[0],
+  //         ],
+  //       },
+  //     },
+  //     // { //currently not working (will figure out later)
+  //     //   causeListDates: {$in: [selectedDate.toISOString()]}, // Check if the date exists in the causeListDates array
+  //     // },
+  //   ],
+  // };
 
+  const query = {
+    $and: [
       {
-        $expr: {
-          $eq: [
-            {
-              $dateToString: {
-                format: "%Y-%m-%d",
-                date: "$orderDate",
-                timezone: "+05:00",
-              },
-            },
-            selectedDate.toISOString().split("T")[0],
-          ],
-        },
+        disposed: { $ne: true }, // Exclude cases where disposed is true
+        transferedOut: {$ne: true},
       },
       {
-        $expr: {
-          $eq: [
-            {
-              $dateToString: {
-                format: "%Y-%m-%d",
-                date: "$nextDate",
-                timezone: "+05:00",
-              },
+        $or: [
+          {
+            $expr: {
+              $eq: [
+                {
+                  $dateToString: {
+                    format: "%Y-%m-%d",
+                    date: "$orderDate",
+                    timezone: "+05:00",
+                  },
+                },
+                selectedDate.toISOString().split("T")[0],
+              ],
             },
-            selectedDate.toISOString().split("T")[0],
-          ],
-        },
-      },
-      // { //currently not working (will figure out later)
-      //   causeListDates: {$in: [selectedDate.toISOString()]}, // Check if the date exists in the causeListDates array
-      // },
-    ],
+          },
+          {
+            $expr: {
+              $eq: [
+                {
+                  $dateToString: {
+                    format: "%Y-%m-%d",
+                    date: "$nextDate",
+                    timezone: "+05:00",
+                  },
+                },
+                selectedDate.toISOString().split("T")[0],
+              ],
+            },
+          },
+        ],
+      }
+    ]
   };
 
   // Assuming you have a MongoDB collection named "records"
   // const result = await db.collection('records').find(query).toArray();
   try {
     const result = await Case.find(query);
-    // console.log("Fetched data:", result);
+    // console.log("Fetched data length:", result.length);
     res.status(201).json(result);
   } catch (error) {
     console.log("Fetched data error:", error);

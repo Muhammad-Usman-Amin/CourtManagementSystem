@@ -6,7 +6,7 @@ import {
 import { useDispatch } from "react-redux";
 
 // import { getPosts } from './actions/posts';
-import { getCases } from "./actions/cases";
+import { getCases, getPendingCases } from "./actions/cases";
 import { getEmployeeData } from "./actions/employeeData.js";
 // import courtLogo from "./images/courtLogo.png";
 // import Posts from './components/Posts/Posts';
@@ -47,6 +47,7 @@ const App = () => {
   useEffect(() => {
     dispatch(getEmployeeData());
     dispatch(getCases({reqQuery:"All"}));
+    dispatch(getPendingCases({reqQuery: "Pending"}));
     dispatch(getControlCenter());
   }, [currentId, dispatch]);
 
