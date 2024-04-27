@@ -59,6 +59,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   // const classes2 = useStyles2();
   // const cases = useSelector((state) => state.cases);
   const cases = useSelector((state) => state.causeLists);
+
   // console.log(cases);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -198,6 +199,56 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     // console.log("-1 exec");
     return array[array.length - 1]; // or any other appropriate value or action
   }
+
+  const sortedCases = cases.slice().sort((a, b) => {
+    const sortingKeywords = [
+      "حاضری",
+      "حاضری، ریکارڈ",
+      "مختارنامہ، حاضری",
+      "تقرری وکیل، حاضری",
+      "حاضری، وکالت نامہ، حاضری",
+      "حاضری، جواب دعویٰ، حاضری",
+      "جواب دعویٰ، حاضری",
+    ]; // Add more keywords here as needed
+    // Loop through sortingKeywords
+    for (const keyword of sortingKeywords) {
+      // const hasKeywordA = a.abstract?.toLowerCase().startsWith(keyword);
+      // const hasKeywordB = b.abstract?.toLowerCase().startsWith(keyword);
+      const hasKeywordA = getSecondToLastElement(a.causeListEntries).actionAbstract?.startsWith(keyword);
+     const hasKeywordB = getSecondToLastElement(b.causeListEntries).actionAbstract?.startsWith(keyword);
+
+      // Prioritize cases with the current keyword at the beginning
+      if (hasKeywordA && !hasKeywordB) return -1; // Case A with keyword comes before Case B without
+      if (!hasKeywordA && hasKeywordB) return 1; // Case B with keyword comes after Case A without
+    }
+
+    // If none of the sorting keywords are found, sort by any other criteria (optional)
+    // return a.someOtherProperty.localeCompare(b.someOtherProperty);
+
+    return 0; // Cases are considered equal based on keywords
+  });
+
+  // const sortedCases = cases.slice().sort((a, b) => {
+  //   // Check if "attendance" exists in abstract (case-insensitive)
+
+  //   // {caseFile.causeListEntries &&
+  //   //   getSecondToLastElement(caseFile.causeListEntries)
+  //   //     .actionAbstract}
+
+  //   // const hasAttendanceA = a.abstract?.toLowerCase().includes('attendance');
+  //   // const hasAttendanceB = b.abstract?.toLowerCase().includes('attendance'); .includes('حاضری')
+  //   const hasAttendanceA = getSecondToLastElement(a.causeListEntries).actionAbstract?.startsWith('حاضری');
+  //   const hasAttendanceB = getSecondToLastElement(b.causeListEntries).actionAbstract?.startsWith('حاضری');
+
+  //   // Prioritize cases with "attendance"
+  //   if (hasAttendanceA) return -1; // Case A with "attendance" comes before anything else
+  //   if (hasAttendanceB) return 1; // Case B with "attendance" comes after cases without
+
+  //   // If neither has "attendance", sort by any other criteria (optional)
+  //   // return a.someOtherProperty.localeCompare(b.someOtherProperty);
+
+  //   return 0; // Cases are considered equal based on keywords
+  // });
 
   return (
     <>
@@ -386,7 +437,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </TableCell>
                 </TableRow>
 
-                {cases.map((caseFile) => (
+                {sortedCases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
                     getSecondToLastElementCategory(

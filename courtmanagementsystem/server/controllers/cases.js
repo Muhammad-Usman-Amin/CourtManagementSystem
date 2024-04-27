@@ -11,7 +11,7 @@ export const getCases = async (req, res) => {
     // console.log(query);
     let cases;
     if(query.reqQuery === "All"){
-      cases = await Case.find();
+      cases = await Case.find().sort({["Date of Institution "]: 1});
     }
 
     if(query.reqQuery === "Pending"){
@@ -20,7 +20,7 @@ export const getCases = async (req, res) => {
               { disposed: { $ne: true } }, //$ne means not equal to
               { "Disposal OR Transfer Out Flag": { $nin: ["Disposed", "Transfer Out"] } } //$nin means not in array
           ]
-      })
+      }).sort({["Date of Institution "]: 1})
     }
     
     if(query.reqQuery === "Disposed"){
@@ -29,7 +29,7 @@ export const getCases = async (req, res) => {
               { disposed: true },
               { "Disposal OR Transfer Out Flag": { $in: ["Disposed", "Transfer Out"] } }
           ]
-      })
+      }).sort({["Date of Institution "]: 1})
       // }
     }
 

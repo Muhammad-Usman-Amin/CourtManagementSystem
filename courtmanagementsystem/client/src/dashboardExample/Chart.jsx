@@ -13,9 +13,9 @@ import Title from "./Title";
 import { useSelector } from "react-redux";
 
 // Generate Sales Data
-function createData(date, cases) {
-  return { date, cases };
-}
+// function createData(date, cases) {
+//   return { date, cases };
+// }
 
 // Example data
 // const casesData = [
@@ -118,7 +118,10 @@ export default function Chart() {
               Date
             </Label>
           </XAxis>
-          <YAxis stroke={theme.palette.text.secondary}>
+          <YAxis
+            stroke={theme.palette.text.secondary}
+            // tickFormatter={(value) => Math.ceil(value)} // Function to remove decimals
+          >
             <Label
               angle={270}
               position="left"

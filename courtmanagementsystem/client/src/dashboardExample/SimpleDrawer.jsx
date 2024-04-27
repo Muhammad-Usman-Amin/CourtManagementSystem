@@ -35,6 +35,20 @@ import Fade from "@material-ui/core/Fade";
 import ControlCenter from "../components/Form/ControlCenter";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { colors } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
+
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    // right: -3,
+    // top: 13,
+    // border: `2px solid ${theme.palette.background.paper}`,
+    // padding: "0 4px",
+    fontSize: "8px",
+    textOverflow: 'ellipsis',
+    whiteSpace: "nowrap"
+  },
+}))(Badge);
 
 export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
   const classes = useStyles();
@@ -55,7 +69,10 @@ export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const controlPanel = useSelector((state) => state.controlCenter);
+  // console.log(controlPanel);
 
   return (
     <div className={classes.root}>
@@ -88,9 +105,25 @@ export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
 
           <Tooltip title="Control Center">
             <IconButton color="inherit" onClick={handleOpenModal}>
-              <Badge badgeContent={"CJV"} color="secondary">
+              {/* <Badge
+                // sx={{
+                //   "& .MuiBadge-badge": { fontSize: "1px" }, // not working, will figure out later  
+                // }}
+                badgeContent={
+                  controlPanel.length && controlPanel[0].courtNumber
+                }
+                color="secondary"
+              >
                 <EventSeatIcon />
-              </Badge>
+              </Badge> */}
+              <StyledBadge
+                badgeContent={
+                  controlPanel.length && controlPanel[0].courtNumber
+                }
+                color="secondary"
+              >
+                <EventSeatIcon />
+              </StyledBadge>
             </IconButton>
           </Tooltip>
           <Tooltip title="Toggle Light/Dark theme">
