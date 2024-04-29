@@ -66,7 +66,8 @@ export default function Chart() {
   const theme = useTheme();
 
   const cases = useSelector((state) => state.cases);
-  let lastEntries = cases.slice(-50);
+  let lastEntries = cases.slice(-192);
+  // let lastEntries = cases;
   lastEntries = lastEntries.sort(
     (a, b) =>
       new Date(a["Date of Institution "]) - new Date(b["Date of Institution "])

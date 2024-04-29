@@ -25,6 +25,7 @@ import PrintDataTable from "./components/Form/PrintDataTable.jsx";
 import CourtList from "./screens/CourtsScreen";
 import CourtPage from "./screens/CourtPage";
 import PrintCauseList from "./components/CauseLists/PrintCauseList";
+import PrintPendency from "./components/CauseLists/PrintPendency.jsx";
 
 import { BrowserRouter as Router } from "react-router-dom/cjs/react-router-dom.min";
 import { Route, Switch } from "react-router-dom/cjs/react-router-dom";
@@ -138,6 +139,7 @@ const App = () => {
                 <Route path="/court/:courtId" component={CourtPage} />
                 <Route path="/PrintDataTable" component={PrintDataTable} />
                 <Route path="/PrintCauseList" component={PrintCauseList} />
+                <Route path="/PrintPendency" component={PrintPendency} />
 
                 <Route path="*">
                   <Error404Screen />

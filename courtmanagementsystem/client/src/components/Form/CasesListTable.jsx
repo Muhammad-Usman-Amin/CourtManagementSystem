@@ -7,7 +7,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { Button, CircularProgress } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
@@ -28,6 +27,9 @@ import {
   AppBar,
   Tab,
   Tabs,
+  Button,
+  CircularProgress,
+  Grid,
 } from "@material-ui/core";
 import TabPanel from "./TabPanel";
 
@@ -61,33 +63,33 @@ export default function CasesListTable({
   onPageChange,
 }) {
   const tableRef = React.useRef();
-  
+
   // const handlePrint = useReactToPrint({
-    //   content: () => tableRef.current,
-    // });
-    
-    const dispatch = useDispatch();
-    // const queryData = useSelector((state) => state.queryData);
-    const classes = useStyles();
-    useEffect(() => {
-      dispatch(getCases({reqQuery:"All"}));
-    }, [dispatch]);
+  //   content: () => tableRef.current,
+  // });
 
-    useEffect(() => {
-      setCurrentId(null);
-      onPageChange("Cases List");
-    }, [onPageChange, setCurrentId]);
-    
-    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-    const [selectedRow, setSelectedRow] = useState(null);
+  const dispatch = useDispatch();
+  // const queryData = useSelector((state) => state.queryData);
+  const classes = useStyles();
+  useEffect(() => {
+    dispatch(getCases({ reqQuery: "All" }));
+  }, [dispatch]);
 
-    const [selectedTab, setSelectedTab] = useState(0);
-    
-    const handleChange = (event, newValue) => {
-      setSelectedTab(newValue);
-    };
-    
-    const handleDelete = (id) => {
+  useEffect(() => {
+    setCurrentId(null);
+    onPageChange("Cases List");
+  }, [onPageChange, setCurrentId]);
+
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
+
+  const handleDelete = (id) => {
     setSelectedRow(id);
     setOpenDeleteDialog(true);
   };
@@ -98,17 +100,41 @@ export default function CasesListTable({
     dispatch(deleteCase(selectedRow));
     setOpenDeleteDialog(false);
   };
-  
+
   const handleCancelDelete = () => {
     setOpenDeleteDialog(false);
   };
   const cases = useSelector((state) => state.cases);
   const pendingCases = useSelector((state) => state.pendingCases);
-  
+
   return !cases.length ? (
     <CircularProgress />
   ) : (
     <>
+      {selectedTab === 1 && (
+        <Grid item container justify="space-between" xs={12} sm={3}>
+          {/* <Divider orientation="vertical" flexItem /> */}
+          <Button
+            variant="contained"
+            size="large"
+            // startIcon={<EditIcon />}
+            color="primary"
+            style={{ borderRadius: 5,  marginBottom: 10 }}
+            component={Link}
+            to={{
+              pathname: "/PrintPendency",
+              // state: {
+              //   nextDate: nextDate,
+              //   orderDate: orderDate,
+              //   dateCauseList: dateCauseList,
+              // },
+            }}
+          >
+            Print Pendency
+          </Button>
+          {/* <Divider orientation="vertical" flexItem /> */}
+        </Grid>
+      )}
       <div>
         <AppBar position="static">
           <Tabs
@@ -281,7 +307,7 @@ export default function CasesListTable({
             </Dialog>
           </div>
         </TabPanel>
-        
+
         <TabPanel value={selectedTab} index={1}>
           {/* Render your All Cases table component here */}
           {/* Pending Cases */}
