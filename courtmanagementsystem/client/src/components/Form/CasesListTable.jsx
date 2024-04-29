@@ -214,7 +214,7 @@ export default function CasesListTable({
                         fontSize: 20,
                       }}
                     >
-                      {row.actionAbstract.replace(
+                      {row.actionAbstract?.replace(
                         /(، حاضری|، شہادت|، بحث|، حکم)/g,
                         ""
                       )}
@@ -375,7 +375,7 @@ export default function CasesListTable({
                         fontSize: 20,
                       }}
                     >
-                      {row.actionAbstract.replace(
+                      {row.actionAbstract?.replace(
                         /(، حاضری|، شہادت|، بحث|، حکم)/g,
                         ""
                       )}
