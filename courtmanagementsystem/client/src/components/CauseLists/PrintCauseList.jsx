@@ -14,92 +14,7 @@ import { useDispatch } from "react-redux";
 import { getCauseList } from "../../actions/causeLists";
 import { LinearProgress } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    centeredDiv: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      // width: 100%,
-      // height: 100vh,
-      // border: "1px solid black",
-      // borderRadius: "10px",
-      overflow: "hidden",
-    },
-    table: {
-      margin: theme.spacing(1),
-      borderCollapse: "collapse",
-      maxWidth: "8.5in",
-      // minHeight: '14in', //causes issue
-      maxHeight: "14in",
-      // margin: "0 auto",
-      // minWidth: 650,
-      // width: "100%",
-      // border: "1px solid black",
-      alignContent: "center",
-      // border: "1px solid black",
-      // margin: "20px 20px 20px 20px",
-      // borderRadius: "30px",
-    },
-    tableHeaderCell: {
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-      fontFamily: "Jameel Noori Nastaleeq",
-      border: "1px solid",
-      borderColor: theme.palette.primary.black,
-      fontWeight: "bold",
-      fontSize: 14,
-      // minWidth: "100px",
-      // align: "center",
-      textAlign: "center",
-    },
-    tableEmptyCell: {
-      margin: 0,
-      padding: 0,
-      border: "1px solid",
-      borderColor: theme.palette.primary.black,
-      // fontWeight: "bold",
-      // fontSize: 11,
-      minWidth: "5px",
-      // align: "center",
-      // textAlign: "center",
-    },
-    tableCell: {
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-      fontSize: 16,
-      // align: "center",
-      textAlign: "center",
-      border: "1px solid",
-      borderColor: theme.palette.black,
-      // borderColor: theme.palette.grey[300],
-      padding: theme.spacing(1),
-      // fontFamily: "Alvi Nastaleeq Regular",
-      fontFamily: "Jameel Noori Nastaleeq",
-    },
-    rightAlignedCell: {
-      textAlign: "right",
-    },
-    tableHeadTwo: {
-      fontSize: 18,
-      // fontFamily: "Alvi Nastaleeq Regular",
-      fontFamily: "Jameel Noori Nastaleeq",
-      // fontStyle: "",
-      fontWeight: "bold",
-      padding: "20px",
-    },
-    tableCaseTitle: {
-      fontSize: 14,
-      // fontFamily: "Alvi Nastaleeq Regular",
-      fontFamily: "Jameel Noori Nastaleeq",
-      // fontStyle: "",
-      fontWeight: "bold",
-      padding: "10px",
-    },
-  })
-);
+
 
 const PrintCauseList = (props) => {
   // const nextDate = props.location.nextDate;
@@ -128,7 +43,7 @@ const PrintCauseList = (props) => {
     console.log(data);
   }, [data, dateCauseList, dispatch]);
 
-  const classes = useStyles();
+  
   const tableRef = React.useRef();
 
   const handlePrint = useReactToPrint({
@@ -224,6 +139,100 @@ const PrintCauseList = (props) => {
   
   //   return 0; // Cases are considered equal based on keywords
   // });
+
+  const useStyles = makeStyles((theme) =>
+  createStyles({
+    centeredDiv: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      // width: 100%,
+      // height: 100vh,
+      // border: "1px solid black",
+      // borderRadius: "10px",
+      overflow: "hidden",
+    },
+    table: {
+      margin: theme.spacing(0),
+      borderCollapse: "collapse",
+      maxWidth: "8.5in",
+      // minHeight: '14in', //causes issue
+      maxHeight: "14in",
+      // margin: "0 auto",
+      // minWidth: 650,
+      // width: "100%",
+      // border: "1px solid black",
+      alignContent: "center",
+      // border: "1px solid black",
+      // margin: "20px 20px 20px 20px",
+      // borderRadius: "30px",
+      // margin: 0,
+      // padding: 0,
+    },
+    tableHeaderCell: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      fontFamily: "Jameel Noori Nastaleeq",
+      border: "1px solid",
+      borderColor: theme.palette.primary.black,
+      fontWeight: "bold",
+      fontSize: 14,
+      // minWidth: "100px",
+      // align: "center",
+      textAlign: "center",
+    },
+    tableEmptyCell: {
+      margin: 0,
+      padding: 0,
+      border: "1px solid",
+      borderColor: theme.palette.primary.black,
+      // fontWeight: "bold",
+      // fontSize: 11,
+      minWidth: "5px",
+      // align: "center",
+      // textAlign: "center",
+    },
+    tableCell: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      fontSize: 16,
+      // align: "center",
+      textAlign: "center",
+      border: "1px solid",
+      borderColor: theme.palette.black,
+      // borderColor: theme.palette.grey[300],
+      // padding: theme.spacing(1),
+      // fontFamily: "Alvi Nastaleeq Regular",
+      fontFamily: "Jameel Noori Nastaleeq",
+      // margin: 0,
+      // padding: 0,
+      ...(data.length > 18 ? { margin: 0, padding: 0 } : {}), // Conditional styles
+    },
+    rightAlignedCell: {
+      textAlign: "right",
+    },
+    tableHeadTwo: {
+      fontSize: 18,
+      // fontFamily: "Alvi Nastaleeq Regular",
+      fontFamily: "Jameel Noori Nastaleeq",
+      // fontStyle: "",
+      fontWeight: "bold",
+      padding: "20px",
+    },
+    tableCaseTitle: {
+      fontSize: 14,
+      // fontFamily: "Alvi Nastaleeq Regular",
+      fontFamily: "Jameel Noori Nastaleeq",
+      // fontStyle: "",
+      fontWeight: "bold",
+      padding: "10px",
+    },
+  })
+);
+
+const classes = useStyles();
 
   return !data.length ? (
     <LinearProgress />

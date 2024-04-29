@@ -93,6 +93,7 @@ const ControlCenter = () => {
   const [poData, setPoData] = useState({
     presidingOfficer: "",
     causeListName: "",
+    causeListEnglishName: "",
     designation: "",
     judgeCategory: "",
     courtNumber: "",
@@ -509,7 +510,7 @@ const ControlCenter = () => {
         </Typography> */}
 
         <Grid container spacing={2} alignContent="center" justify="center">
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <FormControl
               fullWidth
               variant="outlined"
@@ -557,29 +558,7 @@ const ControlCenter = () => {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={8}>
-            <TextField
-              className={classes.uFont}
-              inputProps={{
-                style: {
-                  textAlign: "center",
-                  fontSize: 22,
-                  fontFamily: "Jameel Noori Nastaleeq",
-                },
-              }}
-              InputLabelProps={{ style: { textAlign: "right" } }}
-              name="causeListName"
-              variant="outlined"
-              label="Cause List Name"
-              fullWidth
-              value={poData.causeListName ? poData.causeListName : ""}
-              onChange={(e) =>
-                setPoData({ ...poData, causeListName: e.target.value })
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={5}>
+          <Grid item xs={12} sm={6}>
             <FormControl
               fullWidth
               variant="outlined"
@@ -622,7 +601,7 @@ const ControlCenter = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={7}>
+          <Grid item xs={12} sm={12}>
             <FormControl
               fullWidth
               variant="outlined"
@@ -738,7 +717,7 @@ const ControlCenter = () => {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={5}>
             <FormControl
               fullWidth
               variant="outlined"
@@ -780,7 +759,7 @@ const ControlCenter = () => {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={7}>
             <FormControl
               fullWidth
               variant="outlined"
@@ -942,6 +921,50 @@ const ControlCenter = () => {
                 />
               </Grid>
             </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={12}>
+            <TextField
+              className={classes.uFont}
+              inputProps={{
+                style: {
+                  textAlign: "center",
+                  fontSize: 22,
+                  fontFamily: "Jameel Noori Nastaleeq",
+                },
+              }}
+              InputLabelProps={{ style: { textAlign: "right" } }}
+              name="causeListName"
+              variant="outlined"
+              label="Cause List Name in URDU"
+              fullWidth
+              value={poData.causeListName ? poData.causeListName : ""}
+              onChange={(e) =>
+                setPoData({ ...poData, causeListName: e.target.value })
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={12}>
+            <TextField
+              // className={classes.uFont}
+              // inputProps={{
+              //   style: {
+              //     textAlign: "center",
+              //     fontSize: 22,
+              //     fontFamily: "Jameel Noori Nastaleeq",
+              //   },
+              // }}
+              // InputLabelProps={{ style: { textAlign: "right" } }}
+              name="causeListEnglishName"
+              variant="outlined"
+              label="Cause List Name in ENGLISH"
+              fullWidth
+              value={poData.causeListEnglishName ? poData.causeListEnglishName : ""}
+              onChange={(e) =>
+                setPoData({ ...poData, causeListEnglishName: e.target.value })
+              }
+            />
           </Grid>
 
           <Grid item xs={12} sm={12}>
