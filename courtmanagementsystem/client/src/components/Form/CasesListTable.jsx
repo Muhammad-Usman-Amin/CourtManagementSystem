@@ -32,6 +32,12 @@ import {
   Grid,
 } from "@material-ui/core";
 import TabPanel from "./TabPanel";
+import {
+  MuiPickersUtilsProvider,
+  // KeyboardTimePicker,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 // import { getEmployeeData } from './actions/employeeData';
 // import { parseISO } from 'date-fns/parseISO';
@@ -104,6 +110,7 @@ export default function CasesListTable({
   const handleCancelDelete = () => {
     setOpenDeleteDialog(false);
   };
+  const [datePendency, setDatePendency] = useState(new Date());
   const cases = useSelector((state) => state.cases);
   const pendingCases = useSelector((state) => state.pendingCases);
 
@@ -112,27 +119,49 @@ export default function CasesListTable({
   ) : (
     <>
       {selectedTab === 1 && (
-        <Grid item container justify="space-between" xs={12} sm={3}>
-          {/* <Divider orientation="vertical" flexItem /> */}
-          <Button
-            variant="contained"
-            size="large"
-            // startIcon={<EditIcon />}
-            color="primary"
-            style={{ borderRadius: 5,  marginBottom: 10 }}
-            component={Link}
-            to={{
-              pathname: "/PrintPendency",
-              // state: {
-              //   nextDate: nextDate,
-              //   orderDate: orderDate,
-              //   dateCauseList: dateCauseList,
-              // },
-            }}
-          >
-            Print Pendency
-          </Button>
-          {/* <Divider orientation="vertical" flexItem /> */}
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={2}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+              <KeyboardDatePicker
+                // margin="normal"
+                views={["month"]}
+                id="date-picker-causeList"
+                label="Select Pendency Month"
+                autoOk
+                variant="inline"
+                format="MMMM yyyy"
+                value={datePendency}
+                onChange={(date) => {
+                  // setCaseId(caseFile._id);
+                  // setCurrentId(caseFile._id);
+                  setDatePendency(date);
+                }}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+            </MuiPickersUtilsProvider>
+          </Grid>
+          <Grid item container justify="space-between" xs={12} sm={3}>
+            {/* <Divider orientation="vertical" flexItem /> */}
+            <Button
+              variant="contained"
+              size="large"
+              // startIcon={<EditIcon />}
+              color="primary"
+              style={{ borderRadius: 5, marginBottom: 10 }}
+              component={Link}
+              to={{
+                pathname: "/PrintPendency",
+                state: {
+                  datePendency: datePendency,
+                },
+              }}
+            >
+              Print Pendency
+            </Button>
+            {/* <Divider orientation="vertical" flexItem /> */}
+          </Grid>
         </Grid>
       )}
       <div>
@@ -215,7 +244,7 @@ export default function CasesListTable({
                       }}
                     >
                       {row.actionAbstract?.replace(
-                        /(، حاضری|، شہادت|، بحث|، حکم)/g,
+                        /(، حاضری|، شہادت|، بحث|، حکم|، حاضری )/g,
                         ""
                       )}
                     </TableCell>
@@ -376,7 +405,7 @@ export default function CasesListTable({
                       }}
                     >
                       {row.actionAbstract?.replace(
-                        /(، حاضری|، شہادت|، بحث|، حکم)/g,
+                        /(، حاضری|، شہادت|، بحث|، حکم|، حاضری )/g,
                         ""
                       )}
                     </TableCell>

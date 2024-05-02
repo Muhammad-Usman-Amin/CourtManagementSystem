@@ -1082,19 +1082,19 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem
                   className={classes.uFont}
-                  value={" ترمیمی عرضیدعویٰ، حاضری"}
+                  value={"ترمیمی عرضیدعویٰ، حاضری"}
                 >
                   ترمیمی عرضیدعویٰ
                 </MenuItem>
                 <MenuItem
                   className={classes.uFont}
-                  value={" ترمیمی جواب دعویٰ، حاضری"}
+                  value={"ترمیمی جواب دعویٰ، حاضری"}
                 >
                   ترمیمی جواب دعویٰ
                 </MenuItem>
                 <MenuItem
                   className={classes.uFont}
-                  value={" ترمیمی جواب درخواست، حاضری"}
+                  value={"ترمیمی جواب درخواست، حاضری"}
                 >
                   ترمیمی جواب درخواست
                 </MenuItem>

@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) =>
       textAlign: "center",
       margin: 0, // Set margin to 0
       padding: 0,
-      backgroundColor: 'lightgray'
+      backgroundColor: "lightgray",
     },
     tableEmptyCell: {
       margin: 0,
@@ -110,7 +110,7 @@ const PrintPendency = (props) => {
   // const nextDate = props.location.nextDate;
   // const orderDate = props.location.state.orderDate;
   const orderDate = new Date();
-  // const dateCauseList = props.location.state.dateCauseList;
+  const datePendency = props.location.state.datePendency;
 
   // console.log(orderDate);
   // const [dateCauseList] = useState(
@@ -182,6 +182,94 @@ const PrintPendency = (props) => {
     return array[array.length - 1]; // or any other appropriate value or action
   }
 
+  function getActionEng(action) {
+    const str = action.replace(/(^\s+|\s+$)/g, "");
+    //The regular expression (^\s+|\s+$) matches one or more (+) whitespace characters (\s) at the beginning (^) or end ($) of the string.
+    //The g flag ensures that all occurrences of these patterns are replaced.
+    switch (str) {
+      case "حاضری":
+      case "حاضری، ریکارڈ":
+      case "حاضری، اشتہار":
+      case "مختارنامہ":
+        return "Attendance";
+      // break;
+      case "جواب دعویٰ":
+        return "Written Statement";
+      // case ' ترمیمی جواب دعویٰ':
+      //   return 'Amended Written Statement';
+      // case 'ترمیمی جواب دعویٰ ':
+      //   return 'Amended Written Statement';
+      // case ' ترمیمی عرضیدعویٰ':
+      //   return 'Amended Plaint';
+      case "ترمیمی جواب دعویٰ":
+        return "Amended Wrtitten Statement";
+      case "ترمیمی عرضیدعویٰ":
+        return "Amended Plaint";
+      case "جواب و بحث":
+      case "جواب درخواست":
+        return "Replication";
+      case 'پروفارمہ ای':
+        return 'Proformas';
+      case "تنقیحات":
+        return "Framing of Issues";
+      case "شہادت":
+      case 'شہادت استغاثہ':
+        return "Evidence";
+      case "شہادت سائیل":
+        return "Petitioner Evidence";
+      case "یکطرفہ شہادت":
+        return "Ex-parte Evidence";
+      case "شہادت مدعی":
+        return "Plaintiff Evidence";
+      case "شہادت مدعیہ":
+        return "Plaintiff Evidence";
+      case "شہادت مدعا علیہم":
+        return "Defendants Evidence";
+      case "شہادت مدعیان":
+        return "Plaintiffs Evidence";
+      case "بیلف رپورٹ":
+      case "حاضری، بیلف رپورٹ":
+        return "Bailiff’s Report";
+      case "نادرا رپورٹ":
+        return "NADRA's Report";
+      case "شہادت مدعا علیہ":
+        return "Defendant Evidence";
+      case "راضی نامہ":
+        return "Compromise";
+      case "مصالحت ابتدائی":
+        return "Pre-Reconciliation";
+      case "مصالحت ثانی":
+        return "Post-Reconciliation";
+      case "بقایا بحث":
+        return "Remaining Arguments";
+      case "بحث، ریکارڈ":
+        return "Arguments on Application";
+      case "بحث بر مقدمہ":
+        return "Arguments";
+      case "یکطرفہ بحث":
+        return "ex-parte Arguments";
+      case "بحث بر درخواست":
+        return "Arguments on Application";
+      case "حکم بر درخواست":
+        return "Order on Application";
+      case "حکم":
+        return "Order";
+      case "حکم بر مقدمہ":
+        return "Order";
+      case "مزید کاروائی":
+        return "Others";
+      case "انتظار مسل":
+        return "Others";
+      case "ہمراہ":
+        return "Attached";
+      case "بقایا آدائیگی":
+        return "Remaining Payment";
+      default:
+        return str;
+    }
+  }
+  console.log(getActionEng("حاضری"));
+
   return !pendingCases.length ? (
     <LinearProgress />
   ) : (
@@ -228,7 +316,7 @@ const PrintPendency = (props) => {
                     {/* بعدالت جناب زیب النساءعباسی سِول جج /جج فیملی کورٹ/علاقہ
                     قاضی-V دیر پائین بمقام تیمرگرہ */}
                     {"CHRONOLOGICAL LIST FOR THE MONTH OF " +
-                      format?.(new Date(), "MMMM, yyyy").toUpperCase()}
+                      format?.(datePendency, "MMMM, yyyy").toUpperCase()}
                   </TableCell>
                 </TableRow>
 
@@ -419,9 +507,11 @@ const PrintPendency = (props) => {
                             getSecondToLastElement(
                               caseFile.causeListEntries
                             ).actionAbstract.replace("، حاضری", "")} */}
-                          {caseFile.actionAbstract?.replace(
-                            /(، حاضری|، شہادت|، بحث|، حکم)/g,
-                            ""
+                          {getActionEng(
+                            caseFile.actionAbstract?.replace(
+                              /(، حاضری|، شہادت|، بحث|، حکم|، حاضری )/g,
+                              ""
+                            )
                           )}
                         </TableCell>
                         {/* <TableCell className={classes.tableCell} align="left">
