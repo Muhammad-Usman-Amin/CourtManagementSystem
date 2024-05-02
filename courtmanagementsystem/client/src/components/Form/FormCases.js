@@ -151,6 +151,26 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     );
   }, [onPageChange, currentId, caseFile]);
 
+  function getCaseNo(str){
+switch (str) {
+  case 'Civil-001-Civil Suits (Original Jurisdiction)':
+    return 'Suit - /1';
+  case 'Civil-006-Family Court Cases':
+    return 'FC - /III';
+  case 'Civil-018-Other Civil Misc Applications':
+    return 'MA - /6'
+  case 'Civil-015-Execution Petitions':
+    return 'Ex - /10';
+
+  default:
+    return '';
+}
+  }
+  const [cNo, setCNo] = useState('');
+  useEffect(() => {
+    setCNo(getCaseNo(caseData['Category Per PQS']));
+  }, [caseData["Category Per PQS"]])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -288,15 +308,23 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem value="">
                     <em>Mostly Used</em>
                   </MenuItem>
-                  <MenuItem value={"Civil-002-Civil Suit"}>Suit</MenuItem>
+                  <MenuItem value={"Civil-001-Civil Suits (Original Jurisdiction)"}>Suit/1</MenuItem>
+                  <MenuItem value={"Civil-006-Family Court Cases"}>FC/III</MenuItem>
+                  <MenuItem value={"Civil-018-Other Civil Misc Applications"}>MA/6</MenuItem>
+                  <MenuItem value={"Civil-015-Execution Petitions"}>
+                    Ex/10
+                  </MenuItem>
+                  <MenuItem value={"Civil-021-Objection Petitions"}>
+                    Objection Petititons (OP/11)
+                  </MenuItem>
                   <MenuItem value={"Civil-022-Civil Appeals"}>
-                    Civil Appeal
+                    Civil Appeal/13
                   </MenuItem>
                   <MenuItem value={"Civil-025-Family Appeals"}>
-                    Family Appeal
+                    Family Appeal (FCA)
                   </MenuItem>
-                  <MenuItem value={"Civil-027-Civil Appeals against Orders"}>
-                    MCA
+                  <MenuItem value={"Civil-027-Civil Appeals against Order"}>
+                    MCA/14
                   </MenuItem>
 
                   <MenuItem value="">
@@ -307,9 +335,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   >
                     Civil-001 Civil Suits (Original Jurisdiction)
                   </MenuItem>
-                  {/* <MenuItem value={"Civil-002-Civil Suit"}>
+                  <MenuItem value={"Civil-002-Civil Suit"}>
                     Civil-002 Civil Suit
-                  </MenuItem> */}
+                  </MenuItem>
                   <MenuItem value={"Civil-003-Suits under Order 37 CPC"}>
                     Civil-003 Suits under Order 37 CPC
                   </MenuItem>
@@ -377,9 +405,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem value={"Civil-021-Objection Petitions"}>
                     Civil-021 Objection Petitions
                   </MenuItem>
-                  {/* <MenuItem value={"Civil-022-Civil Appeals"}>
-                    Civil-022 Civil Appeals */}
-                  {/* </MenuItem> */}
+                  <MenuItem value={"Civil-022-Civil Appeals"}>
+                    Civil-022 Civil Appeals
+                  </MenuItem>
                   <MenuItem value={"Civil-023-Civil Revisions"}>
                     Civil-023 Civil Revisions
                   </MenuItem>
@@ -388,15 +416,15 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   >
                     Civil-024 Guardianship and Succession Appeals
                   </MenuItem>
-                  {/* <MenuItem value={"Civil-025-Family Appeals"}>
+                  <MenuItem value={"Civil-025-Family Appeals"}>
                     Civil-025 Family Appeals
-                  </MenuItem> */}
+                  </MenuItem>
                   <MenuItem value={"Civil-026-Rent Appeals"}>
                     Civil-026 Rent Appeals
                   </MenuItem>
-                  {/* <MenuItem value={"Civil-027-Civil Appeals against Order"}>
+                  <MenuItem value={"Civil-027-Civil Appeals against Order"}>
                     Civil-027 Civil Appeals against Order
-                  </MenuItem> */}
+                  </MenuItem>
                   <MenuItem value={"Civil-028-Insolvency Cases"}>
                     Civil-028 Insolvency Cases
                   </MenuItem>
@@ -434,16 +462,16 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem value={"CR-001-Homicide"}>
                     Homicide Session Case
                   </MenuItem>
-                  <MenuItem value={"CR-011-Norcotics Substances"}>
+                  <MenuItem value={"CR-011-Narcotics Substances"}>
                     CNSA Case
                   </MenuItem>
                   <MenuItem value={"CR-020-Bail Applications"}>
-                    BA, BBA, BCA, CrMisc
+                    BA, BBA, BCA, CrMisc /IV
                   </MenuItem>
                   <MenuItem value="">
                     <em>All Categories</em>
                   </MenuItem>
-                  {/* <MenuItem value={"CR-001-Homicide"}>CR-001 Homicide</MenuItem> */}
+                  <MenuItem value={"CR-001-Homicide"}>CR-001 Homicide</MenuItem>
                   <MenuItem value={"CR-002-Attempt to Murder"}>
                     CR-002 Attempt to Murder
                   </MenuItem>
@@ -471,9 +499,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem value={"CR-010-Complaint Cases"}>
                     CR-010 Complaint Cases
                   </MenuItem>
-                  {/* <MenuItem value={"CR-011-Narcotics Substances"}>
+                  <MenuItem value={"CR-011-Narcotics Substances"}>
                     CR-011 Narcotics Substances
-                  </MenuItem> */}
+                  </MenuItem>
                   <MenuItem value={"CR-012-Habeas Corpus (491 Cr.PC.)"}>
                     CR-012 Habeas Corpus (491 Cr.PC.)
                   </MenuItem>
@@ -548,7 +576,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               variant="outlined"
               label="Case Number"
               fullWidth
-              value={caseData["Case No"]}
+              value={caseData["Case No"] ? caseData['Case No'] : cNo}
               onChange={(e) =>
                 setCaseData({ ...caseData, "Case No": e.target.value })
               }

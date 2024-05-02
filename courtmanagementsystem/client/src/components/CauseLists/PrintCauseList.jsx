@@ -14,22 +14,17 @@ import { useDispatch } from "react-redux";
 import { getCauseList } from "../../actions/causeLists";
 import { LinearProgress } from "@material-ui/core";
 
-
-
 const PrintCauseList = (props) => {
   // const nextDate = props.location.nextDate;
   const orderDate = props.location.state.orderDate;
   // const dateCauseList = props.location.state.dateCauseList;
 
   console.log(orderDate);
-  const [dateCauseList] = useState(
-    props.location.state.dateCauseList
-  );
+  const [dateCauseList] = useState(props.location.state.dateCauseList);
 
   const dispatch = useDispatch();
   const data = useSelector((state) => state.causeLists);
   const controlPanel = useSelector((state) => state.controlCenter);
-
 
   let index = 0;
   const [serialNo, setSerialNo] = useState([]);
@@ -43,7 +38,6 @@ const PrintCauseList = (props) => {
     console.log(data);
   }, [data, dateCauseList, dispatch]);
 
-  
   const tableRef = React.useRef();
 
   const handlePrint = useReactToPrint({
@@ -104,8 +98,12 @@ const PrintCauseList = (props) => {
     for (const keyword of sortingKeywords) {
       // const hasKeywordA = a.abstract?.toLowerCase().startsWith(keyword);
       // const hasKeywordB = b.abstract?.toLowerCase().startsWith(keyword);
-      const hasKeywordA = getSecondToLastElement(a.causeListEntries).actionAbstract?.startsWith(keyword);
-     const hasKeywordB = getSecondToLastElement(b.causeListEntries).actionAbstract?.startsWith(keyword);
+      const hasKeywordA = getSecondToLastElement(
+        a.causeListEntries
+      ).actionAbstract?.startsWith(keyword);
+      const hasKeywordB = getSecondToLastElement(
+        b.causeListEntries
+      ).actionAbstract?.startsWith(keyword);
 
       // Prioritize cases with the current keyword at the beginning
       if (hasKeywordA && !hasKeywordB) return -1; // Case A with keyword comes before Case B without
@@ -129,110 +127,127 @@ const PrintCauseList = (props) => {
   //   // const hasAttendanceB = b.abstract?.toLowerCase().includes('attendance'); .includes('حاضری')
   //   const hasAttendanceA = getSecondToLastElement(a.causeListEntries).actionAbstract?.startsWith('حاضری');
   //   const hasAttendanceB = getSecondToLastElement(b.causeListEntries).actionAbstract?.startsWith('حاضری');
-  
+
   //   // Prioritize cases with "attendance"
   //   if (hasAttendanceA) return -1; // Case A with "attendance" comes before anything else
   //   if (hasAttendanceB) return 1; // Case B with "attendance" comes after cases without
-  
+
   //   // If neither has "attendance", sort by any other criteria (optional)
   //   // return a.someOtherProperty.localeCompare(b.someOtherProperty);
-  
+
   //   return 0; // Cases are considered equal based on keywords
   // });
 
   const useStyles = makeStyles((theme) =>
-  createStyles({
-    centeredDiv: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      // width: 100%,
-      // height: 100vh,
-      // border: "1px solid black",
-      // borderRadius: "10px",
-      overflow: "hidden",
-    },
-    table: {
-      margin: theme.spacing(0),
-      borderCollapse: "collapse",
-      maxWidth: "8.5in",
-      // minHeight: '14in', //causes issue
-      maxHeight: "14in",
-      // margin: "0 auto",
-      // minWidth: 650,
-      // width: "100%",
-      // border: "1px solid black",
-      alignContent: "center",
-      // border: "1px solid black",
-      // margin: "20px 20px 20px 20px",
-      // borderRadius: "30px",
-      // margin: 0,
-      // padding: 0,
-    },
-    tableHeaderCell: {
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-      fontFamily: "Jameel Noori Nastaleeq",
-      border: "1px solid",
-      borderColor: theme.palette.primary.black,
-      fontWeight: "bold",
-      fontSize: 14,
-      // minWidth: "100px",
-      // align: "center",
-      textAlign: "center",
-    },
-    tableEmptyCell: {
-      margin: 0,
-      padding: 0,
-      border: "1px solid",
-      borderColor: theme.palette.primary.black,
-      // fontWeight: "bold",
-      // fontSize: 11,
-      minWidth: "5px",
-      // align: "center",
-      // textAlign: "center",
-    },
-    tableCell: {
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-      fontSize: 16,
-      // align: "center",
-      textAlign: "center",
-      border: "1px solid",
-      borderColor: theme.palette.black,
-      // borderColor: theme.palette.grey[300],
-      // padding: theme.spacing(1),
-      // fontFamily: "Alvi Nastaleeq Regular",
-      fontFamily: "Jameel Noori Nastaleeq",
-      // margin: 0,
-      // padding: 0,
-      ...(data.length > 18 ? { margin: 0, padding: 0 } : {}), // Conditional styles
-    },
-    rightAlignedCell: {
-      textAlign: "right",
-    },
-    tableHeadTwo: {
-      fontSize: 18,
-      // fontFamily: "Alvi Nastaleeq Regular",
-      fontFamily: "Jameel Noori Nastaleeq",
-      // fontStyle: "",
-      fontWeight: "bold",
-      padding: "20px",
-    },
-    tableCaseTitle: {
-      fontSize: 14,
-      // fontFamily: "Alvi Nastaleeq Regular",
-      fontFamily: "Jameel Noori Nastaleeq",
-      // fontStyle: "",
-      fontWeight: "bold",
-      padding: "10px",
-    },
-  })
-);
+    createStyles({
+      centeredDiv: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        // width: 100%,
+        // height: 100vh,
+        // border: "1px solid black",
+        // borderRadius: "10px",
+        overflow: "hidden",
+      },
+      table: {
+        margin: theme.spacing(0),
+        borderCollapse: "collapse",
+        maxWidth: "8.5in",
+        // minHeight: '14in', //causes issue
+        maxHeight: "14in",
+        // margin: "0 auto",
+        // minWidth: 650,
+        // width: "100%",
+        // border: "1px solid black",
+        alignContent: "center",
+        // border: "1px solid black",
+        // margin: "20px 20px 20px 20px",
+        // borderRadius: "30px",
+        // margin: 0,
+        // padding: 0,
+      },
+      tableHeaderCell: {
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        fontFamily: "Jameel Noori Nastaleeq",
+        border: "1px solid",
+        borderColor: theme.palette.primary.black,
+        fontWeight: "bold",
+        fontSize: 14,
+        // minWidth: "100px",
+        // align: "center",
+        textAlign: "center",
+      },
+      tableEmptyCell: {
+        margin: 0,
+        padding: 0,
+        border: "1px solid",
+        borderColor: theme.palette.primary.black,
+        // fontWeight: "bold",
+        // fontSize: 11,
+        minWidth: "5px",
+        // align: "center",
+        // textAlign: "center",
+      },
+      tableCell: {
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        fontSize: 16,
+        // align: "center",
+        textAlign: "center",
+        border: "1px solid",
+        borderColor: theme.palette.black,
+        // borderColor: theme.palette.grey[300],
+        // padding: theme.spacing(1),
+        // fontFamily: "Alvi Nastaleeq Regular",
+        fontFamily: "Jameel Noori Nastaleeq",
+        // margin: 0,
+        // padding: 0,
+        ...(data.length > 18 ? { margin: 0, padding: 0 } : {}), // Conditional styles
+      },
+      rightAlignedCell: {
+        textAlign: "right",
+      },
+      tableHeadTwo: {
+        fontSize: 18,
+        // fontFamily: "Alvi Nastaleeq Regular",
+        fontFamily: "Jameel Noori Nastaleeq",
+        // fontStyle: "",
+        fontWeight: "bold",
+        padding: "20px",
+      },
+      tableCaseTitle: {
+        fontSize: 14,
+        // fontFamily: "Alvi Nastaleeq Regular",
+        fontFamily: "Jameel Noori Nastaleeq",
+        // fontStyle: "",
+        fontWeight: "bold",
+        padding: "10px",
+      },
+    })
+  );
+  function titleFormat(title) {
+    const titleParts = title?.split("بنام");
 
-const classes = useStyles();
+    // Check if there's at least one part
+    if (titleParts.length >= 1) {
+      // Format the title with bold "بنام"
+      return (
+        <>
+          {titleParts[0]}
+          <b>بنام</b> {titleParts.length === 2 && titleParts[1]}
+        </>
+      );
+    } else {
+      // Handle cases where the title is empty or doesn't contain the delimiter
+      return <span>(No Urdu Title Found)</span>;
+    }
+  }
+
+  const classes = useStyles();
 
   return !data.length ? (
     <LinearProgress />
@@ -273,7 +288,7 @@ const classes = useStyles();
                     }}
                     className={classes.tableHeaderCell}
                   >
-                  {controlPanel[0].causeListName}
+                    {controlPanel[0].causeListName}
                     {/* بعدالت جناب زیب النساءعباسی سِول جج /جج فیملی کورٹ/علاقہ
                     قاضی-V دیر پائین بمقام تیمرگرہ */}
                   </TableCell>
@@ -470,7 +485,9 @@ const classes = useStyles();
                                     {caseFile["Date of Other Institution"]
                                       ? format?.(
                                           parseISO(
-                                            caseFile["Date of Other Institution"]
+                                            caseFile[
+                                              "Date of Other Institution"
+                                            ]
                                           ),
                                           "dd-MM-yyyy"
                                         )
@@ -497,9 +514,10 @@ const classes = useStyles();
                           align="left"
                           style={{ fontSize: 24 }}
                         >
-                          {caseFile.urduTitle
+                          {titleFormat(caseFile.urduTitle)}
+                          {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
-                            : caseFile["Case Title"]}
+                            : caseFile["Case Title"]} */}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -653,7 +671,9 @@ const classes = useStyles();
                                     {caseFile["Date of Other Institution"]
                                       ? format?.(
                                           parseISO(
-                                            caseFile["Date of Other Institution"]
+                                            caseFile[
+                                              "Date of Other Institution"
+                                            ]
                                           ),
                                           "dd-MM-yyyy"
                                         )
@@ -680,9 +700,10 @@ const classes = useStyles();
                           align="left"
                           style={{ fontSize: 24 }}
                         >
-                          {caseFile.urduTitle
+                          {titleFormat(caseFile.urduTitle)}
+                          {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
-                            : caseFile["Case Title"]}
+                            : caseFile["Case Title"]} */}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -836,7 +857,9 @@ const classes = useStyles();
                                     {caseFile["Date of Other Institution"]
                                       ? format?.(
                                           parseISO(
-                                            caseFile["Date of Other Institution"]
+                                            caseFile[
+                                              "Date of Other Institution"
+                                            ]
                                           ),
                                           "dd-MM-yyyy"
                                         )
@@ -863,9 +886,10 @@ const classes = useStyles();
                           align="left"
                           style={{ fontSize: 24 }}
                         >
-                          {caseFile.urduTitle
+                          {titleFormat(caseFile.urduTitle)}
+                          {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
-                            : caseFile["Case Title"]}
+                            : caseFile["Case Title"]} */}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -1019,7 +1043,9 @@ const classes = useStyles();
                                     {caseFile["Date of Other Institution"]
                                       ? format?.(
                                           parseISO(
-                                            caseFile["Date of Other Institution"]
+                                            caseFile[
+                                              "Date of Other Institution"
+                                            ]
                                           ),
                                           "dd-MM-yyyy"
                                         )
@@ -1046,9 +1072,10 @@ const classes = useStyles();
                           align="left"
                           style={{ fontSize: 24 }}
                         >
-                          {caseFile.urduTitle
+                          {titleFormat(caseFile.urduTitle)}
+                          {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
-                            : caseFile["Case Title"]}
+                            : caseFile["Case Title"]} */}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -1200,7 +1227,9 @@ const classes = useStyles();
                                     {caseFile["Date of Other Institution"]
                                       ? format?.(
                                           parseISO(
-                                            caseFile["Date of Other Institution"]
+                                            caseFile[
+                                              "Date of Other Institution"
+                                            ]
                                           ),
                                           "dd-MM-yyyy"
                                         )
@@ -1227,9 +1256,10 @@ const classes = useStyles();
                           align="left"
                           style={{ fontSize: 24 }}
                         >
-                          {caseFile.urduTitle
+                          {titleFormat(caseFile.urduTitle)}
+                          {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
-                            : caseFile["Case Title"]}
+                            : caseFile["Case Title"]} */}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}

@@ -1,4 +1,4 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, FETCH_PENDING } from '../constants/actionTypes';
+import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, FETCH_PENDING, FETCH_INSTITUTION } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Actions creators
@@ -24,6 +24,20 @@ export const getPendingCases = (params) => async (dispatch) => {
     try {
         const { data } = await api.fetchCases(params);
         dispatch({ type: FETCH_PENDING, payload: data });
+        // datam = data;
+    } catch (error) {
+        console.log(error);
+    }
+    // console.log("Cases Action result:");
+    // console.log(datam);
+};
+export const getInstitutionCases = (params) => async (dispatch) => {
+    // console.log('getCases Called');
+    // let datam = null;
+    // console.log(getQuery);
+    try {
+        const { data } = await api.fetchCases(params);
+        dispatch({ type: FETCH_INSTITUTION, payload: data });
         // datam = data;
     } catch (error) {
         console.log(error);

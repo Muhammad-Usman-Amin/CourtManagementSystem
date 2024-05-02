@@ -6,7 +6,7 @@ import {
 import { useDispatch } from "react-redux";
 
 // import { getPosts } from './actions/posts';
-import { getCases, getPendingCases } from "./actions/cases";
+import { getCases, getInstitutionCases, getPendingCases } from "./actions/cases";
 import { getEmployeeData } from "./actions/employeeData.js";
 // import courtLogo from "./images/courtLogo.png";
 // import Posts from './components/Posts/Posts';
@@ -34,6 +34,7 @@ import Error404Screen from "./screens/Error404Screen";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { lightTheme, darkTheme } from "./theme";
 import { getControlCenter } from "./actions/controlCenter.js";
+import PrintInstitution from "./components/CauseLists/PrintInstitution.jsx";
 
 const App = () => {
   // const classes = makeStyles();
@@ -49,6 +50,7 @@ const App = () => {
     dispatch(getEmployeeData());
     dispatch(getCases({reqQuery:"All"}));
     dispatch(getPendingCases({reqQuery: "Pending"}));
+    dispatch(getInstitutionCases({reqQuery: "InstitutionCases"}));
     dispatch(getControlCenter());
   }, [currentId, dispatch]);
 
@@ -140,6 +142,7 @@ const App = () => {
                 <Route path="/PrintDataTable" component={PrintDataTable} />
                 <Route path="/PrintCauseList" component={PrintCauseList} />
                 <Route path="/PrintPendency" component={PrintPendency} />
+                <Route path="/PrintInstitution" component={PrintInstitution} />
 
                 <Route path="*">
                   <Error404Screen />

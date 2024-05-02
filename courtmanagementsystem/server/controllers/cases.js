@@ -22,6 +22,15 @@ export const getCases = async (req, res) => {
           ]
       }).sort({["Date of Institution "]: 1})
     }
+
+    if(query.reqQuery === "InstitutionCases"){
+        cases = await Case.find({
+          $and: [
+              { disposed: { $ne: true } }, //$ne means not equal to
+              { "Disposal OR Transfer Out Flag": { $nin: ["Disposed", "Transfer Out"] } } //$nin means not in array
+          ]
+      }).sort({["Date of Institution "]: -1})
+    }
     
     if(query.reqQuery === "Disposed"){
         cases = await Case.find({
