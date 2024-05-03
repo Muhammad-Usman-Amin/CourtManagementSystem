@@ -38,6 +38,8 @@ import { createCase, updateCase } from "../../actions/cases";
 import ClearAllIcon from "@material-ui/icons/ClearAll";
 import SaveIcon from "@material-ui/icons/Save";
 import { addDays } from "date-fns";
+// import { useNavigate } from 'react-router-dom/cjs/react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const GreenCheckbox = withStyles({
   root: {
@@ -170,7 +172,15 @@ switch (str) {
   useEffect(() => {
     setCNo(getCaseNo(caseData['Category Per PQS']));
   }, [caseData["Category Per PQS"]])
+  
+  useEffect(() => {
+    if(!currentId)
+    setCaseData({...caseData, 'Case No': cNo});
+    // console.log(cNo);
+    // console.log(caseData['Case No']);
+  }, [cNo])
 
+  const history = useHistory();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -190,6 +200,7 @@ switch (str) {
       }
     }
     clear();
+    history.push('/CasesListTable'); // Navigate to the CasesListTable route
   };
   const clear = () => {
     setCurrentId(null);
@@ -671,6 +682,9 @@ switch (str) {
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="زن اشوئی">
                     زن اشوئی
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="فیملی کیس">
+                    فیملی کیس
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="حکم عدولی">
                     حکم عدولی

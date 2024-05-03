@@ -10,36 +10,98 @@ export const getCases = async (req, res) => {
   try {
     // console.log(query);
     let cases;
-    if(query.reqQuery === "All"){
-      cases = await Case.find().sort({["Date of Institution "]: 1});
+    if (query.reqQuery === "All") {
+      cases = await Case.find().sort({ ["Date of Institution "]: 1 });
     }
 
-    if(query.reqQuery === "Pending"){
-        cases = await Case.find({
-          $and: [
-              { disposed: { $ne: true } }, //$ne means not equal to
-              { "Disposal OR Transfer Out Flag": { $nin: ["Disposed", "Transfer Out"] } } //$nin means not in array
-          ]
-      }).sort({["Date of Institution "]: 1})
+    if (query.reqQuery === "Pending") {
+      cases = await Case.find({
+        $and: [
+          { disposed: { $ne: true } }, //$ne means not equal to
+          {
+            "Disposal OR Transfer Out Flag": {
+              $nin: ["Disposed", "Transfer Out"],
+            },
+          }, //$nin means not in array
+        ],
+      }).sort({ ["Date of Institution "]: 1 });
     }
 
-    if(query.reqQuery === "InstitutionCases"){
-        cases = await Case.find({
-          $and: [
-              { disposed: { $ne: true } }, //$ne means not equal to
-              { "Disposal OR Transfer Out Flag": { $nin: ["Disposed", "Transfer Out"] } } //$nin means not in array
-          ]
-      }).sort({["Date of Institution "]: -1})
-    }
-    
-    if(query.reqQuery === "Disposed"){
-        cases = await Case.find({
-          $or: [
-              { disposed: true },
-              { "Disposal OR Transfer Out Flag": { $in: ["Disposed", "Transfer Out"] } }
-          ]
-      }).sort({["Date of Institution "]: 1})
+    // if (query.reqQuery === "InstitutionCases") {
+    //   cases = await Case.find({
+    //     $and: [
+    //       { disposed: { $ne: true } }, //$ne means not equal to
+    //       {
+    //         "Disposal OR Transfer Out Flag": {
+    //           $nin: ["Disposed", "Transfer Out"],
+    //         },
+    //       }, //$nin means not in array
+    //     ],
+    //   }).sort({ ["Date of Institution "]: -1 });
+    // }
+
+    if (query.reqQuery === "Disposed") {
+      cases = await Case.find({
+        $or: [
+          { disposed: true },
+          {
+            "Disposal OR Transfer Out Flag": {
+              $in: ["Disposed", "Transfer Out"],
+            },
+          },
+        ],
+      }).sort({ ["Date of Institution "]: 1 });
       // }
+    }
+    if (query.reqQuery === "InstitutionCases") {
+      const selectedMonth = 4; // Assuming the user selects April (Month 4)
+      const selectedYear = 2024; // Assuming the user selects the year 2024
+      cases = await Case.aggregate([
+        {
+          $match: {
+            $or: [
+              {
+                $expr: {
+                  $and: [
+                    {
+                      $eq: [{ $month: "$Date of Institution " }, selectedMonth],
+                    },
+                    { $eq: [{ $year: "$Date of Institution " }, selectedYear] },
+                  ],
+                },
+              },
+              {
+                $expr: {
+                  $and: [
+                    {
+                      $eq: [{ $month: "$Date of Transfer In" }, selectedMonth],
+                    },
+                    { $eq: [{ $year: "$Date of Transfer In" }, selectedYear] },
+                  ],
+                },
+              },
+              {
+                $expr: {
+                  $and: [
+                    {
+                      $eq: [
+                        { $month: "$Date of Other Institution" },
+                        selectedMonth,
+                      ],
+                    },
+                    {
+                      $eq: [
+                        { $year: "$Date of Other Institution" },
+                        selectedYear,
+                      ],
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ]).sort({ ["Date of Institution "]: 1 });
     }
 
     res.status(200).json(cases);

@@ -115,7 +115,6 @@ export default function CasesListTable({
   const cases = useSelector((state) => state.cases);
   const pendingCases = useSelector((state) => state.pendingCases);
   const institutionCases = useSelector((state) => state.institutionCases);
-  
 
   return !cases.length ? (
     <CircularProgress />
@@ -252,10 +251,12 @@ export default function CasesListTable({
                   </TableCell>
                   <TableCell align="left">Case Title</TableCell>
                   {/* <TableCell align="left">Case Type</TableCell> */}
-                  <TableCell align="left">Action Abstract</TableCell>
+                  {selectedTab === 0 && <TableCell align="left">Action Abstract</TableCell>}
+                  {selectedTab === 2 && <TableCell align="left">Date of Transfer In</TableCell>}
                   {/* <TableCell align="left">Institution Year</TableCell> */}
                   <TableCell className={classes.dateValue} align="left">
-                    Next Date
+                  {selectedTab === 0 && 'Next Date'}
+                  {selectedTab === 2 && 'Date of Other Institution'}
                   </TableCell>
                   <TableCell align="left">Edit</TableCell>
                   <TableCell align="left">Delete</TableCell>
@@ -587,10 +588,11 @@ export default function CasesListTable({
                 </TableRow>
               </TableHead>
               <TableBody>
+                {console.log(institutionCases)}
                 {institutionCases.map((row) => (
                   <TableRow hover key={row._id}>
                     <TableCell component="th" scope="row">
-                      {pendingCases.indexOf(row) + 1}
+                      {institutionCases.indexOf(row) + 1}
                     </TableCell>
                     <TableCell align="left">{row["Case No"]}</TableCell>
                     <TableCell align="left">
@@ -606,9 +608,23 @@ export default function CasesListTable({
                       style={{ color: row.disposed ? "red" : "inherit" }}
                     >
                       {row["Case Title"]}
+                      {row["Date of Transfer In"] ? (
+                        <span style={{ color: "red" }}> (Transfered In)</span>
+                      ) : (
+                        ""
+                      )}
+
+                      {row["Date of Other Institution"] ? (
+                        <span style={{ color: "red" }}>
+                          {" "}
+                          ({row["Institution Flag"]})
+                        </span>
+                      ) : (
+                        ""
+                      )}
                     </TableCell>
                     {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
-                    <TableCell
+                    {/* <TableCell
                       align="right"
                       style={{
                         fontFamily: "Jameel Noori Nastaleeq",
@@ -619,16 +635,33 @@ export default function CasesListTable({
                         /(، حاضری|، شہادت|، بحث|، حکم|، حاضری )/g,
                         ""
                       )}
+                    </TableCell> */}
+                    <TableCell align="left">
+                      {!row["Date of Transfer In"]
+                        ? ""
+                        : format?.(
+                            parseISO(row["Date of Transfer In"]),
+                            "dd-MM-yyy"
+                          )}
+                    </TableCell>
+                    
+                    <TableCell align="left">
+                      {!row["Date of Other Institution"]
+                        ? ""
+                        : format?.(
+                            parseISO(row["Date of Other Institution"]),
+                            "dd-MM-yyy"
+                          )}
                     </TableCell>
                     {/* <TableCell align="left">{row["Institution Year"]}</TableCell> */}
-                    <TableCell
+                    {/* <TableCell
                       style={{ minWidth: "fit-content", whiteSpace: "nowrap" }}
                       align="left"
                     >
                       {!row.nextDate
                         ? "null"
                         : format?.(parseISO(row.nextDate), "dd-MM-yyy")}
-                    </TableCell>
+                    </TableCell> */}
 
                     <TableCell align="left">
                       <Button
@@ -640,7 +673,7 @@ export default function CasesListTable({
                         style={{ borderRadius: 50 }}
                         onClick={() => {
                           setCurrentId(row._id);
-                          console.log(currentId);
+                          // console.log(currentId);
                         }}
                       >
                         {<EditIcon />}
