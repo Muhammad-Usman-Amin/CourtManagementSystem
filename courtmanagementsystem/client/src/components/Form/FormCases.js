@@ -163,6 +163,8 @@ switch (str) {
     return 'MA - /6'
   case 'Civil-015-Execution Petitions':
     return 'Ex - /10';
+  case 'Civil-021-Objection Petitions':
+    return 'OP - /11';
 
   default:
     return '';

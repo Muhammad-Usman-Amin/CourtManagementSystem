@@ -6,7 +6,7 @@ import {
 import { useDispatch } from "react-redux";
 
 // import { getPosts } from './actions/posts';
-import { getCases, getInstitutionCases, getPendingCases } from "./actions/cases";
+import { getCases, getDisposalCases, getInstitutionCases, getPendingCases } from "./actions/cases";
 import { getEmployeeData } from "./actions/employeeData.js";
 // import courtLogo from "./images/courtLogo.png";
 // import Posts from './components/Posts/Posts';
@@ -49,8 +49,9 @@ const App = () => {
   useEffect(() => {
     dispatch(getEmployeeData());
     dispatch(getCases({reqQuery:"All"}));
-    dispatch(getPendingCases({reqQuery: "Pending"}));
-    dispatch(getInstitutionCases({reqQuery: "InstitutionCases"}));
+    dispatch(getPendingCases({reqQuery: "PendingCases", datePendency: new Date()}));
+    dispatch(getInstitutionCases({reqQuery: "InstitutionCases", dateInstitution: new Date()}));
+    dispatch(getDisposalCases({reqQuery: "DisposalCases", dateDisposal: new Date()}))
     dispatch(getControlCenter());
   }, [currentId, dispatch]);
 

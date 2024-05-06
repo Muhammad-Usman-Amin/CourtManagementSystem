@@ -120,20 +120,20 @@ const PrintInstitution = (props) => {
 
   const dispatch = useDispatch();
   // const data = useSelector((state) => state.causeLists);
-  const pendingCases = useSelector((state) => state.pendingCases);
+  const institutionCases = useSelector((state) => state.institutionCases);
   const controlPanel = useSelector((state) => state.controlCenter);
 
   let index = 0;
   const [serialNo, setSerialNo] = useState([]);
   useEffect(() => {
-    if (!pendingCases) dispatch(getCauseList({ dateCauseList: dateCauseList }));
-    for (let i = 1; i <= pendingCases.length; i++) {
+    if (!institutionCases) dispatch(getCauseList({ dateCauseList: dateCauseList }));
+    for (let i = 1; i <= institutionCases.length; i++) {
       // sno.push(i);
       // setSerialNo((oldArray) => [...oldArray, i]);
       setSerialNo((prevArray) => [...prevArray, i]);
     }
     // console.log(pendingCases);
-  }, [pendingCases, dateCauseList, dispatch]);
+  }, [institutionCases, dateCauseList, dispatch]);
 
   const classes = useStyles();
   const tableRef = React.useRef();
@@ -268,9 +268,9 @@ const PrintInstitution = (props) => {
         return str;
     }
   }
-  console.log(getActionEng("حاضری"));
+  // console.log(getActionEng("حاضری"));
 
-  return !pendingCases.length ? (
+  return !institutionCases.length ? (
     <LinearProgress />
   ) : (
     <>
@@ -370,7 +370,7 @@ const PrintInstitution = (props) => {
                   </TableCell>
                 </TableRow> */}
 
-                {pendingCases.map((caseFile) => (
+                {institutionCases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
                     getSecondToLastElementCategory(caseFile.causeListEntries)

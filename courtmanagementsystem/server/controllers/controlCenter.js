@@ -6,7 +6,7 @@ const router = express.Router();
 
 export const getPoData = async (req, res) => {
   // const query = req.query;
-  console.log('getpodata called');
+  // console.log('getpodata called');
 
   try {
     const poDataFile = await poData.find();

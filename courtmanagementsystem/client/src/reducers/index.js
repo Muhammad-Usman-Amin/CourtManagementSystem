@@ -1,11 +1,22 @@
-import { combineReducers } from 'redux';
-import posts from './posts';
-import cases from './cases';
-import pendingCases from './pendingCases';
-import institutionCases from './institutionCases';
-import employeeData from './employeeData';
-import queryData from './queryData';
-import causeLists from './causeLists';
-import controlCenter from './controlCenter';
+import { combineReducers } from "redux";
+import posts from "./posts";
+import cases from "./cases";
+import pendingCases from "./pendingCases";
+import institutionCases from "./institutionCases";
+import disposalCases from "./disposalCases";
+import employeeData from "./employeeData";
+import queryData from "./queryData";
+import causeLists from "./causeLists";
+import controlCenter from "./controlCenter";
 
-export default combineReducers({ posts, cases, pendingCases, institutionCases, employeeData, queryData, causeLists, controlCenter });
+export default combineReducers({
+  posts,
+  cases,
+  pendingCases,
+  institutionCases,
+  disposalCases,
+  employeeData,
+  queryData,
+  causeLists,
+  controlCenter,
+});

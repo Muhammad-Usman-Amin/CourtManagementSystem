@@ -4,6 +4,7 @@ export const DELETE = 'DELETE';
 export const FETCH_ALL = 'FETCH_ALL';
 export const FETCH_PENDING = 'FETCH_PENDING';
 export const FETCH_INSTITUTION = 'FETCH_INSTITUTION';
+export const FETCH_DISPOSAL = 'FETCH_DISPOSAL';
 export const LIKE = 'LIKE';
 export const QUERY = 'QUERY';
 export const FETCH_ALL_CAUSE_LIST = 'FETCH_ALL_CAUSE_LIST';

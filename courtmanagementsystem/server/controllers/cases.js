@@ -14,19 +14,42 @@ export const getCases = async (req, res) => {
       cases = await Case.find().sort({ ["Date of Institution "]: 1 });
     }
 
-    if (query.reqQuery === "Pending") {
+    const datePend = new Date(query.datePendency);
+    // Extract year and month
+    const monthPend = datePend.getMonth() + 1; // Months are zero-indexed (January is 0)
+    const yearPend = datePend.getFullYear();
+    // console.log(query.reqQuery);
+    // console.log(monthPend + " - " + yearPend);
+
+    if (query.reqQuery === "PendingCases") {
+      // cases = await Case.find({
+      //   $and: [
+      //     { disposed: { $ne: true } }, //$ne means not equal to
+      //     {
+      //       "Disposal OR Transfer Out Flag": {
+      //         $nin: ["Disposed", "Transfer Out"],
+      //       },
+      //     }, //$nin means not in array
+      //   ],
+      // }).sort({ ["Date of Institution "]: 1 });
+
       cases = await Case.find({
         $and: [
-          { disposed: { $ne: true } }, //$ne means not equal to
+          { disposed: { $ne: true } },
           {
             "Disposal OR Transfer Out Flag": {
               $nin: ["Disposed", "Transfer Out"],
             },
-          }, //$nin means not in array
+          },
+          // Add condition to filter by date
+          {
+            "Date of Institution ": {
+              $lte: new Date(yearPend, monthPend - 1, 31), // Set the day to the last day of the month to cover the entire month
+            },
+          },
         ],
       }).sort({ ["Date of Institution "]: 1 });
     }
-
     // if (query.reqQuery === "InstitutionCases") {
     //   cases = await Case.find({
     //     $and: [
@@ -40,22 +63,38 @@ export const getCases = async (req, res) => {
     //   }).sort({ ["Date of Institution "]: -1 });
     // }
 
-    if (query.reqQuery === "Disposed") {
+    const dateDisp = new Date(query.dateDisposal);
+    // Extract year and month
+    const monthDisp = dateDisp.getMonth() + 1; // Months are zero-indexed (January is 0)
+    const yearDisp = dateDisp.getFullYear();
+    console.log(query);
+    if (query.reqQuery === "DisposalCases") {
       cases = await Case.find({
-        $or: [
-          { disposed: true },
-          {
-            "Disposal OR Transfer Out Flag": {
-              $in: ["Disposed", "Transfer Out"],
-            },
-          },
-        ],
-      }).sort({ ["Date of Institution "]: 1 });
+        // $and: [
+        disposed: true,
+        "Disposal OR Transfer Out Flag": {
+          $in: ["Disposed", "Transfer Out"],
+        },
+        $expr: {
+          $and: [
+            { $eq: [{ $month: "$Date of Disposal Transfer Out" }, monthDisp] },
+            { $eq: [{ $year: "$Date of Disposal Transfer Out" }, yearDisp] },
+          ],
+        },
+        // ],
+      }).sort({ ["Date of Disposal Transfer Out"]: 1 });
       // }
     }
+    // console.log(query);
+
+    const dateObj = new Date(query.dateInstitution);
+    // Extract year and month
+    const month = dateObj.getMonth() + 1; // Months are zero-indexed (January is 0)
+    const year = dateObj.getFullYear();
+
     if (query.reqQuery === "InstitutionCases") {
-      const selectedMonth = 4; // Assuming the user selects April (Month 4)
-      const selectedYear = 2024; // Assuming the user selects the year 2024
+      const selectedMonth = month; // Assuming the user selects April (Month 4)
+      const selectedYear = year; // Assuming the user selects the year 2024
       cases = await Case.aggregate([
         {
           $match: {
