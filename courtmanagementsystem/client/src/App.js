@@ -35,7 +35,8 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import { lightTheme, darkTheme } from "./theme";
 import { getControlCenter } from "./actions/controlCenter.js";
 import PrintInstitution from "./components/CauseLists/PrintInstitution.jsx";
-
+import PrintDisposal from "./components/CauseLists/PrintDisposal.jsx";
+import PrintButton from "./components/CauseLists/PrintButton.jsx";
 const App = () => {
   // const classes = makeStyles();
   const classes2 = useStyles();
@@ -144,6 +145,8 @@ const App = () => {
                 <Route path="/PrintCauseList" component={PrintCauseList} />
                 <Route path="/PrintPendency" component={PrintPendency} />
                 <Route path="/PrintInstitution" component={PrintInstitution} />
+                <Route path="/PrintDisposal" component={PrintDisposal} />
+                <Route pathe="/PrintButton" component={PrintButton} />
 
                 <Route path="*">
                   <Error404Screen />

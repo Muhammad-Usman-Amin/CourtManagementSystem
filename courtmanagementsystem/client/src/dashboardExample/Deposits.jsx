@@ -8,6 +8,7 @@ import { format} from "date-fns";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getPendingCases } from "../actions/cases";
+import { CircularProgress } from "@material-ui/core";
 
 // function preventDefault(event) {
 //   event.preventDefault();
@@ -24,17 +25,20 @@ const useStyles = makeStyles({
 export default function Deposits() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getPendingCases({reqQuery:"Pending"}));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getPendingCases({reqQuery:"PendingCases"}));
+  // }, []);
   
   const pendingCases = useSelector((state) => state.pendingCases);
+  // console.log(pendingCases);
   const classes = useStyles();
-  return (
+  return !pendingCases.length ? (
+    <CircularProgress />
+  ) : (
     <React.Fragment>
       <Title>Total Pending Cases</Title>
       <Typography component="p" variant="h2">
-        {pendingCases?.length}
+        {pendingCases.length}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         as of {format(Date.now(), "dd MMMM, yyy")}

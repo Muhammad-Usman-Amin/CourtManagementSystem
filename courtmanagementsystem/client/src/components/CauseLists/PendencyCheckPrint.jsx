@@ -5,7 +5,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { useReactToPrint } from "react-to-print";
+// import { useReactToPrint } from "react-to-print";
 import { format, parseISO } from "date-fns";
 import { useSelector } from "react-redux";
 import { Button, Grid } from "@material-ui/core";
@@ -106,11 +106,12 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const PrintPendency = (props) => {
+const PendencyCheckPrint = (props) => {
   // const nextDate = props.location.nextDate;
   // const orderDate = props.location.state.orderDate;
   const orderDate = new Date();
-  const datePendency = props.location.state.datePendency;
+//   const datePendency = props.location.state.datePendency;
+  const datePendency = new Date();
 
   // console.log(orderDate);
   // const [dateCauseList] = useState(
@@ -136,20 +137,20 @@ const PrintPendency = (props) => {
   }, [pendingCases, dateCauseList, dispatch]);
 
   const classes = useStyles();
-  const tableRef = React.useRef();
+//   const tableRef = React.useRef();
 
-  const handlePrint = useReactToPrint({
-    content: () => tableRef.current,
-    pageStyle: `
-      @page {
-        size: auto;
-        margin: 0;
-      }
-      @top-right {
-        content: "Page " counter(page) " of " counter(pages);
-      }
-    `,
-  });
+//   const handlePrint = useReactToPrint({
+//     content: () => tableRef.current,
+//     pageStyle: `
+//       @page {
+//         size: auto;
+//         margin: 0;
+//       }
+//       @top-left-corner {
+//         content: "Page " counter(page) " of " counter(pages);
+//       }
+//     `,
+//   });
 
   function getSecondToLastElementCategory(array) {
     if (array.length === 0) {
@@ -286,19 +287,19 @@ const PrintPendency = (props) => {
       <div className={classes.centeredDiv} style={{ flexGrow: 1 }}>
         {/* <div> */}
         <Grid container spacing={2} alignContent="center" justify="center">
-          <Grid item container justify="center" xs={12}>
+          {/* <Grid item container justify="center" xs={12}>
             <Button
               // fullWidth
               variant="contained"
               color="secondary"
-              onClick={handlePrint}
+            //   onClick={handlePrint}
             >
               Print
             </Button>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} container justify="center">
             <Table
-              ref={tableRef}
+            //   ref={tableRef}
               size="small"
               className={classes.table}
               aria-label="simple table"
@@ -547,4 +548,4 @@ const PrintPendency = (props) => {
   );
 };
 
-export default PrintPendency;
+export default PendencyCheckPrint;

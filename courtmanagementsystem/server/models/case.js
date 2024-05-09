@@ -48,6 +48,7 @@ const caseSchema = new mongoose.Schema({
     default: 0,
   },
   nature: String,
+  isOtherNature: Boolean,
 });
 
 // {

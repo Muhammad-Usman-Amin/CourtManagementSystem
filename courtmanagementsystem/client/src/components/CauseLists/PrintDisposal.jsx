@@ -43,13 +43,14 @@ const useStyles = makeStyles((theme) =>
     },
     tableHeaderCell: {
       overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
+      // textOverflow: "ellipsis",
+      // whiteSpace: "nowrap"
       // fontFamily: "Jameel Noori Nastaleeq",
       border: "1px solid",
       borderColor: theme.palette.primary.black,
       fontWeight: "bold",
       fontSize: 8,
+      lineHeight: 1.2,
       // minWidth: "100px",
       // align: "center",
       textAlign: "center",
@@ -106,11 +107,11 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const PrintPendency = (props) => {
+const PrintDisposal = (props) => {
   // const nextDate = props.location.nextDate;
   // const orderDate = props.location.state.orderDate;
   const orderDate = new Date();
-  const datePendency = props.location.state.datePendency;
+  const dateDisposal = props.location.state.dateDisposal;
 
   // console.log(orderDate);
   // const [dateCauseList] = useState(
@@ -120,35 +121,25 @@ const PrintPendency = (props) => {
 
   const dispatch = useDispatch();
   // const data = useSelector((state) => state.causeLists);
-  const pendingCases = useSelector((state) => state.pendingCases);
+  const disposalCases = useSelector((state) => state.disposalCases);
   const controlPanel = useSelector((state) => state.controlCenter);
-
+  console.log(disposalCases);
   let index = 0;
   const [serialNo, setSerialNo] = useState([]);
   useEffect(() => {
-    if (!pendingCases) dispatch(getCauseList({ dateCauseList: dateCauseList }));
-    for (let i = 1; i <= pendingCases.length; i++) {
+    for (let i = 1; i <= disposalCases.length; i++) {
       // sno.push(i);
       // setSerialNo((oldArray) => [...oldArray, i]);
       setSerialNo((prevArray) => [...prevArray, i]);
     }
     // console.log(pendingCases);
-  }, [pendingCases, dateCauseList, dispatch]);
+  }, [disposalCases, dateDisposal, dispatch]);
 
   const classes = useStyles();
   const tableRef = React.useRef();
 
   const handlePrint = useReactToPrint({
     content: () => tableRef.current,
-    pageStyle: `
-      @page {
-        size: auto;
-        margin: 0;
-      }
-      @top-right {
-        content: "Page " counter(page) " of " counter(pages);
-      }
-    `,
   });
 
   function getSecondToLastElementCategory(array) {
@@ -217,12 +208,12 @@ const PrintPendency = (props) => {
       case "جواب و بحث":
       case "جواب درخواست":
         return "Replication";
-      case 'پروفارمہ ای':
-        return 'Proformas';
+      case "پروفارمہ ای":
+        return "Proformas";
       case "تنقیحات":
         return "Framing of Issues";
       case "شہادت":
-      case 'شہادت استغاثہ':
+      case "شہادت استغاثہ":
         return "Evidence";
       case "شہادت سائیل":
         return "Petitioner Evidence";
@@ -238,7 +229,7 @@ const PrintPendency = (props) => {
         return "Plaintiffs Evidence";
       case "بیلف رپورٹ":
       case "حاضری، بیلف رپورٹ":
-        return "Bailiff's Report";
+        return "Bailiff’s Report";
       case "نادرا رپورٹ":
         return "NADRA's Report";
       case "شہادت مدعا علیہ":
@@ -277,9 +268,9 @@ const PrintPendency = (props) => {
         return str;
     }
   }
-  console.log(getActionEng("حاضری"));
+  // console.log(getActionEng("حاضری"));
 
-  return !pendingCases.length && !controlPanel.length ? (
+  return !disposalCases.length ? (
     <LinearProgress />
   ) : (
     <>
@@ -309,7 +300,7 @@ const PrintPendency = (props) => {
                   <TableCell
                     className={classes.tableHeaderCell}
                     align="center"
-                    colSpan={9}
+                    colSpan={11}
                     style={{
                       fontSize: 12,
                       fontFamily: "Times Roman",
@@ -324,8 +315,8 @@ const PrintPendency = (props) => {
                     <br />
                     {/* بعدالت جناب زیب النساءعباسی سِول جج /جج فیملی کورٹ/علاقہ
                     قاضی-V دیر پائین بمقام تیمرگرہ */}
-                    {"CHRONOLOGICAL LIST FOR THE MONTH OF " +
-                      format?.(datePendency, "MMMM, yyyy").toUpperCase()}
+                    {"DISPOSAL LIST FOR THE MONTH OF " +
+                      format?.(dateDisposal, "MMMM, yyyy").toUpperCase()}
                   </TableCell>
                 </TableRow>
 
@@ -357,7 +348,13 @@ const PrintPendency = (props) => {
                     Institution Flag
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell} align="left">
-                    Current Pendency Stage
+                    Date of Disposal <br /> Transfer Out
+                  </TableCell>
+                  <TableCell className={classes.tableHeaderCell} align="left">
+                    Disposal OR <br /> Transfer Out Flag
+                  </TableCell>
+                  <TableCell className={classes.tableHeaderCell} align="left">
+                    Disposal Mode Flag
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -379,165 +376,186 @@ const PrintPendency = (props) => {
                   </TableCell>
                 </TableRow> */}
 
-                {pendingCases.map((caseFile) => (
-                  <>
-                    {caseFile.causeListEntries &&
-                    getSecondToLastElementCategory(caseFile.causeListEntries)
-                      .actionAbstract ? (
-                      <TableRow hover key={caseFile._id}>
-                        {/* <TableCell className={classes.tableEmptyCell}>
+                {disposalCases.length &&
+                  disposalCases.map((caseFile) => (
+                    <>
+                      {caseFile.causeListEntries &&
+                      getSecondToLastElementCategory(caseFile.causeListEntries)
+                        .actionAbstract ? (
+                        <TableRow hover key={caseFile._id}>
+                          {/* <TableCell className={classes.tableEmptyCell}>
                           {""}
                         </TableCell> */}
 
-                        <TableCell
-                          className={classes.tableCell}
-                          component="th"
-                          scope="row"
-                          style={{ maxWidth: 1 }}
-                        >
-                          {/* {data.indexOf(caseFile) + 1} */}
-                          {serialNo[index++]}
-                        </TableCell>
-                        <TableCell
-                          className={classes.tableCell}
-                          component="th"
-                          scope="row"
-                        >
-                          {caseFile["Case No"]}
-                        </TableCell>
+                          <TableCell
+                            className={classes.tableCell}
+                            component="th"
+                            scope="row"
+                            style={{ maxWidth: 1 }}
+                          >
+                            {/* {data.indexOf(caseFile) + 1} */}
+                            {serialNo[index++]}
+                          </TableCell>
+                          <TableCell
+                            className={classes.tableCell}
+                            component="th"
+                            scope="row"
+                          >
+                            {caseFile["Case No"]}
+                          </TableCell>
 
-                        <TableCell
-                          className={classes.tableCell}
-                          // className={[classes.tableCell, classes.tableCaseTitle]}
-                          align="left"
-                          // style={{ fontSize: 24 }}
-                        >
-                          {caseFile["Case Title"]}
-                        </TableCell>
-                        <TableCell
-                          className={classes.tableCell}
-                          // className={[classes.tableCell, classes.tableCaseTitle]}
-                          align="left"
-                          // style={{
-                          //   fontSize: "16px",
-                          //   direction: "ltr",
-                          //   lineHeight: 0.6,
-                          // }}
-                        >
-                          {caseFile["Category Per PQS"]}
-                        </TableCell>
+                          <TableCell
+                            className={classes.tableCell}
+                            // className={[classes.tableCell, classes.tableCaseTitle]}
+                            align="left"
+                            // style={{ fontSize: 24 }}
+                          >
+                            {caseFile["Case Title"]}
+                          </TableCell>
+                          <TableCell
+                            className={classes.tableCell}
+                            // className={[classes.tableCell, classes.tableCaseTitle]}
+                            align="left"
+                            // style={{
+                            //   fontSize: "16px",
+                            //   direction: "ltr",
+                            //   lineHeight: 0.6,
+                            // }}
+                          >
+                            {caseFile["Category Per PQS"]}
+                          </TableCell>
 
-                        <TableCell
-                          className={classes.tableCell}
-                          align="left"
-                          // style={{ lineHeight: 1, fontSize: "14px" }}
-                        >
-                          {!caseFile["Date of Institution "] ? (
-                            "null"
-                          ) : (
-                            <>
-                              <span style={{ fontSize: "" }}>
-                                {format?.(
-                                  parseISO(caseFile["Date of Institution "]),
-                                  "dd-MM-yyy"
-                                )}
-                              </span>
-                              <br />
-                            </>
-                          )}
-                        </TableCell>
-
-                        <TableCell
-                          className={classes.tableCell}
-                          align="left"
-                          // style={{ lineHeight: 1, fontSize: "14px" }}
-                        >
-                          {!caseFile["Date of Transfer In"] ? null : (
-                            <>
-                              {parseISO(
-                                caseFile["Date of Transfer In"]
-                              ).getFullYear() > 1980 ? (
-                                <>
-                                  <span style={{ fontSize: "" }}>
-                                    {caseFile["Date of Transfer In"]
-                                      ? format?.(
-                                          parseISO(
-                                            caseFile["Date of Transfer In"]
-                                          ),
-                                          "dd-MM-yyyy"
-                                        )
-                                      : null}
-                                  </span>
-                                  <br />
-                                </>
-                              ) : null}
-                            </>
-                          )}
-                        </TableCell>
-
-                        <TableCell
-                          className={classes.tableCell}
-                          align="left"
-                          // style={{ lineHeight: 1, fontSize: "14px" }}
-                        >
-                          {!caseFile["Date of Other Institution"] ? null : (
-                            <>
-                              {parseISO(
-                                caseFile["Date of Other Institution"]
-                              ).getFullYear() > 1980 ? (
-                                <>
-                                  <span style={{ fontSize: "" }}>
-                                    {caseFile["Date of Other Institution"]
-                                      ? format?.(
-                                          parseISO(
-                                            caseFile[
-                                              "Date of Other Institution"
-                                            ]
-                                          ),
-                                          "dd-MM-yyyy"
-                                        )
-                                      : null}
-                                  </span>
-                                  <br />
-                                </>
-                              ) : null}
-                            </>
-                          )}
-                        </TableCell>
-
-                        <TableCell className={classes.tableCell} align="left">
-                          {caseFile["Institution Flag"]
-                            ? caseFile["Institution Flag"]
-                            : ""}
-                        </TableCell>
-
-                        <TableCell className={classes.tableCell} align="left">
-                          {/* {caseFile.causeListEntries &&
-                            getSecondToLastElement(
-                              caseFile.causeListEntries
-                            ).actionAbstract.replace("، حاضری", "")} */}
-                          {getActionEng(
-                            caseFile.actionAbstract?.replace(
-                              /(، حاضری|، شہادت|، بحث|، حکم|، حاضری )/g,
-                              ""
-                            )
-                          )}
-                        </TableCell>
-                        {/* <TableCell className={classes.tableCell} align="left">
-                          {caseFile.causeListEntries &&
-                            format(
-                              parseISO(
-                                getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate
-                              ),
-                              "dd-MM-yyy"
+                          <TableCell
+                            className={classes.tableCell}
+                            align="left"
+                            // style={{ lineHeight: 1, fontSize: "14px" }}
+                          >
+                            {!caseFile["Date of Institution "] ? (
+                              "null"
+                            ) : (
+                              <>
+                                <span style={{ fontSize: "" }}>
+                                  {format?.(
+                                    parseISO(caseFile["Date of Institution "]),
+                                    "dd-MMM-yyy"
+                                  )}
+                                </span>
+                                <br />
+                              </>
                             )}
-                        </TableCell> */}
-                      </TableRow>
-                    ) : null}
-                  </>
-                ))}
+                          </TableCell>
+
+                          <TableCell
+                            className={classes.tableCell}
+                            align="left"
+                            // style={{ lineHeight: 1, fontSize: "14px" }}
+                          >
+                            {!caseFile["Date of Transfer In"] ? null : (
+                              <>
+                                {parseISO(
+                                  caseFile["Date of Transfer In"]
+                                ).getFullYear() > 1980 ? (
+                                  <>
+                                    <span style={{ fontSize: "" }}>
+                                      {caseFile["Date of Transfer In"]
+                                        ? format?.(
+                                            parseISO(
+                                              caseFile["Date of Transfer In"]
+                                            ),
+                                            "dd-MMM-yyyy"
+                                          )
+                                        : null}
+                                    </span>
+                                    <br />
+                                  </>
+                                ) : null}
+                              </>
+                            )}
+                          </TableCell>
+
+                          <TableCell
+                            className={classes.tableCell}
+                            align="left"
+                            // style={{ lineHeight: 1, fontSize: "14px" }}
+                          >
+                            {!caseFile["Date of Other Institution"] ? null : (
+                              <>
+                                {parseISO(
+                                  caseFile["Date of Other Institution"]
+                                ).getFullYear() > 1980 ? (
+                                  <>
+                                    <span style={{ fontSize: "" }}>
+                                      {caseFile["Date of Other Institution"]
+                                        ? format?.(
+                                            parseISO(
+                                              caseFile[
+                                                "Date of Other Institution"
+                                              ]
+                                            ),
+                                            "dd-MMM-yyyy"
+                                          )
+                                        : null}
+                                    </span>
+                                    <br />
+                                  </>
+                                ) : null}
+                              </>
+                            )}
+                          </TableCell>
+
+                          <TableCell className={classes.tableCell} align="left">
+                            {caseFile["Institution Flag"]
+                              ? caseFile["Institution Flag"]
+                              : ""}
+                          </TableCell>
+
+                          <TableCell
+                            className={classes.tableCell}
+                            align="left"
+                            // style={{ lineHeight: 1, fontSize: "14px" }}
+                          >
+                            {!caseFile[
+                              "Date of Disposal Transfer Out"
+                            ] ? null : (
+                              <>
+                                {parseISO(
+                                  caseFile["Date of Disposal Transfer Out"]
+                                ).getFullYear() > 1980 ? (
+                                  <>
+                                    <span style={{ fontSize: "" }}>
+                                      {caseFile["Date of Disposal Transfer Out"]
+                                        ? format?.(
+                                            parseISO(
+                                              caseFile[
+                                                "Date of Disposal Transfer Out"
+                                              ]
+                                            ),
+                                            "dd-MMM-yyyy"
+                                          )
+                                        : null}
+                                    </span>
+                                    <br />
+                                  </>
+                                ) : null}
+                              </>
+                            )}
+                          </TableCell>
+
+                          <TableCell className={classes.tableCell} align="left">
+                            {caseFile["Disposal OR Transfer Out Flag"]
+                              ? caseFile["Disposal OR Transfer Out Flag"]
+                              : ""}
+                          </TableCell>
+
+                          <TableCell className={classes.tableCell} align="left">
+                            {caseFile["Disposal Mode Flag"]
+                              ? caseFile["Disposal Mode Flag"]
+                              : "Not specified"}
+                          </TableCell>
+                        </TableRow>
+                      ) : null}
+                    </>
+                  ))}
               </TableBody>
             </Table>
           </Grid>
@@ -547,4 +565,4 @@ const PrintPendency = (props) => {
   );
 };
 
-export default PrintPendency;
+export default PrintDisposal;

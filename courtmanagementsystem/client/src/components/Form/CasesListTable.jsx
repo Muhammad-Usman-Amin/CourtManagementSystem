@@ -15,7 +15,12 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useDispatch } from "react-redux";
 import { format, parseISO } from "date-fns";
 // import { useReactToPrint } from "react-to-print";
-import { deleteCase, getDisposalCases, getInstitutionCases, getPendingCases } from "../../actions/cases";
+import {
+  deleteCase,
+  getDisposalCases,
+  getInstitutionCases,
+  getPendingCases,
+} from "../../actions/cases";
 import { getCases } from "../../actions/cases";
 
 import {
@@ -30,6 +35,8 @@ import {
   Button,
   CircularProgress,
   Grid,
+  Divider,
+  Typography,
 } from "@material-ui/core";
 import TabPanel from "./TabPanel";
 import {
@@ -38,6 +45,8 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { getEmployeeData } from "../../actions/causeLists";
+import { getControlCenter } from "../../actions/controlCenter";
 
 // import { getEmployeeData } from './actions/employeeData';
 // import { parseISO } from 'date-fns/parseISO';
@@ -68,13 +77,20 @@ export default function CasesListTable({
   setCurrentId,
   onPageChange,
 }) {
+  const dispatch = useDispatch();
   const tableRef = React.useRef();
-
+  useEffect(() => {
+    dispatch(getEmployeeData());
+    dispatch(getCases({reqQuery:"All"}));
+    dispatch(getPendingCases({reqQuery: "PendingCases", datePendency: new Date()}));
+    dispatch(getInstitutionCases({reqQuery: "InstitutionCases", dateInstitution: new Date()}));
+    dispatch(getDisposalCases({reqQuery: "DisposalCases", dateDisposal: new Date()}))
+    dispatch(getControlCenter());
+  }, [dispatch]);
   // const handlePrint = useReactToPrint({
   //   content: () => tableRef.current,
   // });
 
-  const dispatch = useDispatch();
   // const queryData = useSelector((state) => state.queryData);
   const classes = useStyles();
   useEffect(() => {
@@ -120,28 +136,35 @@ export default function CasesListTable({
 
   const getInst = async (data) => {
     // console.log(data);
-    dispatch(getInstitutionCases({reqQuery: "InstitutionCases", dateInstitution: data}));
+    dispatch(
+      getInstitutionCases({
+        reqQuery: "InstitutionCases",
+        dateInstitution: data,
+      })
+    );
     // console.log(cases);
   };
   const getPend = async (data) => {
     // console.log(data);
-    dispatch(getPendingCases({reqQuery: "PendingCases", datePendency: data}));
+    dispatch(getPendingCases({ reqQuery: "PendingCases", datePendency: data }));
     // console.log(cases);
   };
   const getDisp = async (data) => {
     // console.log(data);
-    dispatch(getDisposalCases({reqQuery: "DisposalCases", dateDisposal: data}));
+    dispatch(
+      getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: data })
+    );
     // console.log(cases);
   };
 
   useEffect(() => {
     getInst(dateInstitution);
   }, [dateInstitution]);
-  
+
   useEffect(() => {
     getPend(datePendency);
   }, [datePendency]);
-  
+
   useEffect(() => {
     getDisp(dateDisposal);
   }, [dateDisposal]);
@@ -152,7 +175,8 @@ export default function CasesListTable({
   ) : (
     <>
       {selectedTab === 1 && (
-        <Grid container spacing={2}>
+        <Grid container spacing={1} alignItems="center" justify="center"> 
+        {/* justifyContent not working so use justify=center */}
           <Grid item xs={12} sm={2}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
               <KeyboardDatePicker
@@ -175,8 +199,9 @@ export default function CasesListTable({
               />
             </MuiPickersUtilsProvider>
           </Grid>
-          <Grid item container justify="space-between" xs={12} sm={3}>
+          <Grid item container xs={12} sm={3} justify="space-between">
             {/* <Divider orientation="vertical" flexItem /> */}
+            <Divider orientation="vertical" flexItem />
             <Button
               variant="contained"
               size="large"
@@ -186,6 +211,7 @@ export default function CasesListTable({
               component={Link}
               to={{
                 pathname: "/PrintPendency",
+                // pathname: "/PrintButton",
                 state: {
                   datePendency: datePendency,
                 },
@@ -193,12 +219,24 @@ export default function CasesListTable({
             >
               Print Pendency
             </Button>
-            {/* <Divider orientation="vertical" flexItem /> */}
+            <Divider orientation="vertical" flexItem />
           </Grid>
+          <Grid item  xs={12} sm={3} >
+            {pendingCases.length && (
+            <Typography
+              style={{ fontSize: "1.5rem", fontWeight: "bold", }}
+            >
+              Total Pendency : {pendingCases.length}
+            </Typography>
+          )}
+          </Grid>
+          <Grid item xs={12} style={{ marginBottom: "8px" }}>
+          <Divider orientation="horizontal" />
+        </Grid>
         </Grid>
       )}
       {selectedTab === 2 && (
-        <Grid container spacing={2}>
+        <Grid container spacing={1} alignItems="center" justify="center">
           <Grid item xs={12} sm={2}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
               <KeyboardDatePicker
@@ -221,8 +259,8 @@ export default function CasesListTable({
               />
             </MuiPickersUtilsProvider>
           </Grid>
-          <Grid item container justify="space-between" xs={12} sm={3}>
-            {/* <Divider orientation="vertical" flexItem /> */}
+          <Grid item container xs={12} sm={3} justify="space-between">
+            <Divider orientation="vertical" flexItem />
             <Button
               variant="contained"
               size="large"
@@ -239,12 +277,24 @@ export default function CasesListTable({
             >
               Print Institutions
             </Button>
-            {/* <Divider orientation="vertical" flexItem /> */}
+            <Divider orientation="vertical" flexItem />
           </Grid>
+          <Grid item  xs={12} sm={3} >
+            {institutionCases.length && (
+            <Typography
+              style={{ fontSize: "1.5rem", fontWeight: "bold", }}
+            >
+              Total Institutions : {institutionCases.length}
+            </Typography>
+          )}
+          </Grid>
+          <Grid item xs={12} style={{ marginBottom: "8px" }}>
+          <Divider orientation="horizontal" />
+        </Grid>
         </Grid>
       )}
       {selectedTab === 3 && (
-        <Grid container spacing={2}>
+        <Grid container spacing={1} alignItems="center" justify="center">
           <Grid item xs={12} sm={2}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
               <KeyboardDatePicker
@@ -267,8 +317,8 @@ export default function CasesListTable({
               />
             </MuiPickersUtilsProvider>
           </Grid>
-          <Grid item container justify="space-between" xs={12} sm={3}>
-            {/* <Divider orientation="vertical" flexItem /> */}
+          <Grid item container xs={12} sm={3} justify="space-between">
+            <Divider orientation="vertical" flexItem />
             <Button
               variant="contained"
               size="large"
@@ -277,16 +327,28 @@ export default function CasesListTable({
               style={{ borderRadius: 5, marginBottom: 10 }}
               component={Link}
               to={{
-                pathname: "/PrintInstitution",
+                pathname: "/PrintDisposal",
                 state: {
-                  dateInstitution: dateInstitution,
+                  dateDisposal: dateDisposal,
                 },
               }}
             >
               Print Disposal
             </Button>
-            {/* <Divider orientation="vertical" flexItem /> */}
+            <Divider orientation="vertical" flexItem />
           </Grid>
+          <Grid item  xs={12} sm={3} >
+            {disposalCases.length && (
+            <Typography
+              style={{ fontSize: "1.5rem", fontWeight: "bold", }}
+            >
+              Total Disposal : {disposalCases.length}
+            </Typography>
+          )}
+          </Grid>
+          <Grid item xs={12} style={{ marginBottom: "8px" }}>
+          <Divider orientation="horizontal" />
+        </Grid>
         </Grid>
       )}
 
@@ -504,90 +566,94 @@ export default function CasesListTable({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {pendingCases.length && pendingCases.map((row) => (
-                  <TableRow hover key={row._id}>
-                    <TableCell component="th" scope="row">
-                      {pendingCases.indexOf(row) + 1}
-                    </TableCell>
-                    <TableCell align="left">{row["Case No"]}</TableCell>
-                    <TableCell align="left">
-                      {!row["Date of Institution "]
-                        ? "null"
-                        : format?.(
-                            parseISO(row["Date of Institution "]),
-                            "dd-MM-yyy"
-                          )}
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ color: row.disposed ? "red" : "inherit" }}
-                    >
-                      {row["Case Title"]}
-                    </TableCell>
-                    {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
-                    <TableCell
-                      align="right"
-                      style={{
-                        fontFamily: "Jameel Noori Nastaleeq",
-                        fontSize: 20,
-                      }}
-                    >
-                      {row.actionAbstract?.replace(
-                        /(، حاضری|، شہادت|، بحث|، حکم|، حاضری )/g,
-                        ""
-                      )}
-                    </TableCell>
-                    {/* <TableCell align="left">{row["Institution Year"]}</TableCell> */}
-                    <TableCell
-                      style={{ minWidth: "fit-content", whiteSpace: "nowrap" }}
-                      align="left"
-                    >
-                      {!row.nextDate
-                        ? "null"
-                        : format?.(parseISO(row.nextDate), "dd-MM-yyy")}
-                    </TableCell>
-
-                    <TableCell align="left">
-                      <Button
-                        size="small"
-                        color="primary"
-                        component={Link}
-                        to="/FormCases"
-                        variant="outlined"
-                        style={{ borderRadius: 50 }}
-                        onClick={() => {
-                          setCurrentId(row._id);
-                          console.log(currentId);
+                {pendingCases.length &&
+                  pendingCases.map((row) => (
+                    <TableRow hover key={row._id}>
+                      <TableCell component="th" scope="row">
+                        {pendingCases.indexOf(row) + 1}
+                      </TableCell>
+                      <TableCell align="left">{row["Case No"]}</TableCell>
+                      <TableCell align="left">
+                        {!row["Date of Institution "]
+                          ? "null"
+                          : format?.(
+                              parseISO(row["Date of Institution "]),
+                              "dd-MM-yyy"
+                            )}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{ color: row.disposed ? "red" : "inherit" }}
+                      >
+                        {row["Case Title"]}
+                      </TableCell>
+                      {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
+                      <TableCell
+                        align="right"
+                        style={{
+                          fontFamily: "Jameel Noori Nastaleeq",
+                          fontSize: 20,
                         }}
                       >
-                        {<EditIcon />}
-                      </Button>{" "}
-                    </TableCell>
-
-                    <TableCell align="left">
-                      <Button
-                        fontSize="small"
-                        color="secondary"
-                        size="small"
-                        variant="outlined"
-                        style={{ borderRadius: 50 }}
-                        onClick={
-                          () => handleDelete(row._id)
-
-                          // () => dispatch(deleteCase(row._id))
-                          // setCurrentId(row._id);
-                          // console.log(currentId);
-                        }
+                        {row.actionAbstract?.replace(
+                          /(، حاضری|، شہادت|، بحث|، حکم|، حاضری )/g,
+                          ""
+                        )}
+                      </TableCell>
+                      {/* <TableCell align="left">{row["Institution Year"]}</TableCell> */}
+                      <TableCell
+                        style={{
+                          minWidth: "fit-content",
+                          whiteSpace: "nowrap",
+                        }}
+                        align="left"
                       >
-                        {<DeleteIcon fontSize="small" />}
-                      </Button>
-                    </TableCell>
+                        {!row.nextDate
+                          ? "null"
+                          : format?.(parseISO(row.nextDate), "dd-MM-yyy")}
+                      </TableCell>
 
-                    {/* <TableCell align="right">{row.fat}</TableCell>
+                      <TableCell align="left">
+                        <Button
+                          size="small"
+                          color="primary"
+                          component={Link}
+                          to="/FormCases"
+                          variant="outlined"
+                          style={{ borderRadius: 50 }}
+                          onClick={() => {
+                            setCurrentId(row._id);
+                            console.log(currentId);
+                          }}
+                        >
+                          {<EditIcon />}
+                        </Button>{" "}
+                      </TableCell>
+
+                      <TableCell align="left">
+                        <Button
+                          fontSize="small"
+                          color="secondary"
+                          size="small"
+                          variant="outlined"
+                          style={{ borderRadius: 50 }}
+                          onClick={
+                            () => handleDelete(row._id)
+
+                            // () => dispatch(deleteCase(row._id))
+                            // setCurrentId(row._id);
+                            // console.log(currentId);
+                          }
+                        >
+                          {<DeleteIcon fontSize="small" />}
+                        </Button>
+                      </TableCell>
+
+                      {/* <TableCell align="right">{row.fat}</TableCell>
                             <TableCell align="right">{row.carbs}</TableCell>
                             <TableCell align="right">{row.protein}</TableCell> */}
-                  </TableRow>
-                ))}
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
             {/* <Button component={Link} to="/PrintDataTable">
@@ -666,42 +732,43 @@ export default function CasesListTable({
               </TableHead>
               <TableBody>
                 {/* {console.log(institutionCases)} */}
-                {institutionCases.length && institutionCases.map((row) => (
-                  <TableRow hover key={row._id}>
-                    <TableCell component="th" scope="row">
-                      {institutionCases.indexOf(row) + 1}
-                    </TableCell>
-                    <TableCell align="left">{row["Case No"]}</TableCell>
-                    <TableCell align="left">
-                      {!row["Date of Institution "]
-                        ? "null"
-                        : format?.(
-                            parseISO(row["Date of Institution "]),
-                            "dd-MM-yyy"
-                          )}
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ color: row.disposed ? "red" : "inherit" }}
-                    >
-                      {row["Case Title"]}
-                      {row["Date of Transfer In"] ? (
-                        <span style={{ color: "red" }}> (Transfered In)</span>
-                      ) : (
-                        ""
-                      )}
+                {institutionCases.length &&
+                  institutionCases.map((row) => (
+                    <TableRow hover key={row._id}>
+                      <TableCell component="th" scope="row">
+                        {institutionCases.indexOf(row) + 1}
+                      </TableCell>
+                      <TableCell align="left">{row["Case No"]}</TableCell>
+                      <TableCell align="left">
+                        {!row["Date of Institution "]
+                          ? "null"
+                          : format?.(
+                              parseISO(row["Date of Institution "]),
+                              "dd-MM-yyy"
+                            )}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{ color: row.disposed ? "red" : "inherit" }}
+                      >
+                        {row["Case Title"]}
+                        {row["Date of Transfer In"] ? (
+                          <span style={{ color: "red" }}> (Transfered In)</span>
+                        ) : (
+                          ""
+                        )}
 
-                      {row["Date of Other Institution"] ? (
-                        <span style={{ color: "red" }}>
-                          {" "}
-                          ({row["Institution Flag"]})
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </TableCell>
-                    {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
-                    {/* <TableCell
+                        {row["Date of Other Institution"] ? (
+                          <span style={{ color: "red" }}>
+                            {" "}
+                            ({row["Institution Flag"]})
+                          </span>
+                        ) : (
+                          ""
+                        )}
+                      </TableCell>
+                      {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
+                      {/* <TableCell
                       align="right"
                       style={{
                         fontFamily: "Jameel Noori Nastaleeq",
@@ -713,25 +780,25 @@ export default function CasesListTable({
                         ""
                       )}
                     </TableCell> */}
-                    <TableCell align="left">
-                      {!row["Date of Transfer In"]
-                        ? ""
-                        : format?.(
-                            parseISO(row["Date of Transfer In"]),
-                            "dd-MM-yyy"
-                          )}
-                    </TableCell>
+                      <TableCell align="left">
+                        {!row["Date of Transfer In"]
+                          ? ""
+                          : format?.(
+                              parseISO(row["Date of Transfer In"]),
+                              "dd-MM-yyy"
+                            )}
+                      </TableCell>
 
-                    <TableCell align="left">
-                      {!row["Date of Other Institution"]
-                        ? ""
-                        : format?.(
-                            parseISO(row["Date of Other Institution"]),
-                            "dd-MM-yyy"
-                          )}
-                    </TableCell>
-                    {/* <TableCell align="left">{row["Institution Year"]}</TableCell> */}
-                    {/* <TableCell
+                      <TableCell align="left">
+                        {!row["Date of Other Institution"]
+                          ? ""
+                          : format?.(
+                              parseISO(row["Date of Other Institution"]),
+                              "dd-MM-yyy"
+                            )}
+                      </TableCell>
+                      {/* <TableCell align="left">{row["Institution Year"]}</TableCell> */}
+                      {/* <TableCell
                       style={{ minWidth: "fit-content", whiteSpace: "nowrap" }}
                       align="left"
                     >
@@ -740,47 +807,47 @@ export default function CasesListTable({
                         : format?.(parseISO(row.nextDate), "dd-MM-yyy")}
                     </TableCell> */}
 
-                    <TableCell align="left">
-                      <Button
-                        size="small"
-                        color="primary"
-                        component={Link}
-                        to="/FormCases"
-                        variant="outlined"
-                        style={{ borderRadius: 50 }}
-                        onClick={() => {
-                          setCurrentId(row._id);
-                          // console.log(currentId);
-                        }}
-                      >
-                        {<EditIcon />}
-                      </Button>{" "}
-                    </TableCell>
+                      <TableCell align="left">
+                        <Button
+                          size="small"
+                          color="primary"
+                          component={Link}
+                          to="/FormCases"
+                          variant="outlined"
+                          style={{ borderRadius: 50 }}
+                          onClick={() => {
+                            setCurrentId(row._id);
+                            // console.log(currentId);
+                          }}
+                        >
+                          {<EditIcon />}
+                        </Button>{" "}
+                      </TableCell>
 
-                    <TableCell align="left">
-                      <Button
-                        fontSize="small"
-                        color="secondary"
-                        size="small"
-                        variant="outlined"
-                        style={{ borderRadius: 50 }}
-                        onClick={
-                          () => handleDelete(row._id)
+                      <TableCell align="left">
+                        <Button
+                          fontSize="small"
+                          color="secondary"
+                          size="small"
+                          variant="outlined"
+                          style={{ borderRadius: 50 }}
+                          onClick={
+                            () => handleDelete(row._id)
 
-                          // () => dispatch(deleteCase(row._id))
-                          // setCurrentId(row._id);
-                          // console.log(currentId);
-                        }
-                      >
-                        {<DeleteIcon fontSize="small" />}
-                      </Button>
-                    </TableCell>
+                            // () => dispatch(deleteCase(row._id))
+                            // setCurrentId(row._id);
+                            // console.log(currentId);
+                          }
+                        >
+                          {<DeleteIcon fontSize="small" />}
+                        </Button>
+                      </TableCell>
 
-                    {/* <TableCell align="right">{row.fat}</TableCell>
+                      {/* <TableCell align="right">{row.fat}</TableCell>
                             <TableCell align="right">{row.carbs}</TableCell>
                             <TableCell align="right">{row.protein}</TableCell> */}
-                  </TableRow>
-                ))}
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
             {/* <Button component={Link} to="/PrintDataTable">
@@ -858,42 +925,43 @@ export default function CasesListTable({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {disposalCases.length && disposalCases.map((row) => (
-                  <TableRow hover key={row._id}>
-                    <TableCell component="th" scope="row">
-                      {disposalCases.indexOf(row) + 1}
-                    </TableCell>
-                    <TableCell align="left">{row["Case No"]}</TableCell>
-                    <TableCell align="left">
-                      {!row["Date of Institution "]
-                        ? "null"
-                        : format?.(
-                            parseISO(row["Date of Institution "]),
-                            "dd-MM-yyy"
-                          )}
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ color: row.disposed ? "red" : "inherit" }}
-                    >
-                      {row["Case Title"]}
-                      {row["Date of Transfer In"] ? (
-                        <span style={{ color: "red" }}> (Transfered In)</span>
-                      ) : (
-                        ""
-                      )}
+                {disposalCases.length &&
+                  disposalCases.map((row) => (
+                    <TableRow hover key={row._id}>
+                      <TableCell component="th" scope="row">
+                        {disposalCases.indexOf(row) + 1}
+                      </TableCell>
+                      <TableCell align="left">{row["Case No"]}</TableCell>
+                      <TableCell align="left">
+                        {!row["Date of Institution "]
+                          ? "null"
+                          : format?.(
+                              parseISO(row["Date of Institution "]),
+                              "dd-MM-yyy"
+                            )}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{ color: row.disposed ? "red" : "inherit" }}
+                      >
+                        {row["Case Title"]}
+                        {row["Date of Transfer In"] ? (
+                          <span style={{ color: "red" }}> (Transfered In)</span>
+                        ) : (
+                          ""
+                        )}
 
-                      {row["Date of Other Institution"] ? (
-                        <span style={{ color: "red" }}>
-                          {" "}
-                          ({row["Institution Flag"]})
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </TableCell>
-                    {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
-                    {/* <TableCell
+                        {row["Date of Other Institution"] ? (
+                          <span style={{ color: "red" }}>
+                            {" "}
+                            ({row["Institution Flag"]})
+                          </span>
+                        ) : (
+                          ""
+                        )}
+                      </TableCell>
+                      {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
+                      {/* <TableCell
                       align="right"
                       style={{
                         fontFamily: "Jameel Noori Nastaleeq",
@@ -905,25 +973,25 @@ export default function CasesListTable({
                         ""
                       )}
                     </TableCell> */}
-                    <TableCell align="left">
-                      {!row["Date of Transfer In"]
-                        ? ""
-                        : format?.(
-                            parseISO(row["Date of Transfer In"]),
-                            "dd-MM-yyy"
-                          )}
-                    </TableCell>
+                      <TableCell align="left">
+                        {!row["Date of Transfer In"]
+                          ? ""
+                          : format?.(
+                              parseISO(row["Date of Transfer In"]),
+                              "dd-MM-yyy"
+                            )}
+                      </TableCell>
 
-                    <TableCell align="left">
-                      {!row["Date of Disposal Transfer Out"]
-                        ? ""
-                        : format?.(
-                            parseISO(row["Date of Disposal Transfer Out"]),
-                            "dd-MM-yyy"
-                          )}
-                    </TableCell>
-                    {/* <TableCell align="left">{row["Institution Year"]}</TableCell> */}
-                    {/* <TableCell
+                      <TableCell align="left">
+                        {!row["Date of Disposal Transfer Out"]
+                          ? ""
+                          : format?.(
+                              parseISO(row["Date of Disposal Transfer Out"]),
+                              "dd-MM-yyy"
+                            )}
+                      </TableCell>
+                      {/* <TableCell align="left">{row["Institution Year"]}</TableCell> */}
+                      {/* <TableCell
                       style={{ minWidth: "fit-content", whiteSpace: "nowrap" }}
                       align="left"
                     >
@@ -932,47 +1000,47 @@ export default function CasesListTable({
                         : format?.(parseISO(row.nextDate), "dd-MM-yyy")}
                     </TableCell> */}
 
-                    <TableCell align="left">
-                      <Button
-                        size="small"
-                        color="primary"
-                        component={Link}
-                        to="/FormCases"
-                        variant="outlined"
-                        style={{ borderRadius: 50 }}
-                        onClick={() => {
-                          setCurrentId(row._id);
-                          // console.log(currentId);
-                        }}
-                      >
-                        {<EditIcon />}
-                      </Button>{" "}
-                    </TableCell>
+                      <TableCell align="left">
+                        <Button
+                          size="small"
+                          color="primary"
+                          component={Link}
+                          to="/FormCases"
+                          variant="outlined"
+                          style={{ borderRadius: 50 }}
+                          onClick={() => {
+                            setCurrentId(row._id);
+                            // console.log(currentId);
+                          }}
+                        >
+                          {<EditIcon />}
+                        </Button>{" "}
+                      </TableCell>
 
-                    <TableCell align="left">
-                      <Button
-                        fontSize="small"
-                        color="secondary"
-                        size="small"
-                        variant="outlined"
-                        style={{ borderRadius: 50 }}
-                        onClick={
-                          () => handleDelete(row._id)
+                      <TableCell align="left">
+                        <Button
+                          fontSize="small"
+                          color="secondary"
+                          size="small"
+                          variant="outlined"
+                          style={{ borderRadius: 50 }}
+                          onClick={
+                            () => handleDelete(row._id)
 
-                          // () => dispatch(deleteCase(row._id))
-                          // setCurrentId(row._id);
-                          // console.log(currentId);
-                        }
-                      >
-                        {<DeleteIcon fontSize="small" />}
-                      </Button>
-                    </TableCell>
+                            // () => dispatch(deleteCase(row._id))
+                            // setCurrentId(row._id);
+                            // console.log(currentId);
+                          }
+                        >
+                          {<DeleteIcon fontSize="small" />}
+                        </Button>
+                      </TableCell>
 
-                    {/* <TableCell align="right">{row.fat}</TableCell>
+                      {/* <TableCell align="right">{row.fat}</TableCell>
                             <TableCell align="right">{row.carbs}</TableCell>
                             <TableCell align="right">{row.protein}</TableCell> */}
-                  </TableRow>
-                ))}
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
             {/* <Button component={Link} to="/PrintDataTable">

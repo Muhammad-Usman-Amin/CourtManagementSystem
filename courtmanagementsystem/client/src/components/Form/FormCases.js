@@ -1427,7 +1427,7 @@ switch (str) {
                 </>
               )}
             </Grid>
-            <Grid container spacing={1} fullWidth>
+            <Grid container spacing={1}>
               {isRemandedRestored && (
                 <>
                   <Grid item xs={12} sm={3}>

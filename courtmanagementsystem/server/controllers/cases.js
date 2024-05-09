@@ -67,7 +67,7 @@ export const getCases = async (req, res) => {
     // Extract year and month
     const monthDisp = dateDisp.getMonth() + 1; // Months are zero-indexed (January is 0)
     const yearDisp = dateDisp.getFullYear();
-    console.log(query);
+    // console.log(query);
     if (query.reqQuery === "DisposalCases") {
       cases = await Case.find({
         // $and: [
@@ -82,7 +82,7 @@ export const getCases = async (req, res) => {
           ],
         },
         // ],
-      }).sort({ ["Date of Disposal Transfer Out"]: 1 });
+      }).sort({ ["Date of Institution "]: 1 });
       // }
     }
     // console.log(query);
@@ -177,6 +177,7 @@ export const createCase = async (req, res) => {
     orderDate: orderDate,
     orderNumber,
     nature,
+    isOtherNature,
     AcquittalORConviction,
   } = body;
   // console.log(caseTitle);
@@ -211,6 +212,7 @@ export const createCase = async (req, res) => {
     orderDate: orderDate,
     orderNumber: orderNumber,
     nature: nature,
+    isOtherNature: isOtherNature,
     AcquittalORConviction: AcquittalORConviction,
   });
 
