@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  CssBaseline,
-} from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { Container, CssBaseline } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 
 // import { getPosts } from './actions/posts';
-import { getCases, getDisposalCases, getInstitutionCases, getPendingCases } from "./actions/cases";
+import {
+  getCases,
+  getDisposalCases,
+  getInstitutionCases,
+  getPendingCases,
+} from "./actions/cases";
 import { getEmployeeData } from "./actions/employeeData.js";
 // import courtLogo from "./images/courtLogo.png";
 // import Posts from './components/Posts/Posts';
@@ -33,7 +35,9 @@ import useStyles from "./dashboardExample/dashboard";
 import Error404Screen from "./screens/Error404Screen";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { lightTheme, darkTheme } from "./theme";
-import { getControlCenter } from "./actions/controlCenter.js";
+import {
+  getControlCenter,
+} from "./actions/controlCenter.js";
 import PrintInstitution from "./components/CauseLists/PrintInstitution.jsx";
 import PrintDisposal from "./components/CauseLists/PrintDisposal.jsx";
 import PrintButton from "./components/CauseLists/PrintButton.jsx";
@@ -49,10 +53,19 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getEmployeeData());
-    dispatch(getCases({reqQuery:"All"}));
-    dispatch(getPendingCases({reqQuery: "PendingCases", datePendency: new Date()}));
-    dispatch(getInstitutionCases({reqQuery: "InstitutionCases", dateInstitution: new Date()}));
-    dispatch(getDisposalCases({reqQuery: "DisposalCases", dateDisposal: new Date()}))
+    dispatch(getCases({ reqQuery: "All" }));
+    dispatch(
+      getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
+    );
+    dispatch(
+      getInstitutionCases({
+        reqQuery: "InstitutionCases",
+        dateInstitution: new Date(),
+      })
+    );
+    dispatch(
+      getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: new Date() })
+    );
     dispatch(getControlCenter());
   }, [currentId, dispatch]);
 
@@ -60,21 +73,20 @@ const App = () => {
   //   dispatch(getControlCenter());
   // },[]);
 
-  const [themeMode, setThemeMode] = useState("Light"); // 'day' or 'night'
-  const toggleThemeMode = () => {
-    setThemeMode((prevMode) => (prevMode === "Light" ? "Dark" : "Light"));
-  };
+  const controlCenter = useSelector((state) => state.controlCenter[0]);
+  
 
   return (
-    <ThemeProvider theme={themeMode === "Light" ? lightTheme : darkTheme}>
+    // <ThemeProvider theme={themeMode === "Light" ? lightTheme : darkTheme}>
+    <ThemeProvider theme={controlCenter?.themeMode === "Light" ? lightTheme : darkTheme}>
       <Router>
         {/* <div className={classes2.root} style={{ backgroundColor: 'aliceblue' }}> */}
         <div className={classes2.root}>
           <CssBaseline />
           <SimpleDrawer
             title={pageTitle}
-            toggleThemeMode={toggleThemeMode}
-            themeMode={themeMode}
+            // toggleThemeMode={toggleThemeMode}
+            // themeMode={themeMode}
           />
           <main className={classes2.content}>
             <div className={classes2.appBarSpacer} />

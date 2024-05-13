@@ -40,7 +40,8 @@ export const createPoData = async (req, res) => {
     //   netJudicialWorkingDays,
     //   incumbencyStatus,
     //   quartelrlyBacklogClearanceTarget,
-    // }]
+    // }],
+    themeMode,
   } = body;
 
   try {
@@ -63,7 +64,7 @@ export const createPoData = async (req, res) => {
     courtNumber,
     stationDistrict,
     courtStatus, //use for Regular, CPC, FamilyCourt etc
-    monthlyData
+    monthlyData,
     // monthlyData: [
     //   {
     //   statementMonth,
@@ -77,6 +78,7 @@ export const createPoData = async (req, res) => {
     //   incumbencyStatus,
     //   quartelrlyBacklogClearanceTarget,
     // }],
+    themeMode
   });
 
   try {

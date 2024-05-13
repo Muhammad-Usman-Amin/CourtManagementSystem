@@ -32,7 +32,8 @@ const poSchema = new mongoose.Schema({
     netJudicialWorkingDays: String,
     incumbencyStatus: String,
     quartelrlyBacklogClearanceTarget: String,
-  }]
+  }],
+  themeMode: String,
 });
 
 const poData = mongoose.model("poFile", poSchema, "poData");

@@ -83,7 +83,8 @@ const useStyles2 = makeStyles((theme) => ({
   },
 }));
 
-const ControlCenter = () => {
+
+const ControlCenter =  () => {
   const dispatch = useDispatch();
   const poFile = useSelector((state) => state.controlCenter);
   const classes2 = useStyles2();
@@ -228,6 +229,7 @@ const ControlCenter = () => {
     setPoData({ ...poData, courtStatus: cStatus });
     // console.log(poData.courtStatus);
   }, [cStatus]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -1063,9 +1065,8 @@ const ControlCenter = () => {
         </Grid>
       </form>
     </Paper>
-  );
-};
-
+  )
+}
 export default ControlCenter;
 
 // import React from 'react';

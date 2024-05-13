@@ -81,10 +81,19 @@ export default function CasesListTable({
   const tableRef = React.useRef();
   useEffect(() => {
     dispatch(getEmployeeData());
-    dispatch(getCases({reqQuery:"All"}));
-    dispatch(getPendingCases({reqQuery: "PendingCases", datePendency: new Date()}));
-    dispatch(getInstitutionCases({reqQuery: "InstitutionCases", dateInstitution: new Date()}));
-    dispatch(getDisposalCases({reqQuery: "DisposalCases", dateDisposal: new Date()}))
+    dispatch(getCases({ reqQuery: "All" }));
+    dispatch(
+      getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
+    );
+    dispatch(
+      getInstitutionCases({
+        reqQuery: "InstitutionCases",
+        dateInstitution: new Date(),
+      })
+    );
+    dispatch(
+      getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: new Date() })
+    );
     dispatch(getControlCenter());
   }, [dispatch]);
   // const handlePrint = useReactToPrint({
@@ -169,15 +178,23 @@ export default function CasesListTable({
     getDisp(dateDisposal);
   }, [dateDisposal]);
 
-
   return !cases.length ? (
-    <CircularProgress />
+    <Grid
+      container
+      justify="center"
+      alignItems="center"
+      style={{ height: "75vh", width: "75vw" }}
+    >
+      {/* <Grid item xs={12} sm={12} style={{ height: '100vh' }}> */}
+      <CircularProgress />
+      {/* </Grid> */}
+    </Grid>
   ) : (
     <>
-      {selectedTab === 1 && (
-        <Grid container spacing={1} alignItems="center" justify="center"> 
-        {/* justifyContent not working so use justify=center */}
-          <Grid item xs={12} sm={2}>
+      {selectedTab === 0 && (
+        <Grid container spacing={1} alignItems="center" justify="center">
+          {/* justifyContent not working so use justify=center */}
+          {/* <Grid item xs={12} sm={2}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
               <KeyboardDatePicker
                 // margin="normal"
@@ -200,7 +217,7 @@ export default function CasesListTable({
             </MuiPickersUtilsProvider>
           </Grid>
           <Grid item container xs={12} sm={3} justify="space-between">
-            {/* <Divider orientation="vertical" flexItem /> */}
+            
             <Divider orientation="vertical" flexItem />
             <Button
               variant="contained"
@@ -220,19 +237,95 @@ export default function CasesListTable({
               Print Pendency
             </Button>
             <Divider orientation="vertical" flexItem />
-          </Grid>
-          <Grid item  xs={12} sm={3} >
+          </Grid> */}
+          <Grid item xs={12} sm={12}>
             {pendingCases.length && (
-            <Typography
-              style={{ fontSize: "1.5rem", fontWeight: "bold", }}
-            >
-              Total Pendency : {pendingCases.length}
-            </Typography>
-          )}
+              <Typography style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+                Total Registered Cases : {cases.length}
+              </Typography>
+            )}
           </Grid>
           <Grid item xs={12} style={{ marginBottom: "8px" }}>
-          <Divider orientation="horizontal" />
+            <Divider orientation="horizontal" />
+          </Grid>
         </Grid>
+      )}
+      {selectedTab === 1 && (
+        <Grid container spacing={1} alignItems="center" justify="center">
+          {/* justifyContent not working so use justify=center */}
+          <Grid item xs={12} sm={2}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+              <KeyboardDatePicker
+                // margin="normal"
+                views={["month"]}
+                id="date-picker-causeList"
+                label="Select Pendency Month"
+                autoOk
+                variant="inline"
+                format="MMMM yyyy"
+                value={datePendency}
+                onChange={(date) => {
+                  // setCaseId(caseFile._id);
+                  // setCurrentId(caseFile._id);
+                  setDatePendency(date);
+                }}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+            </MuiPickersUtilsProvider>
+          </Grid>
+          <Grid item container xs={12} sm={6} justify="space-between">
+            {/* <Divider orientation="vertical" flexItem /> */}
+            <Divider orientation="vertical" flexItem />
+            <Button
+              variant="contained"
+              size="large"
+              // startIcon={<EditIcon />}
+              color="primary"
+              style={{ borderRadius: 5, marginBottom: 10 }}
+              component={Link}
+              to={{
+                pathname: "/PrintPendency",
+                // pathname: "/PrintButton",
+                state: {
+                  datePendency: datePendency,
+                  backlog: 'false',
+                },
+              }}
+            >
+              Print Pendency
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              // startIcon={<EditIcon />}
+              color="primary"
+              style={{ borderRadius: 5, marginBottom: 10 }}
+              component={Link}
+              to={{
+                pathname: "/PrintPendency",
+                // pathname: "/PrintButton",
+                state: {
+                  datePendency: datePendency,
+                  backlog: 'true',
+                },
+              }}
+            >
+              Print Backlog
+            </Button>
+            <Divider orientation="vertical" flexItem />
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            {pendingCases.length && (
+              <Typography style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+                Total Pendency : {pendingCases.length}
+              </Typography>
+            )}
+          </Grid>
+          <Grid item xs={12} style={{ marginBottom: "8px" }}>
+            <Divider orientation="horizontal" />
+          </Grid>
         </Grid>
       )}
       {selectedTab === 2 && (
@@ -279,18 +372,14 @@ export default function CasesListTable({
             </Button>
             <Divider orientation="vertical" flexItem />
           </Grid>
-          <Grid item  xs={12} sm={3} >
-            {institutionCases.length && (
-            <Typography
-              style={{ fontSize: "1.5rem", fontWeight: "bold", }}
-            >
-              Total Institutions : {institutionCases.length}
-            </Typography>
-          )}
+          <Grid item xs={12} sm={3}>
+              <Typography style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+                Total Institutions : {institutionCases.length}
+              </Typography>
           </Grid>
           <Grid item xs={12} style={{ marginBottom: "8px" }}>
-          <Divider orientation="horizontal" />
-        </Grid>
+            <Divider orientation="horizontal" />
+          </Grid>
         </Grid>
       )}
       {selectedTab === 3 && (
@@ -337,18 +426,14 @@ export default function CasesListTable({
             </Button>
             <Divider orientation="vertical" flexItem />
           </Grid>
-          <Grid item  xs={12} sm={3} >
-            {disposalCases.length && (
-            <Typography
-              style={{ fontSize: "1.5rem", fontWeight: "bold", }}
-            >
-              Total Disposal : {disposalCases.length}
-            </Typography>
-          )}
+          <Grid item xs={12} sm={3}>
+              <Typography style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+                Total Disposal : {disposalCases.length}
+              </Typography>
           </Grid>
           <Grid item xs={12} style={{ marginBottom: "8px" }}>
-          <Divider orientation="horizontal" />
-        </Grid>
+            <Divider orientation="horizontal" />
+          </Grid>
         </Grid>
       )}
 
@@ -732,7 +817,13 @@ export default function CasesListTable({
               </TableHead>
               <TableBody>
                 {/* {console.log(institutionCases)} */}
-                {institutionCases.length &&
+                {!institutionCases.length ? 
+                  <TableRow>
+                    <TableCell colSpan={8} align="center">
+                      No Cases Found
+                    </TableCell>
+                  </TableRow>
+                :
                   institutionCases.map((row) => (
                     <TableRow hover key={row._id}>
                       <TableCell component="th" scope="row">
@@ -925,7 +1016,13 @@ export default function CasesListTable({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {disposalCases.length &&
+                {!disposalCases.length ? (
+                  <TableRow>
+                    <TableCell colSpan={8} align="center">
+                      No Cases Found
+                    </TableCell>
+                  </TableRow>
+                ) : (
                   disposalCases.map((row) => (
                     <TableRow hover key={row._id}>
                       <TableCell component="th" scope="row">
@@ -1040,7 +1137,8 @@ export default function CasesListTable({
                             <TableCell align="right">{row.carbs}</TableCell>
                             <TableCell align="right">{row.protein}</TableCell> */}
                     </TableRow>
-                  ))}
+                  ))
+                )}
               </TableBody>
             </Table>
             {/* <Button component={Link} to="/PrintDataTable">

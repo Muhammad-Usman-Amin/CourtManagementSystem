@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+// import { ThemeProvider } from '@material-ui/core/styles';
+
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,8 +13,9 @@ import { useSelector } from "react-redux";
 import { Button, Grid } from "@material-ui/core";
 
 import { useDispatch } from "react-redux";
-import { getCauseList } from "../../actions/causeLists";
+// import { getCauseList } from "../../actions/causeLists";
 import { LinearProgress } from "@material-ui/core";
+import { lightTheme } from "../../theme";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -50,6 +53,7 @@ const useStyles = makeStyles((theme) =>
       borderColor: theme.palette.primary.black,
       fontWeight: "bold",
       fontSize: 8,
+      lineHeight: 1.3,
       // minWidth: "100px",
       // align: "center",
       textAlign: "center",
@@ -111,12 +115,13 @@ const PrintPendency = (props) => {
   // const orderDate = props.location.state.orderDate;
   const orderDate = new Date();
   const datePendency = props.location.state.datePendency;
+  const backlog = props.location.state.backlog;
 
   // console.log(orderDate);
   // const [dateCauseList] = useState(
   //   props.location.state.dateCauseList
   // );
-  const [dateCauseList] = useState(orderDate);
+  // const [dateCauseList] = useState(orderDate);
 
   const dispatch = useDispatch();
   // const data = useSelector((state) => state.causeLists);
@@ -126,52 +131,32 @@ const PrintPendency = (props) => {
   let index = 0;
   const [serialNo, setSerialNo] = useState([]);
   useEffect(() => {
-    if (!pendingCases) dispatch(getCauseList({ dateCauseList: dateCauseList }));
+    // if (!pendingCases) dispatch(getCauseList({ dateCauseList: dateCauseList }));
     for (let i = 1; i <= pendingCases.length; i++) {
       // sno.push(i);
       // setSerialNo((oldArray) => [...oldArray, i]);
       setSerialNo((prevArray) => [...prevArray, i]);
     }
     // console.log(pendingCases);
-  }, [pendingCases, dateCauseList, dispatch]);
+  }, [pendingCases, dispatch]);
 
   const classes = useStyles();
   const tableRef = React.useRef();
 
   const handlePrint = useReactToPrint({
     content: () => tableRef.current,
-    pageStyle: `
-      @page {
-        size: auto;
-        margin: 0;
-      }
-      @top-right {
-        content: "Page " counter(page) " of " counter(pages);
-      }
-    `,
+    // pageStyle: `
+    //   @page {
+    //     size: auto;
+    //     margin: 0;
+    //   }
+    //   @top-right {
+    //     content: "Page " counter(page) " of " counter(pages);
+    //   }
+    // `,
   });
 
   function getSecondToLastElementCategory(array) {
-    if (array.length === 0) {
-      return null;
-    }
-    if (array.length > 1) {
-      if (
-        new Date(array[array.length - 1].orderDate).toDateString() ===
-        new Date(orderDate).toDateString()
-      ) {
-        // console.log(
-        //   new Date(array[array.length - 1].orderDate).toDateString() ===
-        //     new Date(orderDate).toDateString()
-        // );
-        return array[array.length - 2];
-      }
-    }
-    // console.log("-1 exec");
-    return array[array.length - 1]; // or any other appropriate value or action
-  }
-
-  function getSecondToLastElement(array) {
     if (array.length === 0) {
       return null;
     }
@@ -277,12 +262,19 @@ const PrintPendency = (props) => {
         return str;
     }
   }
-  console.log(getActionEng("حاضری"));
+  // console.log(getActionEng("حاضری"));
+  let filteredCases = pendingCases;
+if(backlog === 'true'){
+  filteredCases = pendingCases.filter(
+    (caseData) => new Date(caseData["Date of Institution "]) <= new Date('2020-08-31')
+  );
+}
 
   return !pendingCases.length && !controlPanel.length ? (
     <LinearProgress />
   ) : (
     <>
+    {/* <ThemeProvider theme={lightTheme}> */}
       <div className={classes.centeredDiv} style={{ flexGrow: 1 }}>
         {/* <div> */}
         <Grid container spacing={2} alignContent="center" justify="center">
@@ -306,6 +298,29 @@ const PrintPendency = (props) => {
             >
               <TableHead>
                 <TableRow>
+                {backlog === 'true' ? 
+                  <TableCell
+                    className={classes.tableHeaderCell}
+                    align="center"
+                    colSpan={9}
+                    style={{
+                      fontSize: 12,
+                      fontFamily: "Times Roman",
+                      // fontStyle: "",
+                      fontWeight: "bold",
+                      // padding: "10px",
+                      margin: 0, // Set margin to 0
+                      padding: 0,
+                    }}
+                  >
+                    {controlPanel[0]?.causeListEnglishName}
+                    <br />
+                    {/* بعدالت جناب زیب النساءعباسی سِول جج /جج فیملی کورٹ/علاقہ
+                    قاضی-V دیر پائین بمقام تیمرگرہ */}
+                    {"BACKLOG CASES LIST FOR THE MONTH OF " +
+                      format?.(datePendency, "MMMM, yyyy").toUpperCase()}
+                  </TableCell>
+                :
                   <TableCell
                     className={classes.tableHeaderCell}
                     align="center"
@@ -327,6 +342,7 @@ const PrintPendency = (props) => {
                     {"CHRONOLOGICAL LIST FOR THE MONTH OF " +
                       format?.(datePendency, "MMMM, yyyy").toUpperCase()}
                   </TableCell>
+                }
                 </TableRow>
 
                 {/* <TableHead> */}
@@ -379,7 +395,7 @@ const PrintPendency = (props) => {
                   </TableCell>
                 </TableRow> */}
 
-                {pendingCases.map((caseFile) => (
+                {filteredCases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
                     getSecondToLastElementCategory(caseFile.causeListEntries)
@@ -543,6 +559,7 @@ const PrintPendency = (props) => {
           </Grid>
         </Grid>
       </div>
+    {/* </ThemeProvider> */}
     </>
   );
 };

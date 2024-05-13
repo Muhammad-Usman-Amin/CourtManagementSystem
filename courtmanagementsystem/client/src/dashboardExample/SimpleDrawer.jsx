@@ -1,11 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
 // import CssBaseline from '@material-ui/core/CssBaseline';
-import Box from "@material-ui/core/Box";
 
 // import MuiAppBar from '@mui/material/AppBar';
-import { styled, createTheme, ThemeProvider } from "@material-ui/core/styles";
 // import MuiDrawer from '@mui/material/Drawer';
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -14,12 +11,8 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
 import Badge from "@material-ui/core/Badge";
-import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -34,9 +27,9 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import ControlCenter from "../components/Form/ControlCenter";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { colors } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
+import { updateControlCenter } from "./../actions/controlCenter";
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -45,12 +38,13 @@ const StyledBadge = withStyles((theme) => ({
     // border: `2px solid ${theme.palette.background.paper}`,
     // padding: "0 4px",
     fontSize: "8px",
-    textOverflow: 'ellipsis',
-    whiteSpace: "nowrap"
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   },
 }))(Badge);
 
-export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
+export default function SimpleDrawer({ title }) {
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   const [openModal, setOpenModal] = React.useState(false);
@@ -71,8 +65,37 @@ export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
   };
   // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const controlPanel = useSelector((state) => state.controlCenter);
-  // console.log(controlPanel);
+  const controlCenter = useSelector((state) => state.controlCenter[0]);
+  const [themeMode, setThemeMode] = useState("Light"); // 'day' or 'night'
+
+  useEffect(() => {
+    if (!controlCenter?.themeMode) {
+      return;
+    } else {
+      controlCenter.themeMode && setThemeMode(controlCenter.themeMode);
+    }
+  }, [controlCenter]);
+
+  const toggleThemeMode = () => {
+    setThemeMode((prevMode) => (prevMode === "Light" ? "Dark" : "Light"));
+    // setThemeMode(() => (controlCenter[0].themeMode === "Light" ? "Dark" : "Light"));
+  };
+
+  const [poID, setPoId] = useState(null);
+  useEffect(() => {
+    if (controlCenter) setPoId(controlCenter._id);
+    // console.log(controlCenter);
+  }, [controlCenter]);
+
+  useEffect(() => {
+    if (poID)
+      dispatch(
+        updateControlCenter(controlCenter._id, {
+          ...controlCenter,
+          themeMode: themeMode,
+        })
+      );
+  }, [themeMode]);
 
   return (
     <div className={classes.root}>
@@ -117,9 +140,7 @@ export default function SimpleDrawer({ title, toggleThemeMode, themeMode }) {
                 <EventSeatIcon />
               </Badge> */}
               <StyledBadge
-                badgeContent={
-                  controlPanel.length && controlPanel[0].courtNumber
-                }
+                badgeContent={controlCenter && controlCenter.courtNumber}
                 color="secondary"
               >
                 <EventSeatIcon />
