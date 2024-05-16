@@ -6,6 +6,7 @@ import {
   DELETE,
   QUERY,
   LIKE,
+  FETCH_RANGE_CAUSE_LIST,
 } from "../constants/actionTypes";
 import * as api from "../api";
 
@@ -14,6 +15,15 @@ export const getCauseList = (params) => async (dispatch) => {
   try {
     const { data } = await api.fetchCauseList(params);
     dispatch({ type: FETCH_ALL_CAUSE_LIST, payload: data });
+    // console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getRangeCauseLists = (params) => async (dispatch) => {
+  try {
+    const { data } = await api.fetchCauseList(params);
+    dispatch({ type: FETCH_RANGE_CAUSE_LIST, payload: data });
     // console.log(data);
   } catch (error) {
     console.log(error);

@@ -7,6 +7,7 @@ import disposalCases from "./disposalCases";
 import employeeData from "./employeeData";
 import queryData from "./queryData";
 import causeLists from "./causeLists";
+import rangeCauseLists from "./rangeCauseLists";
 import controlCenter from "./controlCenter";
 
 export default combineReducers({
@@ -18,5 +19,6 @@ export default combineReducers({
   employeeData,
   queryData,
   causeLists,
+  rangeCauseLists,
   controlCenter,
 });

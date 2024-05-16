@@ -6,114 +6,228 @@ import express from "express";
 const router = express.Router();
 
 export const getCauseList = async (req, res) => {
-  const { dateCauseList } = req.query;
-  // console.log(dateCauseList);
-  //   console.log(new Date(dateCauseList).toDateString());
-  //   const date = new Date(dateCauseList).toDateString();
-  const selectedDate = new Date(dateCauseList);
-  // console.log(new Date().toISOString().split("T")[0]); //prints 2024-04-25
-  //   const today = new Date(dateCauseList);
-  //   today.setUTCHours(0, 0, 0, 0);
-  //   console.log(selectedDate);
-  //   console.log(selectedDate.toISOString().split("T")[0]);
+  if (req.query.dateCauseList) {
+    const { dateCauseList } = req.query;
+    // console.log(dateCauseList);
+    //   console.log(new Date(dateCauseList).toDateString());
+    //   const date = new Date(dateCauseList).toDateString();
+    const selectedDate = new Date(dateCauseList);
+    // console.log(new Date().toISOString().split("T")[0]); //prints 2024-04-25
+    //   const today = new Date(dateCauseList);
+    //   today.setUTCHours(0, 0, 0, 0);
+    //   console.log(selectedDate);
+    //   console.log(selectedDate.toISOString().split("T")[0]);
 
-  // try {
+    // try {
 
-  // const employeesData = await EmployeeData.find();
+    // const employeesData = await EmployeeData.find();
 
-  // const query = await EmployeeData.find({ designation: query.designation })
-  // .sort({ dateOfDesignation: 1 });
+    // const query = await EmployeeData.find({ designation: query.designation })
+    // .sort({ dateOfDesignation: 1 });
 
-  // const today = new Date(); // Assuming today's date
+    // const today = new Date(); // Assuming today's date
 
-  // const query = {
-  //   $or: [
-  //     //   { orderDate: { $eq: selectedDate } }, // this won't work because string are not same due to time
-  //     //   { nextDate: { $eq: selectedDate } },
-  //     {
-  //       $expr: {
-  //         $eq: [
-  //           {
-  //             $dateToString: {
-  //               format: "%Y-%m-%d",
-  //               date: "$orderDate",
-  //               timezone: "+05:00",
-  //             },
-  //           },
-  //           selectedDate.toISOString().split("T")[0],
-  //         ],
-  //       },
-  //     },
-  //     {
-  //       $expr: {
-  //         $eq: [
-  //           {
-  //             $dateToString: {
-  //               format: "%Y-%m-%d",
-  //               date: "$nextDate",
-  //               timezone: "+05:00",
-  //             },
-  //           },
-  //           selectedDate.toISOString().split("T")[0],
-  //         ],
-  //       },
-  //     },
-  //     // { //currently not working (will figure out later)
-  //     //   causeListDates: {$in: [selectedDate.toISOString()]}, // Check if the date exists in the causeListDates array
-  //     // },
-  //   ],
-  // };
+    // const query = {
+    //   $or: [
+    //     //   { orderDate: { $eq: selectedDate } }, // this won't work because string are not same due to time
+    //     //   { nextDate: { $eq: selectedDate } },
+    //     {
+    //       $expr: {
+    //         $eq: [
+    //           {
+    //             $dateToString: {
+    //               format: "%Y-%m-%d",
+    //               date: "$orderDate",
+    //               timezone: "+05:00",
+    //             },
+    //           },
+    //           selectedDate.toISOString().split("T")[0],
+    //         ],
+    //       },
+    //     },
+    //     {
+    //       $expr: {
+    //         $eq: [
+    //           {
+    //             $dateToString: {
+    //               format: "%Y-%m-%d",
+    //               date: "$nextDate",
+    //               timezone: "+05:00",
+    //             },
+    //           },
+    //           selectedDate.toISOString().split("T")[0],
+    //         ],
+    //       },
+    //     },
+    //     // { //currently not working (will figure out later)
+    //     //   causeListDates: {$in: [selectedDate.toISOString()]}, // Check if the date exists in the causeListDates array
+    //     // },
+    //   ],
+    // };
 
-  const query = {
-    $and: [
-      {
-        disposed: { $ne: true }, // Exclude cases where disposed is true
-        transferedOut: {$ne: true},
-      },
-      {
-        $or: [
-          {
-            $expr: {
-              $eq: [
-                {
-                  $dateToString: {
-                    format: "%Y-%m-%d",
-                    date: "$orderDate",
-                    timezone: "+05:00",
+    const query = {
+      $and: [
+        {
+          disposed: { $ne: true }, // Exclude cases where disposed is true
+          transferedOut: { $ne: true },
+        },
+        {
+          $or: [
+            {
+              $expr: {
+                $eq: [
+                  {
+                    $dateToString: {
+                      format: "%Y-%m-%d",
+                      date: "$orderDate",
+                      timezone: "+05:00",
+                    },
                   },
-                },
-                selectedDate.toISOString().split("T")[0],
-              ],
+                  selectedDate.toISOString().split("T")[0],
+                ],
+              },
             },
+            {
+              $expr: {
+                $eq: [
+                  {
+                    $dateToString: {
+                      format: "%Y-%m-%d",
+                      date: "$nextDate",
+                      timezone: "+05:00",
+                    },
+                  },
+                  selectedDate.toISOString().split("T")[0],
+                ],
+              },
+            },
+          ],
+        },
+      ],
+    };
+
+    // Assuming you have a MongoDB collection named "records"
+    // const result = await db.collection('records').find(query).toArray();
+    try {
+      const result = await Case.find(query);
+      // console.log("Fetched data length:", result.length);
+      res.status(201).json(result);
+    } catch (error) {
+      console.log("Fetched data error:", error);
+      res.status(409).json({ error });
+    }
+  }
+
+  if (req.query.range === "range") {
+    console.log("range triggered");
+    // const { startDate, endDate } = req.query;
+
+    const startDateObj = new Date();
+
+    // Create a new date object to avoid modifying the original
+    const endDateObj = new Date(startDateObj.getTime());
+
+    // Add 10 days to the new date object
+    endDateObj.setDate(endDateObj.getDate() + 35);
+
+    // console.log("Original Date:", startDateObj);
+    // console.log("Date after adding 10 days:", endDateObj);
+
+    // const startDateObj = new Date(startDate);
+    // const endDateObj = new Date(endDate);
+    // const startDateObj = new Date();
+    // const endDateObj =  new Date(startDateObj.getDate() + 5);
+    // console.log(startDateObj + "  enddateobj:");
+    // console.log(endDateObj);
+
+    const results = [];
+
+    // Iterate over consecutive dates
+    let currentDate = new Date(startDateObj);
+    while (currentDate <= endDateObj) {
+      const query = {
+        $and: [
+          {
+            disposed: { $ne: true }, // Exclude cases where disposed is true
+            transferedOut: { $ne: true },
           },
           {
-            $expr: {
-              $eq: [
-                {
-                  $dateToString: {
-                    format: "%Y-%m-%d",
-                    date: "$nextDate",
-                    timezone: "+05:00",
-                  },
+            $or: [
+              {
+                $expr: {
+                  $eq: [
+                    {
+                      $dateToString: {
+                        format: "%Y-%m-%d",
+                        date: "$orderDate",
+                        timezone: "+05:00",
+                      },
+                    },
+                    currentDate.toISOString().split("T")[0],
+                  ],
                 },
-                selectedDate.toISOString().split("T")[0],
-              ],
-            },
+              },
+              {
+                $expr: {
+                  $eq: [
+                    {
+                      $dateToString: {
+                        format: "%Y-%m-%d",
+                        date: "$nextDate",
+                        timezone: "+05:00",
+                      },
+                    },
+                    currentDate.toISOString().split("T")[0],
+                  ],
+                },
+              },
+            ],
           },
         ],
-      }
-    ]
-  };
+      };
 
-  // Assuming you have a MongoDB collection named "records"
-  // const result = await db.collection('records').find(query).toArray();
-  try {
-    const result = await Case.find(query);
-    // console.log("Fetched data length:", result.length);
-    res.status(201).json(result);
-  } catch (error) {
-    console.log("Fetched data error:", error);
-    res.status(409).json({ error });
+      try {
+        const result = await Case.find(query);
+        let attendance = 0;
+        let evidence = 0;
+        let argument = 0;
+        let order = 0;
+        let finalOrder = 0;
+        let orderOnApplication = 0;
+
+        if (result.length !== 0) {
+          result.forEach((file) => {
+            // Calculate attendance for each file
+            attendance += file?.actionAbstract.includes("حاضری") ? 1 : 0;
+            evidence += file?.actionAbstract.includes("شہادت") ? 1 : 0;
+            argument += file?.actionAbstract.includes("بحث") ? 1 : 0;
+            order += file?.actionAbstract.includes("حکم") ? 1 : 0;
+            finalOrder += file?.actionAbstract.includes("حکم بر مقدمہ") ? 1 : 0;
+            orderOnApplication += file?.actionAbstract.includes("حکم بر درخواست") ? 1 : 0;
+          });
+
+          results.push({
+            date: currentDate.toISOString().split("T")[0],
+            data: result,
+            attendance: attendance,
+            evidence: evidence,
+            argument: argument,
+            order: order,
+            orderOnApplication: orderOnApplication,
+            finalOrder: finalOrder,
+          });
+        }
+      } catch (error) {
+        console.log("Fetched data error:", error);
+        res.status(409).json({ error });
+        return; // Stop the execution if there's an error
+      }
+
+      // Move to the next date
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    // console.log(results);
+    res.status(201).json(results);
   }
 
   //   Case.find(query)

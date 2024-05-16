@@ -275,7 +275,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
           </MuiPickersUtilsProvider>
         </Grid>
         <Grid item xs={12} sm={2}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+          {/* <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
             <KeyboardDatePicker
               // margin="normal"
               id="date-picker-causeList-orderDate"
@@ -293,7 +293,22 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 "aria-label": "change date",
               }}
             />
-          </MuiPickersUtilsProvider>
+          </MuiPickersUtilsProvider> */}
+          <Button
+            variant="contained"
+            component={Link}
+            to={{
+              pathname: "/DailyTotalCases",
+              // state: {
+              //   nextDate: nextDate,
+              //   orderDate: orderDate,
+              //   dateCauseList: dateCauseList,
+              // },
+            }}
+          >
+            View Daily Totals
+          </Button>
+
         </Grid>
 
         <Grid item container justify="space-between" xs={12} sm={3}>

@@ -41,6 +41,8 @@ import {
 import PrintInstitution from "./components/CauseLists/PrintInstitution.jsx";
 import PrintDisposal from "./components/CauseLists/PrintDisposal.jsx";
 import PrintButton from "./components/CauseLists/PrintButton.jsx";
+import DailyTotalCases from "./screens/DailyTotalCases.jsx";
+import { getRangeCauseLists } from "./actions/causeLists.js";
 const App = () => {
   // const classes = makeStyles();
   const classes2 = useStyles();
@@ -67,6 +69,7 @@ const App = () => {
       getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: new Date() })
     );
     dispatch(getControlCenter());
+    dispatch(getRangeCauseLists({ range: "range" }));
   }, [currentId, dispatch]);
 
   // useEffect(() => {
@@ -152,13 +155,22 @@ const App = () => {
                     onPageChange={handlePageChange}
                   />
                 />
+                <Route
+                  path="/DailyTotalCases"
+                  children=<DailyTotalCases
+                    onPageChange={handlePageChange}
+                  />
+                />
+                
                 <Route path="/court/:courtId" component={CourtPage} />
                 <Route path="/PrintDataTable" component={PrintDataTable} />
                 <Route path="/PrintCauseList" component={PrintCauseList} />
                 <Route path="/PrintPendency" component={PrintPendency} />
                 <Route path="/PrintInstitution" component={PrintInstitution} />
                 <Route path="/PrintDisposal" component={PrintDisposal} />
-                <Route pathe="/PrintButton" component={PrintButton} />
+                <Route path="/PrintButton" component={PrintButton} />
+
+                {/* <Route path="/DailyTotalCases" component={DailyTotalCases} /> */}
 
                 <Route path="*">
                   <Error404Screen />
