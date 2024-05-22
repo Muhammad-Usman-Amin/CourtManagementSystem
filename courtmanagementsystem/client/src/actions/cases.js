@@ -7,6 +7,8 @@ import {
   FETCH_PENDING,
   FETCH_INSTITUTION,
   FETCH_DISPOSAL,
+  FETCH_CASES_STATISTICS,
+  FETCH_INSTITUTIONS_STATISTICS,
 } from "../constants/actionTypes";
 import * as api from "../api";
 
@@ -47,6 +49,34 @@ export const getInstitutionCases = (params) => async (dispatch) => {
   try {
     const { data } = await api.fetchCases(params);
     dispatch({ type: FETCH_INSTITUTION, payload: data });
+    // datam = data;
+  } catch (error) {
+    console.log(error);
+  }
+  // console.log("Cases Action result:");
+  // console.log(datam);
+};
+export const getCasesStatistics = (params) => async (dispatch) => {
+  // console.log('getCases Called');
+  // let datam = null;
+  // console.log(getQuery);
+  try {
+    const { data } = await api.fetchCases(params);
+    dispatch({ type: FETCH_CASES_STATISTICS, payload: data });
+    // datam = data;
+  } catch (error) {
+    console.log(error);
+  }
+  // console.log("Cases Action result:");
+  // console.log(datam);
+};
+export const getInstitutionsStatistics = (params) => async (dispatch) => {
+  // console.log('getCases Called');
+  // let datam = null;
+  // console.log(getQuery);
+  try {
+    const { data } = await api.fetchCases(params);
+    dispatch({ type: FETCH_INSTITUTIONS_STATISTICS, payload: data });
     // datam = data;
   } catch (error) {
     console.log(error);

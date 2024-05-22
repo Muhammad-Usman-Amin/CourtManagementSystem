@@ -4,6 +4,8 @@ import cases from "./cases";
 import pendingCases from "./pendingCases";
 import institutionCases from "./institutionCases";
 import disposalCases from "./disposalCases";
+import casesStatistics from "./casesStatistics";
+import institutionsStatistics from "./institutionsStatistics";
 import employeeData from "./employeeData";
 import queryData from "./queryData";
 import causeLists from "./causeLists";
@@ -16,6 +18,8 @@ export default combineReducers({
   pendingCases,
   institutionCases,
   disposalCases,
+  casesStatistics,
+  institutionsStatistics,
   employeeData,
   queryData,
   causeLists,

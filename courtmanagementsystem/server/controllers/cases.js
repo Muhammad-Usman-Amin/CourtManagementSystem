@@ -14,14 +14,14 @@ export const getCases = async (req, res) => {
       cases = await Case.find().sort({ ["Date of Institution "]: 1 });
     }
 
-    const datePend = new Date(query.datePendency);
-    // Extract year and month
-    const monthPend = datePend.getMonth() + 1; // Months are zero-indexed (January is 0)
-    const yearPend = datePend.getFullYear();
-    // console.log(query.reqQuery);
-    // console.log(monthPend + " - " + yearPend);
-
     if (query.reqQuery === "PendingCases") {
+      const datePend = new Date(query.datePendency);
+      // Extract year and month
+      const monthPend = datePend.getMonth() + 1; // Months are zero-indexed (January is 0)
+      const yearPend = datePend.getFullYear();
+      // console.log(query.reqQuery);
+      // console.log(monthPend + " - " + yearPend);
+
       // cases = await Case.find({
       //   $and: [
       //     { disposed: { $ne: true } }, //$ne means not equal to
@@ -50,6 +50,155 @@ export const getCases = async (req, res) => {
         ],
       }).sort({ ["Date of Institution "]: 1 });
     }
+
+    // if(query.reqQuery === "InstituionsStatistics"){
+    if(query.reqQuery === "InstitutionsStatistics"){
+
+      const result = await Case.aggregate([
+        {
+          $project: {
+            dates: [
+              { date: '$Date of Institution ' },
+              { date: '$Date of Transfer In' },
+              { date: '$Date of Other Institution' }
+            ],
+            disposalFlag: '$Disposal OR Transfer Out Flag'  //for pendency of each month
+          }
+        },
+        { $unwind: '$dates' },
+        {
+          $match: {
+            'dates.date': { $ne: null },  // Ensure the date is not null
+            disposalFlag: { $nin: ["Disposed", "Transfer Out"] }  // Exclude specified values
+          }
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: '$dates.date' },
+              month: { $month: '$dates.date' }
+            },
+            count: { $sum: 1 }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            month: '$_id.month',
+            year: '$_id.year',
+            count: 1
+          }
+        },
+        {
+          $sort: { year: 1, month: 1 }
+        }
+      ]);
+  
+      // Transform the result to the desired format
+      const formattedResult = result.map(item => {
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const formattedDate = `${monthNames[item.month - 1]}-${item.year}`;
+        return {
+          date: formattedDate, // e.g., "May-2024"
+          cases: item.count
+        };
+      });
+
+      // console.log(formattedResult);
+      res.status(200).json(formattedResult);
+        return;
+    }
+
+    if (query.reqQuery === "CaseStatistics") {
+      const datePend = new Date();
+      const monthPend = datePend.getMonth() + 1; // Months are zero-indexed (January is 0)
+      const yearPend = datePend.getFullYear();
+
+      cases = await Case.find({
+        $and: [
+          { disposed: { $ne: true } },
+          {
+            "Disposal OR Transfer Out Flag": {
+              $nin: ["Disposed", "Transfer Out"],
+            },
+          },
+          // Add condition to filter by date
+          {
+            "Date of Institution ": {
+              $lte: new Date(yearPend, monthPend - 1, 31), // Set the day to the last day of the month to cover the entire month
+            },
+          },
+        ],
+      }).sort({ ["Category Per PQS"]: 1 });
+
+      let results = [];
+      // let stats = {suits: 0, familyCases: 0, applications: 0,}
+      let suits = 0;
+      let familyCases = 0;
+      let applications = 0;
+      let custodyOfMiners = 0;
+      let executions = 0;
+      let rentCases = 0;
+      let objectionPetitions = 0;
+
+      if (cases.length !== 0) {
+        cases.filter((item) => {
+          suits +=
+            item["Category Per PQS"] ===
+            "Civil-001-Civil Suits (Original Jurisdiction)"
+              ? 1
+              : 0;
+          suits += item["Category Per PQS"] === "Civil-002-Civil Suit" ? 1 : 0;
+          familyCases +=
+            item["Category Per PQS"] === "Civil-006-Family Court Cases" ? 1 : 0;
+            applications +=
+            item["Category Per PQS"] ===
+            "Civil-018-Other Civil Misc Applications"
+            ? 1
+            : 0;
+            custodyOfMiners +=
+            item["Category Per PQS"] === "Civil-004-Custody of Minors" ? 1 : 0;
+            executions +=
+            item["Category Per PQS"] === "Civil-015-Execution Petitions"
+            ? 1
+            : 0;
+            objectionPetitions +=
+            item["Category Per PQS"] === "Civil-021-Objection Petitions"
+            ? 1
+            : 0;
+            rentCases +=
+              item["Category Per PQS"] === "Civil-026-Rent Appeals" ? 1 : 0;
+        });
+
+        // cases.forEach((file) => {
+        //   // Calculate attendance for each file
+        //   suits +=
+        //     file?.["Category Per PQS"] ===
+        //     "Civil-001-Civil Suits (Original Jurisdiction)"
+        //       ? 1
+        //       : 0;
+        //   familyCases += file?.actionAbstract.includes("شہادت") ? 1 : 0;
+        //   applications += file?.actionAbstract.includes("بحث") ? 1 : 0;
+        //   custodyOfMiners += file?.actionAbstract.includes("حکم") ? 1 : 0;
+        //   executions += file?.actionAbstract.includes("حکم بر مقدمہ") ? 1 : 0;
+        //   rentCases += file?.actionAbstract.includes("حکم بر درخواست") ? 1 : 0;
+        // });
+
+        results.push({pendingCases:[
+          {name: "Suits", cases: suits},
+          {name: "Family Cases", cases: familyCases},
+          {name: "Applications", cases: applications},
+          {name: "Custody Of Miners", cases: custodyOfMiners},
+          {name: "Executions", cases: executions},
+          {name: "Objection Petitions", cases: objectionPetitions},
+          {name:"Rent Cases", cases: rentCases},
+        ]});
+        // console.log(results);
+        res.status(200).json(results);
+        return;
+      }
+    }
+    // }
     // if (query.reqQuery === "InstitutionCases") {
     //   cases = await Case.find({
     //     $and: [
@@ -63,36 +212,42 @@ export const getCases = async (req, res) => {
     //   }).sort({ ["Date of Institution "]: -1 });
     // }
 
-    const dateDisp = new Date(query.dateDisposal);
-    // Extract year and month
-    const monthDisp = dateDisp.getMonth() + 1; // Months are zero-indexed (January is 0)
-    const yearDisp = dateDisp.getFullYear();
-    // console.log(query);
     if (query.reqQuery === "DisposalCases") {
+      const dateDisp = new Date(query.dateDisposal);
+      // Extract year and month
+      const monthDisp = dateDisp.getMonth() + 1; // Months are zero-indexed (January is 0)
+      const yearDisp = dateDisp.getFullYear();
+      // console.log(query);
       cases = await Case.find({
         // $and: [
-        disposed: true,
-        "Disposal OR Transfer Out Flag": {
-          $in: ["Disposed", "Transfer Out"],
-        },
+        // disposed: true,
         $expr: {
           $and: [
             { $eq: [{ $month: "$Date of Disposal Transfer Out" }, monthDisp] },
             { $eq: [{ $year: "$Date of Disposal Transfer Out" }, yearDisp] },
+            // {$eq: ["$Disposal OR Transfer Out Flag", "Disposed"]}, // for disposals only
           ],
         },
+        // "Disposal OR Transfer Out Flag": {
+        //   $in: ["Disposed", "Transfer Out"],
+        // },
+        //upper and below both method works
+        // $or: [
+        //   { "Disposal OR Transfer Out Flag": "Disposed" },
+        //   { "Disposal OR Transfer Out Flag": "Transfer Out" }
+        // ],
         // ],
       }).sort({ ["Date of Institution "]: 1 });
       // }
     }
     // console.log(query);
 
-    const dateObj = new Date(query.dateInstitution);
-    // Extract year and month
-    const month = dateObj.getMonth() + 1; // Months are zero-indexed (January is 0)
-    const year = dateObj.getFullYear();
-
     if (query.reqQuery === "InstitutionCases") {
+      const dateObj = new Date(query.dateInstitution);
+      // Extract year and month
+      const month = dateObj.getMonth() + 1; // Months are zero-indexed (January is 0)
+      const year = dateObj.getFullYear();
+
       const selectedMonth = month; // Assuming the user selects April (Month 4)
       const selectedYear = year; // Assuming the user selects the year 2024
       cases = await Case.aggregate([

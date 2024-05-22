@@ -119,7 +119,7 @@ export const getCauseList = async (req, res) => {
   }
 
   if (req.query.range === "range") {
-    console.log("range triggered");
+    // console.log("range triggered");
     // const { startDate, endDate } = req.query;
 
     const startDateObj = new Date();

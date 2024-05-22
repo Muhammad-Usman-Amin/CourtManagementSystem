@@ -311,7 +311,7 @@ const PrintDisposal = (props) => {
                       padding: 0,
                     }}
                   >
-                    {controlPanel[0].causeListEnglishName}
+                    {controlPanel[0]?.causeListEnglishName}
                     <br />
                     {/* بعدالت جناب زیب النساءعباسی سِول جج /جج فیملی کورٹ/علاقہ
                     قاضی-V دیر پائین بمقام تیمرگرہ */}

@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 // import { getPosts } from './actions/posts';
 import {
   getCases,
+  getCasesStatistics,
   getDisposalCases,
   getInstitutionCases,
+  getInstitutionsStatistics,
   getPendingCases,
 } from "./actions/cases";
 import { getEmployeeData } from "./actions/employeeData.js";
@@ -54,7 +56,8 @@ const App = () => {
   };
 
   useEffect(() => {
-    dispatch(getEmployeeData());
+    dispatch(getControlCenter());
+    dispatch(getInstitutionsStatistics({ reqQuery: "InstitutionsStatistics"}));
     dispatch(getCases({ reqQuery: "All" }));
     dispatch(
       getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
@@ -68,8 +71,9 @@ const App = () => {
     dispatch(
       getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: new Date() })
     );
-    dispatch(getControlCenter());
     dispatch(getRangeCauseLists({ range: "range" }));
+    dispatch(getCasesStatistics({reqQuery: "CaseStatistics"}))
+    dispatch(getEmployeeData());
   }, [currentId, dispatch]);
 
   // useEffect(() => {

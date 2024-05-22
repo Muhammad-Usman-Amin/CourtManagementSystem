@@ -61,55 +61,86 @@ import { useSelector } from "react-redux";
 //   createData("14 Mar", 5),
 //   createData("15 Mar", 1),
 // ];
+const CustomTooltip = ({ active, payload, label, theme }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div
+        style={{
+          backgroundColor: theme.palette.background.paper,
+          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 5,
+          padding: 10,
+          color: theme.palette.text.primary,
+        }}
+      >
+        <p>{label}</p>
+        <p>{`Cases: ${payload[0].value}`}</p>
+      </div>
+    );
+  }
+
+  return null;
+};
 
 export default function Chart() {
   const theme = useTheme();
 
-  const cases = useSelector((state) => state.cases);
-  let lastEntries = cases.slice(-192);
-  // let lastEntries = cases;
-  lastEntries = lastEntries.sort(
-    (a, b) =>
-      new Date(a["Date of Institution "]) - new Date(b["Date of Institution "])
+  const institutionsStatistics = useSelector(
+    (state) => state.institutionsStatistics
   );
 
-  const casesByDate = lastEntries.reduce((acc, cur) => {
-    const date = new Date(cur["Date of Institution "]).toLocaleDateString(
-      "en-US",
-      {
-        month: "short",
-        day: "numeric",
-      }
-    );
-    acc[date] = (acc[date] || 0) + 1;
-    return acc;
-  }, {});
+  // below is archived code which count cases submitted on each day
+  // let lastEntries = cases.slice(-192);
+  // // let lastEntries = cases;
+  // lastEntries = lastEntries.sort(
+  //   (a, b) =>
+  //     new Date(a["Date of Institution "]) - new Date(b["Date of Institution "])
+  // );
 
-  // Convert the object to an array of objects with 'date' and 'amountOfCases' properties
-  const result = Object.keys(casesByDate).map((date) => ({
-    date,
-    Cases: casesByDate[date],
-  }));
+  // const casesByDate = lastEntries.reduce((acc, cur) => {
+  //   const date = new Date(cur["Date of Institution "]).toLocaleDateString(
+  //     "en-US",
+  //     {
+  //       month: "short",
+  //       day: "numeric",
+  //     }
+  //   );
+  //   acc[date] = (acc[date] || 0) + 1;
+  //   return acc;
+  // }, {});
+
+  // // Convert the object to an array of objects with 'date' and 'amountOfCases' properties
+  // const result = Object.keys(casesByDate).map((date) => ({
+  //   date,
+  //   Cases: casesByDate[date],
+  // }));
 
   // console.log(result);
 
   return (
     <React.Fragment>
-      <Title>Cases Submitted on a Day</Title>
+      <Title>Monthly Institutions Pendency</Title>
       <ResponsiveContainer>
         <LineChart
-          data={result}
+          data={institutionsStatistics}
           margin={{
             top: 16,
             right: 16,
-            bottom: 0,
+            bottom: 18,
             left: 24,
           }}
         >
-          <XAxis dataKey="date" stroke={theme.palette.text.secondary}>
+          <XAxis
+            dataKey="date"
+            stroke={theme.palette.text.secondary}
+            tick={{ angle: -60, textAnchor: "end" }}
+            interval={0} // Ensures all labels are displayed
+            height={60} // Increases height to provide more space for labels
+          >
             <Label
               angle={0}
               position="insideBottom"
+              offset={-15} //Adjusted the vertical position of the "Date" label
               style={{
                 margin: 5,
                 textAnchor: "middle",
@@ -125,7 +156,7 @@ export default function Chart() {
           >
             <Label
               angle={270}
-              position="left"
+              position="insideLeft"
               style={{ textAnchor: "middle", fill: theme.palette.text.primary }}
             >
               Number of Cases
@@ -133,11 +164,12 @@ export default function Chart() {
           </YAxis>
           <Line
             type="monotone"
-            dataKey="Cases"
+            dataKey="cases"
             stroke={theme.palette.primary.main}
             dot={false}
           />
-          <Tooltip />
+          {/* <Tooltip /> */}
+          <Tooltip content={<CustomTooltip theme={theme} />} />
         </LineChart>
       </ResponsiveContainer>
     </React.Fragment>

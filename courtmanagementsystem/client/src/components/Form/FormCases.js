@@ -185,6 +185,7 @@ switch (str) {
   const history = useHistory();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log(caseData);
 
     if (currentId) {
       dispatch(updateCase(currentId, caseData));
@@ -1672,7 +1673,6 @@ switch (str) {
                         }}
                         label="Disposal Mode Flag"
                       >
-                        <MenuItem value=""></MenuItem>
                         <MenuItem value={"Contested-Trial Based"}>
                           Contested-Trial Based
                         </MenuItem>
@@ -1681,6 +1681,7 @@ switch (str) {
                         </MenuItem>
                         <MenuItem value={"Uncontested"}>Uncontested</MenuItem>
                         <MenuItem value={"In Default"}>In Default</MenuItem>
+                        <MenuItem value="Transfer Out">Transfer Out</MenuItem>
                         {caseData["Case Type"] === "Criminal" && (
                           <MenuItem value={"Pleadguilty"}>Pleadguilty</MenuItem>
                         )}

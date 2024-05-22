@@ -1,0 +1,157 @@
+import React, { useState, useEffect } from 'react';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {
+  Typography,
+  Paper,
+  Grid,
+  useMediaQuery,
+} from '@material-ui/core';
+import { useSelector } from 'react-redux';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    boxShadow: theme.shadows[3],
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.background.paper,
+  },
+  header: {
+    marginBottom: theme.spacing(2),
+    color: theme.palette.primary.main,
+  },
+  statBox: {
+    padding: theme.spacing(2),
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.background.default,
+    boxShadow: theme.shadows[2],
+  },
+  statTitle: {
+    fontSize: '1.2rem',
+    fontWeight: 'bold',
+    color: theme.palette.text.primary,
+  },
+  statValue: {
+    fontSize: '2rem',
+    fontWeight: 'bold',
+    color: theme.palette.secondary.main,
+  },
+}));
+
+const MonthlyStats = () => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const [totalInstitution, setTotalInstitution] = useState(0);
+  const [totalDisposals, setTotalDisposals] = useState(0);
+  const [totalTransferredIn, setTotalTransferredIn] = useState(0);
+  const [totalTransferredOut, setTotalTransferredOut] = useState(0);
+
+  const totalInstitutions = useSelector((state) => state.institutionCases);
+  const totalDisposal = useSelector((state) => state.disposalCases.length);
+  const [totalTransferedOut, setTotalTransferedOut] = useState([]);
+  const [totalTransferedIn, setTotalTransferedIn] = useState([]);
+
+  useEffect(()=> {
+    setTotalTransferedOut(totalInstitutions.filter(item => item['Disposal Mode Flag'] === 'Transfer Out'));
+    // setTotalTransferedIn(totalInstitutions.filter(item => item['Date of Transfer In']));
+    setTotalTransferedIn(totalInstitutions.filter(item => {
+        // Extract month and year from 'Date of Transfer In' field
+        const dateOfTransferIn = new Date(item['Date of Transfer In']);
+        const month = dateOfTransferIn.getMonth() + 1; // getMonth() returns 0-based index
+        const year = dateOfTransferIn.getFullYear();
+      
+        // Get current month and year
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-based index
+        const currentYear = currentDate.getFullYear();
+      
+        // Return true if month and year match current month and year
+        return month === currentMonth && year === currentYear;
+      }));
+  },[totalInstitutions])
+
+//   useEffect(()=> {
+//     console.log(totalTransferedOut);
+//   },[totalTransferedOut])
+  
+//   useEffect(()=> {
+//     console.log(totalTransferedIn);
+//   },[totalTransferedIn])
+
+  const timerDuration = 1000;
+  useEffect(() => {
+    animateNumber(0, totalInstitutions.length, setTotalInstitution, timerDuration);
+    animateNumber(0, totalDisposal, setTotalDisposals, timerDuration);
+    animateNumber(0, totalTransferedIn.length, setTotalTransferredIn, timerDuration);
+    animateNumber(0, totalTransferedOut.length, setTotalTransferredOut, timerDuration);
+  }, [totalInstitutions, totalDisposal, totalTransferedOut, totalTransferedIn]);
+
+  const animateNumber = (start, end, setter, duration) => {
+    const range = end - start;
+    const stepTime = Math.abs(Math.floor(duration / range));
+    const startTime = new Date().getTime();
+    const endTime = startTime + duration;
+    let timer;
+
+    const runAnimation = () => {
+      const now = new Date().getTime();
+      const remaining = Math.max((endTime - now) / duration, 0);
+      const value = Math.round(end - (remaining * range));
+      setter(value);
+      if (value !== end) {
+        timer = setTimeout(runAnimation, stepTime);
+      }
+    };
+
+    runAnimation();
+    return () => clearTimeout(timer);
+  };
+
+  return (
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <Typography variant="h6" className={classes.header}>
+              THIS MONTH'S TOTAL
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper className={classes.statBox}>
+                  <Typography className={classes.statTitle}>Institutions</Typography>
+                  <Typography className={classes.statValue}>{totalInstitution}</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper className={classes.statBox}>
+                  <Typography className={classes.statTitle}>Disposals</Typography>
+                  <Typography className={classes.statValue}>{totalDisposals}</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper className={classes.statBox}>
+                  <Typography className={classes.statTitle}>Transferred In</Typography>
+                  <Typography className={classes.statValue}>{totalTransferredIn}</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper className={classes.statBox}>
+                  <Typography className={classes.statTitle}>Transferred Out</Typography>
+                  <Typography className={classes.statValue}>{totalTransferredOut}</Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+      </Grid>
+    </div>
+  );
+};
+
+export default MonthlyStats;

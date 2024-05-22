@@ -40,6 +40,7 @@ import { updateCase } from "../../actions/cases";
 import { getCauseList } from "../../actions/causeLists";
 // import useStyles2 from "../../dashboardExample/dashboard";
 import { addDays } from "date-fns";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles({
   table: {
@@ -59,12 +60,16 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   // const classes2 = useStyles2();
   // const cases = useSelector((state) => state.cases);
   const cases = useSelector((state) => state.causeLists);
+  const location = useLocation();
+  const selectedDate = location.state?.selectedDate ? new Date(location.state.selectedDate) : new Date();
+  // console.log(selectedDate);
 
   // console.log(cases);
   const dispatch = useDispatch();
   const classes = useStyles();
   // const [orderDate, setOrderDate] = useState(new Date("2023-06-19"));
-  const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 0));
+  // const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 0));
+  const [dateCauseList, setDateCauseList] = useState(selectedDate);
   const [orderDate, setOrderDate] = useState(dateCauseList);
   useEffect(() => {
     setOrderDate(dateCauseList);

@@ -41,12 +41,19 @@
 
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Paper, Grid, CircularProgress, Divider } from "@material-ui/core";
+import {
+  Typography,
+  Paper,
+  Grid,
+  CircularProgress,
+  Divider,
+} from "@material-ui/core";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getRangeCauseLists } from "../actions/causeLists";
 import { format } from "date-fns";
-import { parseISO } from 'date-fns';
+import { parseISO } from "date-fns";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +63,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     // textAlign: "center",
     color: theme.palette.text.secondary,
+    cursor: "pointer",
+    transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+    "&:hover": {
+      transform: "scale(1.05)",
+      boxShadow: theme.shadows[4],
+    },
   },
 }));
 
@@ -87,7 +100,7 @@ const daysData = [
   // Add data for other days here...
 ];
 
-const DailyTotalCases = ({onPageChange }) => {
+const DailyTotalCases = ({ onPageChange }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const rangeData = useSelector((state) => state.rangeCauseLists);
@@ -104,6 +117,14 @@ const DailyTotalCases = ({onPageChange }) => {
     onPageChange("Daily Total Cases");
   }, [onPageChange]);
 
+  const history = useHistory();
+  const handleDateClick = (date) => {
+    history.push({
+      pathname: "/CauseLists",
+      state: { selectedDate: date },
+    });
+  };
+
   return !rangeData.length ? (
     <Grid
       container
@@ -118,10 +139,14 @@ const DailyTotalCases = ({onPageChange }) => {
       <div className={classes.root}>
         <Grid container spacing={1}>
           {rangeData.map((day) => (
-            <Grid item xs={6} sm={2} key={day.date}>
+            <Grid item xs={6} sm={2} key={day.date} onClick={() => handleDateClick(day.date)}>
               <Paper className={classes.paper}>
-                <Typography variant="h6" gutterBottom style={{ fontWeight: "bold"}}>
-                  {format?.(parseISO(day.date), "dd-MM-yyy")} |
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  style={{ fontWeight: "bold" }}
+                >
+                  {format?.(parseISO?.(day.date), "dd-MM-yyy")} |
                   {new Date(day.date).toLocaleDateString("ur", {
                     weekday: "long",
                   })}
@@ -143,11 +168,16 @@ const DailyTotalCases = ({onPageChange }) => {
                 <Typography variant="body2">
                   Arguments: {day.argument}
                 </Typography>
-                <Typography variant="body2">Order Total: {day.order}</Typography>
+                <Typography variant="body2">
+                  Order Total: {day.order}
+                </Typography>
                 <Typography variant="body2">
                   Order On Application: {day.orderOnApplication}
                 </Typography>
-                <Typography variant="body2">
+                <Typography
+                  variant="body2"
+                  style={{ color: day.finalOrder > 0 ? "red" : "inherit" }}
+                >
                   Final Order: {day.finalOrder}
                 </Typography>
               </Paper>

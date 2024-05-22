@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -26,7 +26,9 @@ import useStyles from "./dashboard";
 import { Button } from "@material-ui/core";
 import { useSelector } from "react-redux";
 // import store from '../index';
-import TextField from '@material-ui/core/TextField';
+import TextField from "@material-ui/core/TextField";
+import MonthlyStats from "./MonthlyStats";
+import CaseStatistics from "./CaseStatistics";
 
 function Copyright() {
   return (
@@ -140,6 +142,16 @@ export default function Dashboard({ onPageChange }) {
     onPageChange("Dashboard");
   }, [onPageChange]);
 
+  // const [shouldRefresh, setShouldRefresh] = useState(true); // Replace with your condition
+  // useEffect(() => {
+  //   // Check some condition (e.g., user navigates to a specific page)
+
+  //   if (shouldRefresh) {
+  //     window.location.reload();
+  //     setShouldRefresh(false);
+  //   }
+  // }, []);
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
@@ -157,6 +169,14 @@ export default function Dashboard({ onPageChange }) {
             <Deposits />
           </Paper>
         </Grid>
+        <Grid item xs={12} md={12} lg={12}>
+          <MonthlyStats />
+        </Grid>
+        <Grid item xs={12} md={12} lg={12}>
+          <Paper>
+            <CaseStatistics />
+          </Paper>
+        </Grid>
         {/* Recent Orders */}
         <Grid item xs={12}>
           <Paper className={classes.paper}>
@@ -164,6 +184,9 @@ export default function Dashboard({ onPageChange }) {
           </Paper>
         </Grid>
       </Grid>
+      {/* <React.Fragment container xs={12} md={12} lg={12}>
+          <CaseStatistics />
+        </React.Fragment> */}
 
       {/* <Grid item xs={6} md={6}>
         <Button

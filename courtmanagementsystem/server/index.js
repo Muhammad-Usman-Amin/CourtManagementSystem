@@ -42,7 +42,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() =>
-    app.listen(PORT, () => console.log(`Server runnng on port: ${PORT}`))
+    app.listen(PORT, () => console.log(`Server running on port: ${PORT}`))
   )
   .catch((error) => console.log(error.message));
 
