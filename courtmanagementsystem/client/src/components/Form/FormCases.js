@@ -436,8 +436,8 @@ switch (str) {
                   <MenuItem value={"Civil-026-Rent Appeals"}>
                     Civil-026 Rent Appeals
                   </MenuItem>
-                  <MenuItem value={"Civil-027-Civil Appeals against Order"}>
-                    Civil-027 Civil Appeals against Order
+                  <MenuItem value={"Civil-027-Civil Appeals against Orders"}>
+                    Civil-027 Civil Appeals against Orders
                   </MenuItem>
                   <MenuItem value={"Civil-028-Insolvency Cases"}>
                     Civil-028 Insolvency Cases

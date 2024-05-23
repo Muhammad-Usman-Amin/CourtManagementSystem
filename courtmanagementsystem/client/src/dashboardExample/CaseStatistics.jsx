@@ -22,8 +22,11 @@ import {
   Line,
   ResponsiveContainer,
   LabelList,
+  Label,
+  Text,
 } from "recharts";
 import { useSelector } from "react-redux";
+import { selectPendingCases } from "../selectors/caseStatisticsSelector";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +54,7 @@ const COLORS = [
   "#FF5733",
   "#C70039",
   "#900C3F",
-  "#DAF7A6",
+  "#F900A6",
   "#FFC300",
   "#FF33A6",
 ];
@@ -77,11 +80,22 @@ const CustomTooltip = ({ active, payload, label, theme }) => {
   return null;
 };
 
+
+
 const CaseStatistics = () => {
   const classes = useStyles();
   const theme = useTheme();
 
   const casesStatistics = useSelector((state) => state.casesStatistics);
+
+  const pendingCasesFromRedux = useSelector(selectPendingCases);
+  const [pendingCasesData, setPendingCasesData] = useState([]);
+
+  useEffect(() => {
+    if (pendingCasesFromRedux) {
+      setPendingCasesData(pendingCasesFromRedux);
+    }
+  }, [pendingCasesFromRedux]);
 
   // const [suits, setSuits] = useState([]);
   // useEffect(() => {
@@ -94,46 +108,49 @@ const CaseStatistics = () => {
   //   );
   // }, [pendingCases]);
   //   let pendingCasesData = [];
-  const [pendingCasesStat, setPendingCasesStat] = useState([]);
-  useEffect(() => {
-    // console.log(casesStatistics);
-    // if(casesStatistics?.pendingCases)
-    if (casesStatistics && casesStatistics.length > 0) {
-      // pendingCasesData = casesStatistics.map(item => item.pendingCases).flat()
-      setPendingCasesStat(
-        casesStatistics.map((item) => item.pendingCases).flat()
-      );
-      setPendingCasesStat((prevState) =>
-        prevState.filter((caseItem) => caseItem.cases > 0)
-      );
-    }
-    // console.log(pendingCasesData);
-    // pendingCasesData.push(casesStatistics.pendingCases);
-    // let arr = Object.values(pendingCasesData);
+  //   const [pendingCasesStat, setPendingCasesStat] = useState([]);
+  //   useEffect(() => {
+  //     // console.log(casesStatistics);
+  //     // if(casesStatistics?.pendingCases)
+  //     if (casesStatistics && casesStatistics.length > 0) {
+  //       // pendingCasesData = casesStatistics.map(item => item.pendingCases).flat()
+  //       setPendingCasesStat(
+  //         casesStatistics.map((item) => item.pendingCases).flat()
+  //       );
+  //       setPendingCasesStat((prevState) =>
+  //         prevState.filter((caseItem) => caseItem.cases > 0)
+  //       );
+  //     }
+  //     // console.log(pendingCasesData);
+  //     // pendingCasesData.push(casesStatistics.pendingCases);
+  //     // let arr = Object.values(pendingCasesData);
 
-    //   data = [
-    //     { name: "Suits", cases: pendingCasesData?.suits },
-    //     { name: "Family", cases: pendingCasesData?.familyCases },
-    //     { name: "Misc", cases: pendingCasesData?.applications },
-    //     { name: "Custody of Miners", cases: pendingCasesData?.custodyOfMiners },
-    //   ];
-    // console.log(typeof pendingCasesData);
-    // console.log(pendingCasesData);
-    // console.log(pendingCasesData.length);
+  //     //   data = [
+  //     //     { name: "Suits", cases: pendingCasesData?.suits },
+  //     //     { name: "Family", cases: pendingCasesData?.familyCases },
+  //     //     { name: "Misc", cases: pendingCasesData?.applications },
+  //     //     { name: "Custody of Miners", cases: pendingCasesData?.custodyOfMiners },
+  //     //   ];
+  //     // console.log(typeof pendingCasesData);
+  //     // console.log(pendingCasesData);
+  //     // console.log(pendingCasesData.length);
+  //   }, [casesStatistics]);
+
+  useEffect(() => {
+    //   console.log(casesStatistics);
   }, [casesStatistics]);
+  //   useEffect(() => {
+  //       console.log(pendingCasesStat);
+  //   }, [pendingCasesStat]);
 
-  useEffect(() => {
-    //   console.log(pendingCasesStat);
-  }, [pendingCasesStat]);
+  //   const pieData = [
+  //     { name: "Suit", value: 400 },
+  //     { name: "Family", value: 300 },
+  //     { name: "Misc", value: 200 },
+  //     { name: "Criminal", value: 100 },
+  //   ];
 
-  const pieData = [
-    { name: "Suit", value: 400 },
-    { name: "Family", value: 300 },
-    { name: "Misc", value: 200 },
-    { name: "Criminal", value: 100 },
-  ];
-
-  return pendingCasesStat.length === 0 ? (
+  return pendingCasesData.length === 0 ? (
     <Grid
       container
       justify="center"
@@ -151,25 +168,29 @@ const CaseStatistics = () => {
       </Typography>
 
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} md={12} lg={12}>
           <Paper className={classes.paper}>
             <Typography variant="h6" gutterBottom>
               Total Cases by Type
             </Typography>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={400}>
               <BarChart
-                data={pendingCasesStat}
+                data={pendingCasesData}
                 // className={classes.chartContainer}
-                margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
+                margin={{ top: 20, right: 20, left: 20, bottom: 40 }}
               >
                 {/* <CartesianGrid ay="3strokeDasharr 3" /> */}
                 {/* <CartesianGrid /> */}
                 <XAxis
                   dataKey="name"
-                  tick={{ angle: -30, textAnchor: "end" }}
+                  tick={{ angle: -30, textAnchor: "end", fontSize: 13, fill: theme.palette.text.primary
+                //   dy: 10, // Adjust vertical position of the label
+                   }}
                   interval={0}
-                  height={80}
-                />
+                  height={110}
+                  // />
+                >
+                </XAxis>
                 <YAxis />
                 {/* <Tooltip /> */}
                 <Tooltip content={<CustomTooltip theme={theme} />} />
@@ -191,26 +212,27 @@ const CaseStatistics = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} md={12} lg={12}>
           <Paper className={classes.paper}>
             <Typography variant="h6" gutterBottom>
               Cases Distribution
             </Typography>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={400}>
               <PieChart className={classes.chartContainer}>
                 <Pie
-                  data={pendingCasesStat}
+                  data={pendingCasesData}
                   cx="50%"
                   cy="50%"
-                  labelLine={false}
+                  labelLine={true}
                   label={({ name, percent }) =>
                     `${name} ${(percent * 100).toFixed(0)}%`
                   }
-                  outerRadius={110}
+                  outerRadius={170}
                   fill="#8884d8"
                   dataKey="cases"
+                  paddingAngle={2}
                 >
-                  {pendingCasesStat.map((entry, index) => (
+                  {pendingCasesData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={COLORS[index % COLORS.length]}

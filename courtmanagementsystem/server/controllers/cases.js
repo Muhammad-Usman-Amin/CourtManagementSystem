@@ -109,12 +109,127 @@ export const getCases = async (req, res) => {
         return;
     }
 
+    // if (query.reqQuery === "CaseStatistics") {
+    //   const datePend = new Date();
+    //   const monthPend = datePend.getMonth() + 1; // Months are zero-indexed (January is 0)
+    //   const yearPend = datePend.getFullYear();
+
+    //   cases = await Case.find({
+    //     $and: [
+    //       { disposed: { $ne: true } },
+    //       {
+    //         "Disposal OR Transfer Out Flag": {
+    //           $nin: ["Disposed", "Transfer Out"],
+    //         },
+    //       },
+    //       // Add condition to filter by date
+    //       {
+    //         "Date of Institution ": {
+    //           $lte: new Date(yearPend, monthPend - 1, 31), // Set the day to the last day of the month to cover the entire month
+    //         },
+    //       },
+    //     ],
+    //   }).sort({ ["Category Per PQS"]: 1 });
+
+    //   let results = [];
+    //   // let stats = {suits: 0, familyCases: 0, applications: 0,}
+    //   let suits = 0;
+    //   let familyCases = 0;
+    //   let applications = 0;
+    //   let custodyOfMiners = 0;
+    //   let executions = 0;
+    //   let rentCases = 0;
+    //   let objectionPetitions = 0;
+
+    //   if (cases.length !== 0) {
+    //     cases.filter((item) => {
+    //       suits +=
+    //         item["Category Per PQS"] ===
+    //         "Civil-001-Civil Suits (Original Jurisdiction)"
+    //           ? 1
+    //           : 0;
+    //       suits += item["Category Per PQS"] === "Civil-002-Civil Suit" ? 1 : 0;
+    //       familyCases +=
+    //         item["Category Per PQS"] === "Civil-006-Family Court Cases" ? 1 : 0;
+    //         applications +=
+    //         item["Category Per PQS"] ===
+    //         "Civil-018-Other Civil Misc Applications"
+    //         ? 1
+    //         : 0;
+    //         custodyOfMiners +=
+    //         item["Category Per PQS"] === "Civil-004-Custody of Minors" ? 1 : 0;
+    //         executions +=
+    //         item["Category Per PQS"] === "Civil-015-Execution Petitions"
+    //         ? 1
+    //         : 0;
+    //         objectionPetitions +=
+    //         item["Category Per PQS"] === "Civil-021-Objection Petitions"
+    //         ? 1
+    //         : 0;
+    //         rentCases +=
+    //           item["Category Per PQS"] === "Civil-026-Rent Appeals" ? 1 : 0;
+    //     });
+
+    //     // cases.forEach((file) => {
+    //     //   // Calculate attendance for each file
+    //     //   suits +=
+    //     //     file?.["Category Per PQS"] ===
+    //     //     "Civil-001-Civil Suits (Original Jurisdiction)"
+    //     //       ? 1
+    //     //       : 0;
+    //     //   familyCases += file?.actionAbstract.includes("شہادت") ? 1 : 0;
+    //     //   applications += file?.actionAbstract.includes("بحث") ? 1 : 0;
+    //     //   custodyOfMiners += file?.actionAbstract.includes("حکم") ? 1 : 0;
+    //     //   executions += file?.actionAbstract.includes("حکم بر مقدمہ") ? 1 : 0;
+    //     //   rentCases += file?.actionAbstract.includes("حکم بر درخواست") ? 1 : 0;
+    //     // });
+
+    //     results.push({pendingCases:[
+    //       {name: "Suits", cases: suits},
+    //       {name: "Family Cases", cases: familyCases},
+    //       {name: "Applications", cases: applications},
+    //       {name: "Custody Of Miners", cases: custodyOfMiners},
+    //       {name: "Executions", cases: executions},
+    //       {name: "Objection Petitions", cases: objectionPetitions},
+    //       {name:"Rent Cases", cases: rentCases},
+    //     ]});
+    //     // console.log(results);
+    //     res.status(200).json(results);
+    //     return;
+    //   }
+    // }
+
     if (query.reqQuery === "CaseStatistics") {
       const datePend = new Date();
       const monthPend = datePend.getMonth() + 1; // Months are zero-indexed (January is 0)
       const yearPend = datePend.getFullYear();
-
-      cases = await Case.find({
+    
+      // Fetch distinct categories from the database
+      const distinctCategories = await Case.distinct("Category Per PQS", {
+        $and: [
+          { disposed: { $ne: true } },
+          {
+            "Disposal OR Transfer Out Flag": {
+              $nin: ["Disposed", "Transfer Out"],
+            },
+          },
+          // Add condition to filter by date
+          {
+            "Date of Institution ": {
+              $lte: new Date(yearPend, monthPend - 1, 31), // Set the day to the last day of the month to cover the entire month
+            },
+          },
+        ],
+      });
+    
+      // Initialize a count object for each category
+      const categoryCounts = distinctCategories.reduce((acc, category) => {
+        acc[category] = 0;
+        return acc;
+      }, {});
+    
+      // Fetch all relevant cases
+      const cases = await Case.find({
         $and: [
           { disposed: { $ne: true } },
           {
@@ -130,74 +245,26 @@ export const getCases = async (req, res) => {
           },
         ],
       }).sort({ ["Category Per PQS"]: 1 });
-
-      let results = [];
-      // let stats = {suits: 0, familyCases: 0, applications: 0,}
-      let suits = 0;
-      let familyCases = 0;
-      let applications = 0;
-      let custodyOfMiners = 0;
-      let executions = 0;
-      let rentCases = 0;
-      let objectionPetitions = 0;
-
-      if (cases.length !== 0) {
-        cases.filter((item) => {
-          suits +=
-            item["Category Per PQS"] ===
-            "Civil-001-Civil Suits (Original Jurisdiction)"
-              ? 1
-              : 0;
-          suits += item["Category Per PQS"] === "Civil-002-Civil Suit" ? 1 : 0;
-          familyCases +=
-            item["Category Per PQS"] === "Civil-006-Family Court Cases" ? 1 : 0;
-            applications +=
-            item["Category Per PQS"] ===
-            "Civil-018-Other Civil Misc Applications"
-            ? 1
-            : 0;
-            custodyOfMiners +=
-            item["Category Per PQS"] === "Civil-004-Custody of Minors" ? 1 : 0;
-            executions +=
-            item["Category Per PQS"] === "Civil-015-Execution Petitions"
-            ? 1
-            : 0;
-            objectionPetitions +=
-            item["Category Per PQS"] === "Civil-021-Objection Petitions"
-            ? 1
-            : 0;
-            rentCases +=
-              item["Category Per PQS"] === "Civil-026-Rent Appeals" ? 1 : 0;
-        });
-
-        // cases.forEach((file) => {
-        //   // Calculate attendance for each file
-        //   suits +=
-        //     file?.["Category Per PQS"] ===
-        //     "Civil-001-Civil Suits (Original Jurisdiction)"
-        //       ? 1
-        //       : 0;
-        //   familyCases += file?.actionAbstract.includes("شہادت") ? 1 : 0;
-        //   applications += file?.actionAbstract.includes("بحث") ? 1 : 0;
-        //   custodyOfMiners += file?.actionAbstract.includes("حکم") ? 1 : 0;
-        //   executions += file?.actionAbstract.includes("حکم بر مقدمہ") ? 1 : 0;
-        //   rentCases += file?.actionAbstract.includes("حکم بر درخواست") ? 1 : 0;
-        // });
-
-        results.push({pendingCases:[
-          {name: "Suits", cases: suits},
-          {name: "Family Cases", cases: familyCases},
-          {name: "Applications", cases: applications},
-          {name: "Custody Of Miners", cases: custodyOfMiners},
-          {name: "Executions", cases: executions},
-          {name: "Objection Petitions", cases: objectionPetitions},
-          {name:"Rent Cases", cases: rentCases},
-        ]});
-        // console.log(results);
-        res.status(200).json(results);
-        return;
-      }
+    
+      // Count the number of cases for each category
+      cases.forEach((item) => {
+        if (categoryCounts.hasOwnProperty(item["Category Per PQS"])) {
+          categoryCounts[item["Category Per PQS"]]++;
+        }
+      });
+    
+      // Prepare results in the desired format
+      const results = Object.keys(categoryCounts).map((category) => ({
+        name: category.replace(/^[A-Za-z]+-\d+-/, ''),
+        cases: categoryCounts[category],
+      })).sort((a, b) => b.cases - a.cases); //for sorting
+      // console.log(results);
+      res.status(200).json({ pendingCases: results });
+      return;
     }
+
+    
+
     // }
     // if (query.reqQuery === "InstitutionCases") {
     //   cases = await Case.find({

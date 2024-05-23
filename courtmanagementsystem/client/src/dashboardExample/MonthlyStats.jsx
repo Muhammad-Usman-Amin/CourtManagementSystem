@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 const MonthlyStats = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  // const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [totalInstitution, setTotalInstitution] = useState(0);
   const [totalDisposals, setTotalDisposals] = useState(0);

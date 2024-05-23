@@ -119,7 +119,7 @@ export default function Chart() {
 
   return (
     <React.Fragment>
-      <Title>Monthly Institutions Pendency</Title>
+      <Title>Monthly Wise Pendency</Title>
       <ResponsiveContainer>
         <LineChart
           data={institutionsStatistics}
@@ -147,7 +147,7 @@ export default function Chart() {
                 fill: theme.palette.text.primary,
               }}
             >
-              Date
+              Month
             </Label>
           </XAxis>
           <YAxis
@@ -159,7 +159,7 @@ export default function Chart() {
               position="insideLeft"
               style={{ textAnchor: "middle", fill: theme.palette.text.primary }}
             >
-              Number of Cases
+              Total Cases
             </Label>
           </YAxis>
           <Line
