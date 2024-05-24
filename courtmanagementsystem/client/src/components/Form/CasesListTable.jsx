@@ -352,7 +352,7 @@ export default function CasesListTable({
               />
             </MuiPickersUtilsProvider>
           </Grid>
-          <Grid item container xs={12} sm={3} justify="space-between">
+          <Grid item container xs={12} sm={6} justify="space-between">
             <Divider orientation="vertical" flexItem />
             <Button
               variant="contained"
@@ -369,6 +369,22 @@ export default function CasesListTable({
               }}
             >
               Print Institutions
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              // startIcon={<EditIcon />}
+              color="primary"
+              style={{ borderRadius: 5, marginBottom: 10 }}
+              component={Link}
+              to={{
+                pathname: "/PrintFortnitely",
+                state: {
+                  dateInstitution: dateInstitution,
+                },
+              }}
+            >
+              Print Fortnitely
             </Button>
             <Divider orientation="vertical" flexItem />
           </Grid>

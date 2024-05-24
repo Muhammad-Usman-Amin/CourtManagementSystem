@@ -45,6 +45,7 @@ import PrintDisposal from "./components/CauseLists/PrintDisposal.jsx";
 import PrintButton from "./components/CauseLists/PrintButton.jsx";
 import DailyTotalCases from "./screens/DailyTotalCases.jsx";
 import { getRangeCauseLists } from "./actions/causeLists.js";
+import PrintFortnitely from "./components/CauseLists/PrintFortnitely.jsx";
 const App = () => {
   // const classes = makeStyles();
   const classes2 = useStyles();
@@ -171,6 +172,7 @@ const App = () => {
                 <Route path="/PrintCauseList" component={PrintCauseList} />
                 <Route path="/PrintPendency" component={PrintPendency} />
                 <Route path="/PrintInstitution" component={PrintInstitution} />
+                <Route path="/PrintFortnitely" component={PrintFortnitely} />
                 <Route path="/PrintDisposal" component={PrintDisposal} />
                 <Route path="/PrintButton" component={PrintButton} />
 
