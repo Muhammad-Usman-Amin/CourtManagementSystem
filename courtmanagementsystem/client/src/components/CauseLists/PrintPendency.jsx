@@ -109,6 +109,7 @@ const PrintPendency = (props) => {
     const str = action.replace(/(^\s+|\s+$)/g, "");
     switch (str) {
       case "حاضری":
+      case "وکالت نامہ":
       case "حاضری، ریکارڈ":
       case "حاضری، اشتہار":
       case "مختارنامہ":
@@ -126,6 +127,7 @@ const PrintPendency = (props) => {
         return "Proformas";
       case "تنقیحات":
         return "Framing of Issues";
+      case "جرح بر گواہ":
       case "شہادت":
       case "شہادت استغاثہ":
         return "Evidence";
@@ -137,7 +139,7 @@ const PrintPendency = (props) => {
         return "Plaintiff Evidence";
       case "شہادت مدعیہ":
         return "Plaintiff Evidence";
-      case "شہادت مدعا علیہم":
+      case "شہادت مدعاعلیہم":
         return "Defendants Evidence";
       case "شہادت مدعیان":
         return "Plaintiffs Evidence";
@@ -158,8 +160,10 @@ const PrintPendency = (props) => {
         return "Remaining Arguments";
       case "بحث، ریکارڈ":
         return "Arguments on Application";
-      case "بحث بر مقدمہ":
+      case "بحث":
         return "Arguments";
+      case "بحث بر مقدمہ":
+        return "Final Arguments";
       case "یکطرفہ بحث":
         return "ex-parte Arguments";
       case "بحث بر درخواست":
@@ -169,7 +173,7 @@ const PrintPendency = (props) => {
       case "حکم":
         return "Order";
       case "حکم بر مقدمہ":
-        return "Order";
+        return "Final Order";
       case "مزید کاروائی":
         return "Others";
       case "انتظار مسل":

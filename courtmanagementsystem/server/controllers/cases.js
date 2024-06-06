@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Case from "../models/case.js";
 import express from "express";
 
+
 const router = express.Router();
 
 export const getCases = async (req, res) => {
@@ -54,6 +55,62 @@ export const getCases = async (req, res) => {
     // if(query.reqQuery === "InstituionsStatistics"){
     if(query.reqQuery === "InstitutionsStatistics"){
 
+      // const result = await Case.aggregate([
+      //   {
+      //     $project: {
+      //       dates: [
+      //         { date: '$Date of Institution ' },
+      //         { date: '$Date of Transfer In' },
+      //         { date: '$Date of Other Institution' }
+      //       ],
+      //       disposalFlag: '$Disposal OR Transfer Out Flag'  //for pendency of each month
+      //     }
+      //   },
+      //   { $unwind: '$dates' },
+      //   {
+      //     $match: {
+      //       'dates.date': { $ne: null },  // Ensure the date is not null
+      //       disposalFlag: { $nin: ["Disposed", "Transfer Out"] }  // Exclude specified values
+      //     }
+      //   },
+      //   {
+      //     $group: {
+      //       _id: {
+      //         year: { $year: '$dates.date' },
+      //         month: { $month: '$dates.date' }
+      //       },
+      //       count: { $sum: 1 }
+      //     }
+      //   },
+      //   {
+      //     $project: {
+      //       _id: 0,
+      //       month: '$_id.month',
+      //       year: '$_id.year',
+      //       count: 1
+      //     }
+      //   },
+      //   {
+      //     $sort: { year: 1, month: 1 }
+      //   }
+      // ]);
+      // // console.log(result);
+  
+      // // Transform the result to the desired format
+      // const formattedResult = result.map(item => {
+      //   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      //   const formattedDate = `${monthNames[item.month - 1]}-${item.year}`;
+      //   return {
+      //     date: formattedDate, // e.g., "May-2024"
+      //     cases: item.count
+      //   };
+      // });
+
+      // // console.log(formattedResult);
+      // res.status(200).json(formattedResult);
+      //   return;
+
+
       const result = await Case.aggregate([
         {
           $project: {
@@ -67,16 +124,38 @@ export const getCases = async (req, res) => {
         },
         { $unwind: '$dates' },
         {
+          $addFields: {
+            'dates.localDate': {
+              $let: {
+                vars: {
+                  localDate: {
+                    $dateFromString: {
+                      dateString: {
+                        $dateToString: {
+                          format: '%Y-%m-%dT%H:%M:%SZ',
+                          date: '$dates.date',
+                          timezone: 'Asia/Karachi'
+                        }
+                      }
+                    }
+                  }
+                },
+                in: '$$localDate'
+              }
+            }
+          }
+        },
+        {
           $match: {
-            'dates.date': { $ne: null },  // Ensure the date is not null
+            'dates.localDate': { $ne: null },  // Ensure the date is not null
             disposalFlag: { $nin: ["Disposed", "Transfer Out"] }  // Exclude specified values
           }
         },
         {
           $group: {
             _id: {
-              year: { $year: '$dates.date' },
-              month: { $month: '$dates.date' }
+              year: { $year: '$dates.localDate' },
+              month: { $month: '$dates.localDate' }
             },
             count: { $sum: 1 }
           }
@@ -93,7 +172,7 @@ export const getCases = async (req, res) => {
           $sort: { year: 1, month: 1 }
         }
       ]);
-  
+    
       // Transform the result to the desired format
       const formattedResult = result.map(item => {
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -103,11 +182,14 @@ export const getCases = async (req, res) => {
           cases: item.count
         };
       });
-
-      // console.log(formattedResult);
+    
       res.status(200).json(formattedResult);
-        return;
+      return;
+    
     }
+    
+
+
 
     // if (query.reqQuery === "CaseStatistics") {
     //   const datePend = new Date();
@@ -281,32 +363,64 @@ export const getCases = async (req, res) => {
 
     if (query.reqQuery === "DisposalCases") {
       const dateDisp = new Date(query.dateDisposal);
-      // Extract year and month
+
       const monthDisp = dateDisp.getMonth() + 1; // Months are zero-indexed (January is 0)
       const yearDisp = dateDisp.getFullYear();
       // console.log(query);
-      cases = await Case.find({
-        // $and: [
-        // disposed: true,
-        $expr: {
-          $and: [
-            { $eq: [{ $month: "$Date of Disposal Transfer Out" }, monthDisp] },
-            { $eq: [{ $year: "$Date of Disposal Transfer Out" }, yearDisp] },
-            // {$eq: ["$Disposal OR Transfer Out Flag", "Disposed"]}, // for disposals only
-          ],
-        },
-        // "Disposal OR Transfer Out Flag": {
-        //   $in: ["Disposed", "Transfer Out"],
-        // },
-        //upper and below both method works
-        // $or: [
-        //   { "Disposal OR Transfer Out Flag": "Disposed" },
-        //   { "Disposal OR Transfer Out Flag": "Transfer Out" }
-        // ],
-        // ],
-      }).sort({ ["Date of Institution "]: 1 });
+      // cases = await Case.find({
+      //   // $and: [
+      //   // disposed: true,
+      //   $expr: {
+      //     $and: [
+      //       { $eq: [{ $month: "$Date of Disposal Transfer Out" }, monthDisp] },
+      //       { $eq: [{ $year: "$Date of Disposal Transfer Out" }, yearDisp] },
+      //       // {$eq: ["$Disposal OR Transfer Out Flag", "Disposed"]}, // for disposals only
+      //     ],
+      //   },
+      //   // "Disposal OR Transfer Out Flag": {
+      //   //   $in: ["Disposed", "Transfer Out"],
+      //   // },
+      //   //upper and below both method works
+      //   // $or: [
+      //   //   { "Disposal OR Transfer Out Flag": "Disposed" },
+      //   //   { "Disposal OR Transfer Out Flag": "Transfer Out" }
+      //   // ],
+      //   // ],
+      // }).sort({ ["Date of Institution "]: 1 });
       // }
+
+      cases = await Case.aggregate([
+        {
+          $addFields: {
+            localDateOfDisposalTransferOut: {
+              $dateFromString: {
+                dateString: {
+                  $dateToString: {
+                    format: '%Y-%m-%dT%H:%M:%SZ',
+                    date: '$Date of Disposal Transfer Out',
+                    timezone: 'Asia/Karachi'
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          $match: {
+            $expr: {
+              $and: [
+                { $eq: [{ $month: "$localDateOfDisposalTransferOut" }, monthDisp] },
+                { $eq: [{ $year: "$localDateOfDisposalTransferOut" }, yearDisp] },
+              ],
+            },
+          },
+        },
+        {
+          $sort: { "Date of Institution ": 1 }
+        }
+      ]);
     }
+    // }
     // console.log(query);
 
     if (query.reqQuery === "InstitutionCases") {
@@ -317,64 +431,158 @@ export const getCases = async (req, res) => {
 
       const selectedMonth = month; // Assuming the user selects April (Month 4)
       const selectedYear = year; // Assuming the user selects the year 2024
-      cases = await Case.aggregate([
-        {
-          $match: {
-            $or: [
-              {
-                $expr: {
-                  $and: [
-                    {
-                      $eq: [{ $month: "$Date of Institution " }, selectedMonth],
-                    },
-                    { $eq: [{ $year: "$Date of Institution " }, selectedYear] },
-                  ],
-                },
-              },
-              {
-                $expr: {
-                  $and: [
-                    {
-                      $eq: [{ $month: "$Date of Transfer In" }, selectedMonth],
-                    },
-                    { $eq: [{ $year: "$Date of Transfer In" }, selectedYear] },
-                  ],
-                },
-              },
-              {
-                $expr: {
-                  $and: [
-                    {
-                      $eq: [
-                        { $month: "$Date of Other Institution" },
-                        selectedMonth,
-                      ],
-                    },
-                    {
-                      $eq: [
-                        { $year: "$Date of Other Institution" },
-                        selectedYear,
-                      ],
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
-      ]).sort({ ["Date of Institution "]: 1 });
-    }
+    //   cases = await Case.aggregate([
+    //     {
+    //       $match: {
+    //         $or: [
+    //           {
+    //             $expr: {
+    //               $and: [
+    //                 {
+    //                   $eq: [{ $month: "$Date of Institution " }, selectedMonth],
+    //                 },
+    //                 { $eq: [{ $year: "$Date of Institution " }, selectedYear] },
+    //               ],
+    //             },
+    //           },
+    //           {
+    //             $expr: {
+    //               $and: [
+    //                 {
+    //                   $eq: [{ $month: "$Date of Transfer In" }, selectedMonth],
+    //                 },
+    //                 { $eq: [{ $year: "$Date of Transfer In" }, selectedYear] },
+    //               ],
+    //             },
+    //           },
+    //           {
+    //             $expr: {
+    //               $and: [
+    //                 {
+    //                   $eq: [
+    //                     { $month: "$Date of Other Institution" },
+    //                     selectedMonth,
+    //                   ],
+    //                 },
+    //                 {
+    //                   $eq: [
+    //                     { $year: "$Date of Other Institution" },
+    //                     selectedYear,
+    //                   ],
+    //                 },
+    //               ],
+    //             },
+    //           },
+    //         ],
+    //       },
+    //     },
+    //   ]).sort({ ["Date of Institution "]: 1 });
+    // }
 
+    // below code fixes the timezome issue, mongodb save documents by default to UTC dates which 
+    // create problems whien you want to fetch those dates for calculations.
+    cases = await Case.aggregate([
+      {
+        $addFields: {
+          localDateOfInstitution: {
+            $dateFromString: {
+              dateString: {
+                $dateToString: {
+                  format: '%Y-%m-%dT%H:%M:%SZ',
+                  date: '$Date of Institution ',
+                  timezone: 'Asia/Karachi'
+                }
+              }
+            }
+          },
+          localDateOfTransferIn: {
+            $dateFromString: {
+              dateString: {
+                $dateToString: {
+                  format: '%Y-%m-%dT%H:%M:%SZ',
+                  date: '$Date of Transfer In',
+                  timezone: 'Asia/Karachi'
+                }
+              }
+            }
+          },
+          localDateOfOtherInstitution: {
+            $dateFromString: {
+              dateString: {
+                $dateToString: {
+                  format: '%Y-%m-%dT%H:%M:%SZ',
+                  date: '$Date of Other Institution',
+                  timezone: 'Asia/Karachi'
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        $match: {
+          $or: [
+            {
+              $expr: {
+                $and: [
+                  {
+                    $eq: [{ $month: "$localDateOfInstitution" }, selectedMonth],
+                  },
+                  { $eq: [{ $year: "$localDateOfInstitution" }, selectedYear] },
+                ],
+              },
+            },
+            {
+              $expr: {
+                $and: [
+                  {
+                    $eq: [{ $month: "$localDateOfTransferIn" }, selectedMonth],
+                  },
+                  { $eq: [{ $year: "$localDateOfTransferIn" }, selectedYear] },
+                ],
+              },
+            },
+            {
+              $expr: {
+                $and: [
+                  {
+                    $eq: [
+                      { $month: "$localDateOfOtherInstitution" },
+                      selectedMonth,
+                    ],
+                  },
+                  {
+                    $eq: [
+                      { $year: "$localDateOfOtherInstitution" },
+                      selectedYear,
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ]).sort({ ["Date of Institution "]: 1 });
+  }
+    
     res.status(200).json(cases);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
 
+// function stripTime(date) {
+//   date.setHours(0, 0, 0, 0);
+//   return date;
+// }
+
 export const createCase = async (req, res) => {
   // const { title, caseNumber, caseType, caseSubType, FIR, FIRdate, UnderSection, policeStation, institutionDate, disposalDate, isTransferedIn } = req.body;
   // const newCase = new Case({ title, caseNumber, caseType, caseSubType, FIR, FIRdate, UnderSection, policeStation, institutionDate, disposalDate, isTransferedIn });
 
+
+  
   const { body } = req;
   // console.log(body);
   const {
@@ -402,7 +610,15 @@ export const createCase = async (req, res) => {
     isOtherNature,
     AcquittalORConviction,
   } = body;
+
+  // Ensure the date is correctly set to the local timezone start of day
+  // console.log(dateOfInstitution)
+  // let { dateOfInst } = startOfDay(parseISO(dateOfInstitution));
+  // console.log(dateOfInst);
+
   // console.log(caseTitle);
+  // const datIns = stripTime(dateOfInstitution)
+  // console.log(datIns);
 
   const newCase = new Case({
     ["Case Title"]: caseTitle,
@@ -415,6 +631,7 @@ export const createCase = async (req, res) => {
     Thana,
     Section,
     ["Date of Institution "]: dateOfInstitution,
+    // ["Date of Institution "]: dateOfInst,
     ["Date of Disposal Transfer Out"]: dateOfDisposalTransferOut,
     ["Disposal OR Transfer Out Flag"]: disposalOrTransferOutFlag,
     ["Disposal Mode Flag"]: disposalModeFlaq,

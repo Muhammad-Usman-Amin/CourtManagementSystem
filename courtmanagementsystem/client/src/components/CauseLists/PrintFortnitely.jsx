@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) =>
       textAlign: "center",
       margin: 0, // Set margin to 0
       padding: 0,
+      lineHeight: 1.2,
       // backgroundColor: "lightgray",
     },
     tableEmptyCell: {
@@ -548,7 +549,7 @@ const PrintFortnitely = (props) => {
                     align="center"
                     className={classes.tableHeaderCell}
                   >
-                    Restored/Remanded
+                    Restored/<br></br>Remanded
                   </TableCell>
                   <TableCell
                     colSpan={1}
@@ -591,7 +592,7 @@ const PrintFortnitely = (props) => {
                     align="center"
                     className={classes.tableHeaderCell}
                   >
-                    Restored/Remanded
+                    Restored/ <br></br>Remanded
                   </TableCell>
                   <TableCell
                     colSpan={1}

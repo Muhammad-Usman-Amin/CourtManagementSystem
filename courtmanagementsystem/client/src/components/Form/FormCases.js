@@ -39,7 +39,7 @@ import ClearAllIcon from "@material-ui/icons/ClearAll";
 import SaveIcon from "@material-ui/icons/Save";
 import { addDays } from "date-fns";
 // import { useNavigate } from 'react-router-dom/cjs/react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 const GreenCheckbox = withStyles({
   root: {
@@ -97,11 +97,20 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   });
 
   const handleDateChange = (date) => {
-    setInstitutionDate(date);
+    // const userInputDate = format(new Date(date), 'yyyy-MM-dd'); // format the date to 'yyyy-MM-dd'
+    // console.log(date);
+    // setInstitutionDate(startOfDay(date));
+    // setCaseData({ ...caseData, "Date of Institution ": date});
 
-    setCaseData({ ...caseData, "Date of Institution ": date });
+    setInstitutionDate(date);
+    setCaseData({ ...caseData, "Date of Institution ": date});
+
     // console.log(caseData["Date of Institution "]);
   };
+
+  // useEffect(() => {
+  //   setCaseData({ ...caseData, "Date of Institution ": institutionDate });
+  // }, [institutionDate]);
 
   const [selectedCaseType, setSelectedCaseType] = useState("Civil");
   const caseFile = useSelector((state) =>
@@ -153,34 +162,33 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     );
   }, [onPageChange, currentId, caseFile]);
 
-  function getCaseNo(str){
-switch (str) {
-  case 'Civil-001-Civil Suits (Original Jurisdiction)':
-    return 'Suit - /1';
-  case 'Civil-006-Family Court Cases':
-    return 'FC - /III';
-  case 'Civil-018-Other Civil Misc Applications':
-    return 'MA - /6'
-  case 'Civil-015-Execution Petitions':
-    return 'Ex - /10';
-  case 'Civil-021-Objection Petitions':
-    return 'OP - /11';
+  function getCaseNo(str) {
+    switch (str) {
+      case "Civil-001-Civil Suits (Original Jurisdiction)":
+        return "Suit - /1";
+      case "Civil-006-Family Court Cases":
+        return "FC - /III";
+      case "Civil-018-Other Civil Misc Applications":
+        return "MA - /6";
+      case "Civil-015-Execution Petitions":
+        return "Ex - /10";
+      case "Civil-021-Objection Petitions":
+        return "OP - /11";
 
-  default:
-    return '';
-}
+      default:
+        return "";
+    }
   }
-  const [cNo, setCNo] = useState('');
+  const [cNo, setCNo] = useState("");
   useEffect(() => {
-    setCNo(getCaseNo(caseData['Category Per PQS']));
-  }, [caseData["Category Per PQS"]])
-  
+    setCNo(getCaseNo(caseData["Category Per PQS"]));
+  }, [caseData["Category Per PQS"]]);
+
   useEffect(() => {
-    if(!currentId)
-    setCaseData({...caseData, 'Case No': cNo});
+    if (!currentId) setCaseData({ ...caseData, "Case No": cNo });
     // console.log(cNo);
     // console.log(caseData['Case No']);
-  }, [cNo])
+  }, [cNo]);
 
   const history = useHistory();
   const handleSubmit = async (e) => {
@@ -203,7 +211,7 @@ switch (str) {
       }
     }
     clear();
-    history.push('/CasesListTable'); // Navigate to the CasesListTable route
+    history.push("/CasesListTable"); // Navigate to the CasesListTable route
   };
   const clear = () => {
     setCurrentId(null);
@@ -322,9 +330,17 @@ switch (str) {
                   <MenuItem value="">
                     <em>Mostly Used</em>
                   </MenuItem>
-                  <MenuItem value={"Civil-001-Civil Suits (Original Jurisdiction)"}>Suit/1</MenuItem>
-                  <MenuItem value={"Civil-006-Family Court Cases"}>FC/III</MenuItem>
-                  <MenuItem value={"Civil-018-Other Civil Misc Applications"}>MA/6</MenuItem>
+                  <MenuItem
+                    value={"Civil-001-Civil Suits (Original Jurisdiction)"}
+                  >
+                    Suit/1
+                  </MenuItem>
+                  <MenuItem value={"Civil-006-Family Court Cases"}>
+                    FC/III
+                  </MenuItem>
+                  <MenuItem value={"Civil-018-Other Civil Misc Applications"}>
+                    MA/6
+                  </MenuItem>
                   <MenuItem value={"Civil-015-Execution Petitions"}>
                     Ex/10
                   </MenuItem>
@@ -590,7 +606,7 @@ switch (str) {
               variant="outlined"
               label="Case Number"
               fullWidth
-              value={caseData["Case No"] ? caseData['Case No'] : cNo}
+              value={caseData["Case No"] ? caseData["Case No"] : cNo}
               onChange={(e) =>
                 setCaseData({ ...caseData, "Case No": e.target.value })
               }
@@ -662,12 +678,12 @@ switch (str) {
                     حکم امتناعی
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="12(2)">
-                  12(2)
+                    12(2)
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="دخلیابی">
                     دخلیابی
                   </MenuItem>
-                  <Divider/>
+                  <Divider />
                   <MenuItem className={classes.uFont} value="تنسیخ نکاح">
                     تنسیخ نکاح
                   </MenuItem>
@@ -692,7 +708,7 @@ switch (str) {
                   <MenuItem className={classes.uFont} value="حکم عدولی">
                     حکم عدولی
                   </MenuItem>
-                  <Divider/>
+                  <Divider />
                   <MenuItem className={classes.uFont} value="درخواست">
                     درخواست
                   </MenuItem>
@@ -714,7 +730,7 @@ switch (str) {
                   <MenuItem className={classes.uFont} value="حضانت">
                     حضانت
                   </MenuItem>
-                  <Divider/>
+                  <Divider />
                   <MenuItem className={classes.uFont} value="اِجراء">
                     اِجراء
                   </MenuItem>
@@ -724,7 +740,7 @@ switch (str) {
                   <MenuItem className={classes.uFont} value="پرت">
                     پرت
                   </MenuItem>
-                  <Divider/>
+                  <Divider />
                   <MenuItem className={classes.uFont} value="استغاثہ">
                     استغاثہ
                   </MenuItem>
@@ -1589,6 +1605,9 @@ switch (str) {
                       setCaseData({
                         ...caseData,
                         disposed: e.target.checked,
+                        "Disposal OR Transfer Out Flag": e.target.checked
+                          ? "Disposed"
+                          : "",
                         transferedOut: false,
                       });
                       setIsDisposed(e.target.checked);
@@ -1682,6 +1701,7 @@ switch (str) {
                         <MenuItem value={"Uncontested"}>Uncontested</MenuItem>
                         <MenuItem value={"In Default"}>In Default</MenuItem>
                         <MenuItem value="Transfer Out">Transfer Out</MenuItem>
+                        <MenuItem value="">Empty</MenuItem>
                         {caseData["Case Type"] === "Criminal" && (
                           <MenuItem value={"Pleadguilty"}>Pleadguilty</MenuItem>
                         )}

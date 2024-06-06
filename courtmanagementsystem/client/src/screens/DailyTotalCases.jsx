@@ -146,8 +146,8 @@ const DailyTotalCases = ({ onPageChange }) => {
                   gutterBottom
                   style={{ fontWeight: "bold" }}
                 >
-                  {format?.(parseISO?.(day.date), "dd-MM-yyy")} |
-                  {new Date(day.date).toLocaleDateString("ur", {
+                  {format?.(parseISO?.(day?.date), "dd-MM-yyy")} |
+                  {new Date(day?.date).toLocaleDateString("ur", {
                     weekday: "long",
                   })}
                   {/* {day.date} | دن */}
