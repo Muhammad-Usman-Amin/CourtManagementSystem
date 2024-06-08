@@ -94,6 +94,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     orderDate: new Date(),
     nature: "",
     isOtherNature: false,
+    isOtherPoliceStation: false,
   });
 
   const handleDateChange = (date) => {
@@ -103,7 +104,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     // setCaseData({ ...caseData, "Date of Institution ": date});
 
     setInstitutionDate(date);
-    setCaseData({ ...caseData, "Date of Institution ": date});
+    setCaseData({ ...caseData, "Date of Institution ": date });
 
     // console.log(caseData["Date of Institution "]);
   };
@@ -128,6 +129,16 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   const [isTransferedIn, setIsTransferedIn] = useState(false);
   const [isRemandedRestored, setIsRemandedRestored] = useState(false);
   const [isOtherNature, setIsOtherNature] = useState(false);
+  const [isOtherPoliceStation, setIsOtherPoliceStation] = useState(false);
+  const predefinedPoliceStations = [
+    "تیمرگرہ",
+    "تالاش",
+    "خال",
+    "بلامبٹ",
+    "چکدرہ",
+    "ثمرباغ",
+  ];
+  const [isPredefinedThana, setIsPredefinedThana] = useState(false);
 
   useEffect(() => {
     // console.log(caseFile);
@@ -151,6 +162,14 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
         ? setIsTransferOut(true)
         : setIsTransferOut(false);
       caseFile.isOtherNature ? setIsOtherNature(true) : setIsOtherNature(false);
+      caseFile.isOtherPoliceStation
+        ? setIsOtherPoliceStation(true)
+        : setIsOtherPoliceStation(false);
+      if (caseFile["Case Type"] === "Criminal") {
+        predefinedPoliceStations.includes(caseData?.Thana)
+          ? setIsPredefinedThana(true)
+          : setIsPredefinedThana(false);
+      }
     }
   }, [caseFile]);
 
@@ -223,6 +242,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     setIsRemandedRestored(false);
     setIsTransferedIn(false);
     setIsOtherNature(false);
+    setIsOtherPoliceStation(false);
     setCaseData({
       "Case Title": "",
       urduTitle: "",
@@ -251,6 +271,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       orderDate: new Date(),
       nature: "",
       isOtherNature: false,
+      isOtherPoliceStation: false,
     });
     setSameAsInstitutiondate(false);
   };
@@ -529,7 +550,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem value={"CR-010-Complaint Cases"}>
                     CR-010 Complaint Cases
                   </MenuItem>
-                  <MenuItem value={"CR-011-Narcotics Substances"}>
+                  <MenuItem value={"CR-011-Norcotics Substances"}>
                     CR-011 Narcotics Substances
                   </MenuItem>
                   <MenuItem value={"CR-012-Habeas Corpus (491 Cr.PC.)"}>
@@ -890,7 +911,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 />
               </Grid>
               <Grid item xs={12} sm={3}>
-                <TextField
+                {/* <TextField
                   name="policeStation"
                   variant="outlined"
                   label="Police Station Name"
@@ -899,7 +920,77 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   onChange={(e) =>
                     setCaseData({ ...caseData, Thana: e.target.value })
                   }
-                />
+                /> */}
+                {isOtherPoliceStation ? (
+                  <TextField
+                    className={classes.uFont}
+                    name="Other Police Station"
+                    variant="outlined"
+                    label="Other Police Station"
+                    fullWidth
+                    value={caseData?.Thana}
+                    onChange={(e) =>
+                      setCaseData({ ...caseData, Thana: e.target.value })
+                    }
+                  />
+                ) : (
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Police Station Name
+                    </InputLabel>
+                    <Select
+                      className={classes.uFont}
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={caseData.Thana}
+                      onChange={(e) => {
+                        setCaseData({
+                          ...caseData,
+                          Thana: e.target.value,
+                        });
+                      }}
+                      label="Police Station Name"
+                    >
+                      <MenuItem value="">
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={isOtherPoliceStation}
+                              color="primary"
+                              onChange={(e) => {
+                                setCaseData({
+                                  ...caseData,
+                                  isOtherPoliceStation: e.target.checked,
+                                });
+                                setIsOtherPoliceStation(e.target.checked);
+                              }}
+                              name="isOtherPoliceStation"
+                            />
+                          }
+                          label="Other Police Station"
+                        />
+                      </MenuItem>
+                      <MenuItem value=""></MenuItem>
+                      {predefinedPoliceStations.map((station) => (
+                        <MenuItem
+                          key={station}
+                          className={classes.uFont}
+                          value={station}
+                        >
+                          {station}
+                        </MenuItem>
+                      ))}
+                      {!isPredefinedThana && (
+                        <MenuItem
+                          className={classes.uFont}
+                          value={caseData.Thana}
+                        >
+                          {caseData.Thana}
+                        </MenuItem>
+                      )}
+                    </Select>
+                  </FormControl>
+                )}
               </Grid>
             </>
           )}

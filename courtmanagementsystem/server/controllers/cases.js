@@ -608,6 +608,7 @@ export const createCase = async (req, res) => {
     orderNumber,
     nature,
     isOtherNature,
+    isOtherPoliceStation,
     AcquittalORConviction,
   } = body;
 
@@ -652,6 +653,7 @@ export const createCase = async (req, res) => {
     orderNumber: orderNumber,
     nature: nature,
     isOtherNature: isOtherNature,
+    isOtherPoliceStation,
     AcquittalORConviction: AcquittalORConviction,
   });
 

@@ -49,7 +49,7 @@ export default (causeLists = initialState, action) => {
 
     // case FETCH_CASES_FAILURE:
     //   return {
-    //     ...state,
+    //     ...causeLists,
     //     error: action.payload,
     //   };
 
