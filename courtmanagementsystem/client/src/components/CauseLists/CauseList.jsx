@@ -145,7 +145,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     if (caseId) handleSubmit(nextDate);
   }, [nextDate]);
 
-  const [serialNo, setSerialNo] = useState([]);
+  // const [serialNo, setSerialNo] = useState([]);
   let index = 0;
   // const [ind, setInd] = useState(0);
   // let sno = [];
@@ -157,23 +157,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   useEffect(() => {
     dispatch(getCauseList({ dateCauseList: dateCauseList }));
   }, []);
-  useEffect(() => {
-    console.log(cases);
-    for (let i = 1; i <= cases.length; i++) {
-      // sno.push(i);
-      // setSerialNo((oldArray) => [...oldArray, i]);
-      setSerialNo((prevArray) => [...prevArray, i]);
-    }
-    // console.log(serialNo);
-  }, [cases]);
-  useEffect(() => {
-    for (let i = 1; i <= cases.length; i++) {
-      // sno.push(i);
-      // setSerialNo((oldArray) => [...oldArray, i]);
-      setSerialNo((prevArray) => [...prevArray, i]);
-    }
-    // console.log(serialNo);
-  }, [dateCauseList]);
+
+  // useEffect(() => {
+  //   // console.log(cases);
+  //   for (let i = 1; i <= cases.length; i++) {
+  //     // sno.push(i);
+  //     // setSerialNo((oldArray) => [...oldArray, i]);
+  //     setSerialNo((prevArray) => [...prevArray, i]);
+  //   }
+  //   // console.log(serialNo);
+  // }, [cases]);
+  // useEffect(() => {
+  //   for (let i = 1; i <= cases.length; i++) {
+  //     // sno.push(i);
+  //     // setSerialNo((oldArray) => [...oldArray, i]);
+  //     setSerialNo((prevArray) => [...prevArray, i]);
+  //   }
+  //   // console.log(serialNo);
+  // }, [dateCauseList]);
 
   function getSecondToLastElementCategory(array) {
     if (array.length === 0) {
@@ -3090,11 +3091,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     !getSecondToLastElementCategory(caseFile.causeListEntries)
                       .actionAbstract ? (
                       <TableRow key={caseFile._id}>
-                        <TableCell component="th" scope="row" align="right">
-                          {/* {cases.indexOf(caseFile) + 1} */}
-                          {/* {serialNo} */}
+                        {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
-                        </TableCell>
+                        </TableCell> */}
+                        <TableCell align="right">{serialNumbers[index++]}</TableCell>
                         <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
