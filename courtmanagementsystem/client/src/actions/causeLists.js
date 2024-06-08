@@ -18,6 +18,8 @@ export const getCauseList = (params) => async (dispatch) => {
     // console.log(data);
   } catch (error) {
     console.log(error);
+    // Optionally, you can dispatch an error action to update the state
+    // dispatch({ type: 'FETCH_CAUSE_LIST_FAILURE', payload: error.message });
   }
 };
 export const getRangeCauseLists = (params) => async (dispatch) => {

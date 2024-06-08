@@ -275,7 +275,7 @@ const PrintPendency = (props) => {
               {filteredCases.map((caseFile) =>
                 caseFile.causeListEntries &&
                 getSecondToLastElementCategory(caseFile.causeListEntries)
-                  .actionAbstract ? (
+                  ?.actionAbstract ? (
                   <TableRow hover key={caseFile._id}>
                   <TableCell
                           className={classes.tableCell}

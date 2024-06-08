@@ -23,7 +23,10 @@ const PrintCauseList = (props) => {
   const [dateCauseList] = useState(props.location.state.dateCauseList);
 
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.causeLists);
+  // const data = useSelector((state) => state.causeLists);
+  const data = useSelector((state) => state.causeLists.cases);
+  const serialNumbers = useSelector((state) => state.causeLists.serialNumbers);
+
   const controlPanel = useSelector((state) => state.controlCenter);
 
   let index = 0;
@@ -419,16 +422,22 @@ const PrintCauseList = (props) => {
                         {/* <TableCell className={classes.tableEmptyCell}>
                           {""}
                         </TableCell> */}
-
                         <TableCell
                           className={classes.tableCell}
                           component="th"
                           scope="row"
                           style={{ maxWidth: 1 }}
                         >
-                          {/* {data.indexOf(caseFile) + 1} */}
-                          {serialNo[index++]}
+                          {serialNumbers[index++]}
                         </TableCell>
+                        {/* <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                          style={{ maxWidth: 1 }}
+                        >
+                          {serialNo[index++]}
+                        </TableCell> */}
                         <TableCell
                           className={classes.tableCell}
                           component="th"
@@ -605,16 +614,22 @@ const PrintCauseList = (props) => {
                         {/* <TableCell className={classes.tableEmptyCell}>
                           {""}
                         </TableCell> */}
-
                         <TableCell
                           className={classes.tableCell}
                           component="th"
                           scope="row"
                           style={{ maxWidth: 1 }}
                         >
-                          {serialNo[index++]}
-                          {/* {data.indexOf(caseFile) + 1} */}
+                          {serialNumbers[index++]}
                         </TableCell>
+                        {/* <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                          style={{ maxWidth: 1 }}
+                        >
+                          {serialNo[index++]}
+                        </TableCell> */}
                         <TableCell
                           className={classes.tableCell}
                           component="th"
@@ -791,16 +806,22 @@ const PrintCauseList = (props) => {
                         {/* <TableCell className={classes.tableEmptyCell}>
                           {""}
                         </TableCell> */}
-
                         <TableCell
                           className={classes.tableCell}
                           component="th"
                           scope="row"
                           style={{ maxWidth: 1 }}
                         >
-                          {/* {data.indexOf(caseFile) + 1} */}
-                          {serialNo[index++]}
+                          {serialNumbers[index++]}
                         </TableCell>
+                        {/* <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                          style={{ maxWidth: 1 }}
+                        >
+                          {serialNo[index++]}
+                        </TableCell> */}
                         <TableCell
                           className={classes.tableCell}
                           component="th"
@@ -977,16 +998,22 @@ const PrintCauseList = (props) => {
                         {/* <TableCell className={classes.tableEmptyCell}>
                           {""}
                         </TableCell> */}
-
                         <TableCell
                           className={classes.tableCell}
                           component="th"
                           scope="row"
                           style={{ maxWidth: 1 }}
                         >
-                          {/* {data.indexOf(caseFile) + 1} */}
-                          {serialNo[index++]}
+                          {serialNumbers[index++]}
                         </TableCell>
+                        {/* <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                          style={{ maxWidth: 1 }}
+                        >
+                          {serialNo[index++]}
+                        </TableCell> */}
                         <TableCell
                           className={classes.tableCell}
                           component="th"
@@ -1161,16 +1188,22 @@ const PrintCauseList = (props) => {
                         {/* <TableCell className={classes.tableEmptyCell}>
                           {""}
                         </TableCell> */}
-
                         <TableCell
                           className={classes.tableCell}
                           component="th"
                           scope="row"
                           style={{ maxWidth: 1 }}
                         >
-                          {/* {data.indexOf(caseFile) + 1} */}
-                          {serialNo[index++]}
+                          {serialNumbers[index++]}
                         </TableCell>
+                        {/* <TableCell
+                          className={classes.tableCell}
+                          component="th"
+                          scope="row"
+                          style={{ maxWidth: 1 }}
+                        >
+                          {serialNo[index++]}
+                        </TableCell> */}
                         <TableCell
                           className={classes.tableCell}
                           component="th"
