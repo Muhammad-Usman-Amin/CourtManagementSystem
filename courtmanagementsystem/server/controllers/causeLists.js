@@ -110,8 +110,14 @@ export const getCauseList = async (req, res) => {
     // const result = await db.collection('records').find(query).toArray();
     try {
       const result = await Case.find(query);
+      const serialNumbers = result.map((_, index) => index + 1);
+      // console.log(serialNumbers);
       // console.log("Fetched data length:", result.length);
-      res.status(201).json(result);
+      // res.status(201).json(result);
+      res.status(200).json({
+        cases: result,
+        serialNumbers
+      });
     } catch (error) {
       console.log("Fetched data error:", error);
       res.status(409).json({ error });

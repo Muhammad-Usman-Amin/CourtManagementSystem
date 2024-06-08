@@ -41,6 +41,7 @@ import { getCauseList } from "../../actions/causeLists";
 // import useStyles2 from "../../dashboardExample/dashboard";
 import { addDays } from "date-fns";
 import { useLocation } from "react-router-dom";
+import { serialNumbers, selectCauseListCases } from "../../selectors/caseStatisticsSelector";
 
 const useStyles = makeStyles({
   table: {
@@ -58,8 +59,13 @@ const useStyles = makeStyles({
 
 const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   // const classes2 = useStyles2();
+
   // const cases = useSelector((state) => state.cases);
-  const cases = useSelector((state) => state.causeLists);
+  // const cases = useSelector((state) => state.causeLists);
+  // const cases = useSelector(selectCauseListCases);
+  const cases = useSelector((state) => state.causeLists.cases);
+  const serialNumbers = useSelector((state) => state.causeLists.serialNumbers);
+
   const location = useLocation();
   const selectedDate = location.state?.selectedDate ? new Date(location.state.selectedDate) : new Date();
   // console.log(selectedDate);
@@ -141,8 +147,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
   const [serialNo, setSerialNo] = useState([]);
   let index = 0;
+  // const [ind, setInd] = useState(0);
   // let sno = [];
   useEffect(() => {
+    index = 0;
     dispatch(getCauseList({ dateCauseList: dateCauseList }));
   }, [dispatch, dateCauseList]);
 
@@ -150,6 +158,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     dispatch(getCauseList({ dateCauseList: dateCauseList }));
   }, []);
   useEffect(() => {
+    console.log(cases);
     for (let i = 1; i <= cases.length; i++) {
       // sno.push(i);
       // setSerialNo((oldArray) => [...oldArray, i]);
@@ -464,7 +473,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("حاضری") ? (
                       <TableRow key={caseFile._id}>
-                        <TableCell align="right">{serialNo[index++]}</TableCell>
+                        {/* <TableCell align="right">{serialNo[index++]}</TableCell> */}
+                        <TableCell align="right">{serialNumbers[index++]}</TableCell>
                         <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
@@ -1121,11 +1131,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("شہادت") ? (
                       <TableRow key={caseFile._id}>
-                        <TableCell component="th" scope="row" align="right">
-                          {/* {cases.indexOf(caseFile) + 1} */}
-                          {/* {serialNo} */}
+                      <TableCell align="right">{serialNumbers[index++]}</TableCell>
+                        {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
@@ -1775,11 +1784,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("بحث") ? (
                       <TableRow key={caseFile._id}>
-                        <TableCell component="th" scope="row" align="right">
-                          {/* {setSerialNo(serialNo + 1)} */}
-                          {/* {serialNo} */}
+                      <TableCell align="right">{serialNumbers[index++]}</TableCell>
+                        {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
@@ -2429,11 +2437,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("حکم") ? (
                       <TableRow key={caseFile._id}>
-                        <TableCell component="th" scope="row" align="right">
-                          {/* {cases.indexOf(caseFile) + 1} */}
-                          {/* {serialNo} */}
+                        {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
-                        </TableCell>
+                        </TableCell> */}
+                        <TableCell align="right">{serialNumbers[index++]}</TableCell>
                         <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
