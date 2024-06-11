@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Case from "../models/case.js";
+// import Datum from "../models/datum.js";
 import express from "express";
 
 
@@ -389,36 +390,82 @@ export const getCases = async (req, res) => {
       // }).sort({ ["Date of Institution "]: 1 });
       // }
 
-      cases = await Case.aggregate([
-        {
-          $addFields: {
-            localDateOfDisposalTransferOut: {
-              $dateFromString: {
-                dateString: {
-                  $dateToString: {
-                    format: '%Y-%m-%dT%H:%M:%SZ',
-                    date: '$Date of Disposal Transfer Out',
-                    timezone: 'Asia/Karachi'
-                  }
+      // cases = await Case.aggregate([
+      //   {
+      //     $addFields: {
+      //       localDateOfDisposalTransferOut: {
+      //         $dateFromString: {
+      //           dateString: {
+      //             $dateToString: {
+      //               format: '%Y-%m-%dT%H:%M:%SZ',
+      //               date: '$Date of Disposal Transfer Out',
+      //               timezone: 'Asia/Karachi'
+      //             }
+      //           }
+      //         }
+      //       }
+      //     }
+      //   },
+      //   {
+      //     $match: {
+      //       $expr: {
+      //         $and: [
+      //           { $eq: [{ $month: "$localDateOfDisposalTransferOut" }, monthDisp] },
+      //           { $eq: [{ $year: "$localDateOfDisposalTransferOut" }, yearDisp] },
+      //         ],
+      //       },
+      //     },
+      //   },
+      //   {
+      //     $sort: { "Date of Institution ": 1 }
+      //   }
+      // ]);
+
+      // cases = await Datum.aggregate([
+        cases = await Case.aggregate([
+          {
+            $addFields: {
+              localDateOfDisposalTransferOut: {
+                $cond: {
+                  if: {
+                    $and: [
+                      { $ne: ["$Date of Disposal Transfer Out", null] },
+                      { $eq: [{ $type: "$Date of Disposal Transfer Out" }, "date"] }
+                    ]
+                  },
+                  then: {
+                    $dateFromString: {
+                      dateString: {
+                        $dateToString: {
+                          format: '%Y-%m-%dT%H:%M:%SZ',
+                          date: '$Date of Disposal Transfer Out',
+                          timezone: 'Asia/Karachi'
+                        }
+                      }
+                    }
+                  },
+                  else: null
                 }
               }
             }
-          }
-        },
-        {
-          $match: {
-            $expr: {
-              $and: [
-                { $eq: [{ $month: "$localDateOfDisposalTransferOut" }, monthDisp] },
-                { $eq: [{ $year: "$localDateOfDisposalTransferOut" }, yearDisp] },
-              ],
+          },
+          {
+            $match: {
+              'localDateOfDisposalTransferOut': { $ne: null },
+              $expr: {
+                $and: [
+                  { $eq: [{ $month: "$localDateOfDisposalTransferOut" }, monthDisp] },
+                  { $eq: [{ $year: "$localDateOfDisposalTransferOut" }, yearDisp] },
+                ],
+              },
             },
           },
-        },
-        {
-          $sort: { "Date of Institution ": 1 }
-        }
-      ]);
+          {
+            $sort: { "Date of Institution ": 1 }
+          }
+        ]);
+        
+        
     }
     // }
     // console.log(query);
