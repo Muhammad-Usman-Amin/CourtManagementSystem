@@ -684,107 +684,96 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                       label="Other Nature"
                     />
                   </MenuItem>
-                  {selectedCaseType === "Civil" && (
-                    <>
-                      <MenuItem className={classes.uFont} value="استقرارحق">
-                        استقرارحق
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="دِلاپانے">
-                        دِلاپانے
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="حتمی ڈگری">
-                        حتمی ڈگری
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="دعویٰ ہرجانہ">
-                        دعویٰ ہرجانہ
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="حکم امتناعی">
-                        حکم امتناعی
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="12(2)">
-                        12(2)
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="دخلیابی">
-                        دخلیابی
-                      </MenuItem>
-                      <MenuItem
-                        className={classes.uFont}
-                        value="دعویٰ تعمیل مختص"
-                      >
-                        دعویٰ تعمیل مختص
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="دعویٰ فہمیدگی">
-                        دعویٰ فہمیدگی
-                      </MenuItem>
-                      <Divider />
-                      <MenuItem className={classes.uFont} value="تنسیخ نکاح">
-                        تنسیخ نکاح
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="کذب نکاح">
-                        کذب نکاح
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="نان نفقہ">
-                        نان نفقہ
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="حق مہر">
-                        حق مہر
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="کزب النکاح">
-                        کزب النکاح
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="زن اشوئی">
-                        زن اشوئی
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="فیملی کیس">
-                        فیملی کیس
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="حکم عدولی">
-                        حکم عدولی
-                      </MenuItem>
-                      <Divider />
-                      <MenuItem className={classes.uFont} value="منسوخی یکطرفہ">
-                        منسوخی یکطرفہ
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="حضانت">
-                        حضانت
-                      </MenuItem>
-                      <Divider />
-                      <MenuItem className={classes.uFont} value="اِجراء">
-                        اِجراء
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="عزرداری">
-                        عزرداری
-                      </MenuItem>
-                      <Divider />
-                    </>
-                  )}
-                  {selectedCaseType === "Criminal" && (
-                    <>
-                      <MenuItem className={classes.uFont} value="ضمانت">
-                        ضمانت
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="سپرداری">
-                        سپرداری
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="کاروائی 514">
-                        کاروائی 514
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="کاروائی 512">
-                        کاروائی 512
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="فوجداری">
-                        فوجداری
-                      </MenuItem>
-                    </>
-                  )}
-                      <MenuItem className={classes.uFont} value="درخواست">
-                        درخواست
-                      </MenuItem>
-                      <MenuItem className={classes.uFont} value="سرسبزگی">
-                        سرسبزگی
-                      </MenuItem>
+                  <MenuItem className={classes.uFont} value="استقرارحق">
+                    استقرارحق
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="دِلاپانے">
+                    دِلاپانے
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="حتمی ڈگری">
+                    حتمی ڈگری
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="دعویٰ ہرجانہ">
+                    دعویٰ ہرجانہ
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="حکم امتناعی">
+                    حکم امتناعی
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="12(2)">
+                    12(2)
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="دخلیابی">
+                    دخلیابی
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="دعویٰ تعمیل مختص">
+                    دعویٰ تعمیل مختص
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="دعویٰ فہمیدگی">
+                    دعویٰ فہمیدگی
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem className={classes.uFont} value="تنسیخ نکاح">
+                    تنسیخ نکاح
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="کذب نکاح">
+                    کذب نکاح
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="نان نفقہ">
+                    نان نفقہ
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="حق مہر">
+                    حق مہر
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="کزب النکاح">
+                    کزب النکاح
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="زن اشوئی">
+                    زن اشوئی
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="فیملی کیس">
+                    فیملی کیس
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem className={classes.uFont} value="درخواست">
+                    درخواست
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="منسوخی یکطرفہ">
+                    منسوخی یکطرفہ
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="حضانت">
+                    حضانت
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="سرسبزگی">
+                    سرسبزگی
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="حکم عدولی">
+                    حکم عدولی
+                  </MenuItem>
                   <MenuItem className={classes.uFont} value="پرت">
                     پرت
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem className={classes.uFont} value="اِجراء">
+                    اِجراء
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="عزرداری">
+                    عزرداری
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem className={classes.uFont} value="ضمانت">
+                    ضمانت
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="سپرداری">
+                    سپرداری
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="کاروائی 514">
+                    کاروائی 514
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="کاروائی 512">
+                    کاروائی 512
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="فوجداری">
+                    فوجداری
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="استغاثہ">
                     استغاثہ
