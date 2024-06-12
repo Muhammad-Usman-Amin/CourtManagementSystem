@@ -125,13 +125,13 @@ const MonthlyStats = () => {
               <Grid item xs={12} sm={6} md={3}>
                 <Paper className={classes.statBox}>
                   <Typography className={classes.statTitle}>Institutions</Typography>
-                  <Typography className={classes.statValue}>{totalInstitution}</Typography>
+                  <Typography className={classes.statValue}>{totalInstitution - totalTransferredIn}</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <Paper className={classes.statBox}>
                   <Typography className={classes.statTitle}>Disposals</Typography>
-                  <Typography className={classes.statValue}>{totalDisposals}</Typography>
+                  <Typography className={classes.statValue}>{totalDisposals - totalTransferredOut}</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>

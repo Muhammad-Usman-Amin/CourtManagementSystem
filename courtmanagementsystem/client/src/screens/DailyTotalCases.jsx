@@ -51,8 +51,8 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getRangeCauseLists } from "../actions/causeLists";
-import { format } from "date-fns";
-import { parseISO } from "date-fns";
+import { parseISO, format as dateFnsFormat, isValid } from "date-fns";
+// import { parseISO } from "date-fns";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -139,14 +139,23 @@ const DailyTotalCases = ({ onPageChange }) => {
       <div className={classes.root}>
         <Grid container spacing={1}>
           {rangeData.map((day) => (
-            <Grid item xs={6} sm={2} key={day.date} onClick={() => handleDateClick(day.date)}>
+            <Grid
+              item
+              xs={6}
+              sm={2}
+              key={day.date}
+              onClick={() => handleDateClick(day.date)}
+            >
               <Paper className={classes.paper}>
                 <Typography
                   variant="h6"
                   gutterBottom
                   style={{ fontWeight: "bold" }}
                 >
-                  {format?.(parseISO?.(day?.date), "dd-MM-yyy")} |
+                  {isValid(parseISO?.(day?.date))
+                    ? dateFnsFormat(parseISO(day?.date), "dd-MM-yyyy")
+                    : "Invalid Date"}
+                  {/* {format?.(parseISO?.(day?.date), "dd-MM-yyy")} | */}
                   {new Date(day?.date).toLocaleDateString("ur", {
                     weekday: "long",
                   })}
