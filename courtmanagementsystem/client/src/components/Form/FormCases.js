@@ -705,11 +705,11 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem className={classes.uFont} value="دخلیابی">
                     دخلیابی
                   </MenuItem>
-                  <MenuItem className={classes.uFont} value="دعویٰ تعمیل مختص">
-                    دعویٰ تعمیل مختص
+                  <MenuItem className={classes.uFont} value="تعمیل مختص">
+                    تعمیل مختص
                   </MenuItem>
-                  <MenuItem className={classes.uFont} value="دعویٰ فہمیدگی">
-                    دعویٰ فہمیدگی
+                  <MenuItem className={classes.uFont} value="فہمیدگی">
+                    فہمیدگی
                   </MenuItem>
                   <Divider />
                   <MenuItem className={classes.uFont} value="تنسیخ نکاح">
