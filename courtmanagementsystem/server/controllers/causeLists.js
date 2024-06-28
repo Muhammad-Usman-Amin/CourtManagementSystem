@@ -134,7 +134,7 @@ export const getCauseList = async (req, res) => {
     const endDateObj = new Date(startDateObj.getTime());
 
     // Add 10 days to the new date object
-    endDateObj.setDate(endDateObj.getDate() + 35);
+    endDateObj.setDate(endDateObj.getDate() + 90);
 
     // console.log("Original Date:", startDateObj);
     // console.log("Date after adding 10 days:", endDateObj);
@@ -197,6 +197,7 @@ export const getCauseList = async (req, res) => {
         let attendance = 0;
         let evidence = 0;
         let argument = 0;
+        let finalArguments = 0;
         let order = 0;
         let finalOrder = 0;
         let orderOnApplication = 0;
@@ -207,6 +208,7 @@ export const getCauseList = async (req, res) => {
             attendance += file?.actionAbstract.includes("حاضری") ? 1 : 0;
             evidence += file?.actionAbstract.includes("شہادت") ? 1 : 0;
             argument += file?.actionAbstract.includes("بحث") ? 1 : 0;
+            finalArguments += file?.actionAbstract.includes("بحث بر مقدمہ") ? 1 : 0;
             order += file?.actionAbstract.includes("حکم") ? 1 : 0;
             finalOrder += file?.actionAbstract.includes("حکم بر مقدمہ") ? 1 : 0;
             orderOnApplication += file?.actionAbstract.includes("حکم بر درخواست") ? 1 : 0;
@@ -218,6 +220,7 @@ export const getCauseList = async (req, res) => {
             attendance: attendance,
             evidence: evidence,
             argument: argument,
+            finalArguments: finalArguments,
             order: order,
             orderOnApplication: orderOnApplication,
             finalOrder: finalOrder,

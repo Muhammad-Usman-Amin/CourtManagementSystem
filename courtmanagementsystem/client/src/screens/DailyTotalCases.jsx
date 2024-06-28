@@ -101,7 +101,13 @@ const DailyTotalCases = ({ onPageChange }) => {
                   Evidence: {day.evidence ?? "N/A"}
                 </Typography>
                 <Typography variant="body2">
-                  Arguments: {day.argument ?? "N/A"}
+                  Arguments Total: {day.argument ?? "N/A"}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  style={{ color: day.finalArguments > 0 ? "salmon" : "inherit" }}
+                >
+                  Final Arguments: {day.finalArguments ?? "N/A"}
                 </Typography>
                 <Typography variant="body2">
                   Order Total: {day.order ?? "N/A"}

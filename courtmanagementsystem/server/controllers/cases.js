@@ -174,6 +174,7 @@ export const getCases = async (req, res) => {
         }
       ]);
     
+      // console.log(result);
       // Transform the result to the desired format
       const formattedResult = result.map(item => {
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

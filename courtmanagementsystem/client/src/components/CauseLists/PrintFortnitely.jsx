@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) =>
       // borderRadius: "30px",
       border: "1px solid",
       borderColor: theme.palette.primary.black,
+      tableLayout: 'auto',
+      // margin: 0,
+      // padding: 0,
     },
     tableHeaderCell: {
       overflow: "hidden",
@@ -59,6 +62,7 @@ const useStyles = makeStyles((theme) =>
       padding: 0,
       lineHeight: 1.2,
       // backgroundColor: "lightgray",
+      maxWidth: "fit-content",
     },
     tableEmptyCell: {
       margin: 0,
@@ -77,6 +81,40 @@ const useStyles = makeStyles((theme) =>
       whiteSpace: "nowrap",
       fontSize: 12,
       // align: "center",
+      textAlign: "left",
+      border: "1px solid",
+      borderColor: theme.palette.black,
+      // borderColor: theme.palette.grey[300],
+      // padding: theme.spacing(1),
+      // fontFamily: "Alvi Nastaleeq Regular",
+      // fontFamily: "Jameel Noori Nastaleeq",
+      margin: 0, // Set margin to 0
+      padding: 0,
+      maxWidth: "fit-content",
+    },
+    tableCellTitle: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      // fontSize: 12,
+      // align: "center",
+      textAlign: "left",
+      border: "1px solid",
+      borderColor: theme.palette.black,
+      // borderColor: theme.palette.grey[300],
+      // padding: theme.spacing(1),
+      // fontFamily: "Alvi Nastaleeq Regular",
+      // fontFamily: "Jameel Noori Nastaleeq",
+      margin: 0, // Set margin to 0
+      padding: 3,
+      // maxWidth: "max-content",
+    },
+    tableCellSno: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      // fontSize: 12,
+      // align: "center",
       textAlign: "center",
       border: "1px solid",
       borderColor: theme.palette.black,
@@ -86,6 +124,19 @@ const useStyles = makeStyles((theme) =>
       // fontFamily: "Jameel Noori Nastaleeq",
       margin: 0, // Set margin to 0
       padding: 0,
+      maxWidth: "fit-content",
+    },
+    tableCellFixBorder: {
+        maxWidth: "max-content",
+        whiteSpace: "nowrap",
+        padding: 0,
+        borderLeft: "1px solid black",
+        borderRight: "1px solid black",
+        borderTop: "none",
+        borderBottom: "none",
+    },
+    tableBorder2: {
+      border: '2px solid black'
     },
     rightAlignedCell: {
       textAlign: "right",
@@ -387,13 +438,14 @@ const PrintFortnitely = (props) => {
                     align="center"
                     colSpan={16}
                     style={{
-                      fontSize: 16,
+                      fontSize: 24,
                       // fontFamily: "Times Roman",
                       // fontStyle: "",
                       fontWeight: "bold",
                       // padding: "10px",
                       margin: 0, // Set margin to 0
                       padding: 0,
+                      borderBottom: 'none',
                     }}
                   >
                     Implementation of National Judicial Policy
@@ -405,13 +457,15 @@ const PrintFortnitely = (props) => {
                     align="center"
                     colSpan={16}
                     style={{
-                      fontSize: 16,
+                      fontSize: 20,
                       // fontFamily: "Times Roman",
                       // fontStyle: "",
                       fontWeight: "bold",
                       // padding: "10px",
                       margin: 0, // Set margin to 0
                       padding: 0,
+                      borderTop: 'none',
+                      borderBottom: 'none',
                     }}
                   >
                     District Courts
@@ -428,6 +482,7 @@ const PrintFortnitely = (props) => {
                       fontWeight: "bold",
                       margin: 0,
                       padding: 0,
+                      borderTop: 'none',
                     }}
                   >
                     <div
@@ -437,7 +492,7 @@ const PrintFortnitely = (props) => {
                         // padding: "10px",
                       }}
                     >
-                      <span>Court Name: {controlPanel[0].courtNumber}</span>
+                      <span>Court Name: {controlPanel[0]?.courtNumber}</span>
                       <span>
                         Statement for the period:{" "}
                         {format?.(dateInstitution, "MMMM, yyyy").toUpperCase()}
@@ -449,21 +504,25 @@ const PrintFortnitely = (props) => {
                 {/* <TableHead> */}
                 <TableRow>
                   <TableCell
-                    colSpan={1}
-                    align="center"
-                    style={{ maxWidth: 1 }}
+                    // colSpan={1}
+                    // align="center"
+                    // style={{ maxWidth: 1 }}
                     // className={classes.tableHeaderCell}
+                    // className={classes.tableCellSno}
+                    className={classes.tableCellFixBorder}
                   ></TableCell>
                   <TableCell
-                    colSpan={2}
-                    align="center"
+                    // colSpan={2}
+                    // align="center"
                     // className={classes.tableHeaderCell}
+                    // className={classes.tableCellTitle}
+                    className={classes.tableCellFixBorder}
                   ></TableCell>
                   <TableCell
                     align="center"
                     colSpan={6}
                     className={classes.tableHeaderCell}
-                    style={{ fontSize: 10 }}
+                    style={{ fontSize: 12 }}
                   >
                     Old Cases
                   </TableCell>
@@ -471,7 +530,7 @@ const PrintFortnitely = (props) => {
                     align="center"
                     colSpan={7}
                     className={classes.tableHeaderCell}
-                    style={{ fontSize: 10 }}
+                    style={{ fontSize: 12 }}
                   >
                     New Cases
                   </TableCell>
@@ -479,17 +538,23 @@ const PrintFortnitely = (props) => {
 
                 <TableRow>
                   <TableCell
-                    align="left"
-                    colSpan={1}
-                    style={{ maxWidth: 1 }}
+                    // className={classes.tableCellSno}
+                    className={classes.tableCellFixBorder}
+                    // align="left"
+                    // colSpan={1}
+                    // style={{ maxWidth: 1 }}
+                    // style={{ maxWidth: 'max-content', whiteSpace: 'nowrap', padding: 0 }}
                     // className={classes.tableHeaderCell}
                   >
                     Sr#
                   </TableCell>
                   <TableCell
-                    align="center"
-                    colSpan={2}
+                    // align="center"
+                    // colSpan={2}
                     // className={classes.tableHeaderCell}
+                    // className={classes.tableCellTitle}
+                    className={classes.tableCellFixBorder}
+                    style={{fontSize:18, fontWeight:'bold', textAlign:'center'}}
                   >
                     Criminal Cases
                   </TableCell>
@@ -497,7 +562,7 @@ const PrintFortnitely = (props) => {
                     colSpan={6}
                     align="center"
                     className={classes.tableHeaderCell}
-                    style={{ fontSize: 10 }}
+                    style={{ fontSize: 12 }}
                   >
                     Filed upto 31-12-2017
                   </TableCell>
@@ -505,7 +570,7 @@ const PrintFortnitely = (props) => {
                     colSpan={7}
                     align="center"
                     className={classes.tableHeaderCell}
-                    style={{ fontSize: 10 }}
+                    style={{ fontSize: 12 }}
                   >
                     Filed from 01-01-2018
                   </TableCell>
@@ -513,15 +578,20 @@ const PrintFortnitely = (props) => {
 
                 <TableRow>
                   <TableCell
-                    align="center"
-                    colSpan={1}
-                    style={{ maxWidth: 1 }}
+                    // align="center"
+                    // colSpan={1}
+                    // style={{ maxWidth: 1 }}
+                    // style={{ maxWidth: 'max-content', whiteSpace: 'nowrap', padding: 0 }}
                     // className={classes.tableHeaderCell}
+                    // className={classes.tableCellSno}
+                    className={classes.tableCellFixBorder}
                   ></TableCell>
                   <TableCell
-                    align="center"
-                    colSpan={2}
+                    // align="center"
+                    // colSpan={2}
                     // className={classes.tableHeaderCell}
+                    // className={classes.tableCellTitle}
+                    className={classes.tableCellFixBorder}
                   ></TableCell>
                   <TableCell
                     colSpan={1}
@@ -622,34 +692,43 @@ const PrintFortnitely = (props) => {
               <TableBody>
                 <TableRow>
                   <TableCell
-                    colSpan={1}
-                    align="center"
-                    style={{ maxWidth: 1 }}
+                    // colSpan={1}
+                    // align="center"
+                    // style={{ maxWidth: 1 }}
+                    // style={{ maxWidth: 'max-content', whiteSpace: 'nowrap', padding: 0 }}
                     // className={classes.tableHeaderCell}
+                    className={classes.tableCellSno}
+                    style={{borderBottom: 'none'}}
                   >
                     1
                   </TableCell>
                   <TableCell
-                    colSpan={2}
-                    align="left"
-                    className={classes.tableHeaderCell}
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
                   >
-                    Time Fixed Bail Applications <br></br> (a) Magistrate (3 Days)
+                    Time Fixed Bail Applications <br></br> (a) Magistrate (3
+                    Days)
                   </TableCell>
                   {rowData()}
                 </TableRow>
 
                 <TableRow>
                   <TableCell
-                    colSpan={1}
-                    align="left"
-                    className={classes.tableHeaderCell}
-                    style={{ maxWidth: 1 }}
+                    // colSpan={1}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    // style={{ maxWidth: 1 }}
+                    // style={{ maxWidth: 'max-content', whiteSpace: 'nowrap', padding: 0 }}
+                    className={classes.tableCellSno}
+                    style={{borderTop: 'none'}}
                   ></TableCell>
                   <TableCell
-                    colSpan={2}
-                    align="center"
-                    className={classes.tableHeaderCell}
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
                   >
                     (b) Session Court (5 Days)
                   </TableCell>
@@ -658,17 +737,20 @@ const PrintFortnitely = (props) => {
 
                 <TableRow>
                   <TableCell
-                    colSpan={1}
-                    className={classes.tableHeaderCell}
-                    align="left"
-                    style={{ maxWidth: 1 }}
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    // style={{ maxWidth: 'max-content', whiteSpace: 'nowrap', padding: 0 }}
+                    className={classes.tableCellSno}
                   >
                     2
                   </TableCell>
                   <TableCell
-                    colSpan={2}
-                    // align="center"
-                    className={classes.tableHeaderCell}
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
                   >
                     Cancellation of bail (15 Days)
                   </TableCell>
@@ -677,17 +759,19 @@ const PrintFortnitely = (props) => {
 
                 <TableRow>
                   <TableCell
-                    colSpan={1}
-                    className={classes.tableHeaderCell}
-                    align="left"
-                    style={{ maxWidth: 1 }}
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
                   >
                     3
                   </TableCell>
                   <TableCell
-                    colSpan={2}
-                    // align="center"
-                    className={classes.tableHeaderCell}
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
                   >
                     Imprisonment upto 7 years (6 Months)
                   </TableCell>
@@ -696,81 +780,847 @@ const PrintFortnitely = (props) => {
 
                 <TableRow>
                   <TableCell
-                    colSpan={1}
-                    className={classes.tableHeaderCell}
-                    align="left"
-                    style={{ maxWidth: 1 }}
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
                   >
                     4
                   </TableCell>
                   <TableCell
-                    colSpan={2}
-                    // align="center"
-                    className={classes.tableHeaderCell}
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
                   >
-                    Imprisonment above 7 years <br></br>including death sentence 
-(1 Year)
+                    Imprisonment above 7 years <br></br>including death sentence
+                    (1 Year)
                   </TableCell>
                   {rowData()}
                 </TableRow>
 
                 <TableRow>
                   <TableCell
-                    colSpan={1}
-                    className={classes.tableHeaderCell}
-                    align="left"
-                    style={{ maxWidth: 1 }}
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
                   >
                     5
                   </TableCell>
                   <TableCell
-                    colSpan={2}
-                    // align="center"
-                    className={classes.tableHeaderCell}
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
                   >
-                    Preventive detention cases ( As early as possible) 
+                    Preventive detention cases ( As early as possible)
                   </TableCell>
                   {rowData()}
                 </TableRow>
 
                 <TableRow>
                   <TableCell
-                    colSpan={1}
-                    className={classes.tableHeaderCell}
-                    align="left"
-                    style={{ maxWidth: 1 }}
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
                   >
                     6
                   </TableCell>
                   <TableCell
-                    colSpan={2}
-                    // align="center"
-                    className={classes.tableHeaderCell}
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
                   >
-                    Transfer Applications u/s 526, 528 CrPC  (7 Days)
+                    Transfer Applications u/s 526, 528 CrPC (7 Days)
                   </TableCell>
                   {rowData()}
                 </TableRow>
 
                 <TableRow>
                   <TableCell
-                    colSpan={1}
-                    className={classes.tableHeaderCell}
-                    align="left"
-                    style={{ maxWidth: 1 }}
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
                   >
                     7
                   </TableCell>
                   <TableCell
-                    colSpan={2}
-                    // align="center"
-                    className={classes.tableHeaderCell}
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
                   >
-                    Misc. Application i.e. superdari, disposal <br></br> of property etc (7 Days)
+                    Misc. Application i.e. superdari, disposal <br></br> of
+                    property etc (7 Days)
                   </TableCell>
                   {rowData()}
                 </TableRow>
 
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    1
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    <b>Prioritized</b>
+                    <br></br>
+                    Narcotics Cases
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    2
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Criminal Revisions
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    3
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Anti-terrorism Cases
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    4
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Women Cases
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    5
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Juvenile Cases
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    6
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Cases of Overseas Pakistanis (either complainant <br></br>{" "}
+                    or accused)
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    7
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Others
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno+' '+ classes.tableBorder2}
+                    style={{borderRight: 'none'}}
+                  ></TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle +' '+ classes.tableBorder2}
+                    style={{borderLeft: 'none'}}
+                  >
+                    <b>Total</b>
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                {/* <TableHead> */}
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    // className={classes.tableCellSno}
+                    className={classes.tableCellFixBorder}
+                  ></TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    // className={classes.tableCellTitle}
+                    className={classes.tableCellFixBorder}
+                  ></TableCell>
+                  <TableCell
+                    align="center"
+                    colSpan={6}
+                    className={classes.tableHeaderCell}
+                    style={{ fontSize: 12 }}
+                  >
+                    Old Cases
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    colSpan={7}
+                    className={classes.tableHeaderCell}
+                    style={{ fontSize: 12 }}
+                  >
+                    New Cases
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    // className={classes.tableCellSno}
+                    className={classes.tableCellFixBorder}
+                  >
+                    Sr#
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    // className={classes.tableCellTitle}
+                    className={classes.tableCellFixBorder}
+                    style={{fontSize:18, fontWeight:'bold', textAlign:'center'}}
+                  >
+                    Civil Cases
+                  </TableCell>
+                  <TableCell
+                    colSpan={6}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                    style={{ fontSize: 12 }}
+                  >
+                    Filed upto 31-12-2017
+                  </TableCell>
+                  <TableCell
+                    colSpan={7}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                    style={{ fontSize: 12 }}
+                  >
+                    Filed from 01-01-2018
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    // className={classes.tableCellSno}
+                    className={classes.tableCellFixBorder}
+                  ></TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    // className={classes.tableCellTitle}
+                    className={classes.tableCellFixBorder}
+                  ></TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                  >
+                    Pend
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                  >
+                    T-In
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                  >
+                    T-Out
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                  >
+                    Restored/<br></br>Remanded
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                  >
+                    Disp
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                    style={{ backgroundColor: "lightgray" }}
+                  >
+                    Bal
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                  >
+                    Pend
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                  >
+                    T-In
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                  >
+                    T-Out
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                  >
+                    Restored/ <br></br>Remanded
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                  >
+                    Inst
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                  >
+                    Disp
+                  </TableCell>
+                  <TableCell
+                    colSpan={1}
+                    align="center"
+                    className={classes.tableHeaderCell}
+                    style={{ backgroundColor: "lightgray" }}
+                  >
+                    Bal
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    1
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Time Fixed <br></br> Stay applications (15 Days)
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    2
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Rent cases (4 Months)
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    3
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Appeals in rent cases (2 Months)
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    4
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Revision petitions (3 Months) (1 Year)
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    5
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Family cases (3-6 Months)
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    6
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Appeals in family cases (30 Days)
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    7
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Appeals in insolvency cases (30 Days)
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    8
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Review applications (30 Days)
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    9
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Negotiable instrument cases u/o 37 CPC (90 Days)
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    10
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Cases of the Overseas Pakistanis (6 Months)
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    1
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    <b>Prioritized</b>
+                    <br></br>
+                    Women Cases
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    2
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Juvenile Cases
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    3
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Small Claims and Minor Offences
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    4
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Trade, Commercial, Investment
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    5
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Civil Execution application
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    6
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Civil Suits
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  >
+                    7
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    Others
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno+' '+ classes.tableBorder2}
+                    style={{borderRight: 'none'}}
+                  >
+                    
+                  </TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle+' '+ classes.tableBorder2}
+                    style={{borderLeft: 'none'}}
+                  >
+                    <b>Total</b>
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    // colSpan={1}
+                    // className={classes.tableHeaderCell}
+                    // align="left"
+                    // style={{ maxWidth: 1 }}
+                    className={classes.tableCellSno}
+                  ></TableCell>
+                  <TableCell
+                    // colSpan={2}
+                    // align="left"
+                    // className={classes.tableHeaderCell}
+                    className={classes.tableCellTitle}
+                  >
+                    <b>Grand Total (Criminal + Civil)</b>
+                  </TableCell>
+                  {rowData()}
+                </TableRow>
               </TableBody>
             </Table>
           </Grid>
@@ -781,255 +1631,3 @@ const PrintFortnitely = (props) => {
 };
 
 export default PrintFortnitely;
-
-// <TableBody>
-// {institutionCases.map((caseFile) => (
-//   <>
-//     {caseFile.causeListEntries &&
-//     getSecondToLastElementCategory(caseFile.causeListEntries)
-//       .actionAbstract ? (
-//       <TableRow hover key={caseFile._id}>
-
-//         <TableCell
-//           className={classes.tableCell}
-//           component="th"
-//           scope="row"
-//           style={{ maxWidth: 1 }}
-//         >
-//           {serialNo[index++]}
-//         </TableCell>
-//         <TableCell
-//           className={classes.tableCell}
-//           component="th"
-//           scope="row"
-//         >
-//           {caseFile["Case No"]}
-//         </TableCell>
-
-//         <TableCell
-//           className={classes.tableCell}
-//           // className={[classes.tableCell, classes.tableCaseTitle]}
-//           align="left"
-//           // style={{ fontSize: 24 }}
-//         >
-//           {caseFile["Case Title"]}
-//         </TableCell>
-//         <TableCell
-//           className={classes.tableCell}
-//           // className={[classes.tableCell, classes.tableCaseTitle]}
-//           align="left"
-//           // style={{
-//           //   fontSize: "16px",
-//           //   direction: "ltr",
-//           //   lineHeight: 0.6,
-//           // }}
-//         >
-//           {caseFile["Category Per PQS"]}
-//         </TableCell>
-
-//         <TableCell
-//           className={classes.tableCell}
-//           align="left"
-//           // style={{ lineHeight: 1, fontSize: "14px" }}
-//         >
-//           {!caseFile["Date of Institution "] ? (
-//             "null"
-//           ) : (
-//             <>
-//               <span style={{ fontSize: "" }}>
-//                 {format?.(
-//                   parseISO(caseFile["Date of Institution "]),
-//                   "dd-MM-yyy"
-//                 )}
-//               </span>
-//               <br />
-//             </>
-//           )}
-//         </TableCell>
-
-//         <TableCell
-//           className={classes.tableCell}
-//           align="left"
-//           // style={{ lineHeight: 1, fontSize: "14px" }}
-//         >
-//           {!caseFile["Date of Transfer In"] ? null : (
-//             <>
-//               {parseISO(
-//                 caseFile["Date of Transfer In"]
-//               ).getFullYear() > 1980 ? (
-//                 <>
-//                   <span style={{ fontSize: "" }}>
-//                     {caseFile["Date of Transfer In"]
-//                       ? format?.(
-//                           parseISO(
-//                             caseFile["Date of Transfer In"]
-//                           ),
-//                           "dd-MM-yyyy"
-//                         )
-//                       : null}
-//                   </span>
-//                   <br />
-//                 </>
-//               ) : null}
-//             </>
-//           )}
-//         </TableCell>
-
-//         <TableCell
-//           className={classes.tableCell}
-//           align="left"
-//           // style={{ lineHeight: 1, fontSize: "14px" }}
-//         >
-//           {!caseFile["Date of Other Institution"] ? null : (
-//             <>
-//               {parseISO(
-//                 caseFile["Date of Other Institution"]
-//               ).getFullYear() > 1980 ? (
-//                 <>
-//                   <span style={{ fontSize: "" }}>
-//                     {caseFile["Date of Other Institution"]
-//                       ? format?.(
-//                           parseISO(
-//                             caseFile[
-//                               "Date of Other Institution"
-//                             ]
-//                           ),
-//                           "dd-MM-yyyy"
-//                         )
-//                       : null}
-//                   </span>
-//                   <br />
-//                 </>
-//               ) : null}
-//             </>
-//           )}
-//         </TableCell>
-
-//         <TableCell className={classes.tableCell} align="left">
-//           {caseFile["Institution Flag"]
-//             ? caseFile["Institution Flag"]
-//             : ""}
-//         </TableCell>
-
-//         <TableCell className={classes.tableCell} align="left">
-//           {getActionEng(
-//             caseFile.actionAbstract?.replace(
-//               /(، حاضری|، شہادت|، بحث|، حکم|، حاضری )/g,
-//               ""
-//             )
-//           )}
-//         </TableCell>
-//       </TableRow>
-//     ) : null}
-//   </>
-// ))}
-// </TableBody>
-
-// import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
-// import {
-//   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
-// } from '@material-ui/core';
-
-// const useStyles = makeStyles({
-//   table: {
-//     minWidth: 650,
-//   },
-//   header: {
-//     fontWeight: 'bold',
-//   },
-// });
-
-// const PrintFortnitely = () => {
-//   const classes = useStyles();
-
-//   const data = [
-//     // Data array as extracted from the text
-//     {
-//       category: 'Criminal Cases',
-//       cases: [
-//         { name: 'Time Fixed Bail Applications (a) Magistrate (3 Days)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Time Fixed Bail Applications (b) Session Court (5 Days)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Cancellation of bail (15 Days)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Imprisonment upto 7 years (6 Months)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Imprisonment above 7 years including death sentence (1 Year)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Preventive detention cases (As early as possible)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Transfer Applications u/s 526, 528 CrPC (7 Days)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Misc. Application i.e. superdari, disposal of property etc (7 Days)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Prioritized Narcotics Cases', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Criminal Revisions', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Anti-terrorism Cases', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Women Cases', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Juvenile Cases', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Cases of Overseas Pakistanis (either complainant or accused)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Others', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//       ],
-//     },
-//     {
-//       category: 'Civil Cases',
-//       cases: [
-//         { name: 'Time Fixed Stay applications (15 Days)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Rent cases (4 Months)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Appeals in rent cases (2 Months)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Revision petitions (3 Months)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Family cases (3-6 Months)', old: [0, 0, 0, 0, 0, 42, 42], new: [1, 2, 8, 8, 43] },
-//         { name: 'Appeals in family cases (30 Days)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Appeals in insolvency cases (30 Days)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Review applications (30 Days)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Negotiable instrument cases u/o 37 CPC (90 Days)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Cases of the Overseas Pakistanis (6 Months)', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Prioritized Women Cases', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Juvenile Cases', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Small Claims and Minor Offences', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Trade, Commercial, Investment', old: [0, 0, 0, 0, 0, 0, 0], new: [0, 0, 0, 0, 0] },
-//         { name: 'Civil Execution application', old: [0, 0, 0, 0, 0, 65, 65], new: [2, 2, 2, 2, 67] },
-//         { name: 'Civil Suits', old: [0, 1, 0, 0, 0, 1, 1, 39], new: [5, 2, 42] },
-//         { name: 'Others', old: [0, 0, 0, 0, 0, 27, 27], new: [1, 1, 5, 6, 26] },
-//       ],
-//     },
-//   ];
-
-//   return (
-//     <TableContainer component={Paper}>
-//       <Table className={classes.table} aria-label="simple table">
-//         <TableHead>
-//           <TableRow>
-//             <TableCell className={classes.header}>Sr #</TableCell>
-//             <TableCell className={classes.header}>Case Type</TableCell>
-//             <TableCell className={classes.header}>Filed up to 31-12-2017 (Old Cases)</TableCell>
-//             <TableCell className={classes.header}>Filed from 01-01-2018 (New Cases)</TableCell>
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-//           {data.map((category, catIndex) => (
-//             <React.Fragment key={catIndex}>
-//               <TableRow>
-//                 <TableCell colSpan={4} className={classes.header}>
-//                   {category.category}
-//                 </TableCell>
-//               </TableRow>
-//               {category.cases.map((caseType, caseIndex) => (
-//                 <TableRow key={caseIndex}>
-//                   <TableCell>{caseIndex + 1}</TableCell>
-//                   <TableCell>{caseType.name}</TableCell>
-//                   <TableCell>
-//                     {caseType.old.map((val, idx) => (
-//                       <div key={idx}>{val}</div>
-//                     ))}
-//                   </TableCell>
-//                   <TableCell>
-//                     {caseType.new.map((val, idx) => (
-//                       <div key={idx}>{val}</div>
-//                     ))}
-//                   </TableCell>
-//                 </TableRow>
-//               ))}
-//             </React.Fragment>
-//           ))}
-//         </TableBody>
-//       </Table>
-//     </TableContainer>
-//   );
-// };
-
-// export default PrintFortnitely;

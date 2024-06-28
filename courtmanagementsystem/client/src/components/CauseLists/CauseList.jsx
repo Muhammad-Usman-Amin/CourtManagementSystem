@@ -41,7 +41,10 @@ import { getCauseList } from "../../actions/causeLists";
 // import useStyles2 from "../../dashboardExample/dashboard";
 import { addDays } from "date-fns";
 import { useLocation } from "react-router-dom";
-import { serialNumbers, selectCauseListCases } from "../../selectors/caseStatisticsSelector";
+import {
+  serialNumbers,
+  selectCauseListCases,
+} from "../../selectors/caseStatisticsSelector";
 
 const useStyles = makeStyles({
   table: {
@@ -67,7 +70,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   const serialNumbers = useSelector((state) => state.causeLists.serialNumbers);
 
   const location = useLocation();
-  const selectedDate = location.state?.selectedDate ? new Date(location.state.selectedDate) : new Date();
+  const selectedDate = location.state?.selectedDate
+    ? new Date(location.state.selectedDate)
+    : new Date();
   // console.log(selectedDate);
 
   // console.log(cases);
@@ -229,8 +234,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     for (const keyword of sortingKeywords) {
       // const hasKeywordA = a.abstract?.toLowerCase().startsWith(keyword);
       // const hasKeywordB = b.abstract?.toLowerCase().startsWith(keyword);
-      const hasKeywordA = getSecondToLastElement(a.causeListEntries).actionAbstract?.startsWith(keyword);
-     const hasKeywordB = getSecondToLastElement(b.causeListEntries).actionAbstract?.startsWith(keyword);
+      const hasKeywordA = getSecondToLastElement(
+        a.causeListEntries
+      ).actionAbstract?.startsWith(keyword);
+      const hasKeywordB = getSecondToLastElement(
+        b.causeListEntries
+      ).actionAbstract?.startsWith(keyword);
 
       // Prioritize cases with the current keyword at the beginning
       if (hasKeywordA && !hasKeywordB) return -1; // Case A with keyword comes before Case B without
@@ -323,7 +332,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
           >
             View Daily Totals
           </Button>
-
         </Grid>
 
         <Grid item container justify="space-between" xs={12} sm={3}>
@@ -475,7 +483,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     ).actionAbstract?.includes("حاضری") ? (
                       <TableRow key={caseFile._id}>
                         {/* <TableCell align="right">{serialNo[index++]}</TableCell> */}
-                        <TableCell align="right">{serialNumbers[index++]}</TableCell>
+                        <TableCell align="right">
+                          {serialNumbers[index++]}
+                        </TableCell>
                         <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
@@ -865,6 +875,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               >
                                 شوکازنوٹس
                               </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، حاضری"}
+                              >
+                                ہمراہ، حاضری
+                              </MenuItem>
                               <Divider />
 
                               <MenuItem
@@ -963,6 +979,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"بیان اہل کمیشن، شہادت"}
                               >
                                 بیان اہل کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تحریری بیانات، شہادت"}
+                              >
+                                تحریری بیانات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان ملزم، شہادت"}
+                              >
+                                بیان ملزم
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان ملزمان، شہادت"}
+                              >
+                                بیان ملزمان
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -1097,6 +1131,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"راضی نامہ، حکم"}
                               >
                                 راضی نامہ، حکم
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، حکم"}
+                              >
+                                ہمراہ، حکم
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -1132,7 +1172,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("شہادت") ? (
                       <TableRow key={caseFile._id}>
-                      <TableCell align="right">{serialNumbers[index++]}</TableCell>
+                        <TableCell align="right">
+                          {serialNumbers[index++]}
+                        </TableCell>
                         {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
                         </TableCell> */}
@@ -1519,6 +1561,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               >
                                 شوکازنوٹس
                               </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، حاضری"}
+                              >
+                                ہمراہ، حاضری
+                              </MenuItem>
                               <Divider />
 
                               <MenuItem
@@ -1617,6 +1665,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"بیان اہل کمیشن، شہادت"}
                               >
                                 بیان اہل کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تحریری بیانات، شہادت"}
+                              >
+                                تحریری بیانات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان ملزم، شہادت"}
+                              >
+                                بیان ملزم
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان ملزمان، شہادت"}
+                              >
+                                بیان ملزمان
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -1751,6 +1817,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"راضی نامہ، حکم"}
                               >
                                 راضی نامہ، حکم
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، حکم"}
+                              >
+                                ہمراہ، حکم
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -1785,7 +1857,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("بحث") ? (
                       <TableRow key={caseFile._id}>
-                      <TableCell align="right">{serialNumbers[index++]}</TableCell>
+                        <TableCell align="right">
+                          {serialNumbers[index++]}
+                        </TableCell>
                         {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
                         </TableCell> */}
@@ -2172,6 +2246,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               >
                                 شوکازنوٹس
                               </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، حاضری"}
+                              >
+                                ہمراہ، حاضری
+                              </MenuItem>
                               <Divider />
 
                               <MenuItem
@@ -2270,6 +2350,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"بیان اہل کمیشن، شہادت"}
                               >
                                 بیان اہل کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تحریری بیانات، شہادت"}
+                              >
+                                تحریری بیانات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان ملزم، شہادت"}
+                              >
+                                بیان ملزم
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان ملزمان، شہادت"}
+                              >
+                                بیان ملزمان
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -2404,6 +2502,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"راضی نامہ، حکم"}
                               >
                                 راضی نامہ، حکم
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، حکم"}
+                              >
+                                ہمراہ، حکم
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -2441,7 +2545,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
                         </TableCell> */}
-                        <TableCell align="right">{serialNumbers[index++]}</TableCell>
+                        <TableCell align="right">
+                          {serialNumbers[index++]}
+                        </TableCell>
                         <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
@@ -2826,6 +2932,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               >
                                 شوکازنوٹس
                               </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، حاضری"}
+                              >
+                                ہمراہ، حاضری
+                              </MenuItem>
                               <Divider />
 
                               <MenuItem
@@ -2924,6 +3036,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"بیان اہل کمیشن، شہادت"}
                               >
                                 بیان اہل کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تحریری بیانات، شہادت"}
+                              >
+                                تحریری بیانات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان ملزم، شہادت"}
+                              >
+                                بیان ملزم
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان ملزمان، شہادت"}
+                              >
+                                بیان ملزمان
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -3058,6 +3188,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"راضی نامہ، حکم"}
                               >
                                 راضی نامہ، حکم
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، حکم"}
+                              >
+                                ہمراہ، حکم
                               </MenuItem>
                             </Select>
                           </FormControl>
@@ -3094,7 +3230,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
                         </TableCell> */}
-                        <TableCell align="right">{serialNumbers[index++]}</TableCell>
+                        <TableCell align="right">
+                          {serialNumbers[index++]}
+                        </TableCell>
                         <TableCell align="center">
                           {caseFile["Case No"]}
                         </TableCell>
@@ -3479,6 +3617,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               >
                                 شوکازنوٹس
                               </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، حاضری"}
+                              >
+                                ہمراہ، حاضری
+                              </MenuItem>
                               <Divider />
 
                               <MenuItem
@@ -3577,6 +3721,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"بیان اہل کمیشن، شہادت"}
                               >
                                 بیان اہل کمیشن
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"تحریری بیانات، شہادت"}
+                              >
+                                تحریری بیانات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان ملزم، شہادت"}
+                              >
+                                بیان ملزم
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"بیان ملزمان، شہادت"}
+                              >
+                                بیان ملزمان
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -3711,6 +3873,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"راضی نامہ، حکم"}
                               >
                                 راضی نامہ، حکم
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"ہمراہ، حکم"}
+                              >
+                                ہمراہ، حکم
                               </MenuItem>
                             </Select>
                           </FormControl>

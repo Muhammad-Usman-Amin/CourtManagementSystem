@@ -1290,6 +1290,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem className={classes.uFont} value="شوکازنوٹس، حاضری">
                   شوکازنوٹس
                 </MenuItem>
+                <MenuItem className={classes.uFont} value={"ہمراہ، حاضری"}>
+                  ہمراہ، حاضری
+                </MenuItem>
                 <Divider />
 
                 <MenuItem
@@ -1355,6 +1358,24 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   value={"بیان اہل کمیشن، شہادت"}
                 >
                   بیان اہل کمیشن
+                </MenuItem>
+                <MenuItem
+                  className={classes.uFont}
+                  value={"تحریری بیانات، شہادت"}
+                >
+                  تحریری بیانات
+                </MenuItem>
+                <MenuItem
+                  className={classes.uFont}
+                  value={"بیان ملزم، شہادت"}
+                >
+                  بیان ملزم
+                </MenuItem>
+                <MenuItem
+                  className={classes.uFont}
+                  value={"بیان ملزمان، شہادت"}
+                >
+                  بیان ملزمان
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"راضی نامہ، شہادت"}>
                   راضی نامہ
@@ -1435,6 +1456,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"راضی نامہ، حکم"}>
                   راضی نامہ، حکم
+                </MenuItem>
+                <MenuItem className={classes.uFont} value={"ہمراہ، حکم"}>
+                  ہمراہ، حکم
                 </MenuItem>
               </Select>
             </FormControl>

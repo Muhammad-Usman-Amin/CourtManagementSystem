@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
@@ -79,8 +79,6 @@ const CustomTooltip = ({ active, payload, label, theme }) => {
 
   return null;
 };
-
-
 
 const CaseStatistics = () => {
   const classes = useStyles();
@@ -164,14 +162,14 @@ const CaseStatistics = () => {
   ) : (
     <div className={classes.root}>
       <Typography variant="h4" gutterBottom>
-        Cases Statistics
+        Pending Cases Statistics
       </Typography>
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={12} lg={12}>
           <Paper className={classes.paper}>
             <Typography variant="h6" gutterBottom>
-              Total Cases by Type
+              Total Pending Cases by Type
             </Typography>
             <ResponsiveContainer width="100%" height={400}>
               <BarChart
@@ -183,14 +181,17 @@ const CaseStatistics = () => {
                 {/* <CartesianGrid /> */}
                 <XAxis
                   dataKey="name"
-                  tick={{ angle: -30, textAnchor: "end", fontSize: 13, fill: theme.palette.text.primary
-                //   dy: 10, // Adjust vertical position of the label
-                   }}
+                  tick={{
+                    angle: -30,
+                    textAnchor: "end",
+                    fontSize: 13,
+                    fill: theme.palette.text.primary,
+                    //   dy: 10, // Adjust vertical position of the label
+                  }}
                   interval={0}
                   height={110}
                   // />
-                >
-                </XAxis>
+                ></XAxis>
                 <YAxis />
                 {/* <Tooltip /> */}
                 <Tooltip content={<CustomTooltip theme={theme} />} />
@@ -215,7 +216,7 @@ const CaseStatistics = () => {
         <Grid item xs={12} md={12} lg={12}>
           <Paper className={classes.paper}>
             <Typography variant="h6" gutterBottom>
-              Cases Distribution
+              Pending Cases Distribution
             </Typography>
             <ResponsiveContainer width="100%" height={400}>
               <PieChart className={classes.chartContainer}>
