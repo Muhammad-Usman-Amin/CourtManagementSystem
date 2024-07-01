@@ -7,6 +7,7 @@ import {
   getCases,
   getCasesStatistics,
   getDisposalCases,
+  getGroupedCases,
   getInstitutionCases,
   getInstitutionsStatistics,
   getPendingCases,
@@ -47,6 +48,7 @@ import DailyTotalCases from "./screens/DailyTotalCases.jsx";
 import { getRangeCauseLists } from "./actions/causeLists.js";
 import PrintFortnitely from "./components/CauseLists/PrintFortnitely.jsx";
 import CaseStatistics from "./dashboardExample/CaseStatistics.jsx";
+import PrintGroupedCases from "./components/CauseLists/PrintGroupedCases.jsx";
 const App = () => {
   // const classes = makeStyles();
   const classes2 = useStyles();
@@ -63,6 +65,9 @@ const App = () => {
     dispatch(getCases({ reqQuery: "All" }));
     dispatch(
       getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
+    );
+    dispatch(
+      getGroupedCases({ reqQuery: "GroupedCases", datePendency: new Date() })
     );
     dispatch(
       getInstitutionCases({
@@ -172,6 +177,7 @@ const App = () => {
                 <Route path="/PrintDataTable" component={PrintDataTable} />
                 <Route path="/PrintCauseList" component={PrintCauseList} />
                 <Route path="/PrintPendency" component={PrintPendency} />
+                <Route path="/PrintGroupedCases/:name" component={PrintGroupedCases} />
                 <Route path="/PrintInstitution" component={PrintInstitution} />
                 <Route path="/PrintFortnitely" component={PrintFortnitely} />
                 <Route path="/PrintDisposal" component={PrintDisposal} />

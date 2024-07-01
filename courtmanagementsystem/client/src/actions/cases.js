@@ -9,6 +9,7 @@ import {
   FETCH_DISPOSAL,
   FETCH_CASES_STATISTICS,
   FETCH_INSTITUTIONS_STATISTICS,
+  FETCH_GROUPED_CASES,
 } from "../constants/actionTypes";
 import * as api from "../api";
 
@@ -35,6 +36,17 @@ export const getPendingCases = (params) => async (dispatch) => {
   try {
     const { data } = await api.fetchCases(params);
     dispatch({ type: FETCH_PENDING, payload: data });
+    // datam = data;
+  } catch (error) {
+    console.log(error);
+  }
+  // console.log("Cases Action result:");
+  // console.log(datam);
+};
+export const getGroupedCases = (params) => async (dispatch) => {
+  try {
+    const { data } = await api.fetchCases(params);
+    dispatch({ type: FETCH_GROUPED_CASES, payload: data });
     // datam = data;
   } catch (error) {
     console.log(error);

@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
@@ -83,6 +84,7 @@ const CustomTooltip = ({ active, payload, label, theme }) => {
 const CaseStatistics = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const history = useHistory();
 
   const casesStatistics = useSelector((state) => state.casesStatistics);
 
@@ -94,6 +96,13 @@ const CaseStatistics = () => {
       setPendingCasesData(pendingCasesFromRedux);
     }
   }, [pendingCasesFromRedux]);
+
+  const handleBarClick = (data, index) => {
+    // console.log(index);
+    // console.log(data);
+    // history.push(`/cases/${data.category}`);
+    history.push(`/PrintGroupedCases/${data.name}`);
+  };
 
   // const [suits, setSuits] = useState([]);
   // useEffect(() => {
@@ -201,6 +210,7 @@ const CaseStatistics = () => {
                   dataKey="cases"
                   fill={theme.palette.primary.main}
                   background={{ fill: theme.palette.background.paper }}
+                  onClick={handleBarClick}
                 >
                   <LabelList
                     dataKey="cases"
