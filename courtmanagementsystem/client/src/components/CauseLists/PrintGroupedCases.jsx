@@ -125,7 +125,7 @@ const PrintGroupedCases = (props) => {
   }
 
   function getActionEng(action) {
-    const str = action.replace(/(^\s+|\s+$)/g, "");
+    const str = action?.replace(/(^\s+|\s+$)/g, "");
     switch (str) {
       case "حاضری":
       case "وکالت نامہ":
