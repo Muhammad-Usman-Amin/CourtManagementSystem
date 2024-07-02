@@ -294,9 +294,10 @@ const PrintGroupedCases = (props) => {
             </TableHead>
             <TableBody>
               {selectedCategory.map((caseFile) =>
-                caseFile.causeListEntries &&
-                getSecondToLastElementCategory(caseFile.causeListEntries)
-                  ?.actionAbstract ? (
+                caseFile["Case Title"] ? (
+                // caseFile.causeListEntries &&
+                // getSecondToLastElementCategory(caseFile.causeListEntries)
+                //   ?.actionAbstract ? (
                   <TableRow hover key={caseFile._id}>
                     <TableCell
                       className={classes.tableCell}
@@ -422,7 +423,7 @@ const PrintGroupedCases = (props) => {
                       align="left"
                     >
                       {!caseFile.nextDate
-                        ? "null"
+                        ? ""
                         : format?.(parseISO(caseFile.nextDate), "dd-MMM-yyy")}
                     </TableCell>
 
@@ -432,7 +433,7 @@ const PrintGroupedCases = (props) => {
                               caseFile.causeListEntries
                             ).actionAbstract.replace("، حاضری", "")} */}
                       {getActionEng(
-                        caseFile.actionAbstract?.replace(
+                        caseFile?.actionAbstract?.replace(
                           /(، حاضری|، شہادت|، بحث|، حکم|، حاضری )/g,
                           ""
                         )

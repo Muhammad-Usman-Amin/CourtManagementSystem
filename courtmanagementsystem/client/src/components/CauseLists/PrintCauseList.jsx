@@ -236,7 +236,7 @@ const PrintCauseList = (props) => {
     const titleParts = title?.split("بنام");
 
     // Check if there's at least one part
-    if (titleParts.length >= 1) {
+    if (titleParts?.length >= 1) {
       // Format the title with bold "بنام"
       return (
         <>
@@ -523,7 +523,7 @@ const PrintCauseList = (props) => {
                           align="left"
                           style={{ fontSize: 24 }}
                         >
-                          {titleFormat(caseFile.urduTitle)}
+                          {caseFile.urduTitle ? titleFormat(caseFile.urduTitle) : caseFile["Case Title"]}
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
