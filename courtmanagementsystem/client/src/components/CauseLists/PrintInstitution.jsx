@@ -300,7 +300,7 @@ const PrintInstitution = (props) => {
                   <TableCell
                     className={classes.tableHeaderCell}
                     align="center"
-                    colSpan={9}
+                    colSpan={10}
                     style={{
                       fontSize: 12,
                       fontFamily: "Times Roman",
@@ -349,6 +349,9 @@ const PrintInstitution = (props) => {
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell} align="left">
                     Current Pendency Stage
+                  </TableCell>
+                  <TableCell className={classes.tableHeaderCell} align="left">
+                    Next Date
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -514,6 +517,17 @@ const PrintInstitution = (props) => {
                             )
                           )}
                         </TableCell>
+
+                        <TableCell
+                    className={classes.tableCell}
+                      style={{ minWidth: "fit-content", whiteSpace: "nowrap" }}
+                      align="left"
+                    >
+                      {!caseFile.nextDate
+                        ? ""
+                        : format?.(parseISO(caseFile.nextDate), "dd-MMM-yyy")}
+                    </TableCell>
+
                         {/* <TableCell className={classes.tableCell} align="left">
                           {caseFile.causeListEntries &&
                             format(

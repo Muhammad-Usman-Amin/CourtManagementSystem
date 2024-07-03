@@ -19,7 +19,7 @@ const PrintCauseList = (props) => {
   const orderDate = props.location.state.orderDate;
   // const dateCauseList = props.location.state.dateCauseList;
 
-  console.log(orderDate);
+  // console.log(orderDate);
   const [dateCauseList] = useState(props.location.state.dateCauseList);
 
   const dispatch = useDispatch();
@@ -30,15 +30,15 @@ const PrintCauseList = (props) => {
   const controlPanel = useSelector((state) => state.controlCenter);
 
   let index = 0;
-  const [serialNo, setSerialNo] = useState([]);
+  // const [serialNo, setSerialNo] = useState([]);
   useEffect(() => {
     if (!data) dispatch(getCauseList({ dateCauseList: dateCauseList }));
-    for (let i = 1; i <= data.length; i++) {
-      // sno.push(i);
-      // setSerialNo((oldArray) => [...oldArray, i]);
-      setSerialNo((prevArray) => [...prevArray, i]);
-    }
-    console.log(data);
+    // for (let i = 1; i <= data.length; i++) {
+    //   // sno.push(i);
+    //   // setSerialNo((oldArray) => [...oldArray, i]);
+    //   setSerialNo((prevArray) => [...prevArray, i]);
+    // }
+    // console.log(data);
   }, [data, dateCauseList, dispatch]);
 
   const tableRef = React.useRef();
@@ -206,7 +206,9 @@ const PrintCauseList = (props) => {
         // borderColor: theme.palette.grey[300],
         // padding: theme.spacing(1),
         // fontFamily: "Alvi Nastaleeq Regular",
-        fontFamily: "Jameel Noori Nastaleeq",
+        // fontFamily: "Jameel Noori Nastaleeq",
+        // ...(data.length > 29 ? {fontFamily:""} : {fontFamily:"Jameel Noori Nastaleeq"}),
+        ...(data.length > 29 ? {fontFamily:""} : {fontFamily:"Jameel Noori Nastaleeq"}),
         // margin: 0,
         // padding: 0,
         ...(data.length > 18 ? { margin: 0, padding: 0 } : {}), // Conditional styles

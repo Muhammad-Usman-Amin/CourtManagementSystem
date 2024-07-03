@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import MuiLink from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Title from "./Title";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { format } from "date-fns";
 import { Link, useHistory } from "react-router-dom";
-import { Button, CircularProgress, IconButton } from "@material-ui/core";
+import { CircularProgress, IconButton } from "@material-ui/core";
 import BarChartIcon from '@material-ui/icons/BarChart'; // Importing a bar chart icon
 
 const useStyles = makeStyles((theme) => ({
@@ -30,9 +30,19 @@ export default function Deposits() {
   const pendingCases = useSelector((state) => state.pendingCases);
   const [totalPending, setTotalPending] = useState(0);
 
-  const timerDuration = 2000;
+  const isMounted = useRef(false);
+  const timerDuration = 1500;
   useEffect(() => {
     animateNumber(0, pendingCases.length, setTotalPending, timerDuration);
+  }, [pendingCases]);
+
+  useEffect(() => {
+    isMounted.current = true;
+    animateNumber(0, pendingCases.length, setTotalPending, timerDuration);
+
+    return () => {
+      isMounted.current = false;
+    };
   }, [pendingCases]);
 
   const animateNumber = (start, end, setter, duration) => {
@@ -46,8 +56,14 @@ export default function Deposits() {
       const now = new Date().getTime();
       const remaining = Math.max((endTime - now) / duration, 0);
       const value = Math.round(end - remaining * range);
-      setter(value);
-      if (value !== end) {
+      // setter(value);
+      // if (value !== end) {
+      //   timer = setTimeout(runAnimation, stepTime);
+      // }
+      if (isMounted.current) {
+        setter(value);
+      }
+      if (value !== end && isMounted.current) {
         timer = setTimeout(runAnimation, stepTime);
       }
     };
@@ -56,7 +72,7 @@ export default function Deposits() {
     return () => clearTimeout(timer);
   };
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const history = useHistory();
 
   const handleGraphButtonClick = () => {

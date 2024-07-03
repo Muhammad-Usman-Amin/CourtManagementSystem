@@ -51,9 +51,19 @@ const MonthlyStats = () => {
   const [totalDisposals, setTotalDisposals] = useState(0);
   const [totalTransferredIn, setTotalTransferredIn] = useState(0);
   const [totalTransferredOut, setTotalTransferredOut] = useState(0);
+  const [totalContestedA, setTotalContestedA] = useState();
+  const [totalTrialBasedA, setTotalTrialBasedA] = useState();
+  const [totalUncontestedA, setTotalUncontestedA] = useState();
+  const [totalInDefaultA, setTotalInDefaultA] = useState();
+  
+  const [totalContested, setTotalContested] = useState([]);
+  const [totalTrialBased, setTotalTrialBased] = useState([]);
+  const [totalUncontested, setTotalUncontested] = useState([]);
+  const [totalInDefault, setTotalInDefault] = useState([]);
 
   const totalInstitutions = useSelector((state) => state.institutionCases);
-  const totalDisposal = useSelector((state) => state.disposalCases.length);
+  // const totalDisposal = useSelector((state) => state.disposalCases.length);
+  const totalDisposal = useSelector((state) => state.disposalCases);
   const [totalTransferedOut, setTotalTransferedOut] = useState([]);
   const [totalTransferedIn, setTotalTransferedIn] = useState([]);
 
@@ -84,13 +94,27 @@ const MonthlyStats = () => {
 //     console.log(totalTransferedIn);
 //   },[totalTransferedIn])
 
+useEffect(()=>{
+  setTotalContested(totalDisposal.filter(item => item["Disposal Mode Flag"].includes("Contested-")));
+  setTotalTrialBased(totalDisposal.filter(item => item["Disposal Mode Flag"].includes("Contested-Trial Based")));
+  setTotalUncontested(totalDisposal.filter(item => item["Disposal Mode Flag"].includes("Uncontested")));
+  setTotalInDefault(totalDisposal.filter(item => item["Disposal Mode Flag"].includes("In Default")));
+
+},[totalDisposal])
+
   const timerDuration = 1000;
   useEffect(() => {
+
     animateNumber(0, totalInstitutions.length, setTotalInstitution, timerDuration);
-    animateNumber(0, totalDisposal, setTotalDisposals, timerDuration);
+    animateNumber(0, totalDisposal.length, setTotalDisposals, timerDuration);
     animateNumber(0, totalTransferedIn.length, setTotalTransferredIn, timerDuration);
     animateNumber(0, totalTransferedOut.length, setTotalTransferredOut, timerDuration);
-  }, [totalInstitutions, totalDisposal, totalTransferedOut, totalTransferedIn]);
+
+    animateNumber(0, totalContested.length, setTotalContestedA, timerDuration);
+    animateNumber(0, totalTrialBased.length, setTotalTrialBasedA, timerDuration);
+    animateNumber(0, totalUncontested.length, setTotalUncontestedA, timerDuration);
+    animateNumber(0, totalInDefault.length, setTotalInDefaultA, timerDuration);
+  }, [totalInDefault, totalInstitutions, totalDisposal, totalTransferedOut, totalTransferedIn]);
 
   const animateNumber = (start, end, setter, duration) => {
     const range = end - start;
@@ -144,6 +168,36 @@ const MonthlyStats = () => {
                 <Paper className={classes.statBox}>
                   <Typography className={classes.statTitle}>Transferred Out</Typography>
                   <Typography className={classes.statValue}>{totalTransferredOut}</Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+
+            <Typography variant="h6" className={classes.header}>
+              Disposals
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper className={classes.statBox}>
+                  <Typography className={classes.statTitle}>Total Contested</Typography>
+                  <Typography className={classes.statValue}>{totalContestedA}</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper className={classes.statBox}>
+                  <Typography className={classes.statTitle}>Trial Based</Typography>
+                  <Typography className={classes.statValue}>{totalTrialBasedA}</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper className={classes.statBox}>
+                  <Typography className={classes.statTitle}>Uncontested</Typography>
+                  <Typography className={classes.statValue}>{totalUncontestedA}</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper className={classes.statBox}>
+                  <Typography className={classes.statTitle}>In Default</Typography>
+                  <Typography className={classes.statValue}>{totalInDefaultA}</Typography>
                 </Paper>
               </Grid>
             </Grid>

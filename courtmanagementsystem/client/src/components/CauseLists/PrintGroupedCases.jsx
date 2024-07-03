@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 import { Button, Grid, LinearProgress } from "@material-ui/core";
 import * as XLSX from "xlsx";
 import { useParams } from "react-router-dom";
-import { selectCustodyOfMinors } from "../../selectors/caseStatisticsSelector";
 
 const useStyles = makeStyles((theme) =>
   createStyles({

@@ -31,6 +31,7 @@ import {
   Box,
   Divider,
 } from "@material-ui/core";
+import clsx from 'clsx';
 import { LinearProgress } from "@material-ui/core";
 //CircularProgress,
 
@@ -356,7 +357,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
         <Grid item xs={12} sm={4} container justify="space-between">
           <Typography
             style={{ textAlign: "left", direction: "ltr", fontSize: "1.2rem" }}
-            className={[classes.boldThis]}
+            className={classes.boldThis}
           >
             Day:{" "}
             {dateCauseList.toLocaleDateString("en-US", { weekday: "long" })} |{" "}
@@ -373,7 +374,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
           {cases.length && (
             <Typography
               style={{ fontSize: "1.2rem" }}
-              className={[classes.boldThis]}
+              className={classes.boldThis}
             >
               Total Cases : {cases.length}
             </Typography>
@@ -399,28 +400,32 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
               style={{ border: "2px solid lightblue" }}
             >
               <TableHead>
-                <TableRow>
+                <TableRow key="head-header">
                   <TableCell
                     style={{ direction: "rtl" }}
-                    className={[classes.uFont, classes.boldThis]}
+                    // className={[classes.uFont, classes.boldThis]}
+                    className={clsx(classes.uFont, classes.boldThis)}
                   >
                     نمبرشمار
                   </TableCell>
                   <TableCell
-                    className={[classes.uFont, classes.boldThis]}
+                    // className={[classes.uFont, classes.boldThis]}
+                    className={clsx(classes.uFont, classes.boldThis)}
                     style={{ textAlign: "center" }}
                   >
                     مقدمہ نمبر
                   </TableCell>
                   <TableCell
-                    className={[classes.uFont, classes.boldThis]}
+                    // className={[classes.uFont, classes.boldThis]}
+                    className={clsx(classes.uFont, classes.boldThis)}
                     align="center"
                     style={{ minWidth: 100 }}
                   >
                     تاریخ رجوعہ
                   </TableCell>
                   <TableCell
-                    className={[classes.uFont, classes.boldThis]}
+                    // className={[classes.uFont, classes.boldThis]}
+                    className={clsx(classes.uFont, classes.boldThis)}
                     style={{ minWidth: 130 }}
                     align="center"
                   >
@@ -428,12 +433,14 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </TableCell>
                   <TableCell
                     align="center"
-                    className={[classes.uFont, classes.boldThis]}
+                    // className={[classes.uFont, classes.boldThis]}
+                    className={clsx(classes.uFont, classes.boldThis)}
                   >
                     کاروائی
                   </TableCell>
                   <TableCell
-                    className={[classes.uFont, classes.boldThis]}
+                    // className={[classes.uFont, classes.boldThis]}
+                    className={clsx(classes.uFont, classes.boldThis)}
                     align="center"
                   >
                     سابقہ تاریخ
@@ -442,14 +449,16 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     Order No
                   </TableCell> */}
                   <TableCell
-                    className={[classes.uFont, classes.boldThis]}
+                    // className={[classes.uFont, classes.boldThis]}
+                    className={clsx(classes.uFont, classes.boldThis)}
                     align="left"
                     style={{ direction: "rtl", width: "200px" }}
                   >
                     آئیندہ تاریخ پیشی
                   </TableCell>
                   <TableCell
-                    className={[classes.uFont, classes.boldThis]}
+                    // className={[classes.uFont, classes.boldThis]}
+                    className={clsx(classes.uFont, classes.boldThis)}
                     style={{ minWidth: 140 }}
                     align="center"
                   >
@@ -459,7 +468,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
               </TableHead>
 
               <TableBody>
-                <TableRow>
+                <TableRow key="attendance-header">
                   <TableCell
                     align="center"
                     colSpan={9}
@@ -481,7 +490,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     getSecondToLastElementCategory(
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("حاضری") ? (
-                      <TableRow key={caseFile._id}>
+                      <TableRow key={caseFile._id.toString()}>
                         {/* <TableCell align="right">{serialNo[index++]}</TableCell> */}
                         <TableCell align="right">
                           {serialNumbers[index++]}
@@ -659,7 +668,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
@@ -884,7 +894,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
@@ -1007,7 +1018,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{
                                   backgroundColor: "lightsalmon",
                                 }}
@@ -1102,7 +1114,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
@@ -1149,7 +1162,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </>
                 ))}
 
-                <TableRow>
+                <TableRow key="evidence-header">
                   <TableCell
                     align="center"
                     colSpan={9}
@@ -1171,7 +1184,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     getSecondToLastElementCategory(
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("شہادت") ? (
-                      <TableRow key={caseFile._id}>
+                      <TableRow key={caseFile._id.toString()}>
                         <TableCell align="right">
                           {serialNumbers[index++]}
                         </TableCell>
@@ -1345,7 +1358,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
@@ -1570,7 +1584,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
@@ -1693,7 +1708,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{
                                   backgroundColor: "lightsalmon",
                                 }}
@@ -1788,7 +1804,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
@@ -1834,7 +1851,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </>
                 ))}
 
-                <TableRow>
+                <TableRow key="arguments-header">
                   <TableCell
                     align="center"
                     colSpan={9}
@@ -1856,7 +1873,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     getSecondToLastElementCategory(
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("بحث") ? (
-                      <TableRow key={caseFile._id}>
+                      <TableRow key={caseFile._id.toString()}>
                         <TableCell align="right">
                           {serialNumbers[index++]}
                         </TableCell>
@@ -2030,7 +2047,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
@@ -2255,7 +2273,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
@@ -2378,7 +2397,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{
                                   backgroundColor: "lightsalmon",
                                 }}
@@ -2473,7 +2493,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
@@ -2519,7 +2540,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </>
                 ))}
 
-                <TableRow>
+                <TableRow key="orders-header">
                   <TableCell
                     align="center"
                     style={{
@@ -2541,7 +2562,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     getSecondToLastElementCategory(
                       caseFile.causeListEntries
                     ).actionAbstract?.includes("حکم") ? (
-                      <TableRow key={caseFile._id}>
+                      <TableRow key={caseFile._id.toString()}>
                         {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
                         </TableCell> */}
@@ -2716,7 +2737,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
@@ -2941,7 +2963,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
@@ -3064,7 +3087,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{
                                   backgroundColor: "lightsalmon",
                                 }}
@@ -3159,7 +3183,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
@@ -3205,7 +3230,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </>
                 ))}
 
-                <TableRow>
+                <TableRow key="others-header">
                   <TableCell
                     align="center"
                     colSpan={9}
@@ -3226,7 +3251,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     {caseFile.causeListEntries &&
                     !getSecondToLastElementCategory(caseFile.causeListEntries)
                       .actionAbstract ? (
-                      <TableRow key={caseFile._id}>
+                      <TableRow key={caseFile._id.toString()}>
                         {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
                         </TableCell> */}
@@ -3401,7 +3426,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
@@ -3626,7 +3652,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
@@ -3749,7 +3776,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{
                                   backgroundColor: "lightsalmon",
                                 }}
@@ -3844,7 +3872,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               <Divider />
 
                               <MenuItem
-                                className={[classes.boldThis, classes.uFont]}
+                                // className={[classes.boldThis, classes.uFont]}
+                                className={clsx(classes.uFont, classes.boldThis)}
                                 style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
@@ -3899,48 +3928,3 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 };
 
 export default CauseList;
-
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
-// const rows = [
-//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//   createData('Eclair', 262, 16.0, 24, 6.0),
-//   createData('Cupcake', 305, 3.7, 67, 4.3),
-//   createData('Gingerbread', 356, 16.0, 49, 3.9),
-// ];
-
-// export default function BasicTable() {
-//   const classes = useStyles();
-
-//   return (
-//     <TableContainer component={Paper}>
-//       <Table className={classes.table} aria-label="simple table">
-//         <TableHead>
-//           <TableRow>
-//             <TableCell>Dessert (100g serving)</TableCell>
-//             <TableCell align="right">Calories</TableCell>
-//             <TableCell align="right">Fat&nbsp;(g)</TableCell>
-//             <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-//             <TableCell align="right">Protein&nbsp;(g)</TableCell>
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-//           {rows.map((row) => (
-//             <TableRow key={row.name}>
-//               <TableCell component="th" scope="row">
-//                 {row.name}
-//               </TableCell>
-//               <TableCell align="right">{row.calories}</TableCell>
-//               <TableCell align="right">{row.fat}</TableCell>
-//               <TableCell align="right">{row.carbs}</TableCell>
-//               <TableCell align="right">{row.protein}</TableCell>
-//             </TableRow>
-//           ))}
-//         </TableBody>
-//       </Table>
-//     </TableContainer>
-//   );
-// }

@@ -123,12 +123,16 @@ const PrintPendency = (props) => {
       case "جواب و بحث":
       case "جواب درخواست":
         return "Replication";
+      case "فرد تعلیقہ":
+        return "Attachment Order";
       case "پروفارمہ ای":
         return "Proformas";
       case "تنقیحات":
         return "Framing of Issues";
       case "جرح بر گواہ":
       case "شہادت":
+      case "شہادت مسئول الیہ":
+      case "طلبیدہ گواہان":
       case "شہادت استغاثہ":
         return "Evidence";
       case "شہادت سائیل":
