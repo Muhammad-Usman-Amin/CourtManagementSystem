@@ -31,7 +31,7 @@ import {
   Box,
   Divider,
 } from "@material-ui/core";
-import clsx from 'clsx';
+import clsx from "clsx";
 import { LinearProgress } from "@material-ui/core";
 //CircularProgress,
 
@@ -292,6 +292,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 // setCaseId(caseFile._id);
                 // setCurrentId(caseFile._id);
                 setDateCauseList(date);
+              }}
+              InputProps={{
+                readOnly: true,
               }}
               KeyboardButtonProps={{
                 "aria-label": "change date",
@@ -669,7 +672,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
@@ -895,7 +901,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
@@ -1019,7 +1028,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{
                                   backgroundColor: "lightsalmon",
                                 }}
@@ -1115,7 +1127,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
@@ -1359,7 +1374,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
@@ -1585,7 +1603,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
@@ -1709,7 +1730,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{
                                   backgroundColor: "lightsalmon",
                                 }}
@@ -1805,7 +1829,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
@@ -2048,7 +2075,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
@@ -2274,7 +2304,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
@@ -2398,7 +2431,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{
                                   backgroundColor: "lightsalmon",
                                 }}
@@ -2494,7 +2530,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
@@ -2738,7 +2777,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
@@ -2964,7 +3006,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
@@ -3088,7 +3133,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{
                                   backgroundColor: "lightsalmon",
                                 }}
@@ -3184,7 +3232,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
@@ -3427,7 +3478,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightblue" }}
                                 value={"حاضری، ریکارڈ"}
                               >
@@ -3653,7 +3707,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightgreen" }}
                                 value={"شہادت مدعی"}
                               >
@@ -3777,7 +3834,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{
                                   backgroundColor: "lightsalmon",
                                 }}
@@ -3873,7 +3933,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
                               <MenuItem
                                 // className={[classes.boldThis, classes.uFont]}
-                                className={clsx(classes.uFont, classes.boldThis)}
+                                className={clsx(
+                                  classes.uFont,
+                                  classes.boldThis
+                                )}
                                 style={{ backgroundColor: "lightcoral" }}
                                 value={"حکم بر درخواست"}
                               >
