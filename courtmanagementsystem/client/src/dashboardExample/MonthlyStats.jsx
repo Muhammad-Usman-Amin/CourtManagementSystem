@@ -76,11 +76,6 @@ const MonthlyStats = () => {
       totalInstitutions.filter((item) => item?.["Institution Flag"] !== "")
     );
 
-    setTotalTransferedOut(
-      totalInstitutions.filter(
-        (item) => item["Disposal Mode Flag"] === "Transfer Out"
-      )
-    );
     // setTotalTransferedIn(totalInstitutions.filter(item => item['Date of Transfer In']));
     setTotalTransferedIn(
       totalInstitutions.filter((item) => {
@@ -99,6 +94,18 @@ const MonthlyStats = () => {
       })
     );
   }, [totalInstitutions]);
+
+  useEffect(() => {
+    setTotalTransferedOut(
+      totalDisposal.filter(
+        (item) => item["Disposal Mode Flag"] === "Transfer Out"
+      )
+    );  
+    return () => {
+      // console.log('totalDisposal useeffect return called');
+    }
+  }, [totalDisposal])
+  
 
   // useEffect(()=> {
   //   // console.log(totalRestoredRemanded);
