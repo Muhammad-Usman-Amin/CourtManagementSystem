@@ -54,6 +54,73 @@ export const getCases = async (req, res) => {
       }).sort({ ["Date of Institution "]: 1 });
     }
 
+    if (query.reqQuery === "GroupedFortnigtlyCases") {
+      const datePend = new Date(query.datePendency);
+      const monthPend = datePend.getMonth() + 1; // Months are zero-indexed (January is 0)
+      const yearPend = datePend.getFullYear();
+
+      let startDay, endDay;
+
+      // Determine the start and end days based on the datePend
+      if (datePend.getDate() <= 15) {
+        startDay = 1;
+        endDay = 15;
+      } else {
+        startDay = 16;
+        // Determine the last day of the month
+        endDay = new Date(yearPend, monthPend, 0).getDate();
+      }
+
+      cases = await Case.find({
+        $and: [
+          { disposed: { $ne: true } },
+          {
+            "Disposal OR Transfer Out Flag": {
+              $nin: ["Disposed", "Transfer Out"],
+            },
+          },
+          {
+            $or: [
+              {
+                "Date of Institution ": {
+                  $gte: new Date(yearPend, monthPend - 1, startDay),
+                  $lte: new Date(yearPend, monthPend - 1, endDay),
+                },
+              },
+              {
+                "Date of Transfer In": {
+                  $gte: new Date(yearPend, monthPend - 1, startDay),
+                  $lte: new Date(yearPend, monthPend - 1, endDay),
+                },
+              },
+              {
+                "Date of Other Institution": {
+                  $gte: new Date(yearPend, monthPend - 1, startDay),
+                  $lte: new Date(yearPend, monthPend - 1, endDay),
+                },
+              },
+            ],
+          },
+        ],
+      }).sort({ ["Date of Institution "]: 1 });
+
+      const groupedCases = cases.reduce((acc, currentCase) => {
+        const category = currentCase["Category Per PQS"].replace(
+          /^[A-Za-z]+-\d+-/,
+          ""
+        );
+        if (!acc[category]) {
+          acc[category] = [];
+        }
+        acc[category].push(currentCase);
+        return acc;
+      }, {});
+      // console.log(groupedCases);
+      res.status(200).json(groupedCases);
+      // res.status(200).json({ groupedCases: groupedCases });
+      return;
+    }
+
     if (query.reqQuery === "GroupedCases") {
       const datePend = new Date(query.datePendency);
       // Extract year and month
@@ -77,7 +144,10 @@ export const getCases = async (req, res) => {
       }).sort({ ["Date of Institution "]: 1 });
 
       const groupedCases = cases.reduce((acc, currentCase) => {
-        const category = currentCase["Category Per PQS"].replace(/^[A-Za-z]+-\d+-/, "");
+        const category = currentCase["Category Per PQS"].replace(
+          /^[A-Za-z]+-\d+-/,
+          ""
+        );
         if (!acc[category]) {
           acc[category] = [];
         }

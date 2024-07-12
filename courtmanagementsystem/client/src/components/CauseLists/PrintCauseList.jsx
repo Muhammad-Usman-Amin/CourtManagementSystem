@@ -211,7 +211,7 @@ const PrintCauseList = (props) => {
         ...(data.length > 29 ? {fontFamily:""} : {fontFamily:"Jameel Noori Nastaleeq"}),
         // margin: 0,
         // padding: 0,
-        ...(data.length > 18 ? { margin: 0, padding: 0 } : {}), // Conditional styles
+        ...(data.length > 0 ? { margin: 0, padding: 0 } : {}), // Conditional styles
       },
       rightAlignedCell: {
         textAlign: "right",

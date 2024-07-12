@@ -8,7 +8,13 @@ import TableRow from "@material-ui/core/TableRow";
 import { useReactToPrint } from "react-to-print";
 import { format, parseISO } from "date-fns";
 import { useSelector } from "react-redux";
-import { Button, Grid, useTheme } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  useTheme,
+  TableContainer,
+  Paper,
+} from "@material-ui/core";
 
 import { useDispatch } from "react-redux";
 import { getCauseList } from "../../actions/causeLists";
@@ -42,7 +48,7 @@ const useStyles = makeStyles((theme) =>
       // borderRadius: "30px",
       border: "1px solid",
       borderColor: theme.palette.primary.black,
-      tableLayout: 'auto',
+      tableLayout: "auto",
       // margin: 0,
       // padding: 0,
     },
@@ -127,16 +133,16 @@ const useStyles = makeStyles((theme) =>
       maxWidth: "fit-content",
     },
     tableCellFixBorder: {
-        maxWidth: "max-content",
-        whiteSpace: "nowrap",
-        padding: 0,
-        borderLeft: "1px solid black",
-        borderRight: "1px solid black",
-        borderTop: "none",
-        borderBottom: "none",
+      maxWidth: "max-content",
+      whiteSpace: "nowrap",
+      padding: 0,
+      borderLeft: "1px solid black",
+      borderRight: "1px solid black",
+      borderTop: "none",
+      borderBottom: "none",
     },
     tableBorder2: {
-      border: '2px solid black'
+      border: "2px solid black",
     },
     rightAlignedCell: {
       textAlign: "right",
@@ -157,8 +163,51 @@ const useStyles = makeStyles((theme) =>
       fontWeight: "bold",
       padding: "10px",
     },
+    head: {
+      // backgroundColor: theme.palette.grey[200],
+      backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[500] : theme.palette.grey[200],
+    },
+    cell: {
+      fontWeight: "bold",
+    },
+    numericCell: {
+      fontWeight: "bold",
+      textAlign: "right",
+    },
+    categoryCell: {
+      fontWeight: "bold",
+    },
   })
 );
+
+function createData(
+  category,
+  pending,
+  tIn,
+  tOut,
+  restoredRemanded,
+  institutions,
+  disposal,
+  balance
+) {
+  return {
+    category,
+    pending,
+    tIn,
+    tOut,
+    restoredRemanded,
+    institutions,
+    disposal,
+    balance,
+  };
+}
+
+const rows = [
+  createData("Civil Suits", 159, 6, 24, 4, 120, 61, 94),
+  createData("Family Cases", 237, 9, 37, 4, 105, 72, 130),
+  createData("Criminal Cases", 262, 16, 24, 6, 110, 90, 145),
+  createData("Miscellaneous", 305, 3, 67, 4, 130, 72, 100),
+];
 
 const PrintFortnitely = (props) => {
   // const nextDate = props.location.nextDate;
@@ -177,6 +226,10 @@ const PrintFortnitely = (props) => {
   const institutionCases = useSelector((state) => state.institutionCases);
   const controlPanel = useSelector((state) => state.controlCenter);
 
+  useEffect(() => {
+    // institutionCases.filter(item => item)
+  }, [institutionCases]);
+
   let index = 0;
   const [serialNo, setSerialNo] = useState([]);
   useEffect(() => {
@@ -192,9 +245,13 @@ const PrintFortnitely = (props) => {
 
   const classes = useStyles();
   const tableRef = React.useRef();
+  const catRef = React.useRef();
 
   const handlePrint = useReactToPrint({
     content: () => tableRef.current,
+  });
+  const handleCatPrint = useReactToPrint({
+    content: () => catRef.current,
   });
 
   const rowData = (data) => {
@@ -410,7 +467,94 @@ const PrintFortnitely = (props) => {
     <LinearProgress />
   ) : (
     <>
-      <div className={classes.centeredDiv} style={{ flexGrow: 1 }}>
+      <div
+        className={classes.centeredDiv}
+        style={{ flexGrow: 1}}
+      >
+        <Grid container spacing={2} alignContent="center" justify="center">
+          <Grid item container justify="center" xs={12}>
+            <Button
+              // fullWidth
+              variant="contained"
+              color="secondary"
+              onClick={handleCatPrint}
+            >
+              Print
+            </Button>
+          </Grid>
+          <Grid item xs={12} container justify="center">
+            <TableContainer component={Paper}>
+              <Table
+                ref={catRef}
+                // className={classes.table}
+                aria-label="simple table"
+                style={{minWidth: 650,}}
+              >
+                <TableHead className={classes.head}>
+                  <TableRow>
+                    <TableCell className={classes.categoryCell}>
+                      Category Name
+                    </TableCell>
+                    <TableCell className={classes.numericCell}>
+                      Pending
+                    </TableCell>
+                    <TableCell className={classes.numericCell}>T-In</TableCell>
+                    <TableCell className={classes.numericCell}>T-Out</TableCell>
+                    <TableCell className={classes.numericCell}>
+                      Restored/Remanded
+                    </TableCell>
+                    <TableCell className={classes.numericCell}>
+                      Institutions
+                    </TableCell>
+                    <TableCell className={classes.numericCell}>
+                      Disposal
+                    </TableCell>
+                    <TableCell className={classes.numericCell}>
+                      Balance
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row) => (
+                    <TableRow key={row.category}>
+                      <TableCell
+                        className={classes.categoryCell}
+                        component="th"
+                        scope="row"
+                      >
+                        {row.category}
+                      </TableCell>
+                      <TableCell className={classes.numericCell}>
+                        {row.pending}
+                      </TableCell>
+                      <TableCell className={classes.numericCell}>
+                        {row.tIn}
+                      </TableCell>
+                      <TableCell className={classes.numericCell}>
+                        {row.tOut}
+                      </TableCell>
+                      <TableCell className={classes.numericCell}>
+                        {row.restoredRemanded}
+                      </TableCell>
+                      <TableCell className={classes.numericCell}>
+                        {row.institutions}
+                      </TableCell>
+                      <TableCell className={classes.numericCell}>
+                        {row.disposal}
+                      </TableCell>
+                      <TableCell className={classes.numericCell}>
+                        {row.balance}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </Grid>
+      </div>
+
+      <div className={classes.centeredDiv} style={{ flexGrow: 1, marginTop: 15 }}>
         {/* <div> */}
         <Grid container spacing={2} alignContent="center" justify="center">
           <Grid item container justify="center" xs={12}>
@@ -445,7 +589,7 @@ const PrintFortnitely = (props) => {
                       // padding: "10px",
                       margin: 0, // Set margin to 0
                       padding: 0,
-                      borderBottom: 'none',
+                      borderBottom: "none",
                     }}
                   >
                     Implementation of National Judicial Policy
@@ -464,8 +608,8 @@ const PrintFortnitely = (props) => {
                       // padding: "10px",
                       margin: 0, // Set margin to 0
                       padding: 0,
-                      borderTop: 'none',
-                      borderBottom: 'none',
+                      borderTop: "none",
+                      borderBottom: "none",
                     }}
                   >
                     District Courts
@@ -482,7 +626,7 @@ const PrintFortnitely = (props) => {
                       fontWeight: "bold",
                       margin: 0,
                       padding: 0,
-                      borderTop: 'none',
+                      borderTop: "none",
                     }}
                   >
                     <div
@@ -554,7 +698,11 @@ const PrintFortnitely = (props) => {
                     // className={classes.tableHeaderCell}
                     // className={classes.tableCellTitle}
                     className={classes.tableCellFixBorder}
-                    style={{fontSize:18, fontWeight:'bold', textAlign:'center'}}
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "bold",
+                      textAlign: "center",
+                    }}
                   >
                     Criminal Cases
                   </TableCell>
@@ -698,7 +846,7 @@ const PrintFortnitely = (props) => {
                     // style={{ maxWidth: 'max-content', whiteSpace: 'nowrap', padding: 0 }}
                     // className={classes.tableHeaderCell}
                     className={classes.tableCellSno}
-                    style={{borderBottom: 'none'}}
+                    style={{ borderBottom: "none" }}
                   >
                     1
                   </TableCell>
@@ -722,7 +870,7 @@ const PrintFortnitely = (props) => {
                     // style={{ maxWidth: 1 }}
                     // style={{ maxWidth: 'max-content', whiteSpace: 'nowrap', padding: 0 }}
                     className={classes.tableCellSno}
-                    style={{borderTop: 'none'}}
+                    style={{ borderTop: "none" }}
                   ></TableCell>
                   <TableCell
                     // colSpan={2}
@@ -1020,15 +1168,19 @@ const PrintFortnitely = (props) => {
                     // className={classes.tableHeaderCell}
                     // align="left"
                     // style={{ maxWidth: 1 }}
-                    className={classes.tableCellSno+' '+ classes.tableBorder2}
-                    style={{borderRight: 'none'}}
+                    className={
+                      classes.tableCellSno + " " + classes.tableBorder2
+                    }
+                    style={{ borderRight: "none" }}
                   ></TableCell>
                   <TableCell
                     // colSpan={2}
                     // align="left"
                     // className={classes.tableHeaderCell}
-                    className={classes.tableCellTitle +' '+ classes.tableBorder2}
-                    style={{borderLeft: 'none'}}
+                    className={
+                      classes.tableCellTitle + " " + classes.tableBorder2
+                    }
+                    style={{ borderLeft: "none" }}
                   >
                     <b>Total</b>
                   </TableCell>
@@ -1088,7 +1240,11 @@ const PrintFortnitely = (props) => {
                     // className={classes.tableHeaderCell}
                     // className={classes.tableCellTitle}
                     className={classes.tableCellFixBorder}
-                    style={{fontSize:18, fontWeight:'bold', textAlign:'center'}}
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "bold",
+                      textAlign: "center",
+                    }}
                   >
                     Civil Cases
                   </TableCell>
@@ -1586,17 +1742,19 @@ const PrintFortnitely = (props) => {
                     // className={classes.tableHeaderCell}
                     // align="left"
                     // style={{ maxWidth: 1 }}
-                    className={classes.tableCellSno+' '+ classes.tableBorder2}
-                    style={{borderRight: 'none'}}
-                  >
-                    
-                  </TableCell>
+                    className={
+                      classes.tableCellSno + " " + classes.tableBorder2
+                    }
+                    style={{ borderRight: "none" }}
+                  ></TableCell>
                   <TableCell
                     // colSpan={2}
                     // align="left"
                     // className={classes.tableHeaderCell}
-                    className={classes.tableCellTitle+' '+ classes.tableBorder2}
-                    style={{borderLeft: 'none'}}
+                    className={
+                      classes.tableCellTitle + " " + classes.tableBorder2
+                    }
+                    style={{ borderLeft: "none" }}
                   >
                     <b>Total</b>
                   </TableCell>
