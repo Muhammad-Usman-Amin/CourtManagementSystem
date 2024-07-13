@@ -25,13 +25,13 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
   statBox: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     borderRadius: theme.shape.borderRadius,
     backgroundColor: theme.palette.background.default,
     boxShadow: theme.shadows[2],
   },
   statTitle: {
-    fontSize: "1.2rem",
+    fontSize: "1.1rem",
     fontWeight: "bold",
     color: theme.palette.text.primary,
   },
@@ -100,12 +100,11 @@ const MonthlyStats = () => {
       totalDisposal.filter(
         (item) => item["Disposal Mode Flag"] === "Transfer Out"
       )
-    );  
+    );
     return () => {
       // console.log('totalDisposal useeffect return called');
-    }
-  }, [totalDisposal])
-  
+    };
+  }, [totalDisposal]);
 
   // useEffect(()=> {
   //   // console.log(totalRestoredRemanded);
@@ -233,7 +232,7 @@ const MonthlyStats = () => {
               THIS MONTH'S TOTAL
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={2}>
                 <Paper className={classes.statBox}>
                   <Typography className={classes.statTitle}>
                     Fresh Institutions
@@ -241,27 +240,18 @@ const MonthlyStats = () => {
                   <Typography className={classes.statValue}>
                     {totalInstitutionA -
                       (totalTransferredInA + totalRestoredRemandedA)}
+                    {/* (totalTransferedIn + totalRestoredRemanded)} */}
                   </Typography>
                   {/* <Typography className={classes.statValue}>{totalInstitutionA}</Typography> */}
-                </Paper>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
-                <Paper className={classes.statBox}>
-                  <Typography className={classes.statTitle}>
-                    Restored/Remanded
-                  </Typography>
-                  <Typography className={classes.statValue}>
-                    {totalRestoredRemandedA}
-                  </Typography>
                 </Paper>
               </Grid>
               <Grid item xs={12} sm={6} md={2}>
                 <Paper className={classes.statBox}>
                   <Typography className={classes.statTitle}>
-                    Disposals
+                    Restored/ Remanded
                   </Typography>
                   <Typography className={classes.statValue}>
-                    {totalDisposalsA - totalTransferredOutA}
+                    {totalRestoredRemandedA}
                   </Typography>
                 </Paper>
               </Grid>
@@ -272,6 +262,26 @@ const MonthlyStats = () => {
                   </Typography>
                   <Typography className={classes.statValue}>
                     {totalTransferredInA}
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2}>
+                <Paper className={classes.statBox}>
+                  <Typography className={classes.statTitle}>
+                    Total Institutions
+                  </Typography>
+                  <Typography className={classes.statValue}>
+                    {totalInstitutionA}
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2}>
+                <Paper className={classes.statBox}>
+                  <Typography className={classes.statTitle}>
+                    Disposals
+                  </Typography>
+                  <Typography className={classes.statValue}>
+                    {totalDisposalsA - totalTransferredOutA}
                   </Typography>
                 </Paper>
               </Grid>
@@ -301,7 +311,7 @@ const MonthlyStats = () => {
                   </Typography>
                 </Paper>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={2}>
                 <Paper className={classes.statBox}>
                   <Typography className={classes.statTitle}>
                     Trial Based
@@ -314,6 +324,16 @@ const MonthlyStats = () => {
               <Grid item xs={12} sm={6} md={3}>
                 <Paper className={classes.statBox}>
                   <Typography className={classes.statTitle}>
+                    Non-Trial Based
+                  </Typography>
+                  <Typography className={classes.statValue}>
+                    {totalContestedA - totalTrialBasedA}
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2}>
+                <Paper className={classes.statBox}>
+                  <Typography className={classes.statTitle}>
                     Uncontested
                   </Typography>
                   <Typography className={classes.statValue}>
@@ -321,7 +341,7 @@ const MonthlyStats = () => {
                   </Typography>
                 </Paper>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={2}>
                 <Paper className={classes.statBox}>
                   <Typography className={classes.statTitle}>
                     In Default
