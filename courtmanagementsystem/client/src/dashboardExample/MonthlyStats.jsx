@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[2],
   },
   statTitle: {
-    fontSize: "1.1rem",
+    fontSize: "1rem",
     fontWeight: "bold",
     color: theme.palette.text.primary,
   },
@@ -248,7 +248,7 @@ const MonthlyStats = () => {
               <Grid item xs={12} sm={6} md={2}>
                 <Paper className={classes.statBox}>
                   <Typography className={classes.statTitle}>
-                    Restored/ Remanded
+                    Restored/Remanded
                   </Typography>
                   <Typography className={classes.statValue}>
                     {totalRestoredRemandedA}

@@ -690,6 +690,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem className={classes.uFont} value="دِلاپانے">
                     دِلاپانے
                   </MenuItem>
+                  <MenuItem className={classes.uFont} value="حق شفع">
+                    حق شفع
+                  </MenuItem>
                   <MenuItem className={classes.uFont} value="حتمی ڈگری">
                     حتمی ڈگری
                   </MenuItem>

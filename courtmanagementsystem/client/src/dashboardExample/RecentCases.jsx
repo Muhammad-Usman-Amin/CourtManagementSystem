@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
   seeMore: {
     marginTop: theme.spacing(3),
   },
+  head: {
+      // backgroundColor: theme.palette.grey[200],
+      backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[500] : theme.palette.grey[200],
+    },
 }));
 
 function formatCase(caseString) {
@@ -63,7 +67,7 @@ export default function RecentCases() {
     <React.Fragment>
       <Title>Recent Cases</Title>
       <Table size="small">
-        <TableHead>
+        <TableHead className={classes.head}>
           <TableRow>
             <TableCell>
               <strong>S.No</strong>
