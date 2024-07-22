@@ -785,6 +785,30 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={"نوٹس نیلامی، حاضری"}
+                              >
+                                نوٹس نیلامی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" نوٹس قرقی، حاضری"}
+                              >
+                                نوٹس قرقی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"وارنٹ قرقی، حاضری"}
+                              >
+                                وارنٹ قرقی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"اِنکوائیری رپورٹ، حاضری"}
+                              >
+                                اِنکوائیری رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"نادرا رپورٹ، حاضری"}
                               >
                                 نادرا رپورٹ
@@ -1487,6 +1511,30 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={"نوٹس نیلامی، حاضری"}
+                              >
+                                نوٹس نیلامی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" نوٹس قرقی، حاضری"}
+                              >
+                                نوٹس قرقی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"وارنٹ قرقی، حاضری"}
+                              >
+                                وارنٹ قرقی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"اِنکوائیری رپورٹ، حاضری"}
+                              >
+                                اِنکوائیری رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"نادرا رپورٹ، حاضری"}
                               >
                                 نادرا رپورٹ
@@ -2185,6 +2233,30 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"نیلامی، حاضری"}
                               >
                                 نیلامی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"نوٹس نیلامی، حاضری"}
+                              >
+                                نوٹس نیلامی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" نوٹس قرقی، حاضری"}
+                              >
+                                نوٹس قرقی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"وارنٹ قرقی، حاضری"}
+                              >
+                                وارنٹ قرقی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"اِنکوائیری رپورٹ، حاضری"}
+                              >
+                                اِنکوائیری رپورٹ
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -2890,6 +2962,30 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={"نوٹس نیلامی، حاضری"}
+                              >
+                                نوٹس نیلامی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" نوٹس قرقی، حاضری"}
+                              >
+                                نوٹس قرقی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"وارنٹ قرقی، حاضری"}
+                              >
+                                وارنٹ قرقی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"اِنکوائیری رپورٹ، حاضری"}
+                              >
+                                اِنکوائیری رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"نادرا رپورٹ، حاضری"}
                               >
                                 نادرا رپورٹ
@@ -3588,6 +3684,30 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"نیلامی، حاضری"}
                               >
                                 نیلامی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"نوٹس نیلامی، حاضری"}
+                              >
+                                نوٹس نیلامی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={" نوٹس قرقی، حاضری"}
+                              >
+                                نوٹس قرقی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"وارنٹ قرقی، حاضری"}
+                              >
+                                وارنٹ قرقی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"اِنکوائیری رپورٹ، حاضری"}
+                              >
+                                اِنکوائیری رپورٹ
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}

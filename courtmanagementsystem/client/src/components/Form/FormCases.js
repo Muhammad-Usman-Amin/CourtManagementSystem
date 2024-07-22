@@ -1211,6 +1211,24 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem
                   className={classes.uFont}
+                  value={"نوٹس نیلامی، حاضری"}
+                >
+                  نوٹس نیلامی
+                </MenuItem>
+                <MenuItem className={classes.uFont} value={" نوٹس قرقی، حاضری"}>
+                  نوٹس قرقی
+                </MenuItem>
+                <MenuItem className={classes.uFont} value={"وارنٹ قرقی، حاضری"}>
+                  وارنٹ قرقی
+                </MenuItem>
+                <MenuItem
+                  className={classes.uFont}
+                  value={"اِنکوائیری رپورٹ، حاضری"}
+                >
+                  اِنکوائیری رپورٹ
+                </MenuItem>
+                <MenuItem
+                  className={classes.uFont}
                   value={"نادرا رپورٹ، حاضری"}
                 >
                   نادرا رپورٹ
@@ -1368,10 +1386,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 >
                   تحریری بیانات
                 </MenuItem>
-                <MenuItem
-                  className={classes.uFont}
-                  value={"بیان ملزم، شہادت"}
-                >
+                <MenuItem className={classes.uFont} value={"بیان ملزم، شہادت"}>
                   بیان ملزم
                 </MenuItem>
                 <MenuItem
