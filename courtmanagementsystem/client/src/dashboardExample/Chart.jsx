@@ -11,7 +11,40 @@ import {
 } from "recharts";
 import Title from "./Title";
 import { useSelector } from "react-redux";
+import { IconButton } from "@material-ui/core";
+import Button from '@material-ui/core/Button';
+import BarChartIcon from '@material-ui/icons/BarChart'; // Importing a bar chart icon
+import { makeStyles } from "@material-ui/core/styles";
+import { Link, useHistory } from "react-router-dom";
 
+
+const useStyles = makeStyles((theme) => ({
+  depositContext: {
+    flex: 1,
+  },
+  iconButton: {
+    position: "absolute",
+    top: theme.spacing(1),
+    right: theme.spacing(1),
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: '0.875rem', // Smaller font size for the text beside the icon
+  },
+  squareContainer: {
+    position: "relative",
+    // padding: theme.spacing(1),
+    // border: `1px solid ${theme.palette.divider}`,
+    borderRadius: theme.shape.borderRadius,
+  },
+  iconTextWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  iconText: {
+    marginLeft: theme.spacing(1), // Space between the icon button and the text
+    fontSize: '0.687rem',
+  },
+}));
 // Generate Sales Data
 // function createData(date, cases) {
 //   return { date, cases };
@@ -83,12 +116,15 @@ const CustomTooltip = ({ active, payload, label, theme }) => {
 };
 
 export default function Chart() {
+  const history = useHistory();
   const theme = useTheme();
 
   const institutionsStatistics = useSelector(
     (state) => state.institutionsStatistics
   );
-
+  const handleGraphButtonClick = () => {
+    history.push("/InstVsDispChart"); // Replace with the actual route to the graphs screen
+  };
   // below is archived code which count cases submitted on each day
   // let lastEntries = cases.slice(-192);
   // // let lastEntries = cases;
@@ -116,10 +152,37 @@ export default function Chart() {
   // }));
 
   // console.log(result);
-
+  const classes = useStyles();
   return (
     <React.Fragment>
+      <div className={classes.squareContainer}>
       <Title>Monthly Wise Pendency</Title>
+      <div className={classes.iconTextWrapper}>
+      <Button
+        variant="outlined"
+        // color="primary"
+        size="small"
+        onClick={handleGraphButtonClick}
+        className={classes.iconButton}
+        startIcon={<BarChartIcon />}
+      >
+        <span variant="body2" className={classes.iconText}>
+        View Monthly Wise Institution Vs Disposal Chart
+        </span>
+      </Button>
+      {/* <IconButton
+          className={classes.iconButton}
+          color="primary"
+          // onClick={handleGraphButtonClick}
+          title="View Monthly Wise Institution Vs Disposal Graph"
+        >
+          <BarChartIcon />
+        <span variant="body2" className={classes.iconText}>
+        View Monthly Wise Institution Vs Disposal Graph
+        </span>
+        </IconButton> */}
+        </div>
+      </div>
       <ResponsiveContainer>
         <LineChart
           data={institutionsStatistics}

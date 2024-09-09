@@ -10,6 +10,7 @@ import {
   getGroupedCases,
   getInstitutionCases,
   getInstitutionsStatistics,
+  getInstVsDispStats,
   getPendingCases,
 } from "./actions/cases";
 import { getEmployeeData } from "./actions/employeeData.js";
@@ -49,6 +50,7 @@ import { getRangeCauseLists } from "./actions/causeLists.js";
 import PrintFortnitely from "./components/CauseLists/PrintFortnitely.jsx";
 import CaseStatistics from "./dashboardExample/CaseStatistics.jsx";
 import PrintGroupedCases from "./components/CauseLists/PrintGroupedCases.jsx";
+import InstVsDispChart from "./dashboardExample/InstVsDispChart.jsx";
 const App = () => {
   // const classes = makeStyles();
   const classes2 = useStyles();
@@ -80,6 +82,7 @@ const App = () => {
     );
     dispatch(getRangeCauseLists({ range: "range" }));
     dispatch(getCasesStatistics({reqQuery: "CaseStatistics"}))
+    dispatch(getInstVsDispStats({reqQuery: "InstVsDispStats", dateYear: new Date()}))
     dispatch(getEmployeeData());
   }, [currentId, dispatch]);
 
@@ -183,6 +186,7 @@ const App = () => {
                 <Route path="/PrintDisposal" component={PrintDisposal} />
                 <Route path="/PrintButton" component={PrintButton} />
                 <Route path ="/CaseStatistics" component={CaseStatistics} />
+                <Route path ="/InstVsDispChart" component={InstVsDispChart} />
 
                 {/* <Route path="/DailyTotalCases" component={DailyTotalCases} /> */}
 

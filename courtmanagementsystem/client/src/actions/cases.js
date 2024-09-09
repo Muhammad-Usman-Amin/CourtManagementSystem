@@ -10,6 +10,7 @@ import {
   FETCH_CASES_STATISTICS,
   FETCH_INSTITUTIONS_STATISTICS,
   FETCH_GROUPED_CASES,
+  FETCH_INST_VS_DISP_STATS,
 } from "../constants/actionTypes";
 import * as api from "../api";
 
@@ -75,6 +76,20 @@ export const getCasesStatistics = (params) => async (dispatch) => {
   try {
     const { data } = await api.fetchCases(params);
     dispatch({ type: FETCH_CASES_STATISTICS, payload: data });
+    // datam = data;
+  } catch (error) {
+    console.log(error);
+  }
+  // console.log("Cases Action result:");
+  // console.log(datam);
+};
+export const getInstVsDispStats = (params) => async (dispatch) => {
+  console.log('getInstVsDispStats Called');
+  // let datam = null;
+  // console.log(getQuery);
+  try {
+    const { data } = await api.fetchCases(params);
+    dispatch({ type: FETCH_INST_VS_DISP_STATS, payload: data });
     // datam = data;
   } catch (error) {
     console.log(error);

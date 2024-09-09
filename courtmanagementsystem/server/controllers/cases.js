@@ -160,6 +160,76 @@ export const getCases = async (req, res) => {
       return;
     }
 
+
+    if (query.reqQuery === "InstVsDispStats") {
+      console.log("InstVsDisp Called");
+      const datePend = new Date(query.dateYear);
+      // Extract year and month
+      // const monthPend = datePend.getMonth() + 1; // Months are zero-indexed (January is 0)
+      const selectedYear = datePend.getFullYear();
+
+      const cases = await Case.aggregate([
+        {
+          // Match documents where any relevant date falls within the selected year
+          $match: {
+            $or: [
+              { "Date of Institution ": { $gte: new Date(`${selectedYear}-01-01`), $lte: new Date(`${selectedYear}-12-31`) } },
+              { "Date of Transfer In": { $gte: new Date(`${selectedYear}-01-01`), $lte: new Date(`${selectedYear}-12-31`) } },
+              { "Date of Disposal Transfer Out": { $gte: new Date(`${selectedYear}-01-01`), $lte: new Date(`${selectedYear}-12-31`) } },
+            ]
+          }
+        },
+        {
+          // Project month and year from dates
+          $project: {
+            monthYear: {
+              $cond: [
+                { $ne: ["$Date of Institution ", null] },
+                { $dateToString: { format: "%Y-%m", date: "$Date of Institution " } },
+                { $cond: [
+                    { $ne: ["$Date of Transfer In", null] },
+                    { $dateToString: { format: "%Y-%m", date: "$Date of Transfer In" } },
+                    { $dateToString: { format: "%Y-%m", date: "$Date of Disposal Transfer Out" } },
+                  ]
+                }
+              ]
+            },
+            isInstitution: { $cond: [{ $ne: ["$Date of Institution ", null] }, 1, 0] },
+            isDisposal: { $cond: [{ $ne: ["$Date of Disposal Transfer Out", null] }, 1, 0] },
+          }
+        },
+        {
+          // Group by month and year, summing institutions and disposals
+          $group: {
+            _id: "$monthYear",
+            Institutions: { $sum: "$isInstitution" },
+            Disposal: { $sum: "$isDisposal" },
+          }
+        },
+        {
+          // Project the final structure
+          $project: {
+            _id: 0,
+            Month: {
+              $concat: [
+                { $arrayElemAt: [ ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], { $subtract: [ { $toInt: { $substr: [ "$_id", 5, 2 ] } }, 1 ] } ] },
+                "-",
+                { $substr: [ "$_id", 0, 4 ] }
+              ]
+            },
+            Institutions: 1,
+            Disposal: 1,
+          }
+        },
+        {
+          // Sort by month
+          $sort: { _id: 1 }
+        }
+      ]);
+      console.log(cases);
+      res.status(200).json(cases);
+      return;
+    }
     // if(query.reqQuery === "InstituionsStatistics"){
     if (query.reqQuery === "InstitutionsStatistics") {
       // const result = await Case.aggregate([

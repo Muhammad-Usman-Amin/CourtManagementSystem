@@ -522,7 +522,7 @@ export default function CasesListTable({
                     </TableCell>
                     <TableCell
                       align="left"
-                      style={{ color: row.disposed ? "red" : "inherit" }}
+                      style={{ color: row.disposed || row["Disposal OR Transfer Out Flag"] === "Transfer Out" ? "red" : "inherit" }}
                     >
                       {row["Case Title"]}
                     </TableCell>
@@ -684,7 +684,7 @@ export default function CasesListTable({
                       </TableCell>
                       <TableCell
                         align="left"
-                        style={{ color: row.disposed ? "red" : "inherit" }}
+                        style={{ color: row.disposed || row["Disposal OR Transfer Out Flag"] === "Transfer Out" ? "red" : "inherit" }}
                       >
                         {row["Case Title"]}
                       </TableCell>
