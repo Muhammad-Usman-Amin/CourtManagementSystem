@@ -153,7 +153,7 @@ const InstVsDispChart = () => {
   const instVsDispStats = useSelector((state) => state.instVsDispStats);
 
   // const pendingCasesFromRedux = useSelector(selectPendingCases);
-  const [pendingCasesData, setPendingCasesData] = useState([]);
+  // const [instVsDispStats, setInstVsDispStats] = useState([(state) => state.instVsDispStats]);
 
   // useEffect(() => {
   //   if (pendingCasesFromRedux) {
@@ -221,7 +221,7 @@ const InstVsDispChart = () => {
   //     { name: "Criminal", value: 100 },
   //   ];
 
-  return pendingCasesData.length == 0 ? (
+  return instVsDispStats.length == 0 ? (
     <Grid
       container
       justify="center"
@@ -248,9 +248,9 @@ const InstVsDispChart = () => {
               <BarChart
                 // width={500}
                 // height={300}
-                data={data}
+                data={instVsDispStats}
                 margin={{
-                  top: 10,
+                  top: 15,
                   right: 30,
                   left: 20,
                   bottom: 5,
@@ -284,12 +284,12 @@ const InstVsDispChart = () => {
                   />
                 </Bar>
                 <Bar
-                  dataKey="Disposal"
+                  dataKey="Disposals"
                   fill="red"
                   activeBar={<Rectangle fill="gold" stroke="purple" />}
                 >
                   <LabelList
-                    dataKey="Disposal"
+                    dataKey="Disposals"
                     position="top"
                     fill={theme.palette.text.primary}
                   />

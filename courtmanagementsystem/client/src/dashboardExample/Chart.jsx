@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTheme } from "@material-ui/core/styles";
 import {
   LineChart,
@@ -15,7 +15,7 @@ import { IconButton } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import BarChartIcon from '@material-ui/icons/BarChart'; // Importing a bar chart icon
 import { makeStyles } from "@material-ui/core/styles";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -122,6 +122,9 @@ export default function Chart() {
   const institutionsStatistics = useSelector(
     (state) => state.institutionsStatistics
   );
+  // useEffect(()=>{
+  //   console.log(institutionsStatistics)
+  // },[institutionsStatistics])
   const handleGraphButtonClick = () => {
     history.push("/InstVsDispChart"); // Replace with the actual route to the graphs screen
   };

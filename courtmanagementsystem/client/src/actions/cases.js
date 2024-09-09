@@ -84,7 +84,7 @@ export const getCasesStatistics = (params) => async (dispatch) => {
   // console.log(datam);
 };
 export const getInstVsDispStats = (params) => async (dispatch) => {
-  console.log('getInstVsDispStats Called');
+  // console.log('getInstVsDispStats Called');
   // let datam = null;
   // console.log(getQuery);
   try {

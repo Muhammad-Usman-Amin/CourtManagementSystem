@@ -327,7 +327,7 @@ const MonthlyStats = () => {
                     Non-Trial Based
                   </Typography>
                   <Typography className={classes.statValue}>
-                    {totalContestedA - totalTrialBasedA}
+                    {isNaN(totalContestedA - totalTrialBasedA) ? "Invalid Value" : totalContestedA - totalTrialBasedA}
                   </Typography>
                 </Paper>
               </Grid>
