@@ -14,11 +14,17 @@ import {
   useTheme,
   TableContainer,
   Paper,
+  Typography,
 } from "@material-ui/core";
 
 import { useDispatch } from "react-redux";
-import { getCauseList } from "../../actions/causeLists";
 import { LinearProgress } from "@material-ui/core";
+import { getFortnightlyReport } from "../../actions/cases";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -165,7 +171,10 @@ const useStyles = makeStyles((theme) =>
     },
     head: {
       // backgroundColor: theme.palette.grey[200],
-      backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[500] : theme.palette.grey[200],
+      backgroundColor:
+        theme.palette.type === "dark"
+          ? theme.palette.grey[500]
+          : theme.palette.grey[200],
     },
     cell: {
       fontWeight: "bold",
@@ -210,6 +219,17 @@ const rows = [
 ];
 
 const PrintFortnitely = (props) => {
+  // const pendingCasesFromRedux = useSelector(selectPendingCases);
+  // const [pendingCasesData, setPendingCasesData] = useState([]);
+
+  // useEffect(() => {
+  //   if (pendingCasesFromRedux) {
+  //     setPendingCasesData(pendingCasesFromRedux);
+  //   }
+  // }, [pendingCasesFromRedux]);
+  // useEffect(()=>{
+  //   console.log(pendingCasesData)
+  // },[pendingCasesData])
   // const nextDate = props.location.nextDate;
   // const orderDate = props.location.state.orderDate;
   const orderDate = new Date();
@@ -219,29 +239,39 @@ const PrintFortnitely = (props) => {
   // const [dateCauseList] = useState(
   //   props.location.state.dateCauseList
   // );
-  const [dateCauseList] = useState(orderDate);
+  // const [dateCauseList] = useState(orderDate);
 
   const dispatch = useDispatch();
   // const data = useSelector((state) => state.causeLists);
-  const institutionCases = useSelector((state) => state.institutionCases);
+  // const institutionCases = useSelector((state) => state.institutionCases);
+  const groupedCases = useSelector((state) => state.groupedCases);
   const controlPanel = useSelector((state) => state.controlCenter);
+  const fortnightlyReport = useSelector((state) => state.fortnightlyReport);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-    // institutionCases.filter(item => item)
-  }, [institutionCases]);
+    console.log(fortnightlyReport);
+  }, [fortnightlyReport]);
 
-  let index = 0;
-  const [serialNo, setSerialNo] = useState([]);
   useEffect(() => {
-    if (!institutionCases)
-      dispatch(getCauseList({ dateCauseList: dateCauseList }));
-    for (let i = 1; i <= institutionCases.length; i++) {
-      // sno.push(i);
-      // setSerialNo((oldArray) => [...oldArray, i]);
-      setSerialNo((prevArray) => [...prevArray, i]);
-    }
-    // console.log(pendingCases);
-  }, [institutionCases, dateCauseList, dispatch]);
+  console.log(groupedCases);
+  }, [groupedCases]);
+
+  useEffect(() => {
+    dispatch(
+      getFortnightlyReport({
+        reqQuery: "FortnightlyReport",
+        selectedMonth: selectedDate,
+      })
+    );
+  }, [selectedDate]);
+  // useEffect(() => {
+  //   // institutionCases.filter(item => item)
+  // }, [institutionCases]);
+
+  // useEffect(() => {
+  //   console.log(institutionCases);
+  // }, [institutionCases]);
 
   const classes = useStyles();
   const tableRef = React.useRef();
@@ -463,14 +493,42 @@ const PrintFortnitely = (props) => {
   // console.log(getActionEng("حاضری"));
   const theme = useTheme();
 
-  return !institutionCases.length ? (
+  return !fortnightlyReport.length && !groupedCases.length ? (
     <LinearProgress />
   ) : (
     <>
-      <div
-        className={classes.centeredDiv}
-        style={{ flexGrow: 1}}
-      >
+      <>
+        <Grid container spacing={2}>
+          <Grid item xs={6} md={3} lg={3}>
+            <Typography variant="h5" gutterBottom>
+              Fortnightly for the month of:
+            </Typography>
+          </Grid>
+          <Grid item xs={6} md={2} lg={2}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+              <KeyboardDatePicker
+                // margin="normal"
+                disableToolbar
+                views={["year", "month"]}
+                id="date-picker-causeList"
+                label="Select Month & Year"
+                autoOk
+                variant="inline"
+                format="MMM yyyy"
+                value={selectedDate}
+                onChange={(date) => {
+                  setSelectedDate(date);
+                }}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+            </MuiPickersUtilsProvider>
+          </Grid>
+          <Grid item xs="auto" md={7} lg={7}></Grid>
+        </Grid>
+      </>
+      <div className={classes.centeredDiv} style={{ flexGrow: 1 }}>
         <Grid container spacing={2} alignContent="center" justify="center">
           <Grid item container justify="center" xs={12}>
             <Button
@@ -482,13 +540,16 @@ const PrintFortnitely = (props) => {
               Print
             </Button>
           </Grid>
+          <Grid item container>
+            <Typography>First Fortnighly Report (1-15th)</Typography>
+          </Grid>
           <Grid item xs={12} container justify="center">
             <TableContainer component={Paper}>
               <Table
                 ref={catRef}
                 // className={classes.table}
                 aria-label="simple table"
-                style={{minWidth: 650,}}
+                style={{ minWidth: 650 }}
               >
                 <TableHead className={classes.head}>
                   <TableRow>
@@ -515,37 +576,46 @@ const PrintFortnitely = (props) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
-                    <TableRow key={row.category}>
-                      <TableCell
-                        className={classes.categoryCell}
-                        component="th"
-                        scope="row"
-                      >
-                        {row.category}
-                      </TableCell>
-                      <TableCell className={classes.numericCell}>
-                        {row.pending}
-                      </TableCell>
-                      <TableCell className={classes.numericCell}>
-                        {row.tIn}
-                      </TableCell>
-                      <TableCell className={classes.numericCell}>
-                        {row.tOut}
-                      </TableCell>
-                      <TableCell className={classes.numericCell}>
-                        {row.restoredRemanded}
-                      </TableCell>
-                      <TableCell className={classes.numericCell}>
-                        {row.institutions}
-                      </TableCell>
-                      <TableCell className={classes.numericCell}>
-                        {row.disposal}
-                      </TableCell>
-                      <TableCell className={classes.numericCell}>
-                        {row.balance}
-                      </TableCell>
-                    </TableRow>
+                  {fortnightlyReport.map((row) => (
+                    <>
+                      {row.firstFortnight.map((item) => (
+                        <TableRow key={row.category}>
+                          <TableCell
+                            className={classes.categoryCell}
+                            component="th"
+                            scope="row"
+                          >
+                            {/* {item.category} */}
+                            {item.category.split("-").pop()}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                            {groupedCases[item.category.split("-").pop()]
+                              ?.length +
+                              item.totalDisposals -
+                              (item.institutions + item.restored + item.transferredIn)}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                            {item.transferredIn}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                            {item.totalTransferOut}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                            {item.restored}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                            {item.institutions}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                            {item.totalDisposals}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                          {groupedCases[item.category.split("-").pop()]
+                              ?.length }
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </>
                   ))}
                 </TableBody>
               </Table>
@@ -554,7 +624,106 @@ const PrintFortnitely = (props) => {
         </Grid>
       </div>
 
-      <div className={classes.centeredDiv} style={{ flexGrow: 1, marginTop: 15 }}>
+      <div className={classes.centeredDiv} style={{ flexGrow: 1 }}>
+        <Grid container spacing={2} alignContent="center" justify="center">
+          <Grid item container justify="center" xs={12}>
+            <Button
+              // fullWidth
+              variant="contained"
+              color="secondary"
+              onClick={handleCatPrint}
+            >
+              Print
+            </Button>
+          </Grid>
+          <Grid item container>
+            <Typography>Second Fortnighly Report (16-31st)</Typography>
+          </Grid>
+          <Grid item xs={12} container justify="center">
+            <TableContainer component={Paper}>
+              <Table
+                ref={catRef}
+                // className={classes.table}
+                aria-label="simple table"
+                style={{ minWidth: 650 }}
+              >
+                <TableHead className={classes.head}>
+                  <TableRow>
+                    <TableCell className={classes.categoryCell}>
+                      Category Name
+                    </TableCell>
+                    <TableCell className={classes.numericCell}>
+                      Pending
+                    </TableCell>
+                    <TableCell className={classes.numericCell}>T-In</TableCell>
+                    <TableCell className={classes.numericCell}>T-Out</TableCell>
+                    <TableCell className={classes.numericCell}>
+                      Restored/Remanded
+                    </TableCell>
+                    <TableCell className={classes.numericCell}>
+                      Institutions
+                    </TableCell>
+                    <TableCell className={classes.numericCell}>
+                      Disposal
+                    </TableCell>
+                    <TableCell className={classes.numericCell}>
+                      Balance
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {fortnightlyReport.map((row) => (
+                    <>
+                      {row.secondFortnight.map((item) => (
+                        <TableRow key={row.category}>
+                          <TableCell
+                            className={classes.categoryCell}
+                            component="th"
+                            scope="row"
+                          >
+                            {/* {item.category} */}
+                            {item.category.split("-").pop()}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                            {groupedCases[item.category.split("-").pop()]
+                              ?.length +
+                              item.totalDisposals -
+                              (item.institutions + item.restored + item.transferredIn)}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                            {item.transferredIn}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                            {item.totalTransferOut}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                            {item.restored}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                            {item.institutions}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                            {item.totalDisposals}
+                          </TableCell>
+                          <TableCell className={classes.numericCell}>
+                          {groupedCases[item.category.split("-").pop()]
+                            ?.length }
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </Grid>
+      </div>
+
+      <div
+        className={classes.centeredDiv}
+        style={{ flexGrow: 1, marginTop: 15 }}
+      >
         {/* <div> */}
         <Grid container spacing={2} alignContent="center" justify="center">
           <Grid item container justify="center" xs={12}>

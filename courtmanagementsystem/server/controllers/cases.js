@@ -161,7 +161,7 @@ export const getCases = async (req, res) => {
     }
 
     if (query.reqQuery === "InstVsDispStats") {
-      console.log("InstVsDisp Called");
+      // console.log("InstVsDisp Called");
       const datePend = new Date(query.dateYear);
       // Extract year and month
       // const monthPend = datePend.getMonth() + 1; // Months are zero-indexed (January is 0)
@@ -303,7 +303,7 @@ export const getCases = async (req, res) => {
           },
         },
       ]);
-      console.log(transferedIn);
+      // console.log(transferedIn);
 
       // Combine the results from all three arrays (institutions, disposals, otherInstitutions)
       const combinedStats = {};
@@ -365,22 +365,36 @@ export const getCases = async (req, res) => {
       const finalStats = Object.keys(combinedStats).map((monthYear) => {
         const [year, month] = monthYear.split("-");
         return {
-          Month: `${
-            [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "October",
-              "November",
-              "December",
-            ][month - 1]
-          }-${year}`,
+          // Month: `${
+          //   [
+          //     "January",
+          //     "February",
+          //     "March",
+          //     "April",
+          //     "May",
+          //     "June",
+          //     "July",
+          //     "August",
+          //     "September",
+          //     "October",
+          //     "November",
+          //     "December",
+          //   ][month - 1]}`,
+          // }-${year}`,
+          Month: [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ][parseInt(month) - 1], // Only the month name is returned
           Institutions:
             combinedStats[monthYear].Institutions +
             combinedStats[monthYear].OtherInstitutions +
@@ -391,9 +405,28 @@ export const getCases = async (req, res) => {
       });
 
       // Sort by month
-      finalStats.sort((a, b) => new Date(a.Month) - new Date(b.Month));
+      // finalStats.sort((a, b) => new Date(a.Month) - new Date(b.Month));
+      // Sorting the finalStats array by the order of months
+      const monthOrder = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
 
-      console.log(finalStats);
+      finalStats.sort((a, b) => {
+        return monthOrder.indexOf(a.Month) - monthOrder.indexOf(b.Month);
+      });
+
+      // console.log(finalStats);
       res.status(200).json(finalStats);
       return;
     }
@@ -542,6 +575,390 @@ export const getCases = async (req, res) => {
       });
 
       res.status(200).json(formattedResult);
+      return;
+    }
+
+    if (query.reqQuery === "FortnightlyReport") {
+      const datePend = new Date(query.selectedMonth);
+      // Extract year and month
+      const month = datePend.getMonth() + 1; // Months are zero-indexed (January is 0)
+      const year = datePend.getFullYear();
+      // const month = 6;
+      // console.log(month);
+
+      const startOfMonth = new Date(year, month - 1, 1); // Start of the month
+      const middleOfMonth = new Date(year, month - 1, 15, 23, 59, 59); // End of 1st fortnight
+      const startOfSecondFortnight = new Date(year, month - 1, 16); // Start of 2nd fortnight
+      const endOfMonth = new Date(year, month, 0, 23, 59, 59); // End of the month
+
+      const cases = await Case.aggregate([
+        {
+          $match: {
+            $or: [
+              {
+                "Date of Institution ": {
+                  $gte: startOfMonth,
+                  $lte: endOfMonth,
+                },
+              },
+              {
+                "Date of Other Institution": {
+                  $gte: startOfMonth,
+                  $lte: endOfMonth,
+                },
+              }, // Restored
+              {
+                "Date of Transfer In": { $gte: startOfMonth, $lte: endOfMonth },
+              },
+              {
+                "Date of Disposal Transfer Out": {
+                  $gte: startOfMonth,
+                  $lte: endOfMonth,
+                },
+              },
+            ],
+          },
+        },
+        {
+          $facet: {
+            firstFortnight: [
+              {
+                $match: {
+                  $or: [
+                    {
+                      "Date of Institution ": {
+                        $gte: startOfMonth,
+                        $lte: middleOfMonth,
+                      },
+                    },
+                    {
+                      "Date of Other Institution": {
+                        $gte: startOfMonth,
+                        $lte: middleOfMonth,
+                      },
+                    }, // Restored
+                    {
+                      "Date of Transfer In": {
+                        $gte: startOfMonth,
+                        $lte: middleOfMonth,
+                      },
+                    },
+                    {
+                      "Date of Disposal Transfer Out": {
+                        $gte: startOfMonth,
+                        $lte: middleOfMonth,
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                $group: {
+                  _id: "$Category Per PQS",
+                  institutions: {
+                    $sum: {
+                      $cond: [
+                        {
+                          $and: [
+                            { $gte: ["$Date of Institution ", startOfMonth] },
+                            { $lte: ["$Date of Institution ", middleOfMonth] },
+                          ],
+                        },
+                        1,
+                        0,
+                      ],
+                    },
+                  },
+                  restored: {
+                    $sum: {
+                      $cond: [
+                        {
+                          $and: [
+                            {
+                              $gte: [
+                                "$Date of Other Institution",
+                                startOfMonth,
+                              ],
+                            },
+                            {
+                              $lte: [
+                                "$Date of Other Institution",
+                                middleOfMonth,
+                              ],
+                            },
+                          ],
+                        },
+                        1,
+                        0,
+                      ],
+                    },
+                  },
+                  transferredIn: {
+                    $sum: {
+                      $cond: [
+                        {
+                          $and: [
+                            { $gte: ["$Date of Transfer In", startOfMonth] },
+                            { $lte: ["$Date of Transfer In", middleOfMonth] },
+                          ],
+                        },
+                        1,
+                        0,
+                      ],
+                    },
+                  },
+                  totalDisposals: {
+                    $sum: {
+                      $cond: [
+                        {
+                          $and: [
+                            {
+                              $eq: [
+                                "$Disposal OR Transfer Out Flag",
+                                "Disposed",
+                              ],
+                            },
+                            {
+                              $gte: [
+                                "$Date of Disposal Transfer Out",
+                                startOfMonth,
+                              ],
+                            },
+                            {
+                              $lte: [
+                                "$Date of Disposal Transfer Out",
+                                middleOfMonth,
+                              ],
+                            },
+                          ],
+                        },
+                        1,
+                        0,
+                      ],
+                    },
+                  },
+                  totalTransferOut: {
+                    $sum: {
+                      $cond: [
+                        {
+                          $and: [
+                            {
+                              $eq: [
+                                "$Disposal OR Transfer Out Flag",
+                                "Transfer Out",
+                              ],
+                            },
+                            {
+                              $gte: [
+                                "$Date of Disposal Transfer Out",
+                                startOfMonth,
+                              ],
+                            },
+                            {
+                              $lte: [
+                                "$Date of Disposal Transfer Out",
+                                middleOfMonth,
+                              ],
+                            },
+                          ],
+                        },
+                        1,
+                        0,
+                      ],
+                    },
+                  },
+                },
+              },
+              {
+                $project: {
+                  _id: 0,
+                  category: "$_id",
+                  institutions: 1,
+                  restored: 1,
+                  transferredIn: 1,
+                  totalDisposals: 1,
+                  totalTransferOut: 1,
+                },
+              },
+              {
+                $sort: { institutions: -1 }, // Sort by institutions in descending order
+              },
+            ],
+            secondFortnight: [
+              {
+                $match: {
+                  $or: [
+                    {
+                      "Date of Institution ": {
+                        $gte: startOfSecondFortnight,
+                        $lte: endOfMonth,
+                      },
+                    },
+                    {
+                      "Date of Other Institution": {
+                        $gte: startOfSecondFortnight,
+                        $lte: endOfMonth,
+                      },
+                    }, // Restored
+                    {
+                      "Date of Transfer In": {
+                        $gte: startOfSecondFortnight,
+                        $lte: endOfMonth,
+                      },
+                    },
+                    {
+                      "Date of Disposal Transfer Out": {
+                        $gte: startOfSecondFortnight,
+                        $lte: endOfMonth,
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                $group: {
+                  _id: "$Category Per PQS",
+                  institutions: {
+                    $sum: {
+                      $cond: [
+                        {
+                          $and: [
+                            {
+                              $gte: [
+                                "$Date of Institution ",
+                                startOfSecondFortnight,
+                              ],
+                            },
+                            { $lte: ["$Date of Institution ", endOfMonth] },
+                          ],
+                        },
+                        1,
+                        0,
+                      ],
+                    },
+                  },
+                  restored: {
+                    $sum: {
+                      $cond: [
+                        {
+                          $and: [
+                            {
+                              $gte: [
+                                "$Date of Other Institution",
+                                startOfSecondFortnight,
+                              ],
+                            },
+                            {
+                              $lte: ["$Date of Other Institution", endOfMonth],
+                            },
+                          ],
+                        },
+                        1,
+                        0,
+                      ],
+                    },
+                  },
+                  transferredIn: {
+                    $sum: {
+                      $cond: [
+                        {
+                          $and: [
+                            {
+                              $gte: [
+                                "$Date of Transfer In",
+                                startOfSecondFortnight,
+                              ],
+                            },
+                            { $lte: ["$Date of Transfer In", endOfMonth] },
+                          ],
+                        },
+                        1,
+                        0,
+                      ],
+                    },
+                  },
+                  totalDisposals: {
+                    $sum: {
+                      $cond: [
+                        {
+                          $and: [
+                            {
+                              $eq: [
+                                "$Disposal OR Transfer Out Flag",
+                                "Disposed",
+                              ],
+                            },
+                            {
+                              $gte: [
+                                "$Date of Disposal Transfer Out",
+                                startOfSecondFortnight,
+                              ],
+                            },
+                            {
+                              $lte: [
+                                "$Date of Disposal Transfer Out",
+                                endOfMonth,
+                              ],
+                            },
+                          ],
+                        },
+                        1,
+                        0,
+                      ],
+                    },
+                  },
+                  totalTransferOut: {
+                    $sum: {
+                      $cond: [
+                        {
+                          $and: [
+                            {
+                              $eq: [
+                                "$Disposal OR Transfer Out Flag",
+                                "Transfer Out",
+                              ],
+                            },
+                            {
+                              $gte: [
+                                "$Date of Disposal Transfer Out",
+                                startOfSecondFortnight,
+                              ],
+                            },
+                            {
+                              $lte: [
+                                "$Date of Disposal Transfer Out",
+                                endOfMonth,
+                              ],
+                            },
+                          ],
+                        },
+                        1,
+                        0,
+                      ],
+                    },
+                  },
+                },
+              },
+              {
+                $project: {
+                  _id: 0,
+                  category: "$_id",
+                  institutions: 1,
+                  restored: 1,
+                  transferredIn: 1,
+                  totalDisposals: 1,
+                  totalTransferOut: 1,
+                },
+              },
+              {
+                $sort: { institutions: -1 }, // Sort by institutions in descending order
+              },
+            ],
+          },
+        },
+      ]);
+
+      res.status(200).json(cases);
       return;
     }
 

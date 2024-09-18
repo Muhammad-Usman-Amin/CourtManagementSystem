@@ -1311,6 +1311,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem className={classes.uFont} value="شوکازنوٹس، حاضری">
                   شوکازنوٹس
                 </MenuItem>
+                <MenuItem className={classes.uFont} value="جواب نوٹس، حاضری">
+                  جواب نوٹس
+                </MenuItem>
                 <MenuItem className={classes.uFont} value={"ہمراہ، حاضری"}>
                   ہمراہ، حاضری
                 </MenuItem>

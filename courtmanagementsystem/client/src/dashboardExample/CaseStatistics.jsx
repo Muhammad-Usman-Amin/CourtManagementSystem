@@ -86,7 +86,7 @@ const CaseStatistics = () => {
   const theme = useTheme();
   const history = useHistory();
 
-  const casesStatistics = useSelector((state) => state.casesStatistics);
+  // const casesStatistics = useSelector((state) => state.casesStatistics);
 
   const pendingCasesFromRedux = useSelector(selectPendingCases);
   const [pendingCasesData, setPendingCasesData] = useState([]);
@@ -143,12 +143,15 @@ const CaseStatistics = () => {
   //     // console.log(pendingCasesData.length);
   //   }, [casesStatistics]);
 
-  useEffect(() => {
-    //   console.log(casesStatistics);
-  }, [casesStatistics]);
+  // useEffect(() => {
+  //     console.log(casesStatistics);
+  // }, [casesStatistics]);
   //   useEffect(() => {
   //       console.log(pendingCasesStat);
   //   }, [pendingCasesStat]);
+    // useEffect(() => {
+    //     console.log(pendingCasesData);
+    // }, [pendingCasesData]);
 
   //   const pieData = [
   //     { name: "Suit", value: 400 },

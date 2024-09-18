@@ -7,6 +7,7 @@ import {
   getCases,
   getCasesStatistics,
   getDisposalCases,
+  getFortnightlyReport,
   getGroupedCases,
   getInstitutionCases,
   getInstitutionsStatistics,
@@ -83,6 +84,7 @@ const App = () => {
     dispatch(getRangeCauseLists({ range: "range" }));
     dispatch(getCasesStatistics({reqQuery: "CaseStatistics"}))
     dispatch(getInstVsDispStats({reqQuery: "InstVsDispStats", dateYear: new Date()}))
+    dispatch(getFortnightlyReport({reqQuery: "FortnightlyReport", selectedMonth: new Date()}))
     dispatch(getEmployeeData());
   }, [currentId, dispatch]);
 

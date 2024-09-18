@@ -917,6 +917,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value="جواب نوٹس، حاضری"
+                              >
+                                جواب نوٹس
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"ہمراہ، حاضری"}
                               >
                                 ہمراہ، حاضری
@@ -1643,6 +1649,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value="جواب نوٹس، حاضری"
+                              >
+                                جواب نوٹس
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"ہمراہ، حاضری"}
                               >
                                 ہمراہ، حاضری
@@ -2365,6 +2377,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value="شوکازنوٹس، حاضری"
                               >
                                 شوکازنوٹس
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value="جواب نوٹس، حاضری"
+                              >
+                                جواب نوٹس
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -3094,6 +3112,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value="جواب نوٹس، حاضری"
+                              >
+                                جواب نوٹس
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"ہمراہ، حاضری"}
                               >
                                 ہمراہ، حاضری
@@ -3816,6 +3840,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value="شوکازنوٹس، حاضری"
                               >
                                 شوکازنوٹس
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value="جواب نوٹس، حاضری"
+                              >
+                                جواب نوٹس
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}

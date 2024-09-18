@@ -13,6 +13,7 @@ import queryData from "./queryData";
 import causeLists from "./causeLists";
 import rangeCauseLists from "./rangeCauseLists";
 import controlCenter from "./controlCenter";
+import fortnightlyReport from "./fortnightlyReport";
 
 export default combineReducers({
   posts,
@@ -22,6 +23,7 @@ export default combineReducers({
   disposalCases,
   casesStatistics,
   instVsDispStats,
+  fortnightlyReport,
   institutionsStatistics,
   groupedCases,
   employeeData,

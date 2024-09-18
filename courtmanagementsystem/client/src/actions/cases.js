@@ -11,6 +11,7 @@ import {
   FETCH_INSTITUTIONS_STATISTICS,
   FETCH_GROUPED_CASES,
   FETCH_INST_VS_DISP_STATS,
+  FETCH_FORTNIGHTLY_REPORT,
 } from "../constants/actionTypes";
 import * as api from "../api";
 
@@ -82,6 +83,18 @@ export const getCasesStatistics = (params) => async (dispatch) => {
   }
   // console.log("Cases Action result:");
   // console.log(datam);
+};
+export const getFortnightlyReport = (params) => async (dispatch) => {
+  // console.log('getInstVsDispStats Called');
+  // let datam = null;
+  // console.log(getQuery);
+  try {
+    const { data } = await api.fetchCases(params);
+    dispatch({ type: FETCH_FORTNIGHTLY_REPORT, payload: data });
+    // datam = data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 export const getInstVsDispStats = (params) => async (dispatch) => {
   // console.log('getInstVsDispStats Called');

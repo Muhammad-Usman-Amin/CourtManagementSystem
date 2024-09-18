@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
@@ -21,13 +20,18 @@ import {
   LabelList,
   Label,
 } from "recharts";
-import { useSelector } from "react-redux";
-import { selectPendingCases } from "../selectors/caseStatisticsSelector";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import { getInstVsDispStats } from "../actions/cases";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(1),
   },
   paper: {
     padding: theme.spacing(2),
@@ -55,74 +59,74 @@ const COLORS = [
   "#FF33A6",
 ];
 
-const data = [
-  {
-    Month: "January",
-    Institutions: 40,
-    Disposal: 24,
-    // amt: 2400,
-  },
-  {
-    Month: "Feburary",
-    Institutions: 30,
-    Disposal: 13,
-    // amt: 2210,
-  },
-  {
-    Month: "March",
-    Institutions: 20,
-    Disposal: 78,
-    // amt: 2290,
-  },
-  {
-    Month: "April",
-    Institutions: 27,
-    Disposal: 39,
-    // amt: 2000,
-  },
-  {
-    Month: "May",
-    Institutions: 18,
-    Disposal: 48,
-    amt: 2181,
-  },
-  {
-    Month: "June",
-    Institutions: 23,
-    Disposal: 38,
-    amt: 2500,
-  },
-  {
-    Month: "July",
-    Institutions: 34,
-    Disposal: 98,
-    amt: 2100,
-  },
-  {
-    Month: "August",
-    Institutions: 31,
-    Disposal: 45,
-    amt: 2100,
-  },
-  {
-    Month: "September",
-    Institutions: 39,
-    Disposal: 27,
-    amt: 2100,
-  },
-  {
-    Month: "November",
-    Institutions: 49,
-    Disposal: 63,
-    amt: 2100,
-  },
-  {
-    Month: "December",
-    Institutions: 44,
-    Disposal: 51,
-    amt: 2100,
-  },
-];
+// const data = [
+//   {
+//     Month: "January",
+//     Institutions: 40,
+//     Disposal: 24,
+//     // amt: 2400,
+//   },
+//   {
+//     Month: "Feburary",
+//     Institutions: 30,
+//     Disposal: 13,
+//     // amt: 2210,
+//   },
+//   {
+//     Month: "March",
+//     Institutions: 20,
+//     Disposal: 78,
+//     // amt: 2290,
+//   },
+//   {
+//     Month: "April",
+//     Institutions: 27,
+//     Disposal: 39,
+//     // amt: 2000,
+//   },
+//   {
+//     Month: "May",
+//     Institutions: 18,
+//     Disposal: 48,
+//     amt: 2181,
+//   },
+//   {
+//     Month: "June",
+//     Institutions: 23,
+//     Disposal: 38,
+//     amt: 2500,
+//   },
+//   {
+//     Month: "July",
+//     Institutions: 34,
+//     Disposal: 98,
+//     amt: 2100,
+//   },
+//   {
+//     Month: "August",
+//     Institutions: 31,
+//     Disposal: 45,
+//     amt: 2100,
+//   },
+//   {
+//     Month: "September",
+//     Institutions: 39,
+//     Disposal: 27,
+//     amt: 2100,
+//   },
+//   {
+//     Month: "November",
+//     Institutions: 49,
+//     Disposal: 63,
+//     amt: 2100,
+//   },
+//   {
+//     Month: "December",
+//     Institutions: 44,
+//     Disposal: 51,
+//     amt: 2100,
+//   },
+// ];
 
 const CustomTooltip = ({ active, payload, label, theme }) => {
   if (active && payload && payload.length) {
@@ -137,7 +141,8 @@ const CustomTooltip = ({ active, payload, label, theme }) => {
         }}
       >
         <p>{label}</p>
-        <p>{`Cases: ${payload[0].value}`}</p>
+        <p style={{ color: "green" }}>{`Institutions: ${payload[0].value}`}</p>
+        <p style={{ color: "red" }}>{`Disposals: ${payload[1].value}`}</p>
       </div>
     );
   }
@@ -148,95 +153,100 @@ const CustomTooltip = ({ active, payload, label, theme }) => {
 const InstVsDispChart = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const history = useHistory();
+  // const history = useHistory();
+  const [year, setYear] = useState(new Date());
 
   const instVsDispStats = useSelector((state) => state.instVsDispStats);
-
-  // const pendingCasesFromRedux = useSelector(selectPendingCases);
-  // const [instVsDispStats, setInstVsDispStats] = useState([(state) => state.instVsDispStats]);
+  const dispatch = useDispatch();
 
   // useEffect(() => {
-  //   if (pendingCasesFromRedux) {
-  //     setPendingCasesData(pendingCasesFromRedux);
-  //   }
-  // }, [pendingCasesFromRedux]);
 
-  const handleBarClick = (data, index) => {
-    // console.log(index);
-    // console.log(data);
-    // history.push(`/cases/${data.category}`);
-    history.push(`/PrintGroupedCases/${data.name}`);
-  };
-
-  // const [suits, setSuits] = useState([]);
-  // useEffect(() => {
-  //   setSuits(
-  //     pendingCases.filter(
-  //       (item) =>
-  //         item["Category Per PQS"] ===
-  //         "Civil-001-Civil Suits (Original Jurisdiction)"
-  //     )
-  //   );
-  // }, [pendingCases]);
-  //   let pendingCasesData = [];
-  //   const [pendingCasesStat, setPendingCasesStat] = useState([]);
-  //   useEffect(() => {
-  //     // console.log(casesStatistics);
-  //     // if(casesStatistics?.pendingCases)
-  //     if (casesStatistics && casesStatistics.length > 0) {
-  //       // pendingCasesData = casesStatistics.map(item => item.pendingCases).flat()
-  //       setPendingCasesStat(
-  //         casesStatistics.map((item) => item.pendingCases).flat()
-  //       );
-  //       setPendingCasesStat((prevState) =>
-  //         prevState.filter((caseItem) => caseItem.cases > 0)
-  //       );
-  //     }
-  //     // console.log(pendingCasesData);
-  //     // pendingCasesData.push(casesStatistics.pendingCases);
-  //     // let arr = Object.values(pendingCasesData);
-
-  //     //   data = [
-  //     //     { name: "Suits", cases: pendingCasesData?.suits },
-  //     //     { name: "Family", cases: pendingCasesData?.familyCases },
-  //     //     { name: "Misc", cases: pendingCasesData?.applications },
-  //     //     { name: "Custody of Miners", cases: pendingCasesData?.custodyOfMiners },
-  //     //   ];
-  //     // console.log(typeof pendingCasesData);
-  //     // console.log(pendingCasesData);
-  //     // console.log(pendingCasesData.length);
-  //   }, [casesStatistics]);
+  // }, [year]);
 
   useEffect(() => {
-      console.log(instVsDispStats);
-  }, [instVsDispStats]);
-  //   useEffect(() => {
-  //       console.log(pendingCasesStat);
-  //   }, [pendingCasesStat]);
+    dispatch(
+      getInstVsDispStats({ reqQuery: "InstVsDispStats", dateYear: year })
+    );
+  }, [year]);
 
-  //   const pieData = [
-  //     { name: "Suit", value: 400 },
-  //     { name: "Family", value: 300 },
-  //     { name: "Misc", value: 200 },
-  //     { name: "Criminal", value: 100 },
-  //   ];
+  // useEffect(() => {
+  //     console.log(instVsDispStats);
+  // }, [instVsDispStats]);
 
-  return instVsDispStats.length == 0 ? (
-    <Grid
-      container
-      justify="center"
-      alignItems="center"
-      //   style={{ height: "80vh", width: "80vw" }}
-    >
-      {/* <Grid item xs={12} sm={12} style={{ height: '100vh' }}> */}
-      <CircularProgress />
-      {/* </Grid> */}
-    </Grid>
+  return instVsDispStats.length === 0 ? (
+    // <div className={classes.root}>
+    <>
+
+      <Grid container spacing={2}>
+        <Grid item xs={6} md={4} lg={4}>
+          <Typography variant="h5" gutterBottom>
+            Institution & Disposal for the Year:
+          </Typography>
+        </Grid>
+        <Grid item xs={6} md={2} lg={2}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+            <KeyboardDatePicker
+              // margin="normal"
+              disableToolbar
+              views={["year"]}
+              id="date-picker-causeList"
+              label="Select Year"
+              autoOk
+              variant="inline"
+              format="yyyy"
+              value={year}
+              onChange={(date) => {
+                setYear(date);
+              }}
+              KeyboardButtonProps={{
+                "aria-label": "change year",
+              }}
+            />
+          </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid item xs="auto" md={6} lg={6}></Grid>
+      </Grid>
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        style={{ height: "50vh", width: "85vw" }}
+      >
+        <CircularProgress />
+      </Grid>
+    </>
+    // </div>
   ) : (
     <div className={classes.root}>
-      <Typography variant="h5" gutterBottom>
-        Institution & Disposal this Year so far
-      </Typography>
+      <Grid container justify="flex-end" alignItems="center" spacing={2}>
+        <Grid item xs={6} md={4} lg={4}>
+          <Typography variant="h5" gutterBottom>
+            Institution & Disposal for the Year:
+          </Typography>
+        </Grid>
+        <Grid item xs={6} md={2} lg={2}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+            <KeyboardDatePicker
+              // margin="normal"
+              disableToolbar
+              views={["year"]}
+              id="date-picker-causeList"
+              label="Select Year"
+              autoOk
+              variant="inline"
+              format="yyyy"
+              value={year}
+              onChange={(date) => {
+                setYear(date);
+              }}
+              KeyboardButtonProps={{
+                "aria-label": "change year",
+              }}
+            />
+          </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid item xs="auto" md={6} lg={6}></Grid>
+      </Grid>
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={12} lg={12}>
@@ -249,12 +259,7 @@ const InstVsDispChart = () => {
                 // width={500}
                 // height={300}
                 data={instVsDispStats}
-                margin={{
-                  top: 15,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
+                margin={{ top: 20, right: 20, left: 20, bottom: 40 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="Month" />
@@ -270,12 +275,14 @@ const InstVsDispChart = () => {
                     Number of Cases
                   </Label>
                 </YAxis>
-                <Tooltip />
+                {/* <Tooltip /> */}
+                <Tooltip content={<CustomTooltip theme={theme} />} />
                 <Legend />
                 <Bar
                   dataKey="Institutions"
                   fill="green"
-                  activeBar={<Rectangle fill="pink" stroke="blue" />}
+                  // background={{ fill: theme.palette.background.paper }}
+                  // activeBar={<Rectangle fill="pink" stroke="blue" />}
                 >
                   <LabelList
                     dataKey="Institutions"
@@ -286,7 +293,7 @@ const InstVsDispChart = () => {
                 <Bar
                   dataKey="Disposals"
                   fill="red"
-                  activeBar={<Rectangle fill="gold" stroke="purple" />}
+                  // activeBar={<Rectangle fill="gold" stroke="purple" />}
                 >
                   <LabelList
                     dataKey="Disposals"

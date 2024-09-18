@@ -290,7 +290,7 @@ export default function CasesListTable({
                 // pathname: "/PrintButton",
                 state: {
                   datePendency: datePendency,
-                  backlog: 'false',
+                  backlog: "false",
                 },
               }}
             >
@@ -308,7 +308,7 @@ export default function CasesListTable({
                 // pathname: "/PrintButton",
                 state: {
                   datePendency: datePendency,
-                  backlog: 'true',
+                  backlog: "true",
                 },
               }}
             >
@@ -389,9 +389,9 @@ export default function CasesListTable({
             <Divider orientation="vertical" flexItem />
           </Grid>
           <Grid item xs={12} sm={3}>
-              <Typography style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-                Total Institutions : {institutionCases.length}
-              </Typography>
+            <Typography style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+              Total Institutions : {institutionCases.length}
+            </Typography>
           </Grid>
           <Grid item xs={12} style={{ marginBottom: "8px" }}>
             <Divider orientation="horizontal" />
@@ -443,9 +443,9 @@ export default function CasesListTable({
             <Divider orientation="vertical" flexItem />
           </Grid>
           <Grid item xs={12} sm={3}>
-              <Typography style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-                Total Disposal : {disposalCases.length}
-              </Typography>
+            <Typography style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+              Total Disposal : {disposalCases.length}
+            </Typography>
           </Grid>
           <Grid item xs={12} style={{ marginBottom: "8px" }}>
             <Divider orientation="horizontal" />
@@ -522,7 +522,14 @@ export default function CasesListTable({
                     </TableCell>
                     <TableCell
                       align="left"
-                      style={{ color: row.disposed || row["Disposal OR Transfer Out Flag"] === "Transfer Out" ? "red" : "inherit" }}
+                      style={{
+                        color:
+                          row.disposed ||
+                          row["Disposal OR Transfer Out Flag"] ===
+                            "Transfer Out"
+                            ? "red"
+                            : "inherit",
+                      }}
                     >
                       {row["Case Title"]}
                     </TableCell>
@@ -684,7 +691,14 @@ export default function CasesListTable({
                       </TableCell>
                       <TableCell
                         align="left"
-                        style={{ color: row.disposed || row["Disposal OR Transfer Out Flag"] === "Transfer Out" ? "red" : "inherit" }}
+                        style={{
+                          color:
+                            row.disposed ||
+                            row["Disposal OR Transfer Out Flag"] ===
+                              "Transfer Out"
+                              ? "red"
+                              : "inherit",
+                        }}
                       >
                         {row["Case Title"]}
                       </TableCell>
@@ -833,13 +847,13 @@ export default function CasesListTable({
               </TableHead>
               <TableBody>
                 {/* {console.log(institutionCases)} */}
-                {!institutionCases.length ? 
+                {!institutionCases.length ? (
                   <TableRow>
                     <TableCell colSpan={8} align="center">
                       No Cases Found
                     </TableCell>
                   </TableRow>
-                :
+                ) : (
                   institutionCases.map((row) => (
                     <TableRow hover key={row._id}>
                       <TableCell component="th" scope="row">
@@ -954,7 +968,8 @@ export default function CasesListTable({
                             <TableCell align="right">{row.carbs}</TableCell>
                             <TableCell align="right">{row.protein}</TableCell> */}
                     </TableRow>
-                  ))}
+                  ))
+                )}
               </TableBody>
             </Table>
             {/* <Button component={Link} to="/PrintDataTable">
