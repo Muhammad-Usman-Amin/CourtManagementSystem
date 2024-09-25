@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -61,6 +61,8 @@ const useStyles = makeStyles({
   },
 });
 
+// const Tab1Content = React.lazy(() => import('./TabPanel'));
+// const Tab1Content = React.lazy(() => import('./PendingCasesTab'));
 // function createData(name, calories, fat, carbs, protein) {
 //     return { name, calories, fat, carbs, protein };
 // }
@@ -79,23 +81,25 @@ export default function CasesListTable({
 }) {
   const dispatch = useDispatch();
   const tableRef = React.useRef();
-  useEffect(() => {
-    dispatch(getEmployeeData());
-    dispatch(getCases({ reqQuery: "All" }));
-    dispatch(
-      getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
-    );
-    dispatch(
-      getInstitutionCases({
-        reqQuery: "InstitutionCases",
-        dateInstitution: new Date(),
-      })
-    );
-    dispatch(
-      getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: new Date() })
-    );
-    dispatch(getControlCenter());
-  }, [dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(getEmployeeData());
+  //   dispatch(getCases({ reqQuery: "All" }));
+  //   dispatch(
+  //     getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
+  //   );
+  //   dispatch(
+  //     getInstitutionCases({
+  //       reqQuery: "InstitutionCases",
+  //       dateInstitution: new Date(),
+  //     })
+  //   );
+  //   dispatch(
+  //     getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: new Date() })
+  //   );
+  //   dispatch(getControlCenter());
+  // }, [dispatch]);
+
   // const handlePrint = useReactToPrint({
   //   content: () => tableRef.current,
   // });
@@ -127,7 +131,7 @@ export default function CasesListTable({
 
   const handleDeleteConfirmation = () => {
     // Dispatch your delete action using Redux here, passing the selectedRow to identify the item to delete
-    console.log("Delete item:", selectedRow);
+    // console.log("Delete item:", selectedRow);
     dispatch(deleteCase(selectedRow));
     setOpenDeleteDialog(false);
   };
@@ -537,7 +541,7 @@ export default function CasesListTable({
                     <TableCell
                       align="right"
                       style={{
-                        fontFamily: "Jameel Noori Nastaleeq",
+                        // fontFamily: "Jameel Noori Nastaleeq",
                         fontSize: 20,
                       }}
                     >
@@ -636,8 +640,6 @@ export default function CasesListTable({
         </TabPanel>
 
         <TabPanel value={selectedTab} index={1}>
-          {/* Render your All Cases table component here */}
-          {/* Pending Cases */}
           <TableContainer component={Paper}>
             <Table
               ref={tableRef}
@@ -668,9 +670,6 @@ export default function CasesListTable({
                   </TableCell>
                   <TableCell align="left">Edit</TableCell>
                   <TableCell align="left">Delete</TableCell>
-                  {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -702,11 +701,10 @@ export default function CasesListTable({
                       >
                         {row["Case Title"]}
                       </TableCell>
-                      {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
                       <TableCell
                         align="right"
                         style={{
-                          fontFamily: "Jameel Noori Nastaleeq",
+                          // fontFamily: "Jameel Noori Nastaleeq",
                           fontSize: 20,
                         }}
                       >
@@ -715,7 +713,6 @@ export default function CasesListTable({
                           ""
                         )}
                       </TableCell>
-                      {/* <TableCell align="left">{row["Institution Year"]}</TableCell> */}
                       <TableCell
                         style={{
                           minWidth: "fit-content",
@@ -763,20 +760,11 @@ export default function CasesListTable({
                           {<DeleteIcon fontSize="small" />}
                         </Button>
                       </TableCell>
-
-                      {/* <TableCell align="right">{row.fat}</TableCell>
-                            <TableCell align="right">{row.carbs}</TableCell>
-                            <TableCell align="right">{row.protein}</TableCell> */}
                     </TableRow>
                   ))}
               </TableBody>
             </Table>
-            {/* <Button component={Link} to="/PrintDataTable">
-          Print
-        </Button> */}
           </TableContainer>
-
-          {/* Delete confirmation dialog */}
           <div>
             <Dialog
               open={openDeleteDialog}

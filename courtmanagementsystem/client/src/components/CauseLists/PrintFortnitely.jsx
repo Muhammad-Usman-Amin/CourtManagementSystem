@@ -19,7 +19,7 @@ import {
 
 import { useDispatch } from "react-redux";
 import { LinearProgress } from "@material-ui/core";
-import { getFortnightlyReport } from "../../actions/cases";
+import { getFortnightlyReport, getPendingCases } from "../../actions/cases";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -218,44 +218,96 @@ const rows = [
   createData("Miscellaneous", 305, 3, 67, 4, 130, 72, 100),
 ];
 
-const PrintFortnitely = (props) => {
-  // const pendingCasesFromRedux = useSelector(selectPendingCases);
-  // const [pendingCasesData, setPendingCasesData] = useState([]);
+// Assuming `pendingCases` is the array of objects containing the cases data
+const categorizePendingCases = (pendingCases) => {
+  // Use `reduce` to categorize and count the cases
+  const categoryCount = pendingCases.reduce((acc, caseItem) => {
+    // Extract the category name from the object
+    const category = caseItem["Category Per PQS"];
 
-  // useEffect(() => {
-  //   if (pendingCasesFromRedux) {
-  //     setPendingCasesData(pendingCasesFromRedux);
-  //   }
-  // }, [pendingCasesFromRedux]);
-  // useEffect(()=>{
-  //   console.log(pendingCasesData)
-  // },[pendingCasesData])
-  // const nextDate = props.location.nextDate;
-  // const orderDate = props.location.state.orderDate;
+    // Initialize the count for this category if it doesn't exist
+    if (!acc[category]) {
+      acc[category] = 0;
+    }
+
+    // Increment the count for this category
+    acc[category] += 1;
+
+    return acc;
+  }, {});
+
+  // Convert the `categoryCount` object to an array of objects
+  // const categorizedArray = Object.keys(categoryCount).map((category) => {
+  //     return {
+  //         category: category,
+  //         count: categoryCount[category],
+  //     };
+  // });
+
+  return categoryCount;
+  // return categorizedArray;
+};
+
+const PrintFortnitely = (props) => {
   const orderDate = new Date();
   const dateInstitution = props.location.state.dateInstitution;
 
-  // console.log(orderDate);
-  // const [dateCauseList] = useState(
-  //   props.location.state.dateCauseList
-  // );
-  // const [dateCauseList] = useState(orderDate);
-
   const dispatch = useDispatch();
-  // const data = useSelector((state) => state.causeLists);
-  // const institutionCases = useSelector((state) => state.institutionCases);
   const groupedCases = useSelector((state) => state.groupedCases);
   const controlPanel = useSelector((state) => state.controlCenter);
   const fortnightlyReport = useSelector((state) => state.fortnightlyReport);
+  const pendingCases = useSelector((state) => state.pendingCases);
+  const disposedCases = useSelector((state) => state.disposalCases);
+  const totalInstitutions = useSelector((state) => state.institutionCases);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [categorizedDataPend, setCategorizedDataPend] = useState([]);
+  const [categorizedDataDisp, setCategorizedDataSDisp] = useState([]);
+  const [categorizedDataInst, setCategorizedDataInst] = useState([]);
+  const [cached, setCached] = useState({});
 
   useEffect(() => {
     console.log(fortnightlyReport);
+    fortnightlyReport.forEach((row) => {
+      row.firstFortnight.forEach((item) => {
+        setCached((prevData) => ({
+          ...prevData,
+          [item.category]: item, // Use category as key
+        }));
+      });
+    });
   }, [fortnightlyReport]);
 
+  // useEffect(() => {
+    // console.log(cached);
+    // console.log(cached['Civil-001-Civil Suits (Original Jurisdiction)']?.institutions);
+  // }, [cached]);
+
+  // useEffect(() => {
+    // console.log(groupedCases);
+  // }, [groupedCases]);
+  // useEffect(() => {
+    // console.log(categorizedDataDisp);
+  // }, [categorizedDataDisp]);
+  // useEffect(() => {
+    // console.log(categorizedDataInst);
+    // console.log(categorizedDataInst["ar"]);
+  // }, [categorizedDataInst]);
+  // useEffect(() => {
+    // console.log(totalInstitutions);
+  // }, [totalInstitutions]);
+
   useEffect(() => {
-  console.log(groupedCases);
-  }, [groupedCases]);
+    // console.log(pendingCases);
+    // Get the categorized array
+    setCategorizedDataPend(categorizePendingCases(pendingCases));
+    setCategorizedDataSDisp(categorizePendingCases(disposedCases));
+    setCategorizedDataInst(categorizePendingCases(totalInstitutions));
+  }, [pendingCases, disposedCases, disposedCases]);
+
+  // useEffect(() => {
+    // console.log(categorizedData);
+    // console.log(categorizedData["Execution Petitions"]);
+  // }, [categorizedDataPend]);
 
   useEffect(() => {
     dispatch(
@@ -263,6 +315,9 @@ const PrintFortnitely = (props) => {
         reqQuery: "FortnightlyReport",
         selectedMonth: selectedDate,
       })
+    );
+    dispatch(
+      getPendingCases({ reqQuery: "PendingCases", datePendency: selectedDate })
     );
   }, [selectedDate]);
   // useEffect(() => {
@@ -384,127 +439,26 @@ const PrintFortnitely = (props) => {
     );
   };
 
-  function getSecondToLastElementCategory(array) {
-    if (array.length === 0) {
-      return null;
-    }
-    if (array.length > 1) {
-      if (
-        new Date(array[array.length - 1].orderDate).toDateString() ===
-        new Date(orderDate).toDateString()
-      ) {
-        // console.log(
-        //   new Date(array[array.length - 1].orderDate).toDateString() ===
-        //     new Date(orderDate).toDateString()
-        // );
-        return array[array.length - 2];
-      }
-    }
-    // console.log("-1 exec");
-    return array[array.length - 1]; // or any other appropriate value or action
-  }
-
-  function getActionEng(action) {
-    const str = action.replace(/(^\s+|\s+$)/g, "");
-    //The regular expression (^\s+|\s+$) matches one or more (+) whitespace characters (\s) at the beginning (^) or end ($) of the string.
-    //The g flag ensures that all occurrences of these patterns are replaced.
-    switch (str) {
-      case "حاضری":
-      case "حاضری، ریکارڈ":
-      case "حاضری، اشتہار":
-      case "مختارنامہ":
-        return "Attendance";
-      // break;
-      case "جواب دعویٰ":
-        return "Written Statement";
-      // case ' ترمیمی جواب دعویٰ':
-      //   return 'Amended Written Statement';
-      // case 'ترمیمی جواب دعویٰ ':
-      //   return 'Amended Written Statement';
-      // case ' ترمیمی عرضیدعویٰ':
-      //   return 'Amended Plaint';
-      case "ترمیمی جواب دعویٰ":
-        return "Amended Wrtitten Statement";
-      case "ترمیمی عرضیدعویٰ":
-        return "Amended Plaint";
-      case "جواب و بحث":
-      case "جواب درخواست":
-        return "Replication";
-      case "پروفارمہ ای":
-        return "Proformas";
-      case "تنقیحات":
-        return "Framing of Issues";
-      case "شہادت":
-      case "شہادت استغاثہ":
-        return "Evidence";
-      case "شہادت سائیل":
-        return "Petitioner Evidence";
-      case "یکطرفہ شہادت":
-        return "Ex-parte Evidence";
-      case "شہادت مدعی":
-        return "Plaintiff Evidence";
-      case "شہادت مدعیہ":
-        return "Plaintiff Evidence";
-      case "شہادت مدعا علیہم":
-        return "Defendants Evidence";
-      case "شہادت مدعیان":
-        return "Plaintiffs Evidence";
-      case "بیلف رپورٹ":
-      case "حاضری، بیلف رپورٹ":
-        return "Bailiff’s Report";
-      case "نادرا رپورٹ":
-        return "NADRA's Report";
-      case "شہادت مدعا علیہ":
-        return "Defendant Evidence";
-      case "راضی نامہ":
-        return "Compromise";
-      case "مصالحت ابتدائی":
-        return "Pre-Reconciliation";
-      case "مصالحت ثانی":
-        return "Post-Reconciliation";
-      case "بقایا بحث":
-        return "Remaining Arguments";
-      case "بحث، ریکارڈ":
-        return "Arguments on Application";
-      case "بحث بر مقدمہ":
-        return "Arguments";
-      case "یکطرفہ بحث":
-        return "ex-parte Arguments";
-      case "بحث بر درخواست":
-        return "Arguments on Application";
-      case "حکم بر درخواست":
-        return "Order on Application";
-      case "حکم":
-        return "Order";
-      case "حکم بر مقدمہ":
-        return "Order";
-      case "مزید کاروائی":
-        return "Others";
-      case "انتظار مسل":
-        return "Others";
-      case "ہمراہ":
-        return "Attached";
-      case "بقایا آدائیگی":
-        return "Remaining Payment";
-      default:
-        return str;
-    }
-  }
-  // console.log(getActionEng("حاضری"));
-  const theme = useTheme();
-
-  return !fortnightlyReport.length && !groupedCases.length ? (
+  return !fortnightlyReport.length &&
+    !categorizedDataPend.length &&
+    !categorizedDataDisp.length &&
+    !categorizedDataInst.length ? (
     <LinearProgress />
   ) : (
     <>
       <>
-        <Grid container spacing={2}>
-          <Grid item xs={6} md={3} lg={3}>
+        <Grid
+          container
+          spacing={1}
+          alignItems="center" // Align items to the center vertically
+          justify="flex-start"
+        >
+          <Grid item>
             <Typography variant="h5" gutterBottom>
               Fortnightly for the month of:
             </Typography>
           </Grid>
-          <Grid item xs={6} md={2} lg={2}>
+          <Grid item md={3} container justify="center">
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
               <KeyboardDatePicker
                 // margin="normal"
@@ -519,17 +473,23 @@ const PrintFortnitely = (props) => {
                 onChange={(date) => {
                   setSelectedDate(date);
                 }}
+                InputProps={{
+                readOnly: true,
+              }}
                 KeyboardButtonProps={{
                   "aria-label": "change date",
                 }}
               />
             </MuiPickersUtilsProvider>
           </Grid>
-          <Grid item xs="auto" md={7} lg={7}></Grid>
+          <Grid item xs="auto" md={6} lg={6}></Grid>
         </Grid>
       </>
-      <div className={classes.centeredDiv} style={{ flexGrow: 1 }}>
-        <Grid container spacing={2} alignContent="center" justify="center">
+      <div
+        className={classes.centeredDiv}
+        style={{ flexGrow: 1, marginTop: 5 }}
+      >
+        <Grid container spacing={1} alignContent="center" justify="center">
           <Grid item container justify="center" xs={12}>
             <Button
               // fullWidth
@@ -589,10 +549,19 @@ const PrintFortnitely = (props) => {
                             {item.category.split("-").pop()}
                           </TableCell>
                           <TableCell className={classes.numericCell}>
-                            {groupedCases[item.category.split("-").pop()]
+                            {/* {groupedCases[item.category.split("-").pop()]
                               ?.length +
                               item.totalDisposals -
-                              (item.institutions + item.restored + item.transferredIn)}
+                              (item.institutions + item.restored + item.transferredIn)} */}
+                            {(categorizedDataPend[item.category] !== undefined
+                              ? categorizedDataPend[item.category]
+                              : 0) +
+                              (categorizedDataDisp[item.category] !== undefined
+                                ? categorizedDataDisp[item.category]
+                                : 0) -
+                              (categorizedDataInst[item.category] !== undefined
+                                ? categorizedDataInst[item.category]
+                                : 0)}
                           </TableCell>
                           <TableCell className={classes.numericCell}>
                             {item.transferredIn}
@@ -603,15 +572,26 @@ const PrintFortnitely = (props) => {
                           <TableCell className={classes.numericCell}>
                             {item.restored}
                           </TableCell>
-                          <TableCell className={classes.numericCell}>
+                          <TableCell style={{color: 'green'}} className={classes.numericCell}>
                             {item.institutions}
                           </TableCell>
-                          <TableCell className={classes.numericCell}>
+                          <TableCell style={{color: 'red'}} className={classes.numericCell}>
                             {item.totalDisposals}
                           </TableCell>
                           <TableCell className={classes.numericCell}>
-                          {groupedCases[item.category.split("-").pop()]
-                              ?.length }
+                            {(categorizedDataPend[item.category] !== undefined
+                              ? categorizedDataPend[item.category]
+                              : 0) +
+                              (categorizedDataDisp[item.category] !== undefined
+                                ? categorizedDataDisp[item.category]
+                                : 0) -
+                              (categorizedDataInst[item.category] !== undefined
+                                ? categorizedDataInst[item.category]
+                                : 0) +
+                              item.institutions +
+                              item.transferredIn +
+                              item.restored -
+                              (item.totalTransferOut + item.totalDisposals)}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -624,8 +604,11 @@ const PrintFortnitely = (props) => {
         </Grid>
       </div>
 
-      <div className={classes.centeredDiv} style={{ flexGrow: 1 }}>
-        <Grid container spacing={2} alignContent="center" justify="center">
+      <div
+        className={classes.centeredDiv}
+        style={{ flexGrow: 1, marginTop: 20 }}
+      >
+        <Grid container spacing={1} alignContent="center" justify="center">
           <Grid item container justify="center" xs={12}>
             <Button
               // fullWidth
@@ -660,10 +643,10 @@ const PrintFortnitely = (props) => {
                     <TableCell className={classes.numericCell}>
                       Restored/Remanded
                     </TableCell>
-                    <TableCell className={classes.numericCell}>
+                    <TableCell style={{color: 'green'}} className={classes.numericCell}>
                       Institutions
                     </TableCell>
-                    <TableCell className={classes.numericCell}>
+                    <TableCell style={{color: 'red'}} className={classes.numericCell}>
                       Disposal
                     </TableCell>
                     <TableCell className={classes.numericCell}>
@@ -685,10 +668,26 @@ const PrintFortnitely = (props) => {
                             {item.category.split("-").pop()}
                           </TableCell>
                           <TableCell className={classes.numericCell}>
-                            {groupedCases[item.category.split("-").pop()]
+                            {/* {groupedCases[item.category.split("-").pop()]
                               ?.length +
                               item.totalDisposals -
-                              (item.institutions + item.restored + item.transferredIn)}
+                              (item.institutions +
+                                item.restored +
+                                item.transferredIn)} */}
+                            {(categorizedDataPend[item.category] !== undefined
+                              ? categorizedDataPend[item.category]
+                              : 0) +
+                              (categorizedDataDisp[item.category] !== undefined
+                                ? categorizedDataDisp[item.category]
+                                : 0) -
+                              (categorizedDataInst[item.category] !== undefined
+                                ? categorizedDataInst[item.category]
+                                : 0) +
+                              cached[item.category]?.institutions +
+                              cached[item.category]?.transferredIn +
+                              cached[item.category]?.restored -
+                              (cached[item.category]?.totalTransferOut +
+                                cached[item.category]?.totalDisposals)}
                           </TableCell>
                           <TableCell className={classes.numericCell}>
                             {item.transferredIn}
@@ -706,8 +705,24 @@ const PrintFortnitely = (props) => {
                             {item.totalDisposals}
                           </TableCell>
                           <TableCell className={classes.numericCell}>
-                          {groupedCases[item.category.split("-").pop()]
-                            ?.length }
+                            {(categorizedDataPend[item.category] !== undefined
+                              ? categorizedDataPend[item.category]
+                              : 0) +
+                              (categorizedDataDisp[item.category] !== undefined
+                                ? categorizedDataDisp[item.category]
+                                : 0) -
+                              (categorizedDataInst[item.category] !== undefined
+                                ? categorizedDataInst[item.category]
+                                : 0) +
+                              cached[item.category]?.institutions +
+                              cached[item.category]?.transferredIn +
+                              cached[item.category]?.restored -
+                              (cached[item.category]?.totalTransferOut +
+                                cached[item.category]?.totalDisposals) +
+                              item.institutions +
+                              item.transferredIn +
+                              item.restored -
+                              (item.totalTransferOut + item.totalDisposals)}
                           </TableCell>
                         </TableRow>
                       ))}

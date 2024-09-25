@@ -120,7 +120,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
 
   const handleSubmit = async (data) => {
     // console.log(e.target.value);
-    console.log(data);
+    // console.log(data);
     // cases.forEach(caseFile => {
     //   if (caseFile._id === caseId) {
     //     // console.log(caseFile._id === caseId);
@@ -130,7 +130,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     // });
     // console.log(data);
     dispatch(updateCase(caseId, data));
-    console.log(cases);
+    // console.log(cases);
   };
 
   useEffect(() => {
@@ -228,6 +228,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
       "مختارنامہ، حاضری",
       "تقرری وکیل، حاضری",
       "حاضری، وکالت نامہ، حاضری",
+      "وکالت نامہ، حاضری",
       "حاضری، جواب دعویٰ، حاضری",
       "جواب دعویٰ، حاضری",
     ]; // Add more keywords here as needed
@@ -341,6 +342,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
         <Grid item container justify="space-between" xs={12} sm={3}>
           <Divider orientation="vertical" flexItem />
           <Button
+            disabled={cases.length === 0}
             variant="contained"
             component={Link}
             to={{
@@ -370,11 +372,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
           </Typography>
           {!cases.length && (
             <Typography>
-              Searching Cases for....
-              {dateCauseList.toLocaleDateString()}
+              {!cases.length ? (
+                <Typography
+                  style={{
+                    color: "red",
+                    textAlign: "left",
+                    direction: "ltr",
+                    fontSize: "1.2rem",
+                  }}
+                  className={classes.boldThis}
+                >
+                  No Cases Found!
+                </Typography>
+              ) : (
+                "Searching Cases for...." + dateCauseList.toLocaleDateString()
+              )}
             </Typography>
           )}
-          {cases.length && (
+          {cases.length > 0 && (
             <Typography
               style={{ fontSize: "1.2rem" }}
               className={classes.boldThis}
