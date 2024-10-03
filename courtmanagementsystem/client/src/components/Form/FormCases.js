@@ -110,7 +110,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   };
 
   // useEffect(() => {
-  //   setCaseData({ ...caseData, "Date of Institution ": institutionDate });
+    // setCaseData({ ...caseData, "Date of Institution ": institutionDate });
+    // console.log(institutionDate);
   // }, [institutionDate]);
 
   const [selectedCaseType, setSelectedCaseType] = useState("Civil");
@@ -1244,6 +1245,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   value={"مزید کاروائی، حاضری"}
                 >
                   مزید کاروائی
+                </MenuItem>
+                <MenuItem className={classes.uFont} value={"انتظار AD، حاضری"}>
+                  انتظار AD
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"انتظار مسل، حاضری"}>
                   انتظار مسل

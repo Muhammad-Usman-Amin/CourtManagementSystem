@@ -643,10 +643,10 @@ const PrintFortnitely = (props) => {
                     <TableCell className={classes.numericCell}>
                       Restored/Remanded
                     </TableCell>
-                    <TableCell style={{color: 'green'}} className={classes.numericCell}>
+                    <TableCell className={classes.numericCell}>
                       Institutions
                     </TableCell>
-                    <TableCell style={{color: 'red'}} className={classes.numericCell}>
+                    <TableCell className={classes.numericCell}>
                       Disposal
                     </TableCell>
                     <TableCell className={classes.numericCell}>
@@ -698,10 +698,10 @@ const PrintFortnitely = (props) => {
                           <TableCell className={classes.numericCell}>
                             {item.restored}
                           </TableCell>
-                          <TableCell className={classes.numericCell}>
+                          <TableCell style={{color: 'green'}} className={classes.numericCell}>
                             {item.institutions}
                           </TableCell>
-                          <TableCell className={classes.numericCell}>
+                          <TableCell style={{color: 'red'}} className={classes.numericCell}>
                             {item.totalDisposals}
                           </TableCell>
                           <TableCell className={classes.numericCell}>

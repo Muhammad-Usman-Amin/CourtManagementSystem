@@ -161,33 +161,56 @@ export const getCases = async (req, res) => {
     }
 
     if (query.reqQuery === "InstVsDispStats") {
-      // console.log("InstVsDisp Called");
-      const datePend = new Date(query.dateYear);
-      // Extract year and month
-      // const monthPend = datePend.getMonth() + 1; // Months are zero-indexed (January is 0)
-      const selectedYear = datePend.getFullYear();
-      // const selectedYear = 2022;
-
-      // Aggregation pipeline for counting institutions
+      const selectedYear = new Date(query.dateYear).getFullYear();
+    
+      // Get the local time zone from the system
+      const localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    
+      //   // Aggregation pipeline for counting institutions
       const institutions = await Case.aggregate([
         {
-          $match: {
-            "Date of Institution ": {
-              $gte: new Date(`${selectedYear}-01-01`),
-              $lte: new Date(`${selectedYear}-12-31`),
+          // Project only the relevant field: "Date of Institution"
+          $project: {
+            institutionDate: "$Date of Institution ",
+          },
+        },
+        {
+          // Convert "Date of Institution" to the user's local time zone
+          $addFields: {
+            localInstitutionDate: {
+              $dateFromString: {
+                dateString: {
+                  $dateToString: {
+                    format: "%Y-%m-%dT%H:%M:%S", // Convert to string first
+                    date: "$institutionDate", // Use the institution date
+                    timezone: localTimeZone, // Apply user's time zone
+                  },
+                },
+              },
             },
           },
         },
         {
+          // Match the cases for the selected year after converting to the user's local timezone
+          $match: {
+            localInstitutionDate: {
+              $gte: new Date(`${selectedYear}-01-01T00:00:00`), // Start of the selected year
+              $lte: new Date(`${selectedYear}-12-31T23:59:59`), // End of the selected year
+            },
+          },
+        },
+        {
+          // Group the cases by year and month of the local institution date
           $group: {
             _id: {
-              month: { $month: "$Date of Institution " },
-              year: { $year: "$Date of Institution " },
+              year: { $year: "$localInstitutionDate" },
+              month: { $month: "$localInstitutionDate" },
             },
-            count: { $sum: 1 },
+            Institutions: { $sum: 1 }, // Count the number of institutions
           },
         },
         {
+          // Project the output in the desired format (e.g., "2024-1")
           $project: {
             _id: 0,
             monthYear: {
@@ -197,31 +220,61 @@ export const getCases = async (req, res) => {
                 { $toString: "$_id.month" },
               ],
             },
-            Institutions: "$count",
+            Institutions: 1,
           },
         },
+        {
+          // Sort the result by year and month
+          $sort: { "monthYear": 1 },
+        },
       ]);
-
+      // console.log(institutions);
+    
       // Aggregation pipeline for counting disposals
       const disposals = await Case.aggregate([
         {
-          $match: {
-            "Date of Disposal Transfer Out": {
-              $gte: new Date(`${selectedYear}-01-01`),
-              $lte: new Date(`${selectedYear}-12-31`),
+          // Project the relevant field: "Date of Disposal Transfer Out"
+          $project: {
+            disposalDate: "$Date of Disposal Transfer Out",
+          },
+        },
+        {
+          // Convert "Date of Disposal Transfer Out" to the user's local time zone
+          $addFields: {
+            localDisposalDate: {
+              $dateFromString: {
+                dateString: {
+                  $dateToString: {
+                    format: "%Y-%m-%dT%H:%M:%S",
+                    date: "$disposalDate",
+                    timezone: localTimeZone,
+                  },
+                },
+              },
             },
           },
         },
         {
+          // Match the cases for the selected year after converting to the user's local timezone
+          $match: {
+            localDisposalDate: {
+              $gte: new Date(`${selectedYear}-01-01T00:00:00`),
+              $lte: new Date(`${selectedYear}-12-31T23:59:59`),
+            },
+          },
+        },
+        {
+          // Group the cases by year and month of the local disposal date
           $group: {
             _id: {
-              month: { $month: "$Date of Disposal Transfer Out" },
-              year: { $year: "$Date of Disposal Transfer Out" },
+              year: { $year: "$localDisposalDate" },
+              month: { $month: "$localDisposalDate" },
             },
-            count: { $sum: 1 },
+            Disposals: { $sum: 1 },
           },
         },
         {
+          // Project the output in the desired format
           $project: {
             _id: 0,
             monthYear: {
@@ -231,31 +284,61 @@ export const getCases = async (req, res) => {
                 { $toString: "$_id.month" },
               ],
             },
-            Disposal: "$count",
+            Disposals: 1,
           },
         },
+        {
+          // Sort the result by year and month
+          $sort: { "monthYear": 1 },
+        },
       ]);
+      
+      console.log(disposals);
 
-      // Aggregation pipeline for counting "Other Institutions"
       const otherInstitutions = await Case.aggregate([
         {
-          $match: {
-            "Date of Other Institution": {
-              $gte: new Date(`${selectedYear}-01-01`),
-              $lte: new Date(`${selectedYear}-12-31`),
+          // Project the relevant field: "Date of Other Institution"
+          $project: {
+            otherInstitutionDate: "$Date of Other Institution",
+          },
+        },
+        {
+          // Convert "Date of Other Institution" to the user's local time zone
+          $addFields: {
+            localOtherInstitutionDate: {
+              $dateFromString: {
+                dateString: {
+                  $dateToString: {
+                    format: "%Y-%m-%dT%H:%M:%S",
+                    date: "$otherInstitutionDate",
+                    timezone: localTimeZone,
+                  },
+                },
+              },
             },
           },
         },
         {
+          // Match the cases for the selected year after converting to the user's local timezone
+          $match: {
+            localOtherInstitutionDate: {
+              $gte: new Date(`${selectedYear}-01-01T00:00:00`),
+              $lte: new Date(`${selectedYear}-12-31T23:59:59`),
+            },
+          },
+        },
+        {
+          // Group the cases by year and month of the local other institution date
           $group: {
             _id: {
-              month: { $month: "$Date of Other Institution" },
-              year: { $year: "$Date of Other Institution" },
+              year: { $year: "$localOtherInstitutionDate" },
+              month: { $month: "$localOtherInstitutionDate" },
             },
-            count: { $sum: 1 },
+            OtherInstitutions: { $sum: 1 },
           },
         },
         {
+          // Project the output in the desired format
           $project: {
             _id: 0,
             monthYear: {
@@ -265,31 +348,61 @@ export const getCases = async (req, res) => {
                 { $toString: "$_id.month" },
               ],
             },
-            OtherInstitutions: "$count",
+            OtherInstitutions: 1,
           },
         },
+        {
+          // Sort the result by year and month
+          $sort: { "monthYear": 1 },
+        },
       ]);
-
-      // Aggregation pipeline for counting "Date of Transfer In"
+      
+      // console.log(otherInstitutions);
+      
       const transferedIn = await Case.aggregate([
         {
-          $match: {
-            "Date of Transfer In": {
-              $gte: new Date(`${selectedYear}-01-01`),
-              $lte: new Date(`${selectedYear}-12-31`),
+          // Project the relevant field: "Date of Transfer In"
+          $project: {
+            transferInDate: "$Date of Transfer In",
+          },
+        },
+        {
+          // Convert "Date of Transfer In" to the user's local time zone
+          $addFields: {
+            localTransferInDate: {
+              $dateFromString: {
+                dateString: {
+                  $dateToString: {
+                    format: "%Y-%m-%dT%H:%M:%S",
+                    date: "$transferInDate",
+                    timezone: localTimeZone,
+                  },
+                },
+              },
             },
           },
         },
         {
+          // Match the cases for the selected year after converting to the user's local timezone
+          $match: {
+            localTransferInDate: {
+              $gte: new Date(`${selectedYear}-01-01T00:00:00`),
+              $lte: new Date(`${selectedYear}-12-31T23:59:59`),
+            },
+          },
+        },
+        {
+          // Group the cases by year and month of the local transfer-in date
           $group: {
             _id: {
-              month: { $month: "$Date of Transfer In" },
-              year: { $year: "$Date of Transfer In" },
+              year: { $year: "$localTransferInDate" },
+              month: { $month: "$localTransferInDate" },
             },
-            count: { $sum: 1 },
+            TransferedIn: { $sum: 1 },
           },
         },
         {
+          // Project the output in the desired format
           $project: {
             _id: 0,
             monthYear: {
@@ -299,13 +412,19 @@ export const getCases = async (req, res) => {
                 { $toString: "$_id.month" },
               ],
             },
-            TransferedIn: "$count",
+            TransferedIn: 1,
           },
         },
+        {
+          // Sort the result by year and month
+          $sort: { "monthYear": 1 },
+        },
       ]);
-      // console.log(transferedIn);
-
-      // Combine the results from all three arrays (institutions, disposals, otherInstitutions)
+      
+      // console.log(transferIn);
+      
+    
+        // Combine the results from all three arrays (institutions, disposals, otherInstitutions)
       const combinedStats = {};
 
       // Merge institutions
@@ -313,7 +432,7 @@ export const getCases = async (req, res) => {
         if (!combinedStats[item.monthYear]) {
           combinedStats[item.monthYear] = {
             Institutions: 0,
-            Disposal: 0,
+            Disposals: 0,
             OtherInstitutions: 0,
             TransferedIn: 0,
           };
@@ -326,12 +445,12 @@ export const getCases = async (req, res) => {
         if (!combinedStats[item.monthYear]) {
           combinedStats[item.monthYear] = {
             Institutions: 0,
-            Disposal: 0,
+            Disposals: 0,
             OtherInstitutions: 0,
             TransferedIn: 0,
           };
         }
-        combinedStats[item.monthYear].Disposal = item.Disposal;
+        combinedStats[item.monthYear].Disposals = item.Disposals;
       });
 
       // Merge other institutions
@@ -339,7 +458,7 @@ export const getCases = async (req, res) => {
         if (!combinedStats[item.monthYear]) {
           combinedStats[item.monthYear] = {
             Institutions: 0,
-            Disposal: 0,
+            Disposals: 0,
             OtherInstitutions: 0,
             TransferedIn: 0,
           };
@@ -353,7 +472,7 @@ export const getCases = async (req, res) => {
         if (!combinedStats[item.monthYear]) {
           combinedStats[item.monthYear] = {
             Institutions: 0,
-            Disposal: 0,
+            Disposals: 0,
             OtherInstitutions: 0,
             TransferedIn: 0,
           };
@@ -399,7 +518,7 @@ export const getCases = async (req, res) => {
             combinedStats[monthYear].Institutions +
             combinedStats[monthYear].OtherInstitutions +
             combinedStats[monthYear].TransferedIn,
-          Disposals: combinedStats[monthYear].Disposal,
+          Disposals: combinedStats[monthYear].Disposals,
           // OtherInstitutions: combinedStats[monthYear].OtherInstitutions,
         };
       });
@@ -426,10 +545,282 @@ export const getCases = async (req, res) => {
         return monthOrder.indexOf(a.Month) - monthOrder.indexOf(b.Month);
       });
 
-      // console.log(finalStats);
+      console.log(finalStats);
       res.status(200).json(finalStats);
       return;
     }
+    
+    // below code does not work correctly because of timezone issues for the given query!
+    // if (query.reqQuery === "InstVsDispStats") {
+    //   // console.log("InstVsDisp Called");
+    //   const datePend = new Date(query.dateYear);
+    //   // Extract year and month
+    //   // const monthPend = datePend.getMonth() + 1; // Months are zero-indexed (January is 0)
+    //   const selectedYear = datePend.getFullYear();
+    //   // const selectedYear = 2022;
+
+    //   // Aggregation pipeline for counting institutions
+    //   const institutions = await Case.aggregate([
+    //     {
+    //       $match: {
+    //         "Date of Institution ": {
+    //           $gte: new Date(`${selectedYear}-01-01`),
+    //           $lte: new Date(`${selectedYear}-12-31`),
+    //         },
+    //       },
+    //     },
+    //     {
+    //       $group: {
+    //         _id: {
+    //           month: { $month: "$Date of Institution " },
+    //           year: { $year: "$Date of Institution " },
+    //         },
+    //         count: { $sum: 1 },
+    //       },
+    //     },
+    //     {
+    //       $project: {
+    //         _id: 0,
+    //         monthYear: {
+    //           $concat: [
+    //             { $toString: "$_id.year" },
+    //             "-",
+    //             { $toString: "$_id.month" },
+    //           ],
+    //         },
+    //         Institutions: "$count",
+    //       },
+    //     },
+    //   ]);
+
+    //   // Aggregation pipeline for counting disposals
+    //   const disposals = await Case.aggregate([
+    //     {
+    //       $match: {
+    //         "Date of Disposal Transfer Out": {
+    //           $gte: new Date(`${selectedYear}-01-01`),
+    //           $lte: new Date(`${selectedYear}-12-31`),
+    //         },
+    //       },
+    //     },
+    //     {
+    //       $group: {
+    //         _id: {
+    //           month: { $month: "$Date of Disposal Transfer Out" },
+    //           year: { $year: "$Date of Disposal Transfer Out" },
+    //         },
+    //         count: { $sum: 1 },
+    //       },
+    //     },
+    //     {
+    //       $project: {
+    //         _id: 0,
+    //         monthYear: {
+    //           $concat: [
+    //             { $toString: "$_id.year" },
+    //             "-",
+    //             { $toString: "$_id.month" },
+    //           ],
+    //         },
+    //         Disposal: "$count",
+    //       },
+    //     },
+    //   ]);
+
+    //   // Aggregation pipeline for counting "Other Institutions"
+    //   const otherInstitutions = await Case.aggregate([
+    //     {
+    //       $match: {
+    //         "Date of Other Institution": {
+    //           $gte: new Date(`${selectedYear}-01-01`),
+    //           $lte: new Date(`${selectedYear}-12-31`),
+    //         },
+    //       },
+    //     },
+    //     {
+    //       $group: {
+    //         _id: {
+    //           month: { $month: "$Date of Other Institution" },
+    //           year: { $year: "$Date of Other Institution" },
+    //         },
+    //         count: { $sum: 1 },
+    //       },
+    //     },
+    //     {
+    //       $project: {
+    //         _id: 0,
+    //         monthYear: {
+    //           $concat: [
+    //             { $toString: "$_id.year" },
+    //             "-",
+    //             { $toString: "$_id.month" },
+    //           ],
+    //         },
+    //         OtherInstitutions: "$count",
+    //       },
+    //     },
+    //   ]);
+
+    //   // Aggregation pipeline for counting "Date of Transfer In"
+    //   const transferedIn = await Case.aggregate([
+    //     {
+    //       $match: {
+    //         "Date of Transfer In": {
+    //           $gte: new Date(`${selectedYear}-01-01`),
+    //           $lte: new Date(`${selectedYear}-12-31`),
+    //         },
+    //       },
+    //     },
+    //     {
+    //       $group: {
+    //         _id: {
+    //           month: { $month: "$Date of Transfer In" },
+    //           year: { $year: "$Date of Transfer In" },
+    //         },
+    //         count: { $sum: 1 },
+    //       },
+    //     },
+    //     {
+    //       $project: {
+    //         _id: 0,
+    //         monthYear: {
+    //           $concat: [
+    //             { $toString: "$_id.year" },
+    //             "-",
+    //             { $toString: "$_id.month" },
+    //           ],
+    //         },
+    //         TransferedIn: "$count",
+    //       },
+    //     },
+    //   ]);
+    //   // console.log(transferedIn);
+
+    //   // Combine the results from all three arrays (institutions, disposals, otherInstitutions)
+    //   const combinedStats = {};
+
+    //   // Merge institutions
+    //   institutions.forEach((item) => {
+    //     if (!combinedStats[item.monthYear]) {
+    //       combinedStats[item.monthYear] = {
+    //         Institutions: 0,
+    //         Disposal: 0,
+    //         OtherInstitutions: 0,
+    //         TransferedIn: 0,
+    //       };
+    //     }
+    //     combinedStats[item.monthYear].Institutions = item.Institutions;
+    //   });
+
+    //   // Merge disposals
+    //   disposals.forEach((item) => {
+    //     if (!combinedStats[item.monthYear]) {
+    //       combinedStats[item.monthYear] = {
+    //         Institutions: 0,
+    //         Disposal: 0,
+    //         OtherInstitutions: 0,
+    //         TransferedIn: 0,
+    //       };
+    //     }
+    //     combinedStats[item.monthYear].Disposal = item.Disposal;
+    //   });
+
+    //   // Merge other institutions
+    //   otherInstitutions.forEach((item) => {
+    //     if (!combinedStats[item.monthYear]) {
+    //       combinedStats[item.monthYear] = {
+    //         Institutions: 0,
+    //         Disposal: 0,
+    //         OtherInstitutions: 0,
+    //         TransferedIn: 0,
+    //       };
+    //     }
+    //     combinedStats[item.monthYear].OtherInstitutions =
+    //       item.OtherInstitutions;
+    //   });
+
+    //   // Merge transfered In
+    //   transferedIn.forEach((item) => {
+    //     if (!combinedStats[item.monthYear]) {
+    //       combinedStats[item.monthYear] = {
+    //         Institutions: 0,
+    //         Disposal: 0,
+    //         OtherInstitutions: 0,
+    //         TransferedIn: 0,
+    //       };
+    //     }
+    //     combinedStats[item.monthYear].TransferedIn = item.TransferedIn;
+    //   });
+
+    //   // Convert the combinedStats object back to an array and format the month names
+    //   const finalStats = Object.keys(combinedStats).map((monthYear) => {
+    //     const [year, month] = monthYear.split("-");
+    //     return {
+    //       // Month: `${
+    //       //   [
+    //       //     "January",
+    //       //     "February",
+    //       //     "March",
+    //       //     "April",
+    //       //     "May",
+    //       //     "June",
+    //       //     "July",
+    //       //     "August",
+    //       //     "September",
+    //       //     "October",
+    //       //     "November",
+    //       //     "December",
+    //       //   ][month - 1]}`,
+    //       // }-${year}`,
+    //       Month: [
+    //         "January",
+    //         "February",
+    //         "March",
+    //         "April",
+    //         "May",
+    //         "June",
+    //         "July",
+    //         "August",
+    //         "September",
+    //         "October",
+    //         "November",
+    //         "December",
+    //       ][parseInt(month) - 1], // Only the month name is returned
+    //       Institutions:
+    //         combinedStats[monthYear].Institutions +
+    //         combinedStats[monthYear].OtherInstitutions +
+    //         combinedStats[monthYear].TransferedIn,
+    //       Disposals: combinedStats[monthYear].Disposal,
+    //       // OtherInstitutions: combinedStats[monthYear].OtherInstitutions,
+    //     };
+    //   });
+
+    //   // Sort by month
+    //   // finalStats.sort((a, b) => new Date(a.Month) - new Date(b.Month));
+    //   // Sorting the finalStats array by the order of months
+    //   const monthOrder = [
+    //     "January",
+    //     "February",
+    //     "March",
+    //     "April",
+    //     "May",
+    //     "June",
+    //     "July",
+    //     "August",
+    //     "September",
+    //     "October",
+    //     "November",
+    //     "December",
+    //   ];
+
+    //   finalStats.sort((a, b) => {
+    //     return monthOrder.indexOf(a.Month) - monthOrder.indexOf(b.Month);
+    //   });
+
+    //   // console.log(finalStats);
+    //   res.status(200).json(finalStats);
+    //   return;
+    // }
 
     // if(query.reqQuery === "InstituionsStatistics"){
     if (query.reqQuery === "InstitutionsStatistics") {
@@ -1516,6 +1907,7 @@ export const updateCase = async (req, res) => {
   const { id } = req.params;
   const caseFile = req.body; // for case data updating usage
   // console.log(caseFile);
+  // console.log(new Date());
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send("No post with that ID");
