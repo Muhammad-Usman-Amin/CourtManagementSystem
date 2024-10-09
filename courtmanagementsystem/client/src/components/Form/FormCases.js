@@ -124,6 +124,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
 
   useEffect(() => {
     setSelectedCaseType("Civil");
+
+    return () => {
+      // Cleanup function runs when navigating away from the component (unmount)
+      // console.log('Navigating away...');
+      // Call your function here
+      clear();
+    };
   }, []);
   const [isDisposed, setIsDisposed] = useState(false);
   const [isTransferOut, setIsTransferOut] = useState(false);

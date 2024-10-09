@@ -106,6 +106,28 @@ export default function CasesListTable({
 
   // const queryData = useSelector((state) => state.queryData);
   const classes = useStyles();
+
+  useEffect(() => {
+    return () => {
+      // Cleanup function runs when navigating away from the component (unmount)
+      // console.log('Navigating away...');
+      // Call your function here
+      
+      dispatch(
+        getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
+      );
+      dispatch(
+        getInstitutionCases({
+          reqQuery: "InstitutionCases",
+          dateInstitution: new Date(),
+        })
+      );
+      dispatch(
+        getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: new Date() })
+      );
+    };
+  }, []);
+
   useEffect(() => {
     dispatch(getCases({ reqQuery: "All" }));
   }, [dispatch]);

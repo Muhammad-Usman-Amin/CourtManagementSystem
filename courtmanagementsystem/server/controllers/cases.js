@@ -162,10 +162,10 @@ export const getCases = async (req, res) => {
 
     if (query.reqQuery === "InstVsDispStats") {
       const selectedYear = new Date(query.dateYear).getFullYear();
-    
+
       // Get the local time zone from the system
       const localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    
+
       //   // Aggregation pipeline for counting institutions
       const institutions = await Case.aggregate([
         {
@@ -225,11 +225,11 @@ export const getCases = async (req, res) => {
         },
         {
           // Sort the result by year and month
-          $sort: { "monthYear": 1 },
+          $sort: { monthYear: 1 },
         },
       ]);
       // console.log(institutions);
-    
+
       // Aggregation pipeline for counting disposals
       const disposals = await Case.aggregate([
         {
@@ -289,11 +289,11 @@ export const getCases = async (req, res) => {
         },
         {
           // Sort the result by year and month
-          $sort: { "monthYear": 1 },
+          $sort: { monthYear: 1 },
         },
       ]);
-      
-      console.log(disposals);
+
+      // console.log(disposals);
 
       const otherInstitutions = await Case.aggregate([
         {
@@ -353,12 +353,12 @@ export const getCases = async (req, res) => {
         },
         {
           // Sort the result by year and month
-          $sort: { "monthYear": 1 },
+          $sort: { monthYear: 1 },
         },
       ]);
-      
+
       // console.log(otherInstitutions);
-      
+
       const transferedIn = await Case.aggregate([
         {
           // Project the relevant field: "Date of Transfer In"
@@ -417,14 +417,13 @@ export const getCases = async (req, res) => {
         },
         {
           // Sort the result by year and month
-          $sort: { "monthYear": 1 },
+          $sort: { monthYear: 1 },
         },
       ]);
-      
+
       // console.log(transferIn);
-      
-    
-        // Combine the results from all three arrays (institutions, disposals, otherInstitutions)
+
+      // Combine the results from all three arrays (institutions, disposals, otherInstitutions)
       const combinedStats = {};
 
       // Merge institutions
@@ -549,7 +548,7 @@ export const getCases = async (req, res) => {
       res.status(200).json(finalStats);
       return;
     }
-    
+
     // below code does not work correctly because of timezone issues for the given query!
     // if (query.reqQuery === "InstVsDispStats") {
     //   // console.log("InstVsDisp Called");
