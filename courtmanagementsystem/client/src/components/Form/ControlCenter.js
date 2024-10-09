@@ -83,8 +83,7 @@ const useStyles2 = makeStyles((theme) => ({
   },
 }));
 
-
-const ControlCenter =  () => {
+const ControlCenter = () => {
   const dispatch = useDispatch();
   const poFile = useSelector((state) => state.controlCenter);
   const classes2 = useStyles2();
@@ -229,7 +228,6 @@ const ControlCenter =  () => {
     setPoData({ ...poData, courtStatus: cStatus });
     // console.log(poData.courtStatus);
   }, [cStatus]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -534,6 +532,19 @@ const ControlCenter =  () => {
                 label="Presiding Officer"
               >
                 <MenuItem value="">Select Any</MenuItem>
+
+                <MenuItem value={"PHC0604-81-1:Mr. Shah Nofal"}>
+                  PHC0604-81-1:Mr. Shah Nofal
+                </MenuItem>
+                <MenuItem value={"PHC0665-83-1:Mr. Sheik Waqas Ahmad"}>
+                  PHC0665-83-1:Mr. Sheik Waqas Ahmad
+                </MenuItem>
+                <MenuItem value={"PHC0611-83-1:Mr. Hafeez Ullah"}>
+                  PHC0611-83-1:Mr. Hafeez Ullah
+                </MenuItem>
+                <MenuItem value={"PHC0677-82-3:Mr. Muhammad Sajid"}>
+                  PHC0677-82-3:Mr. Muhammad Sajid
+                </MenuItem>
                 <MenuItem value={"PHC0813-90-1:Ms. Zaib Un Nisa Abbasi"}>
                   PHC0813-90-1:Ms. Zaib Un Nisa Abbasi
                 </MenuItem>
@@ -962,7 +973,9 @@ const ControlCenter =  () => {
               variant="outlined"
               label="Cause List Name in ENGLISH"
               fullWidth
-              value={poData.causeListEnglishName ? poData.causeListEnglishName : ""}
+              value={
+                poData.causeListEnglishName ? poData.causeListEnglishName : ""
+              }
               onChange={(e) =>
                 setPoData({ ...poData, causeListEnglishName: e.target.value })
               }
@@ -1065,8 +1078,8 @@ const ControlCenter =  () => {
         </Grid>
       </form>
     </Paper>
-  )
-}
+  );
+};
 export default ControlCenter;
 
 // import React from 'react';

@@ -32,9 +32,19 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   head: {
-      // backgroundColor: theme.palette.grey[200],
-      backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[500] : theme.palette.grey[200],
-    },
+    // backgroundColor: theme.palette.grey[200],
+    backgroundColor:
+      theme.palette.type === "dark"
+        ? theme.palette.grey[500]
+        : theme.palette.grey[200],
+  },
+  title: {
+    fontSize: "1.5rem",
+    textAlign: "center",
+  },
+  cellData: {
+    textAlign: "center",
+  },
 }));
 
 function formatCase(caseString) {
@@ -47,8 +57,7 @@ function formatCase(caseString) {
       {parts[0]}
       <strong>
         {" "}
-        {/* {" >"} VS {"< "}{" "} */}
-        {" "} <b>بنام  </b> {" "}{" "}
+        {/* {" >"} VS {"< "}{" "} */} <b>بنام </b>{" "}
       </strong>
       {parts[1]}
     </span>
@@ -68,39 +77,53 @@ export default function RecentCases() {
   return (
     <React.Fragment>
       <Title>Recent Cases</Title>
-      <Table size="small">
+      <Table size="small" dir="rtl">
         <TableHead className={classes.head}>
           <TableRow>
-            <TableCell>
-              <strong>S.No</strong>
+            <TableCell className={classes.title}>
+              <strong>نمبر شمار</strong>
             </TableCell>
-            <TableCell>
-              <strong>Institution Date</strong>
+            <TableCell className={classes.title}>
+              <strong>تاریخ رجوعہ</strong>
             </TableCell>
-            <TableCell>
-              <strong>Case Title</strong>
+            <TableCell className={classes.title}>
+              {/* <strong>Case Title</strong> */}
+              <strong>عنوان مقدمہ</strong>
             </TableCell>
-            <TableCell>
-              <strong>Nature</strong>
+            <TableCell className={classes.title}>
+              <strong>نوعیت</strong>
             </TableCell>
-            <TableCell>
-              <strong>Next Date</strong>
+            <TableCell className={classes.title}>
+              <strong>تاریخ پیشی</strong>
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {lastFiveEntries.map((row) => (
             <TableRow key={row._id}>
-              <TableCell component="th" scope="row">
+              <TableCell
+                className={classes.cellData}
+                component="th"
+                scope="row"
+              >
                 {i++}
               </TableCell>
-              <TableCell>
+              <TableCell className={classes.cellData}>
                 {format?.(parseISO(row["Date of Institution "]), "dd-MM-yyy")}
               </TableCell>
               {/* <TableCell>{formatCase(row["Case Title"])}</TableCell> */}
-              <TableCell style={{ fontSize: 24, fontFamily:"Jameel Noori Nastaleeq", textAlign: 'center' }}>{formatCase(row.urduTitle)}</TableCell>
               <TableCell
-                align="left"
+                className={classes.cellData}
+                style={{
+                  fontSize: 24,
+                  fontFamily: "Jameel Noori Nastaleeq",
+                  textAlign: "center",
+                }}
+              >
+                {formatCase(row.urduTitle)}
+              </TableCell>
+              <TableCell
+                className={classes.cellData}
                 style={{
                   fontFamily: "Jameel Noori Nastaleeq",
                   fontSize: 20,
@@ -108,7 +131,7 @@ export default function RecentCases() {
               >
                 {row.nature}
               </TableCell>
-              <TableCell>
+              <TableCell className={classes.cellData}>
                 {row.nextDate && format(parseISO(row.nextDate), "dd-MM-yyy")}
               </TableCell>
               {/* <TableCell>{row.paymentMethod}</TableCell>

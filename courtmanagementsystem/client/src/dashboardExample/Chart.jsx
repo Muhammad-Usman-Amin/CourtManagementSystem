@@ -12,11 +12,10 @@ import {
 import Title from "./Title";
 import { useSelector } from "react-redux";
 import { IconButton } from "@material-ui/core";
-import Button from '@material-ui/core/Button';
-import BarChartIcon from '@material-ui/icons/BarChart'; // Importing a bar chart icon
+import Button from "@material-ui/core/Button";
+import BarChartIcon from "@material-ui/icons/BarChart"; // Importing a bar chart icon
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-
 
 const useStyles = makeStyles((theme) => ({
   depositContext: {
@@ -26,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: theme.spacing(1),
     right: theme.spacing(1),
-    display: 'flex',
-    alignItems: 'center',
-    fontSize: '0.875rem', // Smaller font size for the text beside the icon
+    display: "flex",
+    alignItems: "center",
+    fontSize: "0.875rem", // Smaller font size for the text beside the icon
   },
   squareContainer: {
     position: "relative",
@@ -37,12 +36,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.shape.borderRadius,
   },
   iconTextWrapper: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   iconText: {
     marginLeft: theme.spacing(1), // Space between the icon button and the text
-    fontSize: '0.687rem',
+    fontSize: "0.687rem",
   },
 }));
 // Generate Sales Data
@@ -159,24 +158,24 @@ export default function Chart() {
   return (
     <React.Fragment>
       <div className={classes.squareContainer}>
-      <Title>Monthly Wise Pendency</Title>
-      <div className={classes.iconTextWrapper}>
-      <Button
-        variant="outlined"
-        // color="primary"
-        size="small"
-        onClick={handleGraphButtonClick}
-        className={classes.iconButton}
-        startIcon={<BarChartIcon />}
-      >
-        <span variant="body2" className={classes.iconText}>
-        View Monthly Wise Institution Vs Disposal Chart
-        </span>
-      </Button>
-      {/* <IconButton
+        <Title>Monthly Wise Pendency</Title>
+        <div className={classes.iconTextWrapper}>
+          <Button
+            variant="outlined"
+            // color="primary"
+            size="small"
+            onClick={handleGraphButtonClick}
+            className={classes.iconButton}
+            startIcon={<BarChartIcon />}
+          >
+            <span variant="body2" className={classes.iconText}>
+              View Monthly Wise Institution Vs Disposal Chart
+            </span>
+          </Button>
+          {/* <IconButton
           className={classes.iconButton}
           color="primary"
-          // onClick={handleGraphButtonClick}
+          onClick={handleGraphButtonClick}
           title="View Monthly Wise Institution Vs Disposal Graph"
         >
           <BarChartIcon />

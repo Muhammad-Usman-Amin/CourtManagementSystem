@@ -84,48 +84,6 @@ const COLORS = [
 //     Disposal: 39,
 //     // amt: 2000,
 //   },
-//   {
-//     Month: "May",
-//     Institutions: 18,
-//     Disposal: 48,
-//     amt: 2181,
-//   },
-//   {
-//     Month: "June",
-//     Institutions: 23,
-//     Disposal: 38,
-//     amt: 2500,
-//   },
-//   {
-//     Month: "July",
-//     Institutions: 34,
-//     Disposal: 98,
-//     amt: 2100,
-//   },
-//   {
-//     Month: "August",
-//     Institutions: 31,
-//     Disposal: 45,
-//     amt: 2100,
-//   },
-//   {
-//     Month: "September",
-//     Institutions: 39,
-//     Disposal: 27,
-//     amt: 2100,
-//   },
-//   {
-//     Month: "November",
-//     Institutions: 49,
-//     Disposal: 63,
-//     amt: 2100,
-//   },
-//   {
-//     Month: "December",
-//     Institutions: 44,
-//     Disposal: 51,
-//     amt: 2100,
-//   },
 // ];
 
 const CustomTooltip = ({ active, payload, label, theme }) => {
@@ -157,26 +115,42 @@ const InstVsDispChart = () => {
   const [year, setYear] = useState(new Date());
 
   const instVsDispStats = useSelector((state) => state.instVsDispStats);
+  const [monthlyCasesData, setMonthlyCasesData] = useState([]);
+  const [loadFlag, setLoadFlag] = useState(0);
   const dispatch = useDispatch();
 
   // useEffect(() => {
 
   // }, [year]);
 
+  //THE BELOW USEEFFECT CAUSED THE BAR GRAPH TO NOT ANIMATE UPON NAVIGATING TO THIS PAGE
+  //CAUSING PROBLMES LIKE TOP LABEL OF BAR GRAPH WERE NOT SHOWING DUE TO NO ANIMATION!
+  //SO THE loadFlag VALUE IS INTRODUCED TO AVOID DISPATCH TO RUN UPON MOUNTING...
+
   useEffect(() => {
-    dispatch(
-      getInstVsDispStats({ reqQuery: "InstVsDispStats", dateYear: year })
-    );
+    // console.log(year.getUTCFullYear());
+    // console.log(loadFlag);
+    if (year.getUTCFullYear() !== loadFlag)
+      dispatch(
+        getInstVsDispStats({ reqQuery: "InstVsDispStats", dateYear: year })
+      );
+      setLoadFlag(year.getUTCFullYear());
   }, [year]);
 
   // useEffect(() => {
-  //     console.log(instVsDispStats);
-  // }, [instVsDispStats]);
+  //   console.log(loadFlag);
+  //   if (year.getUTCFullYear() !== new Date().getFullYear())
+  //   setLoadFlag(prevState => !prevState);
+  // }, [year]);
 
-  return instVsDispStats.length === 0 ? (
+  useEffect(() => {
+    // console.log(instVsDispStats);
+    if (instVsDispStats) setMonthlyCasesData(instVsDispStats);
+  }, [instVsDispStats]);
+
+  return monthlyCasesData.length === 0 ? (
     // <div className={classes.root}>
-    <>
-
+    <React.Fragment>
       <Grid container spacing={2}>
         <Grid item xs={6} md={4} lg={4}>
           <Typography variant="h5" gutterBottom>
@@ -213,10 +187,11 @@ const InstVsDispChart = () => {
         style={{ height: "50vh", width: "85vw" }}
       >
         <CircularProgress />
+        <Typography>No Cases Found!</Typography>
       </Grid>
-    </>
-    // </div>
+    </React.Fragment>
   ) : (
+    // </div>
     <div className={classes.root}>
       <Grid container justify="flex-end" alignItems="center" spacing={2}>
         <Grid item xs={6} md={4} lg={4}>
@@ -258,10 +233,11 @@ const InstVsDispChart = () => {
               <BarChart
                 // width={500}
                 // height={300}
-                data={instVsDispStats}
+                // data={instVsDispStats}
+                data={monthlyCasesData}
                 margin={{ top: 20, right: 20, left: 20, bottom: 40 }}
               >
-                <CartesianGrid strokeDasharray="3 3" />
+                {/* <CartesianGrid strokeDasharray="3 3" /> */}
                 <XAxis dataKey="Month" />
                 <YAxis>
                   <Label
@@ -279,6 +255,7 @@ const InstVsDispChart = () => {
                 <Tooltip content={<CustomTooltip theme={theme} />} />
                 <Legend />
                 <Bar
+                  // label={{ position: "top" }}
                   dataKey="Institutions"
                   fill="green"
                   // background={{ fill: theme.palette.background.paper }}
@@ -291,6 +268,7 @@ const InstVsDispChart = () => {
                   />
                 </Bar>
                 <Bar
+                  // label={{ position: 'top' }}
                   dataKey="Disposals"
                   fill="red"
                   // activeBar={<Rectangle fill="gold" stroke="purple" />}
