@@ -123,25 +123,22 @@ const InstVsDispChart = () => {
 
   // }, [year]);
 
-  //THE BELOW USEEFFECT CAUSED THE BAR GRAPH TO NOT ANIMATE UPON NAVIGATING TO THIS PAGE
+  useEffect(() => {
+    setLoadFlag(0);
+  }, []);
+
+  //THE BELOW USEEFFECT WITHOUT THE loadFlag CAUSED THE BAR CHART TO NOT ANIMATE UPON NAVIGATING TO THIS PAGE
   //CAUSING PROBLMES LIKE TOP LABEL OF BAR GRAPH WERE NOT SHOWING DUE TO NO ANIMATION!
   //SO THE loadFlag VALUE IS INTRODUCED TO AVOID DISPATCH TO RUN UPON MOUNTING...
-
   useEffect(() => {
     // console.log(year.getUTCFullYear());
     // console.log(loadFlag);
-    if (year.getUTCFullYear() !== loadFlag)
+    if (year.getUTCFullYear() === loadFlag)
       dispatch(
         getInstVsDispStats({ reqQuery: "InstVsDispStats", dateYear: year })
       );
-      setLoadFlag(year.getUTCFullYear());
-  }, [year]);
-
-  // useEffect(() => {
-  //   console.log(loadFlag);
-  //   if (year.getUTCFullYear() !== new Date().getFullYear())
-  //   setLoadFlag(prevState => !prevState);
-  // }, [year]);
+    setLoadFlag(year.getUTCFullYear());
+  }, [year, loadFlag]);
 
   useEffect(() => {
     // console.log(instVsDispStats);
