@@ -545,7 +545,7 @@ export const getCases = async (req, res) => {
         return monthOrder.indexOf(a.Month) - monthOrder.indexOf(b.Month);
       });
 
-      console.log(finalStats);
+      // console.log(finalStats);
       res.status(200).json(finalStats);
       return;
     }

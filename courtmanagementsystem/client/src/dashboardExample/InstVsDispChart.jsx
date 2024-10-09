@@ -123,10 +123,6 @@ const InstVsDispChart = () => {
 
   // }, [year]);
 
-  useEffect(() => {
-    setLoadFlag(0);
-  }, []);
-
   //THE BELOW USEEFFECT WITHOUT THE loadFlag CAUSED THE BAR CHART TO NOT ANIMATE UPON NAVIGATING TO THIS PAGE
   //CAUSING PROBLMES LIKE TOP LABEL OF BAR GRAPH WERE NOT SHOWING DUE TO NO ANIMATION!
   //SO THE loadFlag VALUE IS INTRODUCED TO AVOID DISPATCH TO RUN UPON MOUNTING...
@@ -137,8 +133,31 @@ const InstVsDispChart = () => {
       dispatch(
         getInstVsDispStats({ reqQuery: "InstVsDispStats", dateYear: year })
       );
-    setLoadFlag(year.getUTCFullYear());
-  }, [year, loadFlag]);
+      setLoadFlag(year.getUTCFullYear());
+    }, [year, loadFlag]);
+    
+    // useEffect(() => {
+    // }, []);
+    
+    useEffect(() => {
+      // Effect to run on mount
+      setLoadFlag(0);
+      
+      return () => {
+        // Cleanup function runs when navigating away from the component (unmount)
+        // console.log('Navigating away...');
+        // Call your function here
+        myFunctionOnLeave();
+      };
+    }, []); // Empty dependency array to ensure this runs on unmount only
+    
+    const myFunctionOnLeave = () => {
+    dispatch(
+      getInstVsDispStats({ reqQuery: "InstVsDispStats", dateYear: year })
+    );
+    // console.log('Function called before leaving the page');
+    // Perform cleanup or any other logic here
+  };
 
   useEffect(() => {
     // console.log(instVsDispStats);
