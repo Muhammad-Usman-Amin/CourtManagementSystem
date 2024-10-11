@@ -51,24 +51,24 @@ function formatCase(caseString) {
   // const parts = caseString.split("Vs");
   // Used a regular expression with case-insensitive flag 'i' to match all occurrences of "vs" or "VS"
   // const parts = caseString.split(/ vs /i);
-  const parts = caseString.split(/ بنام /i);
+  const parts = caseString?.split(/ بنام /i);
   return (
     <span>
-      {parts[0]}
+      {parts?.[0]}
       <strong>
         {" "}
         {/* {" >"} VS {"< "}{" "} */} <b>بنام </b>{" "}
       </strong>
-      {parts[1]}
+      {parts?.[1]}
     </span>
   );
 }
 
 export default function RecentCases() {
   const cases = useSelector((state) => state.cases);
-  let lastFiveEntries = cases.slice(-20);
+  let latestEntries = cases.slice(-20);
   // Sort the array based on the 'date' property
-  lastFiveEntries = lastFiveEntries.sort(
+  latestEntries = latestEntries.sort(
     (b, a) =>
       new Date(a["Date of Institution "]) - new Date(b["Date of Institution "])
   );
@@ -99,7 +99,7 @@ export default function RecentCases() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {lastFiveEntries.map((row) => (
+          {latestEntries.map((row) => (
             <TableRow key={row._id}>
               <TableCell
                 className={classes.cellData}

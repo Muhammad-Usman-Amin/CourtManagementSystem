@@ -1,34 +1,27 @@
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Drawer from "@material-ui/core/Drawer";
 import Box from "@material-ui/core/Box";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
-import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./listItems";
 import Chart from "./Chart";
 import Deposits from "./Deposits";
 import RecentCases from "./RecentCases";
 import useStyles from "./dashboard";
-import { Button } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import store from '../index';
-import TextField from "@material-ui/core/TextField";
 import MonthlyStats from "./MonthlyStats";
-import CaseStatistics from "./CaseStatistics";
+import { getControlCenter } from "../actions/controlCenter";
+import {
+  getCasesStatistics,
+  getDisposalCases,
+  getGroupedCases,
+  getInstitutionCases,
+  getInstitutionsStatistics,
+  getInstVsDispStats,
+  getPendingCases,
+} from "../actions/cases";
 
 function Copyright() {
   return (
@@ -136,11 +129,36 @@ const drawerWidth = 240;
 
 export default function Dashboard({ onPageChange }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   // const employeeData = useSelector((state) => state.employeeData);
   // const cases = useSelector((state) => state.cases);
   useEffect(() => {
     onPageChange("Dashboard");
   }, [onPageChange]);
+
+  useEffect(() => {
+    dispatch(getControlCenter());
+    dispatch(getInstitutionsStatistics({ reqQuery: "InstitutionsStatistics" }));
+    dispatch(
+      getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
+    );
+    dispatch(
+      getGroupedCases({ reqQuery: "GroupedCases", datePendency: new Date() })
+    );
+    dispatch(
+      getInstitutionCases({
+        reqQuery: "InstitutionCases",
+        dateInstitution: new Date(),
+      })
+    );
+    dispatch(
+      getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: new Date() })
+    );
+    dispatch(getCasesStatistics({ reqQuery: "CaseStatistics" }));
+    dispatch(
+      getInstVsDispStats({ reqQuery: "InstVsDispStats", dateYear: new Date() })
+    );
+  }, []);
 
   // const [shouldRefresh, setShouldRefresh] = useState(true); // Replace with your condition
   // useEffect(() => {
@@ -173,9 +191,7 @@ export default function Dashboard({ onPageChange }) {
           <MonthlyStats />
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
-          <Paper>
-            {/* <CaseStatistics /> */}
-          </Paper>
+          <Paper>{/* <CaseStatistics /> */}</Paper>
         </Grid>
         {/* Recent Orders */}
         <Grid item xs={12}>

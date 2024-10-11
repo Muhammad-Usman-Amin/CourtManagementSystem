@@ -40,6 +40,16 @@ import SaveIcon from "@material-ui/icons/Save";
 import { addDays } from "date-fns";
 // import { useNavigate } from 'react-router-dom/cjs/react-router-dom';
 import { useHistory } from "react-router-dom";
+import { getControlCenter } from "../../actions/controlCenter";
+import {
+  getCasesStatistics,
+  getDisposalCases,
+  getGroupedCases,
+  getInstitutionCases,
+  getInstitutionsStatistics,
+  getInstVsDispStats,
+  getPendingCases,
+} from "../../actions/cases";
 
 const GreenCheckbox = withStyles({
   root: {
@@ -130,6 +140,27 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       // console.log('Navigating away...');
       // Call your function here
       clear();
+      dispatch(getControlCenter());
+    dispatch(getInstitutionsStatistics({ reqQuery: "InstitutionsStatistics" }));
+    dispatch(
+      getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
+    );
+    dispatch(
+      getGroupedCases({ reqQuery: "GroupedCases", datePendency: new Date() })
+    );
+    dispatch(
+      getInstitutionCases({
+        reqQuery: "InstitutionCases",
+        dateInstitution: new Date(),
+      })
+    );
+    dispatch(
+      getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: new Date() })
+    );
+    dispatch(getCasesStatistics({ reqQuery: "CaseStatistics" }));
+    dispatch(
+      getInstVsDispStats({ reqQuery: "InstVsDispStats", dateYear: new Date() })
+    );
     };
   }, []);
   const [isDisposed, setIsDisposed] = useState(false);
