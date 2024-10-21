@@ -14,6 +14,7 @@ import { getActionEng } from "./commonFun";
 import { useDispatch } from "react-redux";
 import { getCauseList } from "../../actions/causeLists";
 import { LinearProgress } from "@material-ui/core";
+import { getInstitutionCases } from "../../actions/cases";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -127,7 +128,8 @@ const PrintInstitution = (props) => {
   let index = 0;
   const [serialNo, setSerialNo] = useState([]);
   useEffect(() => {
-    if (!institutionCases) dispatch(getCauseList({ dateCauseList: dateCauseList }));
+    if (!institutionCases) dispatch(getInstitutionCases({ reqQuery: "InstitutionCases",
+        dateInstitution: dateInstitution, }));
     for (let i = 1; i <= institutionCases.length; i++) {
       // sno.push(i);
       // setSerialNo((oldArray) => [...oldArray, i]);

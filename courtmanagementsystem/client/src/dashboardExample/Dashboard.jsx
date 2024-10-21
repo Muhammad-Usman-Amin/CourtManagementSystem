@@ -174,7 +174,7 @@ export default function Dashboard({ onPageChange }) {
 
   return (
     <React.Fragment>
-      <Grid container spacing={3}>
+      <Grid container spacing={1}>
         {/* Chart */}
         <Grid item xs={12} md={8} lg={9}>
           <Paper className={fixedHeightPaper}>

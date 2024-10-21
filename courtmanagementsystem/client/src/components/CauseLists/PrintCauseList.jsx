@@ -466,6 +466,7 @@ const PrintCauseList = (props) => {
                               <br />
                             </>
                           )}
+
                           {!caseFile["Date of Transfer In"] ? null : (
                             <>
                               {parseISO(
@@ -487,6 +488,7 @@ const PrintCauseList = (props) => {
                               ) : null}
                             </>
                           )}
+                          
                           {!caseFile["Date of Other Institution"] ? null : (
                             <>
                               {parseISO(

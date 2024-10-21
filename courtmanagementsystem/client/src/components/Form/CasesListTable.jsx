@@ -78,6 +78,8 @@ export default function CasesListTable({
   currentId,
   setCurrentId,
   onPageChange,
+  tabValue,
+  dateSelected
 }) {
   const dispatch = useDispatch();
   const tableRef = React.useRef();
@@ -108,23 +110,24 @@ export default function CasesListTable({
   const classes = useStyles();
 
   useEffect(() => {
+
     return () => {
       // Cleanup function runs when navigating away from the component (unmount)
       // console.log('Navigating away...');
       // Call your function here
       
-      dispatch(
-        getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
-      );
-      dispatch(
-        getInstitutionCases({
-          reqQuery: "InstitutionCases",
-          dateInstitution: new Date(),
-        })
-      );
-      dispatch(
-        getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: new Date() })
-      );
+      // dispatch(
+      //   getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
+      // );
+      // dispatch(
+      //   getInstitutionCases({
+      //     reqQuery: "InstitutionCases",
+      //     dateInstitution: new Date(),
+      //   })
+      // );
+      // dispatch(
+      //   getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: new Date() })
+      // );
     };
   }, []);
 
@@ -140,7 +143,14 @@ export default function CasesListTable({
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(1);
+
+  useEffect(()=>{
+    if(tabValue)
+    setSelectedTab(tabValue);
+  if(dateSelected)
+    getPend(dateSelected)
+  },[tabValue, dateSelected])
 
   const handleChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -592,7 +602,7 @@ export default function CasesListTable({
                         style={{ borderRadius: 50 }}
                         onClick={() => {
                           setCurrentId(row._id);
-                          console.log(currentId);
+                          // console.log(currentId);
                         }}
                       >
                         {<EditIcon />}
@@ -757,7 +767,7 @@ export default function CasesListTable({
                           style={{ borderRadius: 50 }}
                           onClick={() => {
                             setCurrentId(row._id);
-                            console.log(currentId);
+                            // console.log(currentId);
                           }}
                         >
                           {<EditIcon />}

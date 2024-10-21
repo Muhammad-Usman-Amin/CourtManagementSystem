@@ -120,8 +120,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   };
 
   // useEffect(() => {
-    // setCaseData({ ...caseData, "Date of Institution ": institutionDate });
-    // console.log(institutionDate);
+  // setCaseData({ ...caseData, "Date of Institution ": institutionDate });
+  // console.log(institutionDate);
   // }, [institutionDate]);
 
   const [selectedCaseType, setSelectedCaseType] = useState("Civil");
@@ -141,26 +141,34 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       // Call your function here
       clear();
       dispatch(getControlCenter());
-    dispatch(getInstitutionsStatistics({ reqQuery: "InstitutionsStatistics" }));
-    dispatch(
-      getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
-    );
-    dispatch(
-      getGroupedCases({ reqQuery: "GroupedCases", datePendency: new Date() })
-    );
-    dispatch(
-      getInstitutionCases({
-        reqQuery: "InstitutionCases",
-        dateInstitution: new Date(),
-      })
-    );
-    dispatch(
-      getDisposalCases({ reqQuery: "DisposalCases", dateDisposal: new Date() })
-    );
-    dispatch(getCasesStatistics({ reqQuery: "CaseStatistics" }));
-    dispatch(
-      getInstVsDispStats({ reqQuery: "InstVsDispStats", dateYear: new Date() })
-    );
+      dispatch(
+        getInstitutionsStatistics({ reqQuery: "InstitutionsStatistics" })
+      );
+      dispatch(
+        getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
+      );
+      dispatch(
+        getGroupedCases({ reqQuery: "GroupedCases", datePendency: new Date() })
+      );
+      dispatch(
+        getInstitutionCases({
+          reqQuery: "InstitutionCases",
+          dateInstitution: new Date(),
+        })
+      );
+      dispatch(
+        getDisposalCases({
+          reqQuery: "DisposalCases",
+          dateDisposal: new Date(),
+        })
+      );
+      dispatch(getCasesStatistics({ reqQuery: "CaseStatistics" }));
+      dispatch(
+        getInstVsDispStats({
+          reqQuery: "InstVsDispStats",
+          dateYear: new Date(),
+        })
+      );
     };
   }, []);
   const [isDisposed, setIsDisposed] = useState(false);
@@ -741,6 +749,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem className={classes.uFont} value="حکم امتناعی">
                     حکم امتناعی
                   </MenuItem>
+                  <MenuItem className={classes.uFont} value="حکم تاکیدی">
+                    حکم تاکیدی
+                  </MenuItem>
                   <MenuItem className={classes.uFont} value="12(2)">
                     12(2)
                   </MenuItem>
@@ -790,6 +801,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="حکم عدولی">
                     حکم عدولی
+                  </MenuItem>
+                  <MenuItem className={classes.uFont} value="درخواست بحالی">
+                    درخواست بحالی
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="پرت">
                     پرت

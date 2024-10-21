@@ -166,12 +166,25 @@ export const getCases = async (req, res) => {
       // Get the local time zone from the system
       const localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-      //   // Aggregation pipeline for counting institutions
+      // Aggregation pipeline for counting institutions
       const institutions = await Case.aggregate([
         {
-          // Project only the relevant field: "Date of Institution"
+          // Project "Date of Institution" only if "Date of Transfer In" is null, empty, or does not exist
           $project: {
-            institutionDate: "$Date of Institution ",
+            institutionDate: {
+              $cond: {
+                if: {
+                  $or: [
+                    {
+                      $eq: [{ $ifNull: ["$Date of Transfer In", null] }, null],
+                    }, // Check if "Date of Transfer In" is null or missing
+                    { $eq: ["$Date of Transfer In", ""] }, // Check if "Date of Transfer In" is an empty string
+                  ],
+                },
+                then: "$Date of Institution ", // If true, use "Date of Institution"
+                else: null, // Otherwise, do not include
+              },
+            },
           },
         },
         {
@@ -228,6 +241,7 @@ export const getCases = async (req, res) => {
           $sort: { monthYear: 1 },
         },
       ]);
+
       // console.log(institutions);
 
       // Aggregation pipeline for counting disposals
@@ -1700,21 +1714,33 @@ export const getCases = async (req, res) => {
       // }
 
       // below code fixes the timezome issue, mongodb save documents by default to UTC dates which
-      // create problems whien you want to fetch those dates for calculations.
+      // create problems when you want to fetch those dates for calculations.
       cases = await Case.aggregate([
         {
           $addFields: {
-            localDateOfInstitution: {
+        // Handle "Date of Institution" and "Date of Transfer In" carefully
+        localDateOfInstitution: {
+          $cond: {
+            if: {
+              $or: [
+                { $eq: [{ $ifNull: ["$Date of Transfer In", null] }, null] }, // If "Date of Transfer In" is null or missing
+                { $eq: ["$Date of Transfer In", ""] }, // Or if "Date of Transfer In" is an empty string
+              ],
+            },
+            then: {
               $dateFromString: {
                 dateString: {
                   $dateToString: {
                     format: "%Y-%m-%dT%H:%M:%SZ",
-                    date: "$Date of Institution ",
+                    date: "$Date of Institution ", // Use "Date of Institution"
                     timezone: "Asia/Karachi",
                   },
                 },
               },
             },
+            else: null,
+          },
+        },
             localDateOfTransferIn: {
               $dateFromString: {
                 dateString: {

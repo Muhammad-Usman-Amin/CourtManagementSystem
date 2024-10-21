@@ -371,7 +371,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
             })}
           </Typography>
           {!cases.length && (
-            <Typography>
+            <>
               {!cases.length ? (
                 <Typography
                   style={{
@@ -387,7 +387,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
               ) : (
                 "Searching Cases for...." + dateCauseList.toLocaleDateString()
               )}
-            </Typography>
+            </>
           )}
           {cases.length > 0 && (
             <Typography

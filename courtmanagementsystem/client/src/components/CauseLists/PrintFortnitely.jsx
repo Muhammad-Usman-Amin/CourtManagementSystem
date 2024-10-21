@@ -181,7 +181,8 @@ const useStyles = makeStyles((theme) =>
     },
     numericCell: {
       fontWeight: "bold",
-      textAlign: "right",
+      textAlign: "center",
+      fontSize: "1.2rem",
     },
     categoryCell: {
       fontWeight: "bold",
@@ -266,7 +267,7 @@ const PrintFortnitely = (props) => {
   const [cached, setCached] = useState({});
 
   useEffect(() => {
-    console.log(fortnightlyReport);
+    // console.log(fortnightlyReport);
     fortnightlyReport.forEach((row) => {
       row.firstFortnight.forEach((item) => {
         setCached((prevData) => ({
@@ -508,29 +509,30 @@ const PrintFortnitely = (props) => {
               <Table
                 ref={catRef}
                 // className={classes.table}
-                aria-label="simple table"
+                aria-label="Fortnighly Table table"
                 style={{ minWidth: 650 }}
+                size="small"
               >
                 <TableHead className={classes.head}>
                   <TableRow>
                     <TableCell className={classes.categoryCell}>
                       Category Name
                     </TableCell>
-                    <TableCell className={classes.numericCell}>
+                    <TableCell className={classes.categoryCell}>
                       Pending
                     </TableCell>
-                    <TableCell className={classes.numericCell}>T-In</TableCell>
-                    <TableCell className={classes.numericCell}>T-Out</TableCell>
-                    <TableCell className={classes.numericCell}>
+                    <TableCell className={classes.categoryCell}>T-In</TableCell>
+                    <TableCell className={classes.categoryCell}>T-Out</TableCell>
+                    <TableCell className={classes.categoryCell}>
                       Restored/Remanded
                     </TableCell>
-                    <TableCell className={classes.numericCell}>
+                    <TableCell className={classes.categoryCell}>
                       Institutions
                     </TableCell>
-                    <TableCell className={classes.numericCell}>
+                    <TableCell className={classes.categoryCell}>
                       Disposal
                     </TableCell>
-                    <TableCell className={classes.numericCell}>
+                    <TableCell className={classes.categoryCell}>
                       Balance
                     </TableCell>
                   </TableRow>
@@ -629,27 +631,28 @@ const PrintFortnitely = (props) => {
                 // className={classes.table}
                 aria-label="simple table"
                 style={{ minWidth: 650 }}
+                size="small"
               >
                 <TableHead className={classes.head}>
                   <TableRow>
                     <TableCell className={classes.categoryCell}>
                       Category Name
                     </TableCell>
-                    <TableCell className={classes.numericCell}>
+                    <TableCell className={classes.categoryCell}>
                       Pending
                     </TableCell>
-                    <TableCell className={classes.numericCell}>T-In</TableCell>
-                    <TableCell className={classes.numericCell}>T-Out</TableCell>
-                    <TableCell className={classes.numericCell}>
+                    <TableCell className={classes.categoryCell}>T-In</TableCell>
+                    <TableCell className={classes.categoryCell}>T-Out</TableCell>
+                    <TableCell className={classes.categoryCell}>
                       Restored/Remanded
                     </TableCell>
-                    <TableCell className={classes.numericCell}>
+                    <TableCell className={classes.categoryCell}>
                       Institutions
                     </TableCell>
-                    <TableCell className={classes.numericCell}>
+                    <TableCell className={classes.categoryCell}>
                       Disposal
                     </TableCell>
-                    <TableCell className={classes.numericCell}>
+                    <TableCell className={classes.categoryCell}>
                       Balance
                     </TableCell>
                   </TableRow>
