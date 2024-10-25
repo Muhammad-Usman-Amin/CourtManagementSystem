@@ -1000,9 +1000,21 @@ export const getCases = async (req, res) => {
           $match: {
             $or: [
               {
-                "Date of Institution ": {
-                  $gte: startOfMonth,
-                  $lte: endOfMonth,
+                $expr: {
+                  $and: [
+                    {
+                      $cond: {
+                        if: { $eq: ["$Date of Transfer In", null] }, // Check if "Date of Transfer In" is null
+                        then: {
+                          $and: [
+                            { $gte: ["$Date of Institution ", startOfMonth] },
+                            { $lte: ["$Date of Institution ", endOfMonth] },
+                          ],
+                        },
+                        else: false, // Skip "Date of Institution" if "Date of Transfer In" exists
+                      },
+                    },
+                  ],
                 },
               },
               {
@@ -1010,9 +1022,12 @@ export const getCases = async (req, res) => {
                   $gte: startOfMonth,
                   $lte: endOfMonth,
                 },
-              }, // Restored
+              },
               {
-                "Date of Transfer In": { $gte: startOfMonth, $lte: endOfMonth },
+                "Date of Transfer In": {
+                  $gte: startOfMonth,
+                  $lte: endOfMonth,
+                },
               },
               {
                 "Date of Disposal Transfer Out": {
@@ -1030,9 +1045,31 @@ export const getCases = async (req, res) => {
                 $match: {
                   $or: [
                     {
-                      "Date of Institution ": {
-                        $gte: startOfMonth,
-                        $lte: middleOfMonth,
+                      $expr: {
+                        $and: [
+                          {
+                            $cond: {
+                              if: { $eq: ["$Date of Transfer In", null] }, // Check if "Date of Transfer In" is null
+                              then: {
+                                $and: [
+                                  {
+                                    $gte: [
+                                      "$Date of Institution ",
+                                      startOfMonth,
+                                    ],
+                                  },
+                                  {
+                                    $lte: [
+                                      "$Date of Institution ",
+                                      middleOfMonth,
+                                    ],
+                                  },
+                                ],
+                              },
+                              else: false, // Skip "Date of Institution" if "Date of Transfer In" exists
+                            },
+                          },
+                        ],
                       },
                     },
                     {
@@ -1040,7 +1077,7 @@ export const getCases = async (req, res) => {
                         $gte: startOfMonth,
                         $lte: middleOfMonth,
                       },
-                    }, // Restored
+                    },
                     {
                       "Date of Transfer In": {
                         $gte: startOfMonth,
@@ -1193,9 +1230,28 @@ export const getCases = async (req, res) => {
                 $match: {
                   $or: [
                     {
-                      "Date of Institution ": {
-                        $gte: startOfSecondFortnight,
-                        $lte: endOfMonth,
+                      $expr: {
+                        $and: [
+                          {
+                            $cond: {
+                              if: { $eq: ["$Date of Transfer In", null] }, // Check if "Date of Transfer In" is null
+                              then: {
+                                $and: [
+                                  {
+                                    $gte: [
+                                      "$Date of Institution ",
+                                      startOfSecondFortnight,
+                                    ],
+                                  },
+                                  {
+                                    $lte: ["$Date of Institution ", endOfMonth],
+                                  },
+                                ],
+                              },
+                              else: false, // Skip "Date of Institution" if "Date of Transfer In" exists
+                            },
+                          },
+                        ],
                       },
                     },
                     {
@@ -1203,7 +1259,7 @@ export const getCases = async (req, res) => {
                         $gte: startOfSecondFortnight,
                         $lte: endOfMonth,
                       },
-                    }, // Restored
+                    },
                     {
                       "Date of Transfer In": {
                         $gte: startOfSecondFortnight,
@@ -1718,29 +1774,31 @@ export const getCases = async (req, res) => {
       cases = await Case.aggregate([
         {
           $addFields: {
-        // Handle "Date of Institution" and "Date of Transfer In" carefully
-        localDateOfInstitution: {
-          $cond: {
-            if: {
-              $or: [
-                { $eq: [{ $ifNull: ["$Date of Transfer In", null] }, null] }, // If "Date of Transfer In" is null or missing
-                { $eq: ["$Date of Transfer In", ""] }, // Or if "Date of Transfer In" is an empty string
-              ],
-            },
-            then: {
-              $dateFromString: {
-                dateString: {
-                  $dateToString: {
-                    format: "%Y-%m-%dT%H:%M:%SZ",
-                    date: "$Date of Institution ", // Use "Date of Institution"
-                    timezone: "Asia/Karachi",
+            // Handle "Date of Institution" and "Date of Transfer In" carefully
+            localDateOfInstitution: {
+              $cond: {
+                if: {
+                  $or: [
+                    {
+                      $eq: [{ $ifNull: ["$Date of Transfer In", null] }, null],
+                    }, // If "Date of Transfer In" is null or missing
+                    { $eq: ["$Date of Transfer In", ""] }, // Or if "Date of Transfer In" is an empty string
+                  ],
+                },
+                then: {
+                  $dateFromString: {
+                    dateString: {
+                      $dateToString: {
+                        format: "%Y-%m-%dT%H:%M:%SZ",
+                        date: "$Date of Institution ", // Use "Date of Institution"
+                        timezone: "Asia/Karachi",
+                      },
+                    },
                   },
                 },
+                else: null,
               },
             },
-            else: null,
-          },
-        },
             localDateOfTransferIn: {
               $dateFromString: {
                 dateString: {

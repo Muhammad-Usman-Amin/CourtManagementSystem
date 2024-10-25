@@ -1337,6 +1337,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 >
                   ترمیمی جواب درخواست
                 </MenuItem>
+
+                <MenuItem
+                  className={classes.uFont}
+                  value={"تقرری اہل کمیشن، حاصری"}
+                >
+                  تقرری اہل کمیشن، حاصری
+                </MenuItem>
                 <MenuItem
                   className={classes.uFont}
                   value={"حاضری، رپورٹ اہل کمیشن"}
@@ -1470,6 +1477,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"جواب و بحث"}>
                   جواب و بحث
+                </MenuItem>
+                <MenuItem className={classes.uFont} value={"بحث بر پزیرائی"}>
+                بحث بر پزیرائی
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"بحث بر درخواست"}>
                   بحث بر درخواست

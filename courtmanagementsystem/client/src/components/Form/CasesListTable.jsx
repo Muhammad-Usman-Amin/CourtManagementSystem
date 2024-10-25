@@ -45,8 +45,7 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import { getEmployeeData } from "../../actions/causeLists";
-import { getControlCenter } from "../../actions/controlCenter";
+import { useLocation } from "react-router-dom";
 
 // import { getEmployeeData } from './actions/employeeData';
 // import { parseISO } from 'date-fns/parseISO';
@@ -78,12 +77,15 @@ export default function CasesListTable({
   currentId,
   setCurrentId,
   onPageChange,
-  tabValue,
-  dateSelected
 }) {
   const dispatch = useDispatch();
   const tableRef = React.useRef();
+  const location = useLocation();
+  const selectedDate = location.state?.dateSelected
+    ? new Date(location.state.dateSelected)
+    : new Date();
 
+  // console.log( tabValue+ dateSelected);
   // useEffect(() => {
   //   dispatch(getEmployeeData());
   //   dispatch(getCases({ reqQuery: "All" }));
@@ -110,12 +112,10 @@ export default function CasesListTable({
   const classes = useStyles();
 
   useEffect(() => {
-
     return () => {
       // Cleanup function runs when navigating away from the component (unmount)
       // console.log('Navigating away...');
       // Call your function here
-      
       // dispatch(
       //   getPendingCases({ reqQuery: "PendingCases", datePendency: new Date() })
       // );
@@ -143,14 +143,17 @@ export default function CasesListTable({
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
-  const [selectedTab, setSelectedTab] = useState(1);
+  const [selectedTab, setSelectedTab] = useState(
+    location.state?.tabValue ? location.state?.tabValue : 1
+  );
 
-  useEffect(()=>{
-    if(tabValue)
-    setSelectedTab(tabValue);
-  if(dateSelected)
-    getPend(dateSelected)
-  },[tabValue, dateSelected])
+  // const [tabValue, setTabValue] = useState(location.state?.tabValue ?);
+
+  // useEffect(() => {
+    // if(tabValue)
+    // setSelectedTab(tabValue);
+    // if (selectedDate) getPend(selectedDate);
+  // }, [selectedDate]);
 
   const handleChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -172,8 +175,12 @@ export default function CasesListTable({
     setOpenDeleteDialog(false);
   };
   const [datePendency, setDatePendency] = useState(new Date());
-  const [dateInstitution, setDateInstitution] = useState(new Date());
-  const [dateDisposal, setDateDisposal] = useState(new Date());
+  const [dateInstitution, setDateInstitution] = useState(
+    location.state?.dateSelected ? location.state?.dateSelected : new Date()
+  );
+  const [dateDisposal, setDateDisposal] = useState(
+    location.state?.dateSelected ? location.state?.dateSelected : new Date()
+  );
   const cases = useSelector((state) => state.cases);
   const pendingCases = useSelector((state) => state.pendingCases);
   const institutionCases = useSelector((state) => state.institutionCases);

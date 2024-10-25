@@ -47,6 +47,16 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     color: theme.palette.secondary.main,
   },
+  paperLink: {
+    // padding: theme.spacing(1),
+    // color: theme.palette.text.secondary,
+    cursor: "pointer",
+    transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+    "&:hover": {
+      transform: "scale(1.05)",
+      boxShadow: theme.shadows[4],
+    },
+  },
 }));
 
 const MonthlyStats = () => {
@@ -54,16 +64,21 @@ const MonthlyStats = () => {
   const history = useHistory();
 
   const handleInstButtonClick = () => {
-    history.push("/InstVsDispChart",{tabValue: 2, dateSelected: dateInstitution}); // Replace with the actual route to the graphs screen
-    
+    history.push("/CasesListTable", {
+      tabValue: 2,
+      dateSelected: selectedDate,
+    }); // Replace with the actual route to the graphs screen
   };
   const handleDispButtonClick = () => {
-    history.push("/InstVsDispChart"); // Replace with the actual route to the graphs screen
+    history.push("/CasesListTable", {
+      tabValue: 3,
+      dateSelected: selectedDate
+    }); // Replace with the actual route to the graphs screen
   };
   // const theme = useTheme();
   // const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const [dateInstitution, setDateInstitution] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const dispatch = useDispatch();
 
   const getData = async (data) => {
@@ -80,8 +95,8 @@ const MonthlyStats = () => {
   };
 
   useEffect(() => {
-    getData(dateInstitution);
-  }, [dateInstitution]);
+    getData(selectedDate);
+  }, [selectedDate]);
 
   const [totalInstitutionA, setTotalInstitutionA] = useState(0);
   const [totalRestoredRemandedA, setTotalRestoredRemandedA] = useState(0);
@@ -122,7 +137,7 @@ const MonthlyStats = () => {
 
           // Get current month and year
           // const currentDate = new Date();
-          const currentDate = dateInstitution;
+          const currentDate = selectedDate;
           const currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-based index
           const currentYear = currentDate.getFullYear();
 
@@ -144,7 +159,7 @@ const MonthlyStats = () => {
           const year = dateOfTransferIn.getFullYear();
 
           // Get current month and year
-          const currentDate = dateInstitution;
+          const currentDate = selectedDate;
           const currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-based index
           const currentYear = currentDate.getFullYear();
 
@@ -154,7 +169,7 @@ const MonthlyStats = () => {
         return;
       })
     );
-  }, [totalInstitutions, dateInstitution]);
+  }, [totalInstitutions, selectedDate]);
 
   useEffect(() => {
     setTotalTransferedOut(
@@ -165,7 +180,7 @@ const MonthlyStats = () => {
     return () => {
       // console.log('totalDisposal useeffect return called');
     };
-  }, [totalDisposal, dateInstitution]);
+  }, [totalDisposal, selectedDate]);
 
   // useEffect(()=> {
   //   // console.log(totalRestoredRemanded);
@@ -209,7 +224,7 @@ const MonthlyStats = () => {
         item["Disposal Mode Flag"].includes("In Default")
       )
     );
-  }, [totalDisposal, dateInstitution]);
+  }, [totalDisposal, selectedDate]);
 
   const timerDuration = 1000;
   useEffect(() => {
@@ -278,7 +293,7 @@ const MonthlyStats = () => {
     totalTransferedOut,
     totalTransferedIn,
     totalRestoredRemanded,
-    dateInstitution,
+    selectedDate,
     totalInstitutions,
     totalDisposal,
   ]);
@@ -327,11 +342,11 @@ const MonthlyStats = () => {
                     variant="inline"
                     // variant="dialog"
                     format="MMMM yyyy"
-                    value={dateInstitution}
+                    value={selectedDate}
                     onChange={(date) => {
                       // setCaseId(caseFile._id);
                       // setCurrentId(caseFile._id);
-                      setDateInstitution(date);
+                      setSelectedDate(date);
                     }}
                     KeyboardButtonProps={{
                       "aria-label": "change date",
@@ -339,11 +354,9 @@ const MonthlyStats = () => {
                   />
                 </MuiPickersUtilsProvider>
               </Grid>
-              <Grid item>
-
-              </Grid>
+              <Grid item></Grid>
             </Grid>
-            <Grid container spacing={2} style={{ marginBottom: '10px' }} >
+            <Grid container spacing={2} style={{ marginBottom: "10px" }}>
               <Grid item xs={12} sm={6} md={2}>
                 <Paper className={classes.statBox}>
                   <Typography className={classes.statTitle}>
@@ -378,7 +391,11 @@ const MonthlyStats = () => {
                 </Paper>
               </Grid>
               <Grid item xs={12} sm={6} md={2}>
-                <Paper className={classes.statBox}>
+                <Paper
+                  // className={classes.statBox}
+                  className={`${classes.statBox} ${classes.paperLink}`}
+                  onClick={handleInstButtonClick}
+                >
                   <Typography className={classes.statTitle}>
                     Total Institutions
                   </Typography>
@@ -388,7 +405,11 @@ const MonthlyStats = () => {
                 </Paper>
               </Grid>
               <Grid item xs={12} sm={6} md={2}>
-                <Paper className={classes.statBox}>
+                <Paper
+                  // className={classes.statBox}
+                  className={`${classes.statBox} ${classes.paperLink}`}
+                  onClick={handleDispButtonClick}
+                >
                   <Typography className={classes.statTitle}>
                     Disposals
                   </Typography>
