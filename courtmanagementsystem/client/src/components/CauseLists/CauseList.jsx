@@ -13,8 +13,9 @@ import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
-import parseISO from "date-fns/parseISO";
-import format from "date-fns/format";
+// import parseISO from "date-fns/parseISO";
+// import format from "date-fns/format";
+import { format, parseISO, isValid } from "date-fns";
 import {
   MuiPickersUtilsProvider,
   // KeyboardTimePicker,
@@ -517,10 +518,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell align="right">
-                          {format?.(
-                            parseISO(caseFile["Date of Institution "]),
-                            "dd-MM-yyy"
-                          )}
+                          {isValid(parseISO(caseFile["Date of Institution "]))
+                            ? format(
+                                parseISO(caseFile["Date of Institution "]),
+                                "dd-MM-yyyy"
+                              )
+                            : "Invalid Date"}
                         </TableCell>
                         <TableCell
                           align="center"
@@ -1273,10 +1276,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell align="right">
-                          {format?.(
-                            parseISO(caseFile["Date of Institution "]),
-                            "dd-MM-yyy"
-                          )}
+                          {isValid(parseISO(caseFile["Date of Institution "]))
+                            ? format(
+                                parseISO(caseFile["Date of Institution "]),
+                                "dd-MM-yyyy"
+                              )
+                            : "Invalid Date"}
                         </TableCell>
                         <TableCell
                           align="center"
@@ -2022,10 +2027,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell align="right">
-                          {format?.(
-                            parseISO(caseFile["Date of Institution "]),
-                            "dd-MM-yyy"
-                          )}
+                          {isValid(parseISO(caseFile["Date of Institution "]))
+                            ? format(
+                                parseISO(caseFile["Date of Institution "]),
+                                "dd-MM-yyyy"
+                              )
+                            : "Invalid Date"}
                         </TableCell>
                         <TableCell
                           align="center"
@@ -2771,10 +2778,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell align="right">
-                          {format?.(
-                            parseISO(caseFile["Date of Institution "]),
-                            "dd-MM-yyy"
-                          )}
+                          {isValid(parseISO(caseFile["Date of Institution "]))
+                            ? format(
+                                parseISO(caseFile["Date of Institution "]),
+                                "dd-MM-yyyy"
+                              )
+                            : "Invalid Date"}
                         </TableCell>
                         <TableCell
                           align="center"
@@ -3520,10 +3529,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           {caseFile["Case No"]}
                         </TableCell>
                         <TableCell align="right">
-                          {format?.(
-                            parseISO(caseFile["Date of Institution "]),
-                            "dd-MM-yyy"
-                          )}
+                          {isValid(parseISO(caseFile["Date of Institution "]))
+                            ? format(
+                                parseISO(caseFile["Date of Institution "]),
+                                "dd-MM-yyyy"
+                              )
+                            : "Invalid Date"}
                         </TableCell>
                         <TableCell
                           align="center"

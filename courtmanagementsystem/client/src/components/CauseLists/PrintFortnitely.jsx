@@ -331,13 +331,17 @@ const PrintFortnitely = (props) => {
 
   const classes = useStyles();
   const tableRef = React.useRef();
-  const catRef = React.useRef();
+  const firstFortnightlyRef = React.useRef();
+  const secondfortnightlyRef = React.useRef();
 
   const handlePrint = useReactToPrint({
     content: () => tableRef.current,
   });
-  const handleCatPrint = useReactToPrint({
-    content: () => catRef.current,
+  const handleFirstFortnightlyPrint = useReactToPrint({
+    content: () => firstFortnightlyRef.current,
+  });
+  const handleSecondFortnightlyPrint = useReactToPrint({
+    content: () => secondfortnightlyRef.current,
   });
 
   const rowData = (data) => {
@@ -443,7 +447,10 @@ const PrintFortnitely = (props) => {
   return !fortnightlyReport.length &&
     !categorizedDataPend.length &&
     !categorizedDataDisp.length &&
-    !categorizedDataInst.length ? (
+    !categorizedDataInst.length &&
+    !pendingCases.length &&
+    !disposedCases.length &&
+    !totalInstitutions.length ? (
     <LinearProgress />
   ) : (
     <>
@@ -464,11 +471,11 @@ const PrintFortnitely = (props) => {
               <KeyboardDatePicker
                 // margin="normal"
                 disableToolbar
-                views={["year", "month"]}
+                views={["month", "year"]}
                 id="date-picker-causeList"
                 label="Select Month & Year"
-                autoOk
-                variant="inline"
+                // autoOk
+                variant="dialog"
                 format="MMM yyyy"
                 value={selectedDate}
                 onChange={(date) => {
@@ -486,6 +493,7 @@ const PrintFortnitely = (props) => {
           <Grid item xs="auto" md={6} lg={6}></Grid>
         </Grid>
       </>
+      {/* <div ref={firstFortnightlyRef}> */}
       <div
         className={classes.centeredDiv}
         style={{ flexGrow: 1, marginTop: 5 }}
@@ -496,7 +504,7 @@ const PrintFortnitely = (props) => {
               // fullWidth
               variant="contained"
               color="secondary"
-              onClick={handleCatPrint}
+              onClick={handleFirstFortnightlyPrint}
             >
               Print
             </Button>
@@ -507,7 +515,7 @@ const PrintFortnitely = (props) => {
           <Grid item xs={12} container justify="center">
             <TableContainer component={Paper}>
               <Table
-                ref={catRef}
+                ref={firstFortnightlyRef}
                 // className={classes.table}
                 aria-label="Fortnighly Table table"
                 style={{ minWidth: 650 }}
@@ -616,7 +624,7 @@ const PrintFortnitely = (props) => {
               // fullWidth
               variant="contained"
               color="secondary"
-              onClick={handleCatPrint}
+              onClick={handleSecondFortnightlyPrint}
             >
               Print
             </Button>
@@ -627,7 +635,7 @@ const PrintFortnitely = (props) => {
           <Grid item xs={12} container justify="center">
             <TableContainer component={Paper}>
               <Table
-                ref={catRef}
+                ref={secondfortnightlyRef}
                 // className={classes.table}
                 aria-label="simple table"
                 style={{ minWidth: 650 }}
@@ -737,6 +745,7 @@ const PrintFortnitely = (props) => {
           </Grid>
         </Grid>
       </div>
+      {/* </div> */}
 
       <div
         className={classes.centeredDiv}

@@ -303,7 +303,7 @@ const PrintInstitution = (props) => {
                   <TableCell
                     className={classes.tableHeaderCell}
                     align="center"
-                    colSpan={10}
+                    colSpan={11}
                     style={{
                       fontSize: 12,
                       fontFamily: "Times Roman",
@@ -334,6 +334,9 @@ const PrintInstitution = (props) => {
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell} align="left">
                     Case Title
+                  </TableCell>
+                  <TableCell className={classes.tableHeaderCell} align="left">
+                    Nature
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell} align="left">
                     Category Per PQS
@@ -390,7 +393,6 @@ const PrintInstitution = (props) => {
                           className={classes.tableCell}
                           component="th"
                           scope="row"
-                          style={{ maxWidth: 1 }}
                         >
                           {/* {data.indexOf(caseFile) + 1} */}
                           {serialNo[index++]}
@@ -410,6 +412,14 @@ const PrintInstitution = (props) => {
                           // style={{ fontSize: 24 }}
                         >
                           {caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell
+                          className={classes.tableCell}
+                          // className={[classes.tableCell, classes.tableCaseTitle]}
+                          align="left"
+                          // style={{ fontSize: 24 }}
+                        >
+                          {caseFile.nature}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}

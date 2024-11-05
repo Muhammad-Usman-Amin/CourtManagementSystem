@@ -631,11 +631,10 @@ const useStyles = makeStyles((theme) =>
 const PrintDisposal = (props) => {
   const orderDate = new Date();
   const dateDisposal = props.location.state.dateDisposal;
-  const [dateCauseList] = useState(orderDate);
   const dispatch = useDispatch();
   const disposalCases = useSelector((state) => state.disposalCases);
   const controlPanel = useSelector((state) => state.controlCenter);
-  let index = 0;
+  // let index = 0;
   const [serialNo, setSerialNo] = useState([]);
 
   useEffect(() => {
@@ -786,7 +785,7 @@ const PrintDisposal = (props) => {
                   <TableCell
                     className={classes.tableHeaderCell}
                     align="center"
-                    colSpan={11}
+                    colSpan={12}
                     style={{
                       fontSize: 12,
                       fontFamily: "Times Roman",
@@ -810,6 +809,9 @@ const PrintDisposal = (props) => {
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell} align="left">
                     Case Title
+                  </TableCell>
+                  <TableCell className={classes.tableHeaderCell} align="left">
+                    Nature
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell} align="left">
                     Category Per PQS
@@ -852,6 +854,9 @@ const PrintDisposal = (props) => {
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile["Case Title"]}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.nature}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
                           {caseFile["Category Per PQS"]}

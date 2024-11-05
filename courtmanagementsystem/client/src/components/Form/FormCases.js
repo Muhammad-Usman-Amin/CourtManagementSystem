@@ -768,17 +768,14 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   <MenuItem className={classes.uFont} value="تنسیخ نکاح">
                     تنسیخ نکاح
                   </MenuItem>
-                  <MenuItem className={classes.uFont} value="کذب نکاح">
-                    کذب نکاح
-                  </MenuItem>
                   <MenuItem className={classes.uFont} value="نان نفقہ">
                     نان نفقہ
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="حق مہر">
                     حق مہر
                   </MenuItem>
-                  <MenuItem className={classes.uFont} value="کزب النکاح">
-                    کزب النکاح
+                  <MenuItem className={classes.uFont} value="کذب النکاح">
+                    کذب النکاح
                   </MenuItem>
                   <MenuItem className={classes.uFont} value="زن اشوئی">
                     زن اشوئی
@@ -1727,7 +1724,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                         }}
                         label="Institution Flag"
                       >
-                        <MenuItem value="None">None</MenuItem>
+                        <MenuItem value="">None</MenuItem>
                         <MenuItem value={"Restored"}>Restored</MenuItem>
                         <MenuItem value={"Remanded"}>Remanded</MenuItem>
                       </Select>

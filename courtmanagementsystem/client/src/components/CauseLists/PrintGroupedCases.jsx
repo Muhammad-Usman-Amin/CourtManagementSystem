@@ -239,7 +239,7 @@ const PrintGroupedCases = (props) => {
                 <TableCell
                   className={classes.tableHeaderCell}
                   align="center"
-                  colSpan={10}
+                  colSpan={11}
                   style={{
                     fontSize: 12,
                     fontFamily: "Times Roman",
@@ -268,6 +268,9 @@ const PrintGroupedCases = (props) => {
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell} align="left">
                   Case Title
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell} align="left">
+                  Nature
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell} align="left">
                   Category Per PQS
@@ -323,6 +326,14 @@ const PrintGroupedCases = (props) => {
                       // style={{ fontSize: 24 }}
                     >
                       {caseFile["Case Title"]}
+                    </TableCell>
+                    <TableCell
+                      className={classes.tableCell}
+                      // className={[classes.tableCell, classes.tableCaseTitle]}
+                      align="left"
+                      // style={{ fontSize: 24 }}
+                    >
+                      {caseFile.nature}
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}
