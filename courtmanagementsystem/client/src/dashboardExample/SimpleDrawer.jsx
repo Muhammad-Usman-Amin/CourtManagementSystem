@@ -178,8 +178,8 @@ export default function SimpleDrawer({ title }) {
         </div>
         <Divider />
         <List className={classes.cursorPointer}>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+        {/* <Divider /> */}
+        {/* <List>{secondaryListItems}</List> */}
       </Drawer>
       <div>
         <Modal

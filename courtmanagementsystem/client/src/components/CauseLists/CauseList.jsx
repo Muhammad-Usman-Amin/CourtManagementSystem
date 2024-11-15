@@ -881,7 +881,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
-                                value={" ترمیمی عرضیدعویٰ، حاضری"}
+                                // value={" ترمیمی عرضیدعویٰ، حاضری"}
+                                value={"ترمیمی عرضیدعویٰ، حاضری"}
                               >
                                 ترمیمی عرضیدعویٰ
                               </MenuItem>
