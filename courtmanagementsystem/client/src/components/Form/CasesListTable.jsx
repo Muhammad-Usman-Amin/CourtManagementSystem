@@ -567,6 +567,7 @@ export default function CasesListTable({
                       align="left"
                       style={{
                         color:
+                          row["Disposal OR Transfer Out Flag"] === "Disposed" ||
                           row.disposed ||
                           row["Disposal OR Transfer Out Flag"] ===
                             "Transfer Out"
@@ -731,6 +732,7 @@ export default function CasesListTable({
                         align="left"
                         style={{
                           color:
+                            row["Disposal OR Transfer Out Flag"] === "Disposed" ||
                             row.disposed ||
                             row["Disposal OR Transfer Out Flag"] ===
                               "Transfer Out"
@@ -897,7 +899,7 @@ export default function CasesListTable({
                       </TableCell>
                       <TableCell
                         align="left"
-                        style={{ color: row.disposed ? "red" : "inherit" }}
+                        style={{ color: row["Disposal OR Transfer Out Flag"] === "Disposed" || row.disposed ? "red" : "inherit" }}
                       >
                         {row["Case Title"]}
                         {row["Date of Transfer In"] ? (
@@ -1097,7 +1099,7 @@ export default function CasesListTable({
                       </TableCell>
                       <TableCell
                         align="left"
-                        style={{ color: row.disposed ? "red" : "inherit" }}
+                        style={{ color: row["Disposal OR Transfer Out Flag"] === "Disposed" || row.disposed ? "red" : "inherit" }}
                       >
                         {row["Case Title"]}
                         {row["Date of Transfer In"] ? (

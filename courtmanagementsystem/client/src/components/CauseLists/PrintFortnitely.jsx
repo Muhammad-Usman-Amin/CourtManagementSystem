@@ -25,6 +25,7 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+// import FormatCaseNumber from "../FormatCaseNumber";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -190,34 +191,34 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-function createData(
-  category,
-  pending,
-  tIn,
-  tOut,
-  restoredRemanded,
-  institutions,
-  disposal,
-  balance
-) {
-  return {
-    category,
-    pending,
-    tIn,
-    tOut,
-    restoredRemanded,
-    institutions,
-    disposal,
-    balance,
-  };
-}
+// function createData(
+//   category,
+//   pending,
+//   tIn,
+//   tOut,
+//   restoredRemanded,
+//   institutions,
+//   disposal,
+//   balance
+// ) {
+//   return {
+//     category,
+//     pending,
+//     tIn,
+//     tOut,
+//     restoredRemanded,
+//     institutions,
+//     disposal,
+//     balance,
+//   };
+// }
 
-const rows = [
-  createData("Civil Suits", 159, 6, 24, 4, 120, 61, 94),
-  createData("Family Cases", 237, 9, 37, 4, 105, 72, 130),
-  createData("Criminal Cases", 262, 16, 24, 6, 110, 90, 145),
-  createData("Miscellaneous", 305, 3, 67, 4, 130, 72, 100),
-];
+// const rows = [
+//   createData("Civil Suits", 159, 6, 24, 4, 120, 61, 94),
+//   createData("Family Cases", 237, 9, 37, 4, 105, 72, 130),
+//   createData("Criminal Cases", 262, 16, 24, 6, 110, 90, 145),
+//   createData("Miscellaneous", 305, 3, 67, 4, 130, 72, 100),
+// ];
 
 // Assuming `pendingCases` is the array of objects containing the cases data
 const categorizePendingCases = (pendingCases) => {
@@ -303,6 +304,10 @@ const PrintFortnitely = (props) => {
     setCategorizedDataPend(categorizePendingCases(pendingCases));
     setCategorizedDataSDisp(categorizePendingCases(disposedCases));
     setCategorizedDataInst(categorizePendingCases(totalInstitutions));
+
+    // if(pendingCases[pendingCases.length -1])
+      // console.log(FormatCaseNumber(pendingCases[pendingCases.length -1]));
+    // console.log(pendingCases[105]);
   }, [pendingCases, disposedCases, disposedCases]);
 
   // useEffect(() => {

@@ -97,7 +97,8 @@ const App = () => {
 
   return (
     // <ThemeProvider theme={themeMode === "Light" ? lightTheme : darkTheme}>
-    <ThemeProvider theme={controlCenter?.themeMode === "Light" ? lightTheme : darkTheme}>
+    // <ThemeProvider theme={controlCenter?.themeMode === "Light" ? lightTheme : darkTheme}>
+    <ThemeProvider theme={controlCenter?.themeMode === "Dark" ? darkTheme : lightTheme}>
       <Router>
         {/* <div className={classes2.root} style={{ backgroundColor: 'aliceblue' }}> */}
         <div className={classes2.root}>

@@ -68,6 +68,7 @@ export const getCauseList = async (req, res) => {
     const query = {
       $and: [
         {
+          "Disposal OR Transfer Out Flag" : { $ne: "Disposed" }, // Exclude disposed cases
           disposed: { $ne: true }, // Exclude cases where disposed is true
           transferedOut: { $ne: true },
         },

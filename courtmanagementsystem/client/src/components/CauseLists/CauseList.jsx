@@ -184,42 +184,42 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   // }, [dateCauseList]);
 
   function getSecondToLastElementCategory(array) {
-    if (array.length === 0) {
+    if (array?.length === 0) {
       return null;
     }
-    if (array.length > 1) {
+    if (array?.length > 1) {
       if (
-        new Date(array[array.length - 1].orderDate).toDateString() ===
+        new Date(array[array?.length - 1].orderDate).toDateString() ===
         new Date(orderDate).toDateString()
       ) {
         // console.log(
         //   new Date(array[array.length - 1].orderDate).toDateString() ===
         //     new Date(orderDate).toDateString()
         // );
-        return array[array.length - 2];
+        return array[array?.length - 2];
       }
     }
     // console.log("-1 exec");
-    return array[array.length - 1]; // or any other appropriate value or action
+    return array[array?.length - 1]; // or any other appropriate value or action
   }
   function getSecondToLastElement(array) {
-    if (array.length === 0) {
+    if (array?.length === 0) {
       return null;
     }
-    if (array.length > 1) {
+    if (array?.length > 1) {
       if (
-        new Date(array[array.length - 1].orderDate).toDateString() ===
+        new Date(array[array?.length - 1].orderDate).toDateString() ===
         new Date(orderDate).toDateString()
       ) {
         // console.log(
         //   new Date(array[array.length - 1].orderDate).toDateString() ===
         //     new Date(orderDate).toDateString()
         // );
-        return array[array.length - 2];
+        return array[array?.length - 2];
       }
     }
     // console.log("-1 exec");
-    return array[array.length - 1]; // or any other appropriate value or action
+    return array[array?.length - 1]; // or any other appropriate value or action
   }
 
   const sortedCases = cases.slice().sort((a, b) => {
@@ -979,6 +979,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={"مجوزہ تنقیحات، شہادت"}
+                              >
+                                مجوزہ تنقیحات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"شہادت مدعیہ"}
                               >
                                 شہادت مدعیہ
@@ -1731,6 +1737,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={"مجوزہ تنقیحات، شہادت"}
+                              >
+                                مجوزہ تنقیحات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"شہادت مدعیہ"}
                               >
                                 شہادت مدعیہ
@@ -2479,6 +2491,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"تنقیحات، شہادت"}
                               >
                                 تنقیحات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مجوزہ تنقیحات، شہادت"}
+                              >
+                                مجوزہ تنقیحات
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -3234,6 +3252,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={"مجوزہ تنقیحات، شہادت"}
+                              >
+                                مجوزہ تنقیحات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"شہادت مدعیہ"}
                               >
                                 شہادت مدعیہ
@@ -3982,6 +4006,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"تنقیحات، شہادت"}
                               >
                                 تنقیحات
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"مجوزہ تنقیحات، شہادت"}
+                              >
+                                مجوزہ تنقیحات
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}

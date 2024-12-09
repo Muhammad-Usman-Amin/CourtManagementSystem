@@ -50,6 +50,7 @@ import {
   getInstVsDispStats,
   getPendingCases,
 } from "../../actions/cases";
+import FormatCaseNumber from "../FormatCaseNumber";
 
 const GreenCheckbox = withStyles({
   root: {
@@ -72,9 +73,33 @@ const GreenRadio = withStyles({
 })((props) => <Radio color="default" {...props} />);
 
 const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
+  const caseFile = useSelector((state) =>
+    currentId ? state.cases.find((c) => c._id === currentId) : null
+  );
+  const [selectedCaseType, setSelectedCaseType] = useState("Civil");
+  const [cNo, setCNo] = useState("");
+  const [tempCNo, setTempCNo] = useState("");
   const [institutionDate, setInstitutionDate] = useState(new Date());
   const [nextDate, setNextDate] = useState(addDays(new Date(), 1));
   const [sameAsInstitutionDate, setSameAsInstitutiondate] = useState(false);
+  const [isDisposed, setIsDisposed] = useState(false);
+  const [isTransferOut, setIsTransferOut] = useState(false);
+  const [isTransferedIn, setIsTransferedIn] = useState(false);
+  const [isRemandedRestored, setIsRemandedRestored] = useState(false);
+  const [isOtherNature, setIsOtherNature] = useState(false);
+  const [isOtherPoliceStation, setIsOtherPoliceStation] = useState(false);
+  const predefinedPoliceStations = [
+    "تیمرگرہ",
+    "تالاش",
+    "خال",
+    "بلامبٹ",
+    "چکدرہ",
+    "ثمرباغ",
+    "لعل قلعہ",
+  ];
+  const [isPredefinedThana, setIsPredefinedThana] = useState(false);
   const [caseData, setCaseData] = useState({
     // "Case Title": '', "Case No": '', "Case Type": 'Civil',"Category Per PQS": '', "FIR NO": '', "FIR Date": '', underSection: '', policeStation: '',"Date of Institution ": Date,  "Date of Disposal": Date, isTransferedIn: false, transferedInDate: Date, "Date of Transfer In": Date,
     "Case Title": "",
@@ -106,6 +131,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     isOtherNature: false,
     isOtherPoliceStation: false,
   });
+  // console.log(caseData);
 
   const handleDateChange = (date) => {
     // const userInputDate = format(new Date(date), 'yyyy-MM-dd'); // format the date to 'yyyy-MM-dd'
@@ -124,13 +150,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   // console.log(institutionDate);
   // }, [institutionDate]);
 
-  const [selectedCaseType, setSelectedCaseType] = useState("Civil");
-  const caseFile = useSelector((state) =>
-    currentId ? state.cases.find((c) => c._id === currentId) : null
-  );
-  const classes = useStyles();
   // const classes2 = useStyles2();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setSelectedCaseType("Civil");
@@ -171,22 +191,6 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       );
     };
   }, []);
-  const [isDisposed, setIsDisposed] = useState(false);
-  const [isTransferOut, setIsTransferOut] = useState(false);
-  const [isTransferedIn, setIsTransferedIn] = useState(false);
-  const [isRemandedRestored, setIsRemandedRestored] = useState(false);
-  const [isOtherNature, setIsOtherNature] = useState(false);
-  const [isOtherPoliceStation, setIsOtherPoliceStation] = useState(false);
-  const predefinedPoliceStations = [
-    "تیمرگرہ",
-    "تالاش",
-    "خال",
-    "بلامبٹ",
-    "چکدرہ",
-    "ثمرباغ",
-    "لعل قلعہ",
-  ];
-  const [isPredefinedThana, setIsPredefinedThana] = useState(false);
 
   useEffect(() => {
     // console.log(caseFile);
@@ -218,6 +222,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
           ? setIsPredefinedThana(true)
           : setIsPredefinedThana(false);
       }
+      setCNo(FormatCaseNumber(caseFile));
     }
   }, [caseFile]);
 
@@ -227,35 +232,86 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
         ? `Editing Case "${caseFile["Case Title"]}"`
         : "Creating New Case"
     );
-  }, [onPageChange, currentId, caseFile]);
+  }, [onPageChange, currentId, caseFile])
 
-  function getCaseNo(str) {
-    switch (str) {
-      case "Civil-001-Civil Suits (Original Jurisdiction)":
-        return "Suit - /1";
-      case "Civil-006-Family Court Cases":
-        return "FC - /III";
-      case "Civil-018-Other Civil Misc Applications":
-        return "MA - /6";
-      case "Civil-015-Execution Petitions":
-        return "Ex - /10";
-      case "Civil-021-Objection Petitions":
-        return "OP - /11";
+  // Handle blur event
+  const handleBlurCaseNumber = (e) => {
+    setTempCNo(e.target.value);
+  };
 
-      default:
-        return "";
-    }
-  }
-  const [cNo, setCNo] = useState("");
+  // Handle input change
+  const handleCaseNumberChange = (e) => {
+    const { value } = e.target;
+    setCaseData((prev) => ({
+      ...prev,
+      "Case No": value, // Update state with raw input
+    }));
+  };
+
+  // function getCaseNo(str) {
+  //   switch (str) {
+  //     case "Civil-001-Civil Suits (Original Jurisdiction)":
+  //       return "Suit - /1";
+  //     case "Civil-006-Family Court Cases":
+  //       return "FC - /III";
+  //     case "Civil-018-Other Civil Misc Applications":
+  //       return "MA - /6";
+  //     case "Civil-015-Execution Petitions":
+  //       return "Ex - /10";
+  //     case "Civil-021-Objection Petitions":
+  //       return "OP - /11";
+
+  //     default:
+  //       return "";
+  //   }
+  // }
+
   useEffect(() => {
-    setCNo(getCaseNo(caseData["Category Per PQS"]));
+    // setCNo(getCaseNo(caseData["Category Per PQS"]));
+    // console.log(caseData);
+    if (caseFile === null) {
+      setCaseData((prev) => ({
+        ...prev,
+        "Case No": FormatCaseNumber(caseData), // Update state with formatted number
+      }));
+      setCNo(FormatCaseNumber(caseData));
+      // console.log('category format exec---');
+    }
   }, [caseData["Category Per PQS"]]);
 
+
+  useEffect(()=>{
+    // console.log(`tempCno exec & value:${tempCNo}`)
+    
+    const formattedCaseNumber = FormatCaseNumber(caseData);
+    // console.log("formatted: "+formattedCaseNumber);
+    setCaseData((prev) => ({
+      ...prev,
+      "Case No": formattedCaseNumber, // Update state with formatted number
+    }));
+    // setCaseData({ ...caseData, "Case No": tempCNo });
+    // console.log('tempCno exec--')
+  },[tempCNo])
+  
   useEffect(() => {
-    if (!currentId) setCaseData({ ...caseData, "Case No": cNo });
+    setCaseData({ ...caseData, "Case No": cNo });
+    // console.log(`cNo exec & value:${cNo}`)
+    // console.log(cNo);
+    // if (!currentId) setCaseData({ ...caseData, "Case No": cNo });
+    // if (currentId) setCaseData({ ...caseData, "Case No": cNo });
     // console.log(cNo);
     // console.log(caseData['Case No']);
+    // setCaseData({ ...caseData, "Case No": cNo });
+    // console.log(cNo);
   }, [cNo]);
+  
+  useEffect(() => {
+    setCNo(FormatCaseNumber(caseData));
+    // console.log(`Case No exec & value:${caseData["Case No"]}`);
+    // console.log(caseData["Case No"]);
+  }, [caseData["Case No"]]);
+  
+  
 
   const history = useHistory();
   const handleSubmit = async (e) => {
@@ -322,6 +378,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       isOtherPoliceStation: false,
     });
     setSameAsInstitutiondate(false);
+    setCNo("");
   };
 
   return (
@@ -669,7 +726,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               </FormControl>
             )}
           </Grid>
-          <Grid item xs={12} sm={3}>
+          {/* <Grid item xs={12} sm={3}>
             <TextField
               name="caseNumber"
               variant="outlined"
@@ -679,6 +736,30 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
               onChange={(e) =>
                 setCaseData({ ...caseData, "Case No": e.target.value })
               }
+            />
+          </Grid> */}
+          <Grid item xs={12} sm={3}>
+            <TextField
+              name="caseNumber"
+              variant="outlined"
+              label="Case Number"
+              fullWidth
+              // value={caseData["Case No"] ? caseData["Case No"] : cNo}
+              // onChange={(e) =>
+              //   setCaseData({ ...caseData, "Case No": e.target.value })
+              // }
+              // value={cNo !== "" ? cNo : caseData["Case No"]}
+              value={caseData["Case No"]}
+              // onBlur={(e) => {
+              //   setTempCNo(e.target.value)
+              // }}
+              onBlur={handleBlurCaseNumber}
+              onChange={handleCaseNumberChange}
+              // onChange={(e) => {
+              //   setCaseData({ ...caseData, "Case No": e.target.value })
+              //   // setTempCNo(e.target.value)
+              //   // setCaseData({ ...caseData, "Case No": cNo });
+              // }}
             />
           </Grid>
 
@@ -1389,6 +1470,12 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 <MenuItem className={classes.uFont} value={"تنقیحات، شہادت"}>
                   تنقیحات
                 </MenuItem>
+                <MenuItem
+                  className={classes.uFont}
+                  value={"مجوزہ تنقیحات، شہادت"}
+                >
+                  مجوزہ تنقیحات
+                </MenuItem>
                 <MenuItem className={classes.uFont} value={"شہادت مدعیہ"}>
                   شہادت مدعیہ
                 </MenuItem>
@@ -1476,7 +1563,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   جواب و بحث
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"بحث بر پزیرائی"}>
-                بحث بر پزیرائی
+                  بحث بر پزیرائی
                 </MenuItem>
                 <MenuItem className={classes.uFont} value={"بحث بر درخواست"}>
                   بحث بر درخواست
