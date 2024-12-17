@@ -14,7 +14,10 @@ export default function FormatCaseNumber(caseData) {
   // const numericPart = caseNo.match(/^\d+/)?.[0];
 
   // Extract the first standalone numeric part, excluding numbers after a slash (/)
-const numericPart = caseNo.split('/')[0].match(/\b\d+\b/)?.[0] || ""; // Matches a whole number before a slash
+// const numericPart = caseNo.split('/')[0].match(/\b\d+\b/)?.[0] || ""; // Matches a whole number before a slash
+
+const numericPart = caseNo.split('/')[0].match(/\d+/)?.[0] || ""; // Extracts the number before a slash
+
 
   // if (!numericPart) {
   //   console.log("FCN error, number returned")
@@ -50,8 +53,8 @@ const numericPart = caseNo.split('/')[0].match(/\b\d+\b/)?.[0] || ""; // Matches
       `MCA - ${number}/14`,
     // "Revision": (number) => `Revision Case No. ${number}-RC`,
     // "Appeal": (number) => `Appeal No. ${number}/A`,
-    // Other: () => `${caseData["Case No"]}`,
-    Other: () => `Case - `,
+    "Other": () => `${caseData["Case No"]}`,
+    // "Other": () => `Case - `,
     // CRIMINAL CATEGORIES
     "CR-001-Homicide": (number) => `SC - ${number}/II`,
     "CR-002-Attempt to Murder": (number) => `SC - ${number}/II`,

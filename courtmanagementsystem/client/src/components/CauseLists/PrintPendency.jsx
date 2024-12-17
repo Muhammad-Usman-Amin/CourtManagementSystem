@@ -197,7 +197,7 @@ const PrintPendency = (props) => {
   if (backlog === "true") {
     filteredCases = pendingCases.filter(
       (caseData) =>
-        new Date(caseData["Date of Institution "]) <= new Date("2020-08-31")
+        new Date(caseData["Date of Institution "]) <= new Date("2020-12-31")
     );
   }
 

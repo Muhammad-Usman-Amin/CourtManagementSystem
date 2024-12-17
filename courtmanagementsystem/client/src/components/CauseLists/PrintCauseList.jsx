@@ -368,7 +368,7 @@ const PrintCauseList = (props) => {
                 {/* <TableHead> */}
                 <TableRow>
                   {/* <TableCell className={classes.tableEmptyCell}></TableCell> */}
-                  <TableCell className={classes.tableHeaderCell}>
+                  <TableCell className={classes.tableHeaderCell} align="left">
                     نمبرشمار
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell}>
@@ -532,6 +532,7 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
+                          {new Date(caseFile["Date of Institution "]) <= new Date("2020-12-31") ? "٭" : ""}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -724,6 +725,8 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
+                          {new Date(caseFile["Date of Institution "]) <= new Date("2020-12-31") ? "٭" : ""}
+                          {/* {new Date(caseFile["Date of Institution "]) <= new Date("2020-12-31") ? "*" : ""} */}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -916,6 +919,7 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
+                          {new Date(caseFile["Date of Institution "]) <= new Date("2020-12-31") ? "٭" : ""}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -1108,6 +1112,7 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
+                          {new Date(caseFile["Date of Institution "]) <= new Date("2020-12-31") ? "٭" : ""}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -1298,6 +1303,7 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
+                          {new Date(caseFile["Date of Institution "]) <= new Date("2020-12-31") ? "٭" : ""}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}

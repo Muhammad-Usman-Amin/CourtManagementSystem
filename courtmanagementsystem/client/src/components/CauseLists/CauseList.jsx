@@ -534,6 +534,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         >
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
+                          <p style={{ textAlign: "left" }}>
+                            {new Date(caseFile["Date of Institution "]) <=
+                            new Date("2020-12-31")
+                              ? "٭"
+                              : ""}
+                          </p>
                         </TableCell>
                         <TableCell
                           align="center"
@@ -830,6 +836,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"نادرا رپورٹ، حاضری"}
                               >
                                 نادرا رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"آدائیگی، حاضری"}
+                              >
+                                آدائیگی
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -1299,6 +1311,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         >
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
+                          {new Date(caseFile["Date of Institution "]) <=
+                          new Date("2020-12-31")
+                            ? "٭"
+                            : ""}
                         </TableCell>
                         <TableCell
                           align="center"
@@ -1589,6 +1605,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"نادرا رپورٹ، حاضری"}
                               >
                                 نادرا رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"آدائیگی، حاضری"}
+                              >
+                                آدائیگی
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -2056,6 +2078,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         >
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
+                          {new Date(caseFile["Date of Institution "]) <=
+                          new Date("2020-12-31")
+                            ? "٭"
+                            : ""}
                         </TableCell>
                         <TableCell
                           align="center"
@@ -2346,6 +2372,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"نادرا رپورٹ، حاضری"}
                               >
                                 نادرا رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"آدائیگی، حاضری"}
+                              >
+                                آدائیگی
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -2813,6 +2845,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         >
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
+                          {new Date(caseFile["Date of Institution "]) <=
+                          new Date("2020-12-31")
+                            ? "٭"
+                            : ""}
                         </TableCell>
                         <TableCell
                           align="center"
@@ -3104,6 +3140,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"نادرا رپورٹ، حاضری"}
                               >
                                 نادرا رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"آدائیگی، حاضری"}
+                              >
+                                آدائیگی
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -3570,6 +3612,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         >
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
+                          {new Date(caseFile["Date of Institution "]) <=
+                          new Date("2020-12-31")
+                            ? "٭"
+                            : ""}
                         </TableCell>
                         <TableCell
                           align="center"
@@ -3861,6 +3907,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"نادرا رپورٹ، حاضری"}
                               >
                                 نادرا رپورٹ
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"آدائیگی، حاضری"}
+                              >
+                                آدائیگی
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}

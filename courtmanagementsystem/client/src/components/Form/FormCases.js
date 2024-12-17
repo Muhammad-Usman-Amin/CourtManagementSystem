@@ -79,8 +79,8 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     currentId ? state.cases.find((c) => c._id === currentId) : null
   );
   const [selectedCaseType, setSelectedCaseType] = useState("Civil");
-  const [cNo, setCNo] = useState("");
-  const [tempCNo, setTempCNo] = useState("");
+  // const [cNo, setCNo] = useState("");
+  // const [tempCNo, setTempCNo] = useState("");
   const [institutionDate, setInstitutionDate] = useState(new Date());
   const [nextDate, setNextDate] = useState(addDays(new Date(), 1));
   const [sameAsInstitutionDate, setSameAsInstitutiondate] = useState(false);
@@ -222,7 +222,13 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
           ? setIsPredefinedThana(true)
           : setIsPredefinedThana(false);
       }
-      setCNo(FormatCaseNumber(caseFile));
+      // setCNo(FormatCaseNumber(caseFile));
+      // console.log(caseFile["Case No"]);
+      // setTempCNo(caseFile["Case No"]);
+      setCaseData((prev) => ({
+        ...prev,
+        "Case No": FormatCaseNumber(caseFile), // Update state with formatted number
+      }));
     }
   }, [caseFile]);
 
@@ -232,11 +238,15 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
         ? `Editing Case "${caseFile["Case Title"]}"`
         : "Creating New Case"
     );
-  }, [onPageChange, currentId, caseFile])
+  }, [onPageChange, currentId, caseFile]);
 
   // Handle blur event
-  const handleBlurCaseNumber = (e) => {
-    setTempCNo(e.target.value);
+  const handleBlurCaseNumber = () => {
+    // setTempCNo(e.target.value);
+    setCaseData((prev) => ({
+      ...prev,
+      "Case No": FormatCaseNumber(caseData), // Update state with formatted number
+    }));
   };
 
   // Handle input change
@@ -274,44 +284,44 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
         ...prev,
         "Case No": FormatCaseNumber(caseData), // Update state with formatted number
       }));
-      setCNo(FormatCaseNumber(caseData));
+      // setCNo(FormatCaseNumber(caseData));
+      // setTempCNo(FormatCaseNumber(caseData));
       // console.log('category format exec---');
     }
   }, [caseData["Category Per PQS"]]);
 
+  // useEffect(()=>{
+  // console.log(`tempCno exec & value:${tempCNo}`)
+  // console.log(caseData);
+  // const formattedCaseNumber = FormatCaseNumber(caseData);
+  // console.log("formatted: "+formattedCaseNumber);
 
-  useEffect(()=>{
-    // console.log(`tempCno exec & value:${tempCNo}`)
-    
-    const formattedCaseNumber = FormatCaseNumber(caseData);
-    // console.log("formatted: "+formattedCaseNumber);
-    setCaseData((prev) => ({
-      ...prev,
-      "Case No": formattedCaseNumber, // Update state with formatted number
-    }));
-    // setCaseData({ ...caseData, "Case No": tempCNo });
-    // console.log('tempCno exec--')
-  },[tempCNo])
-  
-  useEffect(() => {
-    setCaseData({ ...caseData, "Case No": cNo });
-    // console.log(`cNo exec & value:${cNo}`)
-    // console.log(cNo);
-    // if (!currentId) setCaseData({ ...caseData, "Case No": cNo });
-    // if (currentId) setCaseData({ ...caseData, "Case No": cNo });
-    // console.log(cNo);
-    // console.log(caseData['Case No']);
-    // setCaseData({ ...caseData, "Case No": cNo });
-    // console.log(cNo);
-  }, [cNo]);
-  
-  useEffect(() => {
-    setCNo(FormatCaseNumber(caseData));
-    // console.log(`Case No exec & value:${caseData["Case No"]}`);
-    // console.log(caseData["Case No"]);
-  }, [caseData["Case No"]]);
-  
-  
+  // setCaseData((prev) => ({
+  // ...prev,
+  // "Case No": formattedCaseNumber, // Update state with formatted number
+  // }));
+  // setCaseData({ ...caseData, "Case No": tempCNo });
+  // console.log('tempCno exec--')
+  // },[tempCNo])
+
+  // useEffect(() => {
+  // setCaseData({ ...caseData, "Case No": cNo });
+  // console.log(`cNo exec & value:${cNo}`)
+  // console.log(cNo);
+  // if (!currentId) setCaseData({ ...caseData, "Case No": cNo });
+  // if (currentId) setCaseData({ ...caseData, "Case No": cNo });
+  // console.log(cNo);
+  // console.log(caseData['Case No']);
+  // setCaseData({ ...caseData, "Case No": cNo });
+  // console.log(cNo);
+  // }, [cNo]);
+
+  // useEffect(() => {
+  // setCNo(FormatCaseNumber(caseData));
+
+  // console.log(`Case No exec & value:${caseData["Case No"]}`);
+  // console.log(caseData["Case No"]);
+  // }, [caseData["Case No"]]);
 
   const history = useHistory();
   const handleSubmit = async (e) => {
@@ -378,7 +388,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       isOtherPoliceStation: false,
     });
     setSameAsInstitutiondate(false);
-    setCNo("");
+    // setCNo("");
   };
 
   return (
@@ -1363,6 +1373,9 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                   value={"نادرا رپورٹ، حاضری"}
                 >
                   نادرا رپورٹ
+                </MenuItem>
+                <MenuItem className={classes.uFont} value={"آدائیگی، حاضری"}>
+                  آدائیگی
                 </MenuItem>
                 <MenuItem
                   className={classes.uFont}
