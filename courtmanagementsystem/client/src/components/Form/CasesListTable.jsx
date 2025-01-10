@@ -554,7 +554,9 @@ export default function CasesListTable({
                     <TableCell component="th" scope="row">
                       {cases.indexOf(row) + 1}
                     </TableCell>
-                    <TableCell align="left">{row["Case No"]}</TableCell>
+                    <TableCell align="left">
+                    {row["Case No"]}
+                    </TableCell>
                     <TableCell align="left">
                       {!row["Date of Institution "]
                         ? "null"
@@ -576,6 +578,7 @@ export default function CasesListTable({
                       }}
                     >
                       {row["Case Title"]}
+                      {row["Case Type"] === "Criminal" ? ` (FIR.${row["FIR NO"]}) ` : null}
                     </TableCell>
                     {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
                     <TableCell
@@ -741,6 +744,7 @@ export default function CasesListTable({
                         }}
                       >
                         {row["Case Title"]}
+                        {row["Case Type"] === "Criminal" ? ` (FIR.${row["FIR NO"]}) ` : null}
                       </TableCell>
                       <TableCell
                         align="right"
@@ -916,6 +920,7 @@ export default function CasesListTable({
                         ) : (
                           ""
                         )}
+                        {row["Case Type"] === "Criminal" ? ` (FIR.${row["FIR NO"]}) ` : null}
                       </TableCell>
                       {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
                       {/* <TableCell
@@ -1116,6 +1121,7 @@ export default function CasesListTable({
                         ) : (
                           ""
                         )}
+                        {row["Case Type"] === "Criminal" ? ` (FIR.${row["FIR NO"]}) ` : null}
                       </TableCell>
                       {/* <TableCell align="left">{row["Case Type"]}</TableCell> */}
                       {/* <TableCell
