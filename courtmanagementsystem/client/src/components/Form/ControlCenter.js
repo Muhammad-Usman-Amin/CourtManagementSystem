@@ -98,6 +98,7 @@ const ControlCenter = () => {
     judgeCategory: "",
     courtNumber: "",
     stationDistrict: "",
+    backlogDate: new Date(),
     courtStatus: {
       Regular: false,
       CPC: false,
@@ -155,6 +156,16 @@ const ControlCenter = () => {
   const [monthlyDate, setMonthlyDate] = useState(
     getCurrentMonthYear(new Date())
   );
+  const [backlogDate, setBacklogDate] = useState(new Date());
+
+  const handleBacklogDateChange = (date) => {
+    setBacklogDate(date);
+    // setPoData(prev => ...prev, backlogDate: date);
+    setPoData((prev) => ({
+            ...prev,
+            backlogDate: date, // Update state date
+          }));
+  }
 
   const handleDateChange = (date) => {
     setMonthlyDate(date);
@@ -986,6 +997,43 @@ const ControlCenter = () => {
             <Divider></Divider>
           </Grid>
 
+          <Grid item xs={12} sm={3}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+              {/* <Grid container justifyContent="space-around"> */}
+              {/* <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Institution Date"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                    }}
+                /> */}
+              <KeyboardDatePicker
+                views={['year', 'month', 'date']}
+                // views={["month"]}
+                // disableToolbar
+                variant="inline"
+                // margin="normal"
+                id="date-picker-inline"
+                // id="date-picker-dialog"
+                label="Select backlog date"
+                autoOk
+                format="dd MMMM yyyy"
+                value={poData.backlogDate ? poData.backlogDate : backlogDate}
+                onChange={handleBacklogDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+              {/* </Grid> */}
+            </MuiPickersUtilsProvider>
+            {/* </Container> */}
+          </Grid>
           <Grid item xs={12} sm={3}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
               {/* <Grid container justifyContent="space-around"> */}

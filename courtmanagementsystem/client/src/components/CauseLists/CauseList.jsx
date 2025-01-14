@@ -69,6 +69,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   // const cases = useSelector((state) => state.causeLists);
   // const cases = useSelector(selectCauseListCases);
   const cases = useSelector((state) => state.causeLists.cases);
+  const ControlCenter = useSelector((state) => state.controlCenter);
   const serialNumbers = useSelector((state) => state.causeLists.serialNumbers);
 
   const location = useLocation();
@@ -536,8 +537,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           {caseFile.urduTitle}
                           <p style={{ textAlign: "left" }}>
                             {new Date(caseFile["Date of Institution "]) <=
-                            new Date("2020-12-31")
-                              ? "٭"
+                              new Date(ControlCenter[0]?.backlogDate)
+                              ? "★"
                               : ""}
                           </p>
                         </TableCell>
@@ -1312,8 +1313,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
                           {new Date(caseFile["Date of Institution "]) <=
-                          new Date("2020-12-31")
-                            ? "٭"
+                            new Date(ControlCenter[0]?.backlogDate)
+                            ? "★"
                             : ""}
                         </TableCell>
                         <TableCell
@@ -2079,8 +2080,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
                           {new Date(caseFile["Date of Institution "]) <=
-                          new Date("2020-12-31")
-                            ? "٭"
+                            new Date(ControlCenter[0]?.backlogDate)
+                            ? "★"
                             : ""}
                         </TableCell>
                         <TableCell
@@ -2846,8 +2847,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
                           {new Date(caseFile["Date of Institution "]) <=
-                          new Date("2020-12-31")
-                            ? "٭"
+                            new Date(ControlCenter[0]?.backlogDate)
+                            ? "★"
                             : ""}
                         </TableCell>
                         <TableCell
@@ -3613,8 +3614,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
                           {new Date(caseFile["Date of Institution "]) <=
-                          new Date("2020-12-31")
-                            ? "٭"
+                            new Date(ControlCenter[0]?.backlogDate)
+                            ? "★"
                             : ""}
                         </TableCell>
                         <TableCell

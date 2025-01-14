@@ -543,8 +543,8 @@ const PrintCauseList = (props) => {
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
                           {new Date(caseFile["Date of Institution "]) <=
-                          new Date("2020-12-31")
-                            ? "٭"
+                            new Date(controlPanel[0]?.backlogDate)
+                            ? "★"
                             : ""}
                         </TableCell>
                         <TableCell
@@ -738,9 +738,9 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
-                          {new Date(caseFile["Date of Institution "]) <=
-                          new Date("2020-12-31")
-                            ? "٭"
+                            {new Date(caseFile["Date of Institution "]) <=
+                            new Date(controlPanel[0]?.backlogDate)
+                            ? "★"
                             : ""}
                           {/* {new Date(caseFile["Date of Institution "]) <= new Date("2020-12-31") ? "*" : ""} */}
                         </TableCell>
@@ -935,9 +935,9 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
-                          {new Date(caseFile["Date of Institution "]) <=
-                          new Date("2020-12-31")
-                            ? "٭"
+                            {new Date(caseFile["Date of Institution "]) <=
+                            new Date(controlPanel[0]?.backlogDate)
+                            ? "★"
                             : ""}
                         </TableCell>
                         <TableCell
@@ -1131,9 +1131,9 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
-                          {new Date(caseFile["Date of Institution "]) <=
-                          new Date("2020-12-31")
-                            ? "٭"
+                            {new Date(caseFile["Date of Institution "]) <=
+                            new Date(controlPanel[0]?.backlogDate)
+                            ? "★"
                             : ""}
                         </TableCell>
                         <TableCell
@@ -1325,8 +1325,8 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
-                          {new Date(caseFile["Date of Institution "]) <=
-                          new Date("2020-12-31")
+                            {new Date(caseFile["Date of Institution "]) <=
+                            new Date(controlPanel[0]?.backlogDate)
                             ? "٭"
                             : ""}
                         </TableCell>
