@@ -27,7 +27,7 @@ const PrintCauseList = (props) => {
   const data = useSelector((state) => state.causeLists.cases);
   const serialNumbers = useSelector((state) => state.causeLists.serialNumbers);
 
-  const controlPanel = useSelector((state) => state.controlCenter);
+  const ControlCenter = useSelector((state) => state.controlCenter);
 
   let index = 0;
   // const [serialNo, setSerialNo] = useState([]);
@@ -296,7 +296,7 @@ const PrintCauseList = (props) => {
                     }}
                     className={classes.tableHeaderCell}
                   >
-                    {controlPanel[0].causeListName}
+                    {ControlCenter[0].causeListName}
                     {/* بعدالت جناب زیب النساءعباسی سِول جج /جج فیملی کورٹ/علاقہ
                     قاضی-V دیر پائین بمقام تیمرگرہ */}
                   </TableCell>
@@ -542,10 +542,16 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
-                          {new Date(caseFile["Date of Institution "]) <=
+                          {/* {new Date(caseFile["Date of Institution "]) <=
                             new Date(controlPanel[0]?.backlogDate)
                             ? "★"
-                            : ""}
+                            : ""} */}
+                            <span style={{float:"left", textAlign: "left" }}>
+                            {new Date(caseFile["Date of Institution "]) <=
+                              new Date(ControlCenter[0]?.backlogDate)
+                              ? "★"
+                              : ""}
+                          </span>
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -738,10 +744,12 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
+                            <span style={{float:"left", textAlign: "left" }}>
                             {new Date(caseFile["Date of Institution "]) <=
-                            new Date(controlPanel[0]?.backlogDate)
-                            ? "★"
-                            : ""}
+                              new Date(ControlCenter[0]?.backlogDate)
+                              ? "★"
+                              : ""}
+                          </span>
                           {/* {new Date(caseFile["Date of Institution "]) <= new Date("2020-12-31") ? "*" : ""} */}
                         </TableCell>
                         <TableCell
@@ -935,10 +943,12 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
+                            <span style={{float:"left", textAlign: "left" }}>
                             {new Date(caseFile["Date of Institution "]) <=
-                            new Date(controlPanel[0]?.backlogDate)
-                            ? "★"
-                            : ""}
+                              new Date(ControlCenter[0]?.backlogDate)
+                              ? "★"
+                              : ""}
+                          </span>
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -1131,10 +1141,12 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
+                            <span style={{float:"left", textAlign: "left" }}>
                             {new Date(caseFile["Date of Institution "]) <=
-                            new Date(controlPanel[0]?.backlogDate)
-                            ? "★"
-                            : ""}
+                              new Date(ControlCenter[0]?.backlogDate)
+                              ? "★"
+                              : ""}
+                          </span>
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -1325,10 +1337,12 @@ const PrintCauseList = (props) => {
                           {/* {caseFile.urduTitle
                             ? caseFile.urduTitle
                             : caseFile["Case Title"]} */}
+                            <span style={{float:"left", textAlign: "left" }}>
                             {new Date(caseFile["Date of Institution "]) <=
-                            new Date(controlPanel[0]?.backlogDate)
-                            ? "٭"
-                            : ""}
+                              new Date(ControlCenter[0]?.backlogDate)
+                              ? "★"
+                              : ""}
+                          </span>
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}

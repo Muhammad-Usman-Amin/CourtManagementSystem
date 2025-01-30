@@ -535,12 +535,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         >
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
-                          <p style={{ textAlign: "left" }}>
+                          <span style={{float:"left", textAlign: "left" }}>
                             {new Date(caseFile["Date of Institution "]) <=
                               new Date(ControlCenter[0]?.backlogDate)
                               ? "★"
                               : ""}
-                          </p>
+                          </span>
                         </TableCell>
                         <TableCell
                           align="center"
@@ -1312,10 +1312,16 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         >
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
-                          {new Date(caseFile["Date of Institution "]) <=
+                          {/* {new Date(caseFile["Date of Institution "]) <=
                             new Date(ControlCenter[0]?.backlogDate)
                             ? "★"
-                            : ""}
+                            : ""} */}
+                            <span style={{float:"left", textAlign: "left" }}>
+                            {new Date(caseFile["Date of Institution "]) <=
+                              new Date(ControlCenter[0]?.backlogDate)
+                              ? "★"
+                              : ""}
+                          </span>
                         </TableCell>
                         <TableCell
                           align="center"
@@ -2079,10 +2085,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         >
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
-                          {new Date(caseFile["Date of Institution "]) <=
-                            new Date(ControlCenter[0]?.backlogDate)
-                            ? "★"
-                            : ""}
+                          <span style={{float:"left", textAlign: "left" }}>
+                            {new Date(caseFile["Date of Institution "]) <=
+                              new Date(ControlCenter[0]?.backlogDate)
+                              ? "★"
+                              : ""}
+                          </span>
                         </TableCell>
                         <TableCell
                           align="center"
@@ -2846,10 +2854,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         >
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
-                          {new Date(caseFile["Date of Institution "]) <=
-                            new Date(ControlCenter[0]?.backlogDate)
-                            ? "★"
-                            : ""}
+                          <span style={{float:"left", textAlign: "left" }}>
+                            {new Date(caseFile["Date of Institution "]) <=
+                              new Date(ControlCenter[0]?.backlogDate)
+                              ? "★"
+                              : ""}
+                          </span>
                         </TableCell>
                         <TableCell
                           align="center"
@@ -3613,10 +3623,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         >
                           {/* {caseFile["Case Title"]} */}
                           {caseFile.urduTitle}
-                          {new Date(caseFile["Date of Institution "]) <=
-                            new Date(ControlCenter[0]?.backlogDate)
-                            ? "★"
-                            : ""}
+                          <span style={{float:"left", textAlign: "left" }}>
+                            {new Date(caseFile["Date of Institution "]) <=
+                              new Date(ControlCenter[0]?.backlogDate)
+                              ? "★"
+                              : ""}
+                          </span>
                         </TableCell>
                         <TableCell
                           align="center"
