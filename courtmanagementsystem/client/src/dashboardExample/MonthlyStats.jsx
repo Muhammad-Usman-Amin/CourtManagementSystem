@@ -72,7 +72,7 @@ const MonthlyStats = () => {
   const handleDispButtonClick = () => {
     history.push("/CasesListTable", {
       tabValue: 3,
-      dateSelected: selectedDate
+      dateSelected: selectedDate,
     }); // Replace with the actual route to the graphs screen
   };
   // const theme = useTheme();
@@ -107,6 +107,7 @@ const MonthlyStats = () => {
   const [totalTrialBasedA, setTotalTrialBasedA] = useState();
   const [totalUncontestedA, setTotalUncontestedA] = useState();
   const [totalInDefaultA, setTotalInDefaultA] = useState();
+  const [totalDisposalPercentA, setTotalDisposalPercentA] = useState(0);
 
   const [totalIns, setTotalIns] = useState(0);
   const [totalRestoredRemanded, setTotalRestoredRemanded] = useState([]);
@@ -114,6 +115,7 @@ const MonthlyStats = () => {
   const [totalTrialBased, setTotalTrialBased] = useState([]);
   const [totalUncontested, setTotalUncontested] = useState([]);
   const [totalInDefault, setTotalInDefault] = useState([]);
+  const [totalDisposalPercent, setTotalDisposalPercent] = useState(0);
 
   const totalInstitutions = useSelector((state) => state.institutionCases);
   // const totalDisposal = useSelector((state) => state.disposalCases.length);
@@ -181,6 +183,15 @@ const MonthlyStats = () => {
       // console.log('totalDisposal useeffect return called');
     };
   }, [totalDisposal, selectedDate]);
+
+  useEffect(() => {
+    // setTotalDisposalPercent((totalDisposal.length * 100) / totalInstitutions.length);
+    const percent =
+      totalInstitutions.length <= 0 || totalDisposal.length < 0
+        ? 0
+        : Math.round(((totalDisposal.length - totalTransferedOut.length) * 100) / (totalInstitutions.length - totalRestoredRemanded.length));
+    setTotalDisposalPercent(percent);
+  }, [totalInstitutions, totalDisposal, totalTransferedIn, totalRestoredRemanded, totalTransferedOut]);
 
   // useEffect(()=> {
   //   // console.log(totalRestoredRemanded);
@@ -283,6 +294,12 @@ const MonthlyStats = () => {
         setTotalInDefaultA,
         timerDuration
       );
+      animateNumber(
+        0,
+        totalDisposalPercent,
+        setTotalDisposalPercentA,
+        timerDuration
+      );
     }, 1500);
     // Cleanup the timer in case the component unmounts before the timeout finishes
     return () => clearTimeout(timer);
@@ -296,6 +313,7 @@ const MonthlyStats = () => {
     selectedDate,
     totalInstitutions,
     totalDisposal,
+    totalDisposalPercent,
   ]);
 
   const animateNumber = (start, end, setter, duration) => {
@@ -434,7 +452,7 @@ const MonthlyStats = () => {
               Disposals
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={2}>
                 <Paper className={classes.statBox}>
                   <Typography className={classes.statTitle}>
                     Total Contested
@@ -454,14 +472,14 @@ const MonthlyStats = () => {
                   </Typography>
                 </Paper>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={2}>
                 <Paper className={classes.statBox}>
                   <Typography className={classes.statTitle}>
                     Non-Trial Based
                   </Typography>
                   <Typography className={classes.statValue}>
                     {isNaN(totalContestedA - totalTrialBasedA)
-                      ? "0"
+                      ? null
                       : totalContestedA - totalTrialBasedA}
                   </Typography>
                 </Paper>
@@ -483,6 +501,19 @@ const MonthlyStats = () => {
                   </Typography>
                   <Typography className={classes.statValue}>
                     {totalInDefaultA}
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2}>
+                <Paper className={classes.statBox}>
+                  <Typography
+                    className={classes.statTitle}
+                    style={{ fontSize: "0.9rem" }}
+                  >
+                    Disposal % (Req 110%)
+                  </Typography>
+                  <Typography className={classes.statValue}>
+                    {totalDisposalPercentA}%
                   </Typography>
                 </Paper>
               </Grid>

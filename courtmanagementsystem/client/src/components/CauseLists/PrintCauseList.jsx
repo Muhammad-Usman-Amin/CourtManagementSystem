@@ -532,27 +532,49 @@ const PrintCauseList = (props) => {
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
-                          // className={[classes.tableCell, classes.tableCaseTitle]}
-                          align="left"
-                          style={{ fontSize: 24 }}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            textAlign: "center",
+                            justifyContent: "center", // Center Urdu text
+                            whiteSpace: "nowrap", // Prevents text from wrapping
+                            overflow: "hidden", // Ensures text does not break
+                            textOverflow: "ellipsis", // If text overflows, it will show "..."
+                          }}
                         >
-                          {caseFile.urduTitle
-                            ? titleFormat(caseFile.urduTitle)
-                            : caseFile["Case Title"]}
-                          {/* {caseFile.urduTitle
-                            ? caseFile.urduTitle
-                            : caseFile["Case Title"]} */}
-                          {/* {new Date(caseFile["Date of Institution "]) <=
-                            new Date(controlPanel[0]?.backlogDate)
-                            ? "★"
-                            : ""} */}
-                            <span style={{float:"left", textAlign: "left" }}>
+                          {/* Urdu text centered */}
+                          <span
+                            style={{
+                              flex: 1, // Ensures text remains centered
+                              textAlign: "center",
+                              whiteSpace: "nowrap", // Prevents wrapping
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              // fontFamily: "", // Set Urdu font
+                              fontSize: "24px",
+                              // minWidth: "250px", // Adjust width as needed
+                            }}
+                          >
+                            {caseFile.urduTitle
+                              ? titleFormat(caseFile.urduTitle)
+                              : caseFile["Case Title"]}
+                          </span>
+
+                          {/* Star aligned to the far left */}
+                          <span
+                            style={{
+                              marginRight: "8px", // Creates space between the star and Urdu text
+                              fontSize: "24px", // Adjust size as needed
+                              flexShrink: 0, // Prevents it from shrinking
+                            }}
+                          >
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate)
+                            new Date(ControlCenter[0]?.backlogDate)
                               ? "★"
                               : ""}
                           </span>
                         </TableCell>
+
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
@@ -735,22 +757,48 @@ const PrintCauseList = (props) => {
                           )} */}
                         </TableCell>
                         <TableCell
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            textAlign: "center",
+                            justifyContent: "center", // Center Urdu text
+                            whiteSpace: "nowrap", // Prevents text from wrapping
+                            overflow: "hidden", // Ensures text does not break
+                            textOverflow: "ellipsis", // If text overflows, it will show "..."
+                          }}
                           className={classes.tableCell}
-                          // className={[classes.tableCell, classes.tableCaseTitle]}
-                          align="left"
-                          style={{ fontSize: 24 }}
                         >
-                          {titleFormat(caseFile.urduTitle)}
-                          {/* {caseFile.urduTitle
-                            ? caseFile.urduTitle
-                            : caseFile["Case Title"]} */}
-                            <span style={{float:"left", textAlign: "left" }}>
+                          {/* Urdu text centered */}
+                          <span
+                            style={{
+                              flex: 1, // Ensures text remains centered
+                              textAlign: "center",
+                              whiteSpace: "nowrap", // Prevents wrapping
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              // fontFamily: "", // Set Urdu font
+                              fontSize: "24px",
+                              // minWidth: "250px", // Adjust width as needed
+                            }}
+                          >
+                            {caseFile.urduTitle
+                              ? titleFormat(caseFile.urduTitle)
+                              : caseFile["Case Title"]}
+                          </span>
+
+                          {/* Star aligned to the far left */}
+                          <span
+                            style={{
+                              marginRight: "8px", // Creates space between the star and Urdu text
+                              fontSize: "24px", // Adjust size as needed
+                              flexShrink: 0, // Prevents it from shrinking
+                            }}
+                          >
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate)
+                            new Date(ControlCenter[0]?.backlogDate)
                               ? "★"
                               : ""}
                           </span>
-                          {/* {new Date(caseFile["Date of Institution "]) <= new Date("2020-12-31") ? "*" : ""} */}
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
@@ -935,17 +983,44 @@ const PrintCauseList = (props) => {
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
-                          // className={[classes.tableCell, classes.tableCaseTitle]}
-                          align="left"
-                          style={{ fontSize: 24 }}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            textAlign: "center",
+                            justifyContent: "center", // Center Urdu text
+                            whiteSpace: "nowrap", // Prevents text from wrapping
+                            overflow: "hidden", // Ensures text does not break
+                            textOverflow: "ellipsis", // If text overflows, it will show "..."
+                          }}
                         >
-                          {titleFormat(caseFile.urduTitle)}
-                          {/* {caseFile.urduTitle
-                            ? caseFile.urduTitle
-                            : caseFile["Case Title"]} */}
-                            <span style={{float:"left", textAlign: "left" }}>
+                          {/* Urdu text centered */}
+                          <span
+                            style={{
+                              flex: 1, // Ensures text remains centered
+                              textAlign: "center",
+                              whiteSpace: "nowrap", // Prevents wrapping
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              // fontFamily: "", // Set Urdu font
+                              fontSize: "24px",
+                              // minWidth: "250px", // Adjust width as needed
+                            }}
+                          >
+                            {caseFile.urduTitle
+                              ? titleFormat(caseFile.urduTitle)
+                              : caseFile["Case Title"]}
+                          </span>
+
+                          {/* Star aligned to the far left */}
+                          <span
+                            style={{
+                              marginRight: "8px", // Creates space between the star and Urdu text
+                              fontSize: "24px", // Adjust size as needed
+                              flexShrink: 0, // Prevents it from shrinking
+                            }}
+                          >
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate)
+                            new Date(ControlCenter[0]?.backlogDate)
                               ? "★"
                               : ""}
                           </span>
@@ -1133,17 +1208,44 @@ const PrintCauseList = (props) => {
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
-                          // className={[classes.tableCell, classes.tableCaseTitle]}
-                          align="left"
-                          style={{ fontSize: 24 }}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            textAlign: "center",
+                            justifyContent: "center", // Center Urdu text
+                            whiteSpace: "nowrap", // Prevents text from wrapping
+                            overflow: "hidden", // Ensures text does not break
+                            textOverflow: "ellipsis", // If text overflows, it will show "..."
+                          }}
                         >
-                          {titleFormat(caseFile.urduTitle)}
-                          {/* {caseFile.urduTitle
-                            ? caseFile.urduTitle
-                            : caseFile["Case Title"]} */}
-                            <span style={{float:"left", textAlign: "left" }}>
+                          {/* Urdu text centered */}
+                          <span
+                            style={{
+                              flex: 1, // Ensures text remains centered
+                              textAlign: "center",
+                              whiteSpace: "nowrap", // Prevents wrapping
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              // fontFamily: "", // Set Urdu font
+                              fontSize: "24px",
+                              // minWidth: "250px", // Adjust width as needed
+                            }}
+                          >
+                            {caseFile.urduTitle
+                              ? titleFormat(caseFile.urduTitle)
+                              : caseFile["Case Title"]}
+                          </span>
+
+                          {/* Star aligned to the far left */}
+                          <span
+                            style={{
+                              marginRight: "8px", // Creates space between the star and Urdu text
+                              fontSize: "24px", // Adjust size as needed
+                              flexShrink: 0, // Prevents it from shrinking
+                            }}
+                          >
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate)
+                            new Date(ControlCenter[0]?.backlogDate)
                               ? "★"
                               : ""}
                           </span>
@@ -1329,17 +1431,44 @@ const PrintCauseList = (props) => {
                         </TableCell>
                         <TableCell
                           className={classes.tableCell}
-                          // className={[classes.tableCell, classes.tableCaseTitle]}
-                          align="left"
-                          style={{ fontSize: 24 }}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            textAlign: "center",
+                            justifyContent: "center", // Center Urdu text
+                            whiteSpace: "nowrap", // Prevents text from wrapping
+                            overflow: "hidden", // Ensures text does not break
+                            textOverflow: "ellipsis", // If text overflows, it will show "..."
+                          }}
                         >
-                          {titleFormat(caseFile.urduTitle)}
-                          {/* {caseFile.urduTitle
-                            ? caseFile.urduTitle
-                            : caseFile["Case Title"]} */}
-                            <span style={{float:"left", textAlign: "left" }}>
+                          {/* Urdu text centered */}
+                          <span
+                            style={{
+                              flex: 1, // Ensures text remains centered
+                              textAlign: "center",
+                              whiteSpace: "nowrap", // Prevents wrapping
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              // fontFamily: "", // Set Urdu font
+                              fontSize: "24px",
+                              // minWidth: "250px", // Adjust width as needed
+                            }}
+                          >
+                            {caseFile.urduTitle
+                              ? titleFormat(caseFile.urduTitle)
+                              : caseFile["Case Title"]}
+                          </span>
+
+                          {/* Star aligned to the far left */}
+                          <span
+                            style={{
+                              marginRight: "8px", // Creates space between the star and Urdu text
+                              fontSize: "24px", // Adjust size as needed
+                              flexShrink: 0, // Prevents it from shrinking
+                            }}
+                          >
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate)
+                            new Date(ControlCenter[0]?.backlogDate)
                               ? "★"
                               : ""}
                           </span>
