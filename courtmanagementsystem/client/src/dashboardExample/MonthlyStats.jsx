@@ -103,10 +103,10 @@ const MonthlyStats = () => {
   const [totalDisposalsA, setTotalDisposalsA] = useState(0);
   const [totalTransferredInA, setTotalTransferredInA] = useState(0);
   const [totalTransferredOutA, setTotalTransferredOutA] = useState(0);
-  const [totalContestedA, setTotalContestedA] = useState();
-  const [totalTrialBasedA, setTotalTrialBasedA] = useState();
-  const [totalUncontestedA, setTotalUncontestedA] = useState();
-  const [totalInDefaultA, setTotalInDefaultA] = useState();
+  const [totalContestedA, setTotalContestedA] = useState(0);
+  const [totalTrialBasedA, setTotalTrialBasedA] = useState(0);
+  const [totalUncontestedA, setTotalUncontestedA] = useState(0);
+  const [totalInDefaultA, setTotalInDefaultA] = useState(0);
   const [totalDisposalPercentA, setTotalDisposalPercentA] = useState(0);
 
   const [totalIns, setTotalIns] = useState(0);
@@ -417,7 +417,7 @@ const MonthlyStats = () => {
                   <Typography className={classes.statTitle}>
                     Total Institutions
                   </Typography>
-                  <Typography className={classes.statValue}>
+                  <Typography className={classes.statValue} style={{ fontWeight: "bold", color: "green" }}>
                     {totalInstitutionA}
                   </Typography>
                 </Paper>
@@ -431,7 +431,7 @@ const MonthlyStats = () => {
                   <Typography className={classes.statTitle}>
                     Disposals
                   </Typography>
-                  <Typography className={classes.statValue}>
+                  <Typography className={classes.statValue} style={{ fontWeight: "bold", color: "red" }}>
                     {totalDisposalsA - totalTransferredOutA}
                   </Typography>
                 </Paper>

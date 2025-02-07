@@ -16,11 +16,11 @@ import { LinearProgress } from "@material-ui/core";
 
 const PrintCauseList = (props) => {
   // const nextDate = props.location.nextDate;
-  const orderDate = props.location.state.orderDate;
+  const orderDate = props.location.state?.orderDate;
   // const dateCauseList = props.location.state.dateCauseList;
 
   // console.log(orderDate);
-  const [dateCauseList] = useState(props.location.state.dateCauseList);
+  const [dateCauseList] = useState(props.location.state?.dateCauseList);
 
   const dispatch = useDispatch();
   // const data = useSelector((state) => state.causeLists);
