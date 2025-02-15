@@ -888,7 +888,16 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
-                                value={"آدائیگی، حاضری"}
+                                //Looking at the provided list, there is a similar value but with a slight difference:
+                                // ✅ Correctly available option: آدائیگی، حاضری
+                                // ❌ Your provided value: آدائیگی، حاضری
+
+                                // The issue is with the difference in the character "آ" and "آ":
+
+                                // آ (U+0622) is a standalone Alif with Madda.
+                                // آ (U+0627 + U+0653) is Alif + Madda as a separate diacritic.
+                                // value={"آدائیگی، حاضری"} this is the wrong value
+                                value={"آدائیگی، حاضری"}  //this is the correct unicode value
                               >
                                 آدائیگی
                               </MenuItem>
