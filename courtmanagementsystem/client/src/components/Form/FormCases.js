@@ -51,6 +51,7 @@ import {
   getPendingCases,
 } from "../../actions/cases";
 import FormatCaseNumber from "../FormatCaseNumber";
+import { use } from "react";
 
 const GreenCheckbox = withStyles({
   root: {
@@ -73,6 +74,9 @@ const GreenRadio = withStyles({
 })((props) => <Radio color="default" {...props} />);
 
 const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
+  const ControlCenter = useSelector((state) => state.controlCenter);
+  const [judgeCategory, setJudgeCategory] = useState("");
+
   const dispatch = useDispatch();
   const classes = useStyles();
   const caseFile = useSelector((state) =>
@@ -153,6 +157,12 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
   // const classes2 = useStyles2();
 
   useEffect(() => {
+    // judgeCategory = ControlCenter[0]?.designation;
+    setJudgeCategory(ControlCenter[0]?.designation);
+    // console.log("judgeCategory: " + judgeCategory);
+  }, [ControlCenter]);
+
+  useEffect(() => {
     setSelectedCaseType("Civil");
 
     return () => {
@@ -227,7 +237,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
       // setTempCNo(caseFile["Case No"]);
       setCaseData((prev) => ({
         ...prev,
-        "Case No": FormatCaseNumber(caseFile), // Update state with formatted number
+        "Case No": FormatCaseNumber(caseFile, judgeCategory), // Update state with formatted number
       }));
     }
   }, [caseFile]);
@@ -245,7 +255,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     // setTempCNo(e.target.value);
     setCaseData((prev) => ({
       ...prev,
-      "Case No": FormatCaseNumber(caseData), // Update state with formatted number
+      "Case No": FormatCaseNumber(caseData, judgeCategory), // Update state with formatted number
     }));
   };
 
@@ -282,7 +292,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
     if (caseFile === null) {
       setCaseData((prev) => ({
         ...prev,
-        "Case No": FormatCaseNumber(caseData), // Update state with formatted number
+        "Case No": FormatCaseNumber(caseData, judgeCategory), // Update state with formatted number
       }));
       // setCNo(FormatCaseNumber(caseData));
       // setTempCNo(FormatCaseNumber(caseData));
