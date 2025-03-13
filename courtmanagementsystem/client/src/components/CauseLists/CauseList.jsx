@@ -864,6 +864,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={"وارنٹ نیلامی، حاضری"}
+                              >
+                                وارنٹ نیلامی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={" نوٹس قرقی، حاضری"}
                               >
                                 نوٹس قرقی
@@ -897,7 +903,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 // آ (U+0622) is a standalone Alif with Madda.
                                 // آ (U+0627 + U+0653) is Alif + Madda as a separate diacritic.
                                 // value={"آدائیگی، حاضری"} this is the wrong value
-                                value={"آدائیگی، حاضری"}  //this is the correct unicode value
+                                value={"آدائیگی، حاضری"} //this is the correct unicode value
                               >
                                 آدائیگی
                               </MenuItem>
@@ -1671,6 +1677,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"نوٹس نیلامی، حاضری"}
                               >
                                 نوٹس نیلامی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"وارنٹ نیلامی، حاضری"}
+                              >
+                                وارنٹ نیلامی
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
@@ -2479,6 +2491,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={"وارنٹ نیلامی، حاضری"}
+                              >
+                                وارنٹ نیلامی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={"وارنٹ قرقی، حاضری"}
                               >
                                 وارنٹ قرقی
@@ -3273,6 +3291,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}
+                                value={"وارنٹ نیلامی، حاضری"}
+                              >
+                                وارنٹ نیلامی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
                                 value={" نوٹس قرقی، حاضری"}
                               >
                                 نوٹس قرقی
@@ -4039,6 +4063,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 value={"نوٹس نیلامی، حاضری"}
                               >
                                 نوٹس نیلامی
+                              </MenuItem>
+                              <MenuItem
+                                className={classes.uFont}
+                                value={"وارنٹ نیلامی، حاضری"}
+                              >
+                                وارنٹ نیلامی
                               </MenuItem>
                               <MenuItem
                                 className={classes.uFont}

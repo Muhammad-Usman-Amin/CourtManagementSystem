@@ -1366,6 +1366,12 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
                 >
                   نوٹس نیلامی
                 </MenuItem>
+                <MenuItem
+                  className={classes.uFont}
+                  value={"وارنٹ نیلامی، حاضری"}
+                >
+                  وارنٹ نیلامی
+                </MenuItem>
                 <MenuItem className={classes.uFont} value={" نوٹس قرقی، حاضری"}>
                   نوٹس قرقی
                 </MenuItem>
