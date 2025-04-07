@@ -9,6 +9,7 @@ const poSchema = new mongoose.Schema({
   courtNumber: String,
   stationDistrict: String,
   backlogDate: Date,
+  familyCasesBacklogDate: Date,
   courtStatus: {
     Regular: Boolean,
     CPC: Boolean,

@@ -28,6 +28,7 @@ export const createPoData = async (req, res) => {
     courtNumber,
     stationDistrict,
     backlogDate,
+    familyCasesBacklogDate,
     courtStatus, //use for Regular, CPC, FamilyCourt etc
     monthlyData,
     // monthlyData: [{
@@ -65,6 +66,7 @@ export const createPoData = async (req, res) => {
     courtNumber,
     stationDistrict,
     backlogDate,
+    familyCasesBacklogDate,
     courtStatus, //use for Regular, CPC, FamilyCourt etc
     monthlyData,
     // monthlyData: [

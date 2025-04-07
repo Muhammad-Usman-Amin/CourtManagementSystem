@@ -380,6 +380,9 @@ const PrintCauseList = (props) => {
                     تاریخ رجوعہ
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell} align="left">
+                    سابقہ تاریخ
+                  </TableCell>
+                  <TableCell className={classes.tableHeaderCell} align="left">
                     عنوان مقدمہ
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell} align="left">
@@ -387,9 +390,6 @@ const PrintCauseList = (props) => {
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell} align="left">
                     کارروائی
-                  </TableCell>
-                  <TableCell className={classes.tableHeaderCell} align="left">
-                    سابقہ تاریخ
                   </TableCell>
                   <TableCell className={classes.tableHeaderCell} align="left">
                     آئیندہ تاریخ پیشی
@@ -530,6 +530,17 @@ const PrintCauseList = (props) => {
                             </span>
                           )} */}
                         </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            format(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
                         <TableCell
                           className={classes.tableCell}
                           style={{
@@ -569,12 +580,18 @@ const PrintCauseList = (props) => {
                             }}
                           >
                             {new Date(caseFile["Date of Institution "]) <=
-                            new Date(ControlCenter[0]?.backlogDate)
+                              new Date(ControlCenter[0]?.backlogDate) ||
+                            (caseFile["Category Per PQS"] ===
+                              "Civil-006-Family Court Cases" &&
+                              new Date(caseFile["Date of Institution "]) <=
+                                new Date(
+                                  ControlCenter[0]?.familyCasesBacklogDate
+                                ))
                               ? "★"
                               : ""}
                           </span>
                         </TableCell>
-
+                        
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
@@ -617,17 +634,7 @@ const PrintCauseList = (props) => {
                               caseFile.causeListEntries
                             ).actionAbstract.replace("، حاضری", "")}
                         </TableCell>
-                        <TableCell className={classes.tableCell} align="left">
-                          {caseFile.causeListEntries &&
-                            format(
-                              parseISO(
-                                getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate
-                              ),
-                              "dd-MM-yyy"
-                            )}
-                        </TableCell>
+                        
                         <TableCell className={classes.tableCell}></TableCell>
                         <TableCell className={classes.tableCell}></TableCell>
                       </TableRow>
@@ -756,6 +763,17 @@ const PrintCauseList = (props) => {
                             </span>
                           )} */}
                         </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            format(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
                         <TableCell
                           style={{
                             display: "flex",
@@ -795,11 +813,18 @@ const PrintCauseList = (props) => {
                             }}
                           >
                             {new Date(caseFile["Date of Institution "]) <=
-                            new Date(ControlCenter[0]?.backlogDate)
+                              new Date(ControlCenter[0]?.backlogDate) ||
+                            (caseFile["Category Per PQS"] ===
+                              "Civil-006-Family Court Cases" &&
+                              new Date(caseFile["Date of Institution "]) <=
+                                new Date(
+                                  ControlCenter[0]?.familyCasesBacklogDate
+                                ))
                               ? "★"
                               : ""}
                           </span>
                         </TableCell>
+                        
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
@@ -842,17 +867,7 @@ const PrintCauseList = (props) => {
                               caseFile.causeListEntries
                             ).actionAbstract.replace("، شہادت", "")}
                         </TableCell>
-                        <TableCell className={classes.tableCell} align="left">
-                          {caseFile.causeListEntries &&
-                            format(
-                              parseISO(
-                                getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate
-                              ),
-                              "dd-MM-yyy"
-                            )}
-                        </TableCell>
+                        
                         <TableCell className={classes.tableCell}></TableCell>
                         <TableCell className={classes.tableCell}></TableCell>
                       </TableRow>
@@ -981,6 +996,17 @@ const PrintCauseList = (props) => {
                             </span>
                           )} */}
                         </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            format(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
                         <TableCell
                           className={classes.tableCell}
                           style={{
@@ -1020,11 +1046,18 @@ const PrintCauseList = (props) => {
                             }}
                           >
                             {new Date(caseFile["Date of Institution "]) <=
-                            new Date(ControlCenter[0]?.backlogDate)
+                              new Date(ControlCenter[0]?.backlogDate) ||
+                            (caseFile["Category Per PQS"] ===
+                              "Civil-006-Family Court Cases" &&
+                              new Date(caseFile["Date of Institution "]) <=
+                                new Date(
+                                  ControlCenter[0]?.familyCasesBacklogDate
+                                ))
                               ? "★"
                               : ""}
                           </span>
                         </TableCell>
+                        
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
@@ -1067,17 +1100,7 @@ const PrintCauseList = (props) => {
                               caseFile.causeListEntries
                             ).actionAbstract.replace("، بحث", "")}
                         </TableCell>
-                        <TableCell className={classes.tableCell} align="left">
-                          {caseFile.causeListEntries &&
-                            format(
-                              parseISO(
-                                getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate
-                              ),
-                              "dd-MM-yyy"
-                            )}
-                        </TableCell>
+                        
                         <TableCell className={classes.tableCell}></TableCell>
                         <TableCell className={classes.tableCell}></TableCell>
                       </TableRow>
@@ -1206,6 +1229,17 @@ const PrintCauseList = (props) => {
                             </span>
                           )} */}
                         </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            format(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
                         <TableCell
                           className={classes.tableCell}
                           style={{
@@ -1244,12 +1278,23 @@ const PrintCauseList = (props) => {
                               flexShrink: 0, // Prevents it from shrinking
                             }}
                           >
-                            {new Date(caseFile["Date of Institution "]) <=
-                            new Date(ControlCenter[0]?.backlogDate)
+                          {new Date(caseFile["Date of Institution "]) <=
+                              new Date(ControlCenter[0]?.backlogDate) ||
+                            (caseFile["Category Per PQS"] ===
+                              "Civil-006-Family Court Cases" &&
+                              new Date(caseFile["Date of Institution "]) <=
+                                new Date(
+                                  ControlCenter[0]?.familyCasesBacklogDate
+                                ))
                               ? "★"
                               : ""}
+                            {/* {new Date(caseFile["Date of Institution "]) <=
+                            new Date(ControlCenter[0]?.backlogDate)
+                              ? "★"
+                              : ""} */}
                           </span>
                         </TableCell>
+                        
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
@@ -1292,17 +1337,7 @@ const PrintCauseList = (props) => {
                               caseFile.causeListEntries
                             ).actionAbstract.replace("، حکم", "")}
                         </TableCell>
-                        <TableCell className={classes.tableCell} align="left">
-                          {caseFile.causeListEntries &&
-                            format(
-                              parseISO(
-                                getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate
-                              ),
-                              "dd-MM-yyy"
-                            )}
-                        </TableCell>
+                        
                         <TableCell className={classes.tableCell}></TableCell>
                         <TableCell className={classes.tableCell}></TableCell>
                       </TableRow>
@@ -1473,6 +1508,28 @@ const PrintCauseList = (props) => {
                               : ""}
                           </span>
                         </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            format(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="left">
+                          {caseFile.causeListEntries &&
+                            format(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
@@ -1514,17 +1571,7 @@ const PrintCauseList = (props) => {
                             getSecondToLastElement(caseFile.causeListEntries)
                               .actionAbstract}
                         </TableCell>
-                        <TableCell className={classes.tableCell} align="left">
-                          {caseFile.causeListEntries &&
-                            format(
-                              parseISO(
-                                getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate
-                              ),
-                              "dd-MM-yyy"
-                            )}
-                        </TableCell>
+                        
                         <TableCell className={classes.tableCell}></TableCell>
                         <TableCell className={classes.tableCell}></TableCell>
                       </TableRow>

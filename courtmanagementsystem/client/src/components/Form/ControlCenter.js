@@ -99,6 +99,7 @@ const ControlCenter = () => {
     courtNumber: "",
     stationDistrict: "",
     backlogDate: new Date(),
+    familyCasesBacklogDate: new Date(),
     courtStatus: {
       Regular: false,
       CPC: false,
@@ -157,6 +158,7 @@ const ControlCenter = () => {
     getCurrentMonthYear(new Date())
   );
   const [backlogDate, setBacklogDate] = useState(new Date());
+  const [familyCasesBacklogDate, setFamilyCasesBacklogDate] = useState(new Date());
 
   const handleBacklogDateChange = (date) => {
     setBacklogDate(date);
@@ -164,6 +166,14 @@ const ControlCenter = () => {
     setPoData((prev) => ({
             ...prev,
             backlogDate: date, // Update state date
+          }));
+  }
+  const handleFamilyCasesBacklogDate = (date) => {
+    setFamilyCasesBacklogDate(date);
+    // setPoData(prev => ...prev, backlogDate: date);
+    setPoData((prev) => ({
+            ...prev,
+            familyCasesBacklogDate: date, // Update state date
           }));
   }
 
@@ -1029,6 +1039,43 @@ const ControlCenter = () => {
                 format="dd MMMM yyyy"
                 value={poData.backlogDate ? poData.backlogDate : backlogDate}
                 onChange={handleBacklogDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+              {/* </Grid> */}
+            </MuiPickersUtilsProvider>
+            {/* </Container> */}
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} fullWidth>
+              {/* <Grid container justifyContent="space-around"> */}
+              {/* <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Institution Date"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                    }}
+                /> */}
+              <KeyboardDatePicker
+                views={['year', 'month', 'date']}
+                // views={["month"]}
+                // disableToolbar
+                variant="inline"
+                // margin="normal"
+                id="date-picker-inline"
+                // id="date-picker-dialog"
+                label="Select Family cases backlog date"
+                autoOk
+                format="dd MMMM yyyy"
+                value={poData.familyCasesBacklogDate ? poData.familyCasesBacklogDate : familyCasesBacklogDate}
+                onChange={handleFamilyCasesBacklogDate}
                 KeyboardButtonProps={{
                   "aria-label": "change date",
                 }}

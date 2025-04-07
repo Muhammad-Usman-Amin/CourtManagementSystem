@@ -31,7 +31,6 @@ import {
   Grid,
   Box,
   Divider,
-  TextField,
 } from "@material-ui/core";
 import clsx from "clsx";
 import { LinearProgress } from "@material-ui/core";
@@ -134,12 +133,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     // console.log(data);
     dispatch(updateCase(caseId, data));
     // console.log(cases);
-  };
-
-  const [caseNumber, setCaseNumber] = useState("");
-  const handleBlurCaseNumber = async () => {
-    // console.log(e.target.value);
-    if (caseId) dispatch(updateCase(caseId, caseNumber));
   };
 
   useEffect(() => {
@@ -471,25 +464,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   <TableCell
                     // className={[classes.uFont, classes.boldThis]}
                     className={clsx(classes.uFont, classes.boldThis)}
-                    align="center"
-                  >
-                    سابقہ تاریخ
-                  </TableCell>
-                  <TableCell
-                    // className={[classes.uFont, classes.boldThis]}
-                    className={clsx(classes.uFont, classes.boldThis)}
                     style={{ minWidth: 130 }}
                     align="center"
                   >
                     عنوان
-                  </TableCell>
-                  
-                  <TableCell
-                    align="center"
-                    // className={[classes.uFont, classes.boldThis]}
-                    className={clsx(classes.uFont, classes.boldThis)}
-                  >
-                    نوعیت
                   </TableCell>
                   <TableCell
                     align="center"
@@ -497,6 +475,13 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     className={clsx(classes.uFont, classes.boldThis)}
                   >
                     کاروائی
+                  </TableCell>
+                  <TableCell
+                    // className={[classes.uFont, classes.boldThis]}
+                    className={clsx(classes.uFont, classes.boldThis)}
+                    align="center"
+                  >
+                    سابقہ تاریخ
                   </TableCell>
                   {/* <TableCell align="center" style={{ maxWidth: 10 }}>
                     Order No
@@ -549,34 +534,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           {serialNumbers[index++]}
                         </TableCell>
                         <TableCell align="center">
-                          {/* {caseFile["Case No"]} */}
-                          {/* <Grid item xs={12} sm={3}> */}
-                          <TextField
-                            name="caseNumber"
-                            variant="outlined"
-                            label="Case Number"
-                            fullWidth
-                            // value={caseData["Case No"] ? caseData["Case No"] : cNo}
-                            // onChange={(e) =>
-                            //   setCaseData({ ...caseData, "Case No": e.target.value })
-                            // }
-                            // value={cNo !== "" ? cNo : caseData["Case No"]}
-                            value={
-                              caseNumber ? caseNumber : caseFile["Case No"]
-                            }
-                            // onBlur={(e) => {
-                            //   setTempCNo(e.target.value)
-                            // }}
-                            onBlur={handleBlurCaseNumber}
-                            // onChange={handleCaseNumberChange}
-                            onChange={(e) => {
-                              setCaseId(caseFile._id);
-                              setCaseNumber(e.target.value);
-                              // setTempCNo(e.target.value)
-                              // setCaseData({ ...caseData, "Case No": cNo });
-                            }}
-                          />
-                          {/* </Grid> */}
+                          {caseFile["Case No"]}
                         </TableCell>
                         <TableCell align="right">
                           {isValid(parseISO(caseFile["Date of Institution "]))
@@ -585,17 +543,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                 "dd-MM-yyyy"
                               )
                             : "Invalid Date"}
-                        </TableCell>
-                        <TableCell align="center">
-                          {caseFile.causeListEntries &&
-                            format?.(
-                              parseISO(
-                                getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate
-                              ),
-                              "dd-MM-yyy"
-                            )}
                         </TableCell>
                         <TableCell
                           // align="center"
@@ -638,53 +585,10 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             }}
                           >
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate) ||
-                            (caseFile["Category Per PQS"] ===
-                              "Civil-006-Family Court Cases" &&
-                              new Date(caseFile["Date of Institution "]) <=
-                                new Date(
-                                  ControlCenter[0]?.familyCasesBacklogDate
-                                ))
+                            new Date(ControlCenter[0]?.backlogDate)
                               ? "★"
                               : ""}
                           </span>
-                        </TableCell>
-                        
-                        <TableCell
-                          className={classes.tableCell}
-                          // className={[classes.tableCell, classes.tableCaseTitle]}
-                          align="left"
-                          style={{
-                            fontSize: "16px",
-                            direction: "ltr",
-                            lineHeight: 0.6,
-                          }}
-                        >
-                          {caseFile["Case Type"] === "Civil" ? (
-                            caseFile.nature
-                          ) : (
-                            <>
-                              {/* <span style={{ fontSize: "10px" }}>
-                                                    {caseFile["FIR Date"] ? format?.(
-                                                        parseISO(caseFile["FIR Date"]),
-                                                        "dd-MM-yyy"
-                                                      ) : null}
-                                                      </span>
-                                                      <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
-                                علت:
-                                {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
-                              </span>
-                              <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
-                                تھانہ:{caseFile.Thana ? caseFile.Thana : null}
-                              </span>
-                              <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
-                              </span>
-                            </>
-                          )}
                         </TableCell>
                         <TableCell
                           align="center"
@@ -698,7 +602,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             getSecondToLastElement(caseFile.causeListEntries)
                               .actionAbstract}
                         </TableCell>
-
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            format?.(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
+                        </TableCell>
                         {/* <TableCell align="center">
                           <TextField
                             name="Order No"
@@ -1452,17 +1366,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               )
                             : "Invalid Date"}
                         </TableCell>
-                        <TableCell align="center">
-                          {caseFile.causeListEntries &&
-                            format?.(
-                              parseISO(
-                                getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate
-                              ),
-                              "dd-MM-yyy"
-                            )}
-                        </TableCell>
                         <TableCell
                           // align="center"
                           style={{
@@ -1504,65 +1407,32 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             }}
                           >
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate) ||
-                            (caseFile["Category Per PQS"] ===
-                              "Civil-006-Family Court Cases" &&
-                              new Date(caseFile["Date of Institution "]) <=
-                                new Date(
-                                  ControlCenter[0]?.familyCasesBacklogDate
-                                ))
+                            new Date(ControlCenter[0]?.backlogDate)
                               ? "★"
                               : ""}
                           </span>
-                        </TableCell>
-                        
-                        <TableCell
-                          className={classes.tableCell}
-                          // className={[classes.tableCell, classes.tableCaseTitle]}
-                          align="left"
-                          style={{
-                            fontSize: "16px",
-                            direction: "ltr",
-                            lineHeight: 0.6,
-                          }}
-                        >
-                          {caseFile["Case Type"] === "Civil" ? (
-                            caseFile.nature
-                          ) : (
-                            <>
-                              {/* <span style={{ fontSize: "10px" }}>
-                                                    {caseFile["FIR Date"] ? format?.(
-                                                        parseISO(caseFile["FIR Date"]),
-                                                        "dd-MM-yyy"
-                                                      ) : null}
-                                                      </span>
-                                                      <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
-                                علت:
-                                {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
-                              </span>
-                              <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
-                                تھانہ:{caseFile.Thana ? caseFile.Thana : null}
-                              </span>
-                              <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
-                              </span>
-                            </>
-                          )}
                         </TableCell>
                         <TableCell
                           align="center"
                           style={{
                             fontFamily: "Jameel Noori Nastaleeq",
                             fontSize: 20,
-                            direction: "rtl",
                           }}
                         >
                           {caseFile.causeListEntries &&
                             getSecondToLastElement(caseFile.causeListEntries)
                               .actionAbstract}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            format?.(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
                         </TableCell>
                         {/* <TableCell align="center">
                           <TextField
@@ -2301,17 +2171,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               )
                             : "Invalid Date"}
                         </TableCell>
-                        <TableCell align="center">
-                          {caseFile.causeListEntries &&
-                            format?.(
-                              parseISO(
-                                getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate
-                              ),
-                              "dd-MM-yyy"
-                            )}
-                        </TableCell>
                         <TableCell
                           // align="center"
                           style={{
@@ -2352,70 +2211,33 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               flexShrink: 0, // Prevents it from shrinking
                             }}
                           >
-                            {/* {new Date(caseFile["Date of Institution "]) <=
-                            new Date(ControlCenter[0]?.backlogDate)
-                              ? "★"
-                              : ""} */}
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate) ||
-                            (caseFile["Category Per PQS"] ===
-                              "Civil-006-Family Court Cases" &&
-                              new Date(caseFile["Date of Institution "]) <=
-                                new Date(
-                                  ControlCenter[0]?.familyCasesBacklogDate
-                                ))
+                            new Date(ControlCenter[0]?.backlogDate)
                               ? "★"
                               : ""}
                           </span>
-                        </TableCell>
-                        
-                        <TableCell
-                          className={classes.tableCell}
-                          // className={[classes.tableCell, classes.tableCaseTitle]}
-                          align="left"
-                          style={{
-                            fontSize: "16px",
-                            direction: "ltr",
-                            lineHeight: 0.6,
-                          }}
-                        >
-                          {caseFile["Case Type"] === "Civil" ? (
-                            caseFile.nature
-                          ) : (
-                            <>
-                              {/* <span style={{ fontSize: "10px" }}>
-                                                    {caseFile["FIR Date"] ? format?.(
-                                                        parseISO(caseFile["FIR Date"]),
-                                                        "dd-MM-yyy"
-                                                      ) : null}
-                                                      </span>
-                                                      <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
-                                علت:
-                                {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
-                              </span>
-                              <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
-                                تھانہ:{caseFile.Thana ? caseFile.Thana : null}
-                              </span>
-                              <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
-                              </span>
-                            </>
-                          )}
                         </TableCell>
                         <TableCell
                           align="center"
                           style={{
                             fontFamily: "Jameel Noori Nastaleeq",
                             fontSize: 20,
-                            direction: "rtl",
                           }}
                         >
                           {caseFile.causeListEntries &&
                             getSecondToLastElement(caseFile.causeListEntries)
                               .actionAbstract}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            format?.(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
                         </TableCell>
                         {/* <TableCell align="center">
                           <TextField
@@ -3154,17 +2976,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               )
                             : "Invalid Date"}
                         </TableCell>
-                        <TableCell align="center">
-                          {caseFile.causeListEntries &&
-                            format?.(
-                              parseISO(
-                                getSecondToLastElement(
-                                  caseFile.causeListEntries
-                                ).orderDate
-                              ),
-                              "dd-MM-yyy"
-                            )}
-                        </TableCell>
                         <TableCell
                           // align="center"
                           style={{
@@ -3206,65 +3017,32 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             }}
                           >
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate) ||
-                            (caseFile["Category Per PQS"] ===
-                              "Civil-006-Family Court Cases" &&
-                              new Date(caseFile["Date of Institution "]) <=
-                                new Date(
-                                  ControlCenter[0]?.familyCasesBacklogDate
-                                ))
+                            new Date(ControlCenter[0]?.backlogDate)
                               ? "★"
                               : ""}
                           </span>
-                        </TableCell>
-                        
-                        <TableCell
-                          className={classes.tableCell}
-                          // className={[classes.tableCell, classes.tableCaseTitle]}
-                          align="left"
-                          style={{
-                            fontSize: "16px",
-                            direction: "ltr",
-                            lineHeight: 0.6,
-                          }}
-                        >
-                          {caseFile["Case Type"] === "Civil" ? (
-                            caseFile.nature
-                          ) : (
-                            <>
-                              {/* <span style={{ fontSize: "10px" }}>
-                                                    {caseFile["FIR Date"] ? format?.(
-                                                        parseISO(caseFile["FIR Date"]),
-                                                        "dd-MM-yyy"
-                                                      ) : null}
-                                                      </span>
-                                                      <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
-                                علت:
-                                {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
-                              </span>
-                              <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
-                                تھانہ:{caseFile.Thana ? caseFile.Thana : null}
-                              </span>
-                              <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
-                              </span>
-                            </>
-                          )}
                         </TableCell>
                         <TableCell
                           align="center"
                           style={{
                             fontFamily: "Jameel Noori Nastaleeq",
                             fontSize: 20,
-                            direction: "rtl",
                           }}
                         >
                           {caseFile.causeListEntries &&
                             getSecondToLastElement(caseFile.causeListEntries)
                               .actionAbstract}
+                        </TableCell>
+                        <TableCell align="center">
+                          {caseFile.causeListEntries &&
+                            format?.(
+                              parseISO(
+                                getSecondToLastElement(
+                                  caseFile.causeListEntries
+                                ).orderDate
+                              ),
+                              "dd-MM-yyy"
+                            )}
                         </TableCell>
                         {/* <TableCell align="center">
                           <TextField
@@ -4019,6 +3797,17 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               : ""}
                           </span>
                         </TableCell>
+                        <TableCell
+                          align="center"
+                          style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
+                            fontSize: 20,
+                          }}
+                        >
+                          {caseFile.causeListEntries &&
+                            getSecondToLastElement(caseFile.causeListEntries)
+                              .actionAbstract}
+                        </TableCell>
                         <TableCell align="center">
                           {caseFile.causeListEntries &&
                             format?.(
@@ -4030,55 +3819,6 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               "dd-MM-yyy"
                             )}
                         </TableCell>
-                        <TableCell
-                          align="center"
-                          style={{
-                            fontFamily: "Jameel Noori Nastaleeq",
-                            fontSize: 20,
-                            direction: "rtl",
-                          }}
-                        >
-                          {caseFile.causeListEntries &&
-                            getSecondToLastElement(caseFile.causeListEntries)
-                              .actionAbstract}
-                        </TableCell>
-                        <TableCell
-                          className={classes.tableCell}
-                          // className={[classes.tableCell, classes.tableCaseTitle]}
-                          align="left"
-                          style={{
-                            fontSize: "16px",
-                            direction: "ltr",
-                            lineHeight: 0.6,
-                          }}
-                        >
-                          {caseFile["Case Type"] === "Civil" ? (
-                            caseFile.nature
-                          ) : (
-                            <>
-                              {/* <span style={{ fontSize: "10px" }}>
-                                                    {caseFile["FIR Date"] ? format?.(
-                                                        parseISO(caseFile["FIR Date"]),
-                                                        "dd-MM-yyy"
-                                                      ) : null}
-                                                      </span>
-                                                      <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
-                                علت:
-                                {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
-                              </span>
-                              <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
-                                تھانہ:{caseFile.Thana ? caseFile.Thana : null}
-                              </span>
-                              <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
-                              </span>
-                            </>
-                          )}
-                        </TableCell>
-                        
                         {/* <TableCell align="center">
                           <TextField
                             name="Order No"
