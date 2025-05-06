@@ -11,11 +11,13 @@ import { Typography } from "@material-ui/core";
 
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
+
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 // import parseISO from "date-fns/parseISO";
 // import format from "date-fns/format";
-import { format, parseISO, isValid } from "date-fns";
+import { format, parseISO, isValid, set } from "date-fns";
 import {
   MuiPickersUtilsProvider,
   // KeyboardTimePicker,
@@ -69,7 +71,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   // const cases = useSelector((state) => state.cases);
   // const cases = useSelector((state) => state.causeLists);
   // const cases = useSelector(selectCauseListCases);
-  const cases = useSelector((state) => state.causeLists.cases);
+
+  // const cases = useSelector((state) => state.causeLists.cases);
+  const reduxCases = useSelector((state) => state.causeLists.cases);
+  const [casesState, setCasesState] = useState();
+  const [casesNumber, setCasesNumber] = useState([]);
+
   const ControlCenter = useSelector((state) => state.controlCenter);
   const serialNumbers = useSelector((state) => state.causeLists.serialNumbers);
 
@@ -86,6 +93,21 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   // const [dateCauseList, setDateCauseList] = useState(addDays(new Date(), 0));
   const [dateCauseList, setDateCauseList] = useState(selectedDate);
   const [orderDate, setOrderDate] = useState(dateCauseList);
+
+  // Sync local state with Redux store when the component mounts or reduxCases changes
+  useEffect(() => {
+    setCasesState(reduxCases);
+    // Create an object where the key is the case ID and the value is the Case No
+    const casesNumberMap = reduxCases.reduce((acc, caseFile) => {
+      acc[caseFile._id] = caseFile["Case No"];
+      return acc;
+    }, {});
+    setCasesNumber(casesNumberMap); // Store the object in casesNumber
+  }, [reduxCases]);
+  useEffect(() => {
+    console.log(casesState);
+  }, [casesState]);
+
   useEffect(() => {
     setOrderDate(dateCauseList);
   }, [dateCauseList]);
@@ -94,6 +116,8 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   // const [caseData, setCaseData] = useState({
   //   orderDate: new Date(), orderNumber: '', nextDate: nextDate, actionAbstract: '',
   // });
+
+  useEffect(() => {}, [casesNumber]);
   const [orderNumber] = useState({
     orderDate: orderDate,
     orderNumber: "",
@@ -136,10 +160,27 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     // console.log(cases);
   };
 
-  const [caseNumber, setCaseNumber] = useState("");
-  const handleBlurCaseNumber = async () => {
-    // console.log(e.target.value);
-    if (caseId) dispatch(updateCase(caseId, caseNumber));
+  // Example: Update case number locally
+  const handleCaseNumberChange = (e, caseFileId) => {
+    const newValue = e.target.value; // Store the value before using it in the callback
+    // setCurrentId(caseFileId);
+    setCaseId(caseFileId);
+    setCasesNumber((prevCasesNumber) => ({
+      ...prevCasesNumber,
+      [caseFileId]: newValue, // Update the value for the specific case ID
+    }));
+  };
+
+  // Example: Save updated case number to the database
+  const handleCaseNumberBlur = async () => {
+    try {
+      // Dispatch an action to update the case number in the database
+      dispatch(updateCase(caseId, { caseNumber: casesNumber[caseId] }));
+      // Optionally, fetch the updated cause list to ensure data consistency
+      // dispatch(getCauseList({ dateCauseList }));
+    } catch (error) {
+      console.error("Failed to update case number:", error);
+    }
   };
 
   useEffect(() => {
@@ -151,6 +192,11 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     // console.log("orederNumber onblurred useEffectcalled:" + orderNumber);
     if (caseId) handleSubmit(orderNumber);
   }, [orderNumber]);
+
+  // useEffect(() => {
+  //   console.log(casesNumber);
+  //   if (caseId) handleSubmit({ caseNumber: casesNumber[caseId] });
+  // }, [casesNumber]);
 
   useEffect(() => {
     if (caseId) handleSubmit(actionAbstract);
@@ -230,7 +276,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     return array[array?.length - 1]; // or any other appropriate value or action
   }
 
-  const sortedCases = cases.slice().sort((a, b) => {
+  const sortedCases = reduxCases.slice().sort((a, b) => {
     const sortingKeywords = [
       "حاضری",
       "حاضری، ریکارڈ",
@@ -369,7 +415,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
         <Grid item container justify="space-between" xs={12} sm={3}>
           <Divider orientation="vertical" flexItem />
           <Button
-            disabled={cases.length === 0}
+            disabled={reduxCases.length === 0}
             variant="contained"
             component={Link}
             to={{
@@ -397,9 +443,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
               weekday: "long",
             })}
           </Typography>
-          {!cases.length && (
+          {!reduxCases.length && (
             <>
-              {!cases.length ? (
+              {!reduxCases.length ? (
                 <Typography
                   style={{
                     color: "red",
@@ -416,12 +462,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
               )}
             </>
           )}
-          {cases.length > 0 && (
+          {reduxCases.length > 0 && (
             <Typography
               style={{ fontSize: "1.2rem" }}
               className={classes.boldThis}
             >
-              Total Cases : {cases.length}
+              Total Cases : {reduxCases.length}
             </Typography>
           )}
         </Grid>
@@ -429,7 +475,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
           <Divider orientation="horizontal" />
         </Grid>
       </Grid>
-      {!cases.length ? (
+      {!reduxCases.length ? (
         <Box sx={{ width: "100%" }} style={{ margin: "8px 0px" }}>
           <LinearProgress />
         </Box>
@@ -447,16 +493,16 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
               <TableHead>
                 <TableRow key="head-header">
                   <TableCell
-                    style={{ direction: "rtl" }}
                     // className={[classes.uFont, classes.boldThis]}
                     className={clsx(classes.uFont, classes.boldThis)}
+                    // style={{ }}
                   >
                     نمبرشمار
                   </TableCell>
                   <TableCell
                     // className={[classes.uFont, classes.boldThis]}
                     className={clsx(classes.uFont, classes.boldThis)}
-                    style={{ textAlign: "center" }}
+                    style={{ textAlign: "center", width: "170px" }}
                   >
                     مقدمہ نمبر
                   </TableCell>
@@ -478,12 +524,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   <TableCell
                     // className={[classes.uFont, classes.boldThis]}
                     className={clsx(classes.uFont, classes.boldThis)}
-                    style={{ minWidth: 130 }}
+                    style={{ minWidth: 160 }}
                     align="center"
                   >
                     عنوان
                   </TableCell>
-                  
+
                   <TableCell
                     align="center"
                     // className={[classes.uFont, classes.boldThis]}
@@ -505,7 +551,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                     // className={[classes.uFont, classes.boldThis]}
                     className={clsx(classes.uFont, classes.boldThis)}
                     align="left"
-                    style={{ direction: "rtl", width: "200px" }}
+                    style={{ direction: "rtl", width: "210px" }}
                   >
                     آئیندہ تاریخ پیشی
                   </TableCell>
@@ -517,6 +563,14 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   >
                     خلاصہ کاروائی
                   </TableCell>
+                  <TableCell
+                    // className={[classes.uFont, classes.boldThis]}
+                    // className={clsx(classes.uFont, classes.boldThis)}
+                    // style={{ minWidth: 140 }}
+                    align="center"
+                  >
+                    Edit
+                  </TableCell>
                 </TableRow>
               </TableHead>
 
@@ -524,7 +578,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <TableRow key="attendance-header">
                   <TableCell
                     align="center"
-                    colSpan={9}
+                    colSpan={10}
                     style={{
                       fontSize: 20,
                       // fontFamily: "Alvi Nastaleeq Regular",
@@ -561,20 +615,49 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             //   setCaseData({ ...caseData, "Case No": e.target.value })
                             // }
                             // value={cNo !== "" ? cNo : caseData["Case No"]}
-                            value={
-                              caseNumber ? caseNumber : caseFile["Case No"]
+                            // value={caseFile["Case No"] || ""}
+                            value={casesNumber?.[caseFile._id] || ""}
+                            onChange={(e) =>
+                              handleCaseNumberChange(e, caseFile._id)
                             }
+                            onBlur={handleCaseNumberBlur}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                handleCaseNumberBlur(); // Trigger the blur function when Enter is pressed
+                              }
+                            }}
+                            InputProps={{
+                              style: {
+                                fontFamily: "times new roman",
+                                fontSize: 16, // Adjust the font size here
+                                direction: "ltr",
+                              },
+                            }}
                             // onBlur={(e) => {
                             //   setTempCNo(e.target.value)
                             // }}
-                            onBlur={handleBlurCaseNumber}
-                            // onChange={handleCaseNumberChange}
-                            onChange={(e) => {
-                              setCaseId(caseFile._id);
-                              setCaseNumber(e.target.value);
-                              // setTempCNo(e.target.value)
-                              // setCaseData({ ...caseData, "Case No": cNo });
-                            }}
+                            // onBlur={handleCaseNumberBlur}
+                            // onChange={(e) => {
+                            //   const newValue = e.target.value; // Store the value before using it in the callback
+                            //   setCurrentId(caseFile._id);
+                            //   setCaseId(caseFile._id);
+                            //   setCasesNumber((prevCasesNumber) => ({
+                            //     ...prevCasesNumber,
+                            //     [caseFile._id]: newValue, // Update the value for the specific case ID
+                            //   }));
+                            // }}
+                            // onBlur={(e) => handleCaseNumberBlur(caseFile._id, e.target.value)}
+
+                            // onChange={(e) => {
+                            // setCaseId(caseFile._id);
+                            // setCurrentId(caseFile._id);
+                            // setCaseNumber(e.target.value);
+                            // setActionAbstract({
+                            //   orderDate: orderDate,
+                            //   actionAbstract: e.target.value,
+                            // });
+                            // }}
+                            // onBlur={(e) => handleCaseNumberBlur(caseFile._id, e.target.value)}
                           />
                           {/* </Grid> */}
                         </TableCell>
@@ -582,7 +665,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           {isValid(parseISO(caseFile["Date of Institution "]))
                             ? format(
                                 parseISO(caseFile["Date of Institution "]),
-                                "dd-MM-yyyy"
+                                "dd.MM-yyyy"
                               )
                             : "Invalid Date"}
                         </TableCell>
@@ -594,7 +677,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                   caseFile.causeListEntries
                                 ).orderDate
                               ),
-                              "dd-MM-yyy"
+                              "dd.MM-yyy"
                             )}
                         </TableCell>
                         <TableCell
@@ -649,12 +732,13 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               : ""}
                           </span>
                         </TableCell>
-                        
+
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
                           style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
                             fontSize: "16px",
                             direction: "ltr",
                             lineHeight: 0.6,
@@ -671,17 +755,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                                       ) : null}
                                                       </span>
                                                       <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 علت:
                                 {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
                               </span>
                               <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 تھانہ:{caseFile.Thana ? caseFile.Thana : null}
                               </span>
                               <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  whiteSpace: "normal", // Allow wrapping
+                                  wordBreak: "break-word", // Break long words
+                                  overflowWrap: "break-word", // Wrap on overflow
+                                }}
+                              >
+                                جرم:{caseFile.Section ? caseFile.Section : null}
                               </span>
                             </>
                           )}
@@ -1404,6 +1495,22 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             </Select>
                           </FormControl>
                         </TableCell>
+                        <TableCell align="right">
+                          <Button
+                            size="small"
+                            color="primary"
+                            component={Link}
+                            to="/FormCases"
+                            variant="outlined"
+                            style={{ borderRadius: 50 }}
+                            onClick={() => {
+                              setCurrentId(caseFile._id);
+                              // console.log(currentId);
+                            }}
+                          >
+                            {<EditIcon />}
+                          </Button>
+                        </TableCell>
                         {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
                       </TableRow>
                     ) : null}
@@ -1415,7 +1522,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <TableRow key="evidence-header">
                   <TableCell
                     align="center"
-                    colSpan={9}
+                    colSpan={10}
                     style={{
                       fontSize: 20,
                       // fontFamily: "Alvi Nastaleeq Regular",
@@ -1428,7 +1535,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </TableCell>
                 </TableRow>
 
-                {cases.map((caseFile) => (
+                {reduxCases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
                     getSecondToLastElementCategory(
@@ -1441,14 +1548,39 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
                         </TableCell> */}
-                        <TableCell align="center">
+                        {/* <TableCell align="center">
                           {caseFile["Case No"]}
+                        </TableCell> */}
+                        <TableCell align="center">
+                          <TextField
+                            name="caseNumber"
+                            variant="outlined"
+                            label="Case Number"
+                            fullWidth
+                            value={casesNumber?.[caseFile._id] || ""}
+                            onChange={(e) =>
+                              handleCaseNumberChange(e, caseFile._id)
+                            }
+                            onBlur={handleCaseNumberBlur}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                handleCaseNumberBlur(); // Trigger the blur function when Enter is pressed
+                              }
+                            }}
+                            InputProps={{
+                              style: {
+                                fontFamily: "times new roman",
+                                fontSize: 16, // Adjust the font size here
+                                direction: "ltr",
+                              },
+                            }}
+                          />
                         </TableCell>
                         <TableCell align="right">
                           {isValid(parseISO(caseFile["Date of Institution "]))
                             ? format(
                                 parseISO(caseFile["Date of Institution "]),
-                                "dd-MM-yyyy"
+                                "dd.MM-yyyy"
                               )
                             : "Invalid Date"}
                         </TableCell>
@@ -1460,7 +1592,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                   caseFile.causeListEntries
                                 ).orderDate
                               ),
-                              "dd-MM-yyy"
+                              "dd.MM-yyy"
                             )}
                         </TableCell>
                         <TableCell
@@ -1515,12 +1647,13 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               : ""}
                           </span>
                         </TableCell>
-                        
+
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
                           style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
                             fontSize: "16px",
                             direction: "ltr",
                             lineHeight: 0.6,
@@ -1537,17 +1670,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                                       ) : null}
                                                       </span>
                                                       <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 علت:
                                 {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
                               </span>
                               <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 تھانہ:{caseFile.Thana ? caseFile.Thana : null}
                               </span>
                               <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  whiteSpace: "normal", // Allow wrapping
+                                  wordBreak: "break-word", // Break long words
+                                  overflowWrap: "break-word", // Wrap on overflow
+                                }}
+                              >
+                                جرم:{caseFile.Section ? caseFile.Section : null}
                               </span>
                             </>
                           )}
@@ -2254,6 +2394,22 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             </Select>
                           </FormControl>
                         </TableCell>
+                        <TableCell align="right">
+                          <Button
+                            size="small"
+                            color="primary"
+                            component={Link}
+                            to="/FormCases"
+                            variant="outlined"
+                            style={{ borderRadius: 50 }}
+                            onClick={() => {
+                              setCurrentId(caseFile._id);
+                              // console.log(currentId);
+                            }}
+                          >
+                            {<EditIcon />}
+                          </Button>
+                        </TableCell>
                         {/* {setSerialNo((prevIndex) => prevIndex + 1)} */}
                         {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
                       </TableRow>
@@ -2264,7 +2420,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <TableRow key="arguments-header">
                   <TableCell
                     align="center"
-                    colSpan={9}
+                    colSpan={10}
                     style={{
                       fontSize: 20,
                       // fontFamily: "Alvi Nastaleeq Regular",
@@ -2277,7 +2433,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </TableCell>
                 </TableRow>
 
-                {cases.map((caseFile) => (
+                {reduxCases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
                     getSecondToLastElementCategory(
@@ -2290,14 +2446,39 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
                         </TableCell> */}
-                        <TableCell align="center">
+                        {/* <TableCell align="center">
                           {caseFile["Case No"]}
+                        </TableCell> */}
+                        <TableCell align="center">
+                          <TextField
+                            name="caseNumber"
+                            variant="outlined"
+                            label="Case Number"
+                            fullWidth
+                            value={casesNumber?.[caseFile._id] || ""}
+                            onChange={(e) =>
+                              handleCaseNumberChange(e, caseFile._id)
+                            }
+                            onBlur={handleCaseNumberBlur}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                handleCaseNumberBlur(); // Trigger the blur function when Enter is pressed
+                              }
+                            }}
+                            InputProps={{
+                              style: {
+                                fontFamily: "times new roman",
+                                fontSize: 16, // Adjust the font size here
+                                direction: "ltr",
+                              },
+                            }}
+                          />
                         </TableCell>
                         <TableCell align="right">
                           {isValid(parseISO(caseFile["Date of Institution "]))
                             ? format(
                                 parseISO(caseFile["Date of Institution "]),
-                                "dd-MM-yyyy"
+                                "dd.MM-yyyy"
                               )
                             : "Invalid Date"}
                         </TableCell>
@@ -2309,7 +2490,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                   caseFile.causeListEntries
                                 ).orderDate
                               ),
-                              "dd-MM-yyy"
+                              "dd.MM-yyy"
                             )}
                         </TableCell>
                         <TableCell
@@ -2368,12 +2549,13 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               : ""}
                           </span>
                         </TableCell>
-                        
+
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
                           style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
                             fontSize: "16px",
                             direction: "ltr",
                             lineHeight: 0.6,
@@ -2390,17 +2572,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                                       ) : null}
                                                       </span>
                                                       <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 علت:
                                 {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
                               </span>
                               <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 تھانہ:{caseFile.Thana ? caseFile.Thana : null}
                               </span>
                               <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  whiteSpace: "normal", // Allow wrapping
+                                  wordBreak: "break-word", // Break long words
+                                  overflowWrap: "break-word", // Wrap on overflow
+                                }}
+                              >
+                                جرم:{caseFile.Section ? caseFile.Section : null}
                               </span>
                             </>
                           )}
@@ -3107,6 +3296,22 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             </Select>
                           </FormControl>
                         </TableCell>
+                        <TableCell align="right">
+                          <Button
+                            size="small"
+                            color="primary"
+                            component={Link}
+                            to="/FormCases"
+                            variant="outlined"
+                            style={{ borderRadius: 50 }}
+                            onClick={() => {
+                              setCurrentId(caseFile._id);
+                              // console.log(currentId);
+                            }}
+                          >
+                            {<EditIcon />}
+                          </Button>
+                        </TableCell>
                         {/* {setSerialNo((prevIndex) => prevIndex + 1)} */}
                         {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
                       </TableRow>
@@ -3124,13 +3329,13 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                       fontWeight: "bold",
                       backgroundColor: "lightcoral",
                     }}
-                    colSpan={9}
+                    colSpan={10}
                   >
                     حکم
                   </TableCell>
                 </TableRow>
 
-                {cases.map((caseFile) => (
+                {reduxCases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
                     getSecondToLastElementCategory(
@@ -3143,14 +3348,39 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         <TableCell align="right">
                           {serialNumbers[index++]}
                         </TableCell>
-                        <TableCell align="center">
+                        {/* <TableCell align="center">
                           {caseFile["Case No"]}
+                        </TableCell> */}
+                        <TableCell align="center">
+                          <TextField
+                            name="caseNumber"
+                            variant="outlined"
+                            label="Case Number"
+                            fullWidth
+                            value={casesNumber?.[caseFile._id] || ""}
+                            onChange={(e) =>
+                              handleCaseNumberChange(e, caseFile._id)
+                            }
+                            onBlur={handleCaseNumberBlur}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                handleCaseNumberBlur(); // Trigger the blur function when Enter is pressed
+                              }
+                            }}
+                            InputProps={{
+                              style: {
+                                fontFamily: "times new roman",
+                                fontSize: 16, // Adjust the font size here
+                                direction: "ltr",
+                              },
+                            }}
+                          />
                         </TableCell>
                         <TableCell align="right">
                           {isValid(parseISO(caseFile["Date of Institution "]))
                             ? format(
                                 parseISO(caseFile["Date of Institution "]),
-                                "dd-MM-yyyy"
+                                "dd.MM-yyyy"
                               )
                             : "Invalid Date"}
                         </TableCell>
@@ -3162,7 +3392,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                   caseFile.causeListEntries
                                 ).orderDate
                               ),
-                              "dd-MM-yyy"
+                              "dd.MM-yyy"
                             )}
                         </TableCell>
                         <TableCell
@@ -3217,12 +3447,13 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               : ""}
                           </span>
                         </TableCell>
-                        
+
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
                           style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
                             fontSize: "16px",
                             direction: "ltr",
                             lineHeight: 0.6,
@@ -3239,17 +3470,24 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                                       ) : null}
                                                       </span>
                                                       <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 علت:
                                 {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
                               </span>
                               <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 تھانہ:{caseFile.Thana ? caseFile.Thana : null}
                               </span>
                               <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  whiteSpace: "normal", // Allow wrapping
+                                  wordBreak: "break-word", // Break long words
+                                  overflowWrap: "break-word", // Wrap on overflow
+                                }}
+                              >
+                                جرم:{caseFile.Section ? caseFile.Section : null}
                               </span>
                             </>
                           )}
@@ -3957,6 +4195,22 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             </Select>
                           </FormControl>
                         </TableCell>
+                        <TableCell align="right">
+                          <Button
+                            size="small"
+                            color="primary"
+                            component={Link}
+                            to="/FormCases"
+                            variant="outlined"
+                            style={{ borderRadius: 50 }}
+                            onClick={() => {
+                              setCurrentId(caseFile._id);
+                              // console.log(currentId);
+                            }}
+                          >
+                            {<EditIcon />}
+                          </Button>
+                        </TableCell>
                         {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
                       </TableRow>
                     ) : null}
@@ -3967,7 +4221,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                 <TableRow key="others-header">
                   <TableCell
                     align="center"
-                    colSpan={9}
+                    colSpan={10}
                     style={{
                       fontSize: 20,
                       // fontFamily: "Alvi Nastaleeq Regular",
@@ -3980,7 +4234,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </TableCell>
                 </TableRow>
 
-                {cases.map((caseFile) => (
+                {reduxCases.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
                     !getSecondToLastElementCategory(caseFile.causeListEntries)
@@ -3992,14 +4246,39 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                         <TableCell align="right">
                           {serialNumbers[index++]}
                         </TableCell>
-                        <TableCell align="center">
+                        {/* <TableCell align="center">
                           {caseFile["Case No"]}
+                        </TableCell> */}
+                        <TableCell align="center">
+                          <TextField
+                            name="caseNumber"
+                            variant="outlined"
+                            label="Case Number"
+                            fullWidth
+                            value={casesNumber?.[caseFile._id] || ""}
+                            onChange={(e) =>
+                              handleCaseNumberChange(e, caseFile._id)
+                            }
+                            onBlur={handleCaseNumberBlur}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                handleCaseNumberBlur(); // Trigger the blur function when Enter is pressed
+                              }
+                            }}
+                            InputProps={{
+                              style: {
+                                fontFamily: "times new roman",
+                                fontSize: 16, // Adjust the font size here
+                                direction: "ltr",
+                              },
+                            }}
+                          />
                         </TableCell>
                         <TableCell align="right">
                           {isValid(parseISO(caseFile["Date of Institution "]))
                             ? format(
                                 parseISO(caseFile["Date of Institution "]),
-                                "dd-MM-yyyy"
+                                "dd.MM-yyyy"
                               )
                             : "Invalid Date"}
                         </TableCell>
@@ -4027,7 +4306,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                   caseFile.causeListEntries
                                 ).orderDate
                               ),
-                              "dd-MM-yyy"
+                              "dd.MM-yyy"
                             )}
                         </TableCell>
                         <TableCell
@@ -4047,6 +4326,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           // className={[classes.tableCell, classes.tableCaseTitle]}
                           align="left"
                           style={{
+                            fontFamily: "Jameel Noori Nastaleeq",
                             fontSize: "16px",
                             direction: "ltr",
                             lineHeight: 0.6,
@@ -4063,22 +4343,29 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                                                       ) : null}
                                                       </span>
                                                       <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 علت:
                                 {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
                               </span>
                               <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 تھانہ:{caseFile.Thana ? caseFile.Thana : null}
                               </span>
                               <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  whiteSpace: "normal", // Allow wrapping
+                                  wordBreak: "break-word", // Break long words
+                                  overflowWrap: "break-word", // Wrap on overflow
+                                }}
+                              >
+                                جرم:{caseFile.Section ? caseFile.Section : null}
                               </span>
                             </>
                           )}
                         </TableCell>
-                        
+
                         {/* <TableCell align="center">
                           <TextField
                             name="Order No"
@@ -4769,6 +5056,22 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                               </MenuItem>
                             </Select>
                           </FormControl>
+                        </TableCell>
+                        <TableCell align="right">
+                          <Button
+                            size="small"
+                            color="primary"
+                            component={Link}
+                            to="/FormCases"
+                            variant="outlined"
+                            style={{ borderRadius: 50 }}
+                            onClick={() => {
+                              setCurrentId(caseFile._id);
+                              // console.log(currentId);
+                            }}
+                          >
+                            {<EditIcon />}
+                          </Button>
                         </TableCell>
                         {/* <TableCell align="right">{format?.(parseISO(caseFile["Date of Institution "]), "dd MMM-yyy")}</TableCell> */}
                       </TableRow>

@@ -1995,7 +1995,9 @@ export const updateCase = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send("No post with that ID");
 
-  const { orderDate, orderNumber, nextDate, actionAbstract } = req.body; //for causeList usage
+  const { orderDate, orderNumber, caseNumber, nextDate, actionAbstract } = req.body; //for causeList usage
+
+
   // console.log(new Date().toISOString().split("T")[0]);
   //console.log(orderDate); // prints 2024-04-28T04:20:00.000Z
   //console.log(new Date(orderDate).toISOString().split("T")[0]); // prints 2024-04-28
@@ -2014,6 +2016,17 @@ export const updateCase = async (req, res) => {
   const lastCauseListEntry = causeListEntries[causeListEntries.length - 1];
   // console.log("lastCauseListEntry: ");
   // console.log(lastCauseListEntry);
+
+  if(caseNumber){
+    // console.log(caseNumber);
+      updatedCase = await Case.findByIdAndUpdate(
+        id,
+        {
+          "Case No": caseNumber,
+        },
+        { new: true }
+      );
+  }
 
   if (caseFile["Case Title"] || caseFile["Case Title"] === "") {
     // console.log("Title if executed");
@@ -2197,7 +2210,7 @@ export const updateCase = async (req, res) => {
         { new: true }
       );
     }
-
+    
     if (actionAbstract) {
       // console.log("3 action abstract: " + actionAbstract);
       updatedCase = await Case.findByIdAndUpdate(

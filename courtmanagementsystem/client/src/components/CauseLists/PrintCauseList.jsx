@@ -341,7 +341,7 @@ const PrintCauseList = (props) => {
                       </Grid> */}
                       <Grid item sm={4} className={classes.tableHeadTwo}>
                         تاریخ:
-                        {data && format(dateCauseList, "yyy-MM-dd")}
+                        {data && format(dateCauseList, "dd.MM.yyy")}
                         {/* <Typography
                     style={{
                       fontSize: 20,
@@ -468,7 +468,7 @@ const PrintCauseList = (props) => {
                               <span style={{ fontSize: "" }}>
                                 {format?.(
                                   parseISO(caseFile["Date of Institution "]),
-                                  "dd-MM-yyy"
+                                  "dd.MM.yyy"
                                 )}
                               </span>
                               <br />
@@ -487,7 +487,7 @@ const PrintCauseList = (props) => {
                                           parseISO(
                                             caseFile["Date of Transfer In"]
                                           ),
-                                          "dd-MM-yyyy"
+                                          "dd.MM.yyyy"
                                         )
                                       : null}
                                   </span>
@@ -511,7 +511,7 @@ const PrintCauseList = (props) => {
                                               "Date of Other Institution"
                                             ]
                                           ),
-                                          "dd-MM-yyyy"
+                                          "dd.MM.yyyy"
                                         )
                                       : null}
                                   </span>
@@ -538,7 +538,7 @@ const PrintCauseList = (props) => {
                                   caseFile.causeListEntries
                                 ).orderDate
                               ),
-                              "dd-MM-yyy"
+                              "dd.MM.yyy"
                             )}
                         </TableCell>
                         <TableCell
@@ -591,7 +591,7 @@ const PrintCauseList = (props) => {
                               : ""}
                           </span>
                         </TableCell>
-                        
+
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
@@ -613,17 +613,24 @@ const PrintCauseList = (props) => {
                               ) : null}
                               </span>
                               <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 علت:
                                 {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
                               </span>
                               <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 تھانہ:{caseFile.Thana ? caseFile.Thana : null}
                               </span>
                               <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  whiteSpace: "normal", // Allow wrapping
+                                  wordBreak: "break-word", // Break long words
+                                  overflowWrap: "break-word", // Wrap on overflow
+                                }}
+                              >
+                                جرم:{caseFile.Section ? caseFile.Section : null}
                               </span>
                             </>
                           )}
@@ -634,7 +641,7 @@ const PrintCauseList = (props) => {
                               caseFile.causeListEntries
                             ).actionAbstract.replace("، حاضری", "")}
                         </TableCell>
-                        
+
                         <TableCell className={classes.tableCell}></TableCell>
                         <TableCell className={classes.tableCell}></TableCell>
                       </TableRow>
@@ -703,7 +710,7 @@ const PrintCauseList = (props) => {
                               <span style={{ fontSize: "" }}>
                                 {format?.(
                                   parseISO(caseFile["Date of Institution "]),
-                                  "dd-MM-yyy"
+                                  "dd.MM.yyy"
                                 )}
                               </span>
                               <br />
@@ -721,7 +728,7 @@ const PrintCauseList = (props) => {
                                           parseISO(
                                             caseFile["Date of Transfer In"]
                                           ),
-                                          "dd-MM-yyyy"
+                                          "dd.MM.yyyy"
                                         )
                                       : null}
                                   </span>
@@ -744,7 +751,7 @@ const PrintCauseList = (props) => {
                                               "Date of Other Institution"
                                             ]
                                           ),
-                                          "dd-MM-yyyy"
+                                          "dd.MM.yyyy"
                                         )
                                       : null}
                                   </span>
@@ -771,7 +778,7 @@ const PrintCauseList = (props) => {
                                   caseFile.causeListEntries
                                 ).orderDate
                               ),
-                              "dd-MM-yyy"
+                              "dd.MM.yyy"
                             )}
                         </TableCell>
                         <TableCell
@@ -824,7 +831,7 @@ const PrintCauseList = (props) => {
                               : ""}
                           </span>
                         </TableCell>
-                        
+
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
@@ -846,17 +853,21 @@ const PrintCauseList = (props) => {
                               ) : null}
                               </span>
                               <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 علت:
                                 {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
                               </span>
                               <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 تھانہ:{caseFile.Thana ? caseFile.Thana : null}
                               </span>
                               <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                }}
+                              >
+                              {caseFile.Section ? caseFile.Section : null}:جرم
                               </span>
                             </>
                           )}
@@ -867,7 +878,7 @@ const PrintCauseList = (props) => {
                               caseFile.causeListEntries
                             ).actionAbstract.replace("، شہادت", "")}
                         </TableCell>
-                        
+
                         <TableCell className={classes.tableCell}></TableCell>
                         <TableCell className={classes.tableCell}></TableCell>
                       </TableRow>
@@ -936,7 +947,7 @@ const PrintCauseList = (props) => {
                               <span style={{ fontSize: "" }}>
                                 {format?.(
                                   parseISO(caseFile["Date of Institution "]),
-                                  "dd-MM-yyy"
+                                  "dd.MM.yyy"
                                 )}
                               </span>
                               <br />
@@ -954,7 +965,7 @@ const PrintCauseList = (props) => {
                                           parseISO(
                                             caseFile["Date of Transfer In"]
                                           ),
-                                          "dd-MM-yyyy"
+                                          "dd.MM.yyyy"
                                         )
                                       : null}
                                   </span>
@@ -977,7 +988,7 @@ const PrintCauseList = (props) => {
                                               "Date of Other Institution"
                                             ]
                                           ),
-                                          "dd-MM-yyyy"
+                                          "dd.MM.yyyy"
                                         )
                                       : null}
                                   </span>
@@ -1004,7 +1015,7 @@ const PrintCauseList = (props) => {
                                   caseFile.causeListEntries
                                 ).orderDate
                               ),
-                              "dd-MM-yyy"
+                              "dd.MM.yyy"
                             )}
                         </TableCell>
                         <TableCell
@@ -1057,7 +1068,7 @@ const PrintCauseList = (props) => {
                               : ""}
                           </span>
                         </TableCell>
-                        
+
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
@@ -1079,17 +1090,24 @@ const PrintCauseList = (props) => {
                               ) : null}
                               </span>
                               <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 علت:
                                 {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
                               </span>
                               <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 تھانہ:{caseFile.Thana ? caseFile.Thana : null}
                               </span>
                               <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  whiteSpace: "normal", // Allow wrapping
+                                  wordBreak: "break-word", // Break long words
+                                  overflowWrap: "break-word", // Wrap on overflow
+                                }}
+                              >
+                                جرم:{caseFile.Section ? caseFile.Section : null}
                               </span>
                             </>
                           )}
@@ -1100,7 +1118,7 @@ const PrintCauseList = (props) => {
                               caseFile.causeListEntries
                             ).actionAbstract.replace("، بحث", "")}
                         </TableCell>
-                        
+
                         <TableCell className={classes.tableCell}></TableCell>
                         <TableCell className={classes.tableCell}></TableCell>
                       </TableRow>
@@ -1169,7 +1187,7 @@ const PrintCauseList = (props) => {
                               <span style={{ fontSize: "" }}>
                                 {format?.(
                                   parseISO(caseFile["Date of Institution "]),
-                                  "dd-MM-yyy"
+                                  "dd.MM.yyy"
                                 )}
                               </span>
                               <br />
@@ -1187,7 +1205,7 @@ const PrintCauseList = (props) => {
                                           parseISO(
                                             caseFile["Date of Transfer In"]
                                           ),
-                                          "dd-MM-yyyy"
+                                          "dd.MM.yyyy"
                                         )
                                       : null}
                                   </span>
@@ -1210,7 +1228,7 @@ const PrintCauseList = (props) => {
                                               "Date of Other Institution"
                                             ]
                                           ),
-                                          "dd-MM-yyyy"
+                                          "dd.MM.yyyy"
                                         )
                                       : null}
                                   </span>
@@ -1237,7 +1255,7 @@ const PrintCauseList = (props) => {
                                   caseFile.causeListEntries
                                 ).orderDate
                               ),
-                              "dd-MM-yyy"
+                              "dd.MM.yyy"
                             )}
                         </TableCell>
                         <TableCell
@@ -1278,7 +1296,7 @@ const PrintCauseList = (props) => {
                               flexShrink: 0, // Prevents it from shrinking
                             }}
                           >
-                          {new Date(caseFile["Date of Institution "]) <=
+                            {new Date(caseFile["Date of Institution "]) <=
                               new Date(ControlCenter[0]?.backlogDate) ||
                             (caseFile["Category Per PQS"] ===
                               "Civil-006-Family Court Cases" &&
@@ -1294,7 +1312,7 @@ const PrintCauseList = (props) => {
                               : ""} */}
                           </span>
                         </TableCell>
-                        
+
                         <TableCell
                           className={classes.tableCell}
                           // className={[classes.tableCell, classes.tableCaseTitle]}
@@ -1316,17 +1334,24 @@ const PrintCauseList = (props) => {
                               ) : null}
                               </span>
                               <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 علت:
                                 {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
                               </span>
                               <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 تھانہ:{caseFile.Thana ? caseFile.Thana : null}
                               </span>
                               <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  whiteSpace: "normal", // Allow wrapping
+                                  wordBreak: "break-word", // Break long words
+                                  overflowWrap: "break-word", // Wrap on overflow
+                                }}
+                              >
+                                جرم:{caseFile.Section ? caseFile.Section : null}
                               </span>
                             </>
                           )}
@@ -1337,7 +1362,7 @@ const PrintCauseList = (props) => {
                               caseFile.causeListEntries
                             ).actionAbstract.replace("، حکم", "")}
                         </TableCell>
-                        
+
                         <TableCell className={classes.tableCell}></TableCell>
                         <TableCell className={classes.tableCell}></TableCell>
                       </TableRow>
@@ -1404,7 +1429,7 @@ const PrintCauseList = (props) => {
                               <span style={{ fontSize: "" }}>
                                 {format?.(
                                   parseISO(caseFile["Date of Institution "]),
-                                  "dd-MM-yyy"
+                                  "dd.MM.yyy"
                                 )}
                               </span>
                               <br />
@@ -1422,7 +1447,7 @@ const PrintCauseList = (props) => {
                                           parseISO(
                                             caseFile["Date of Transfer In"]
                                           ),
-                                          "dd-MM-yyyy"
+                                          "dd.MM.yyyy"
                                         )
                                       : null}
                                   </span>
@@ -1445,7 +1470,7 @@ const PrintCauseList = (props) => {
                                               "Date of Other Institution"
                                             ]
                                           ),
-                                          "dd-MM-yyyy"
+                                          "dd.MM.yyyy"
                                         )
                                       : null}
                                   </span>
@@ -1516,7 +1541,7 @@ const PrintCauseList = (props) => {
                                   caseFile.causeListEntries
                                 ).orderDate
                               ),
-                              "dd-MM-yyy"
+                              "dd.MM.yyy"
                             )}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="left">
@@ -1527,7 +1552,7 @@ const PrintCauseList = (props) => {
                                   caseFile.causeListEntries
                                 ).orderDate
                               ),
-                              "dd-MM-yyy"
+                              "dd.MM.yyy"
                             )}
                         </TableCell>
                         <TableCell
@@ -1551,17 +1576,24 @@ const PrintCauseList = (props) => {
                               ) : null}
                               </span>
                               <span>/</span> */}
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 علت:
                                 {caseFile["FIR NO"] ? caseFile["FIR NO"] : null}
                               </span>
                               <span>،</span>
-                              <span style={{ fontSize: "10px" }}>
+                              <span style={{ fontSize: "12px" }}>
                                 تھانہ:{caseFile.Thana ? caseFile.Thana : null}
                               </span>
                               <br />
-                              <span style={{ fontSize: "10px" }}>
-                                {caseFile.Section ? caseFile.Section : null}:جرم
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  whiteSpace: "normal", // Allow wrapping
+                                  wordBreak: "break-word", // Break long words
+                                  overflowWrap: "break-word", // Wrap on overflow
+                                }}
+                              >
+                                جرم:{caseFile.Section ? caseFile.Section : null}
                               </span>
                             </>
                           )}
@@ -1571,7 +1603,7 @@ const PrintCauseList = (props) => {
                             getSecondToLastElement(caseFile.causeListEntries)
                               .actionAbstract}
                         </TableCell>
-                        
+
                         <TableCell className={classes.tableCell}></TableCell>
                         <TableCell className={classes.tableCell}></TableCell>
                       </TableRow>
