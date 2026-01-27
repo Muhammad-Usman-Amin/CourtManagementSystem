@@ -142,6 +142,7 @@ export const getCases = async (req, res) => {
           },
         ],
       }).sort({ ["Date of Institution "]: 1 });
+      // }).sort({ ["nextDate"]: 1 }); //this handles sorting of cases by date of institution
 
       const groupedCases = cases.reduce((acc, currentCase) => {
         const category = currentCase["Category Per PQS"].replace(

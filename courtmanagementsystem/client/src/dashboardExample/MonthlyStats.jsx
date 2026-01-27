@@ -189,7 +189,7 @@ const MonthlyStats = () => {
     const percent =
       totalInstitutions.length <= 0 || totalDisposal.length < 0
         ? 0
-        : Math.round(((totalDisposal.length - totalTransferedOut.length) * 100) / (totalInstitutions.length - totalRestoredRemanded.length));
+        : Math.round(((totalDisposal.length - totalTransferedOut.length) * 100) / (totalInstitutions.length));
     setTotalDisposalPercent(percent);
   }, [totalInstitutions, totalDisposal, totalTransferedIn, totalRestoredRemanded, totalTransferedOut]);
 
