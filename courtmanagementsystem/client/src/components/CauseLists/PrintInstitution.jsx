@@ -379,9 +379,8 @@ const PrintInstitution = (props) => {
                   </TableCell>
                 </TableRow> */}
 
-                {institutionCases.map((caseFile) => (
-                  <>
-                    {caseFile.causeListEntries &&
+                {institutionCases.map((caseFile) =>
+                    caseFile.causeListEntries &&
                     getSecondToLastElementCategory(caseFile.causeListEntries)
                       .actionAbstract ? (
                       <TableRow hover key={caseFile._id}>
@@ -553,9 +552,9 @@ const PrintInstitution = (props) => {
                             )}
                         </TableCell> */}
                       </TableRow>
-                    ) : null}
-                  </>
-                ))}
+                    ) : null
+                  
+                )}
               </TableBody>
             </Table>
           </Grid>

@@ -196,10 +196,9 @@ const ControlCenter = () => {
   useEffect(() => {
     // console.log(caseFile);
     // console.log('useEffect called');
-    if (poFile.length) {
-      // console.log(poFile);
-      setPoData(poFile[0]);
-      setCourtStatus(poFile[0].courtStatus);
+    if (poFile) {
+      setPoData(poFile);
+      setCourtStatus(poFile.courtStatus);
 
       // console.log(poData.courtStatus);
       // setCourtStatus(poData.courtStatus);
@@ -258,11 +257,13 @@ const ControlCenter = () => {
       // console.log(poData);
       dispatch(updateControlCenter(currentId, poData));
       setCurrentId(null);
+      dispatch(getControlCenter());
     } else {
       {
         dispatch(createControlCenter(poData));
       }
     }
+    dispatch(getControlCenter());
     setEditView(false);
     // clear();
   };
@@ -553,7 +554,12 @@ const ControlCenter = () => {
                 label="Presiding Officer"
               >
                 <MenuItem value="">Select Any</MenuItem>
-
+                <MenuItem value={"PHC0000-00-0:Mr. Judge"}>
+                  PHC0000-00-0:Mr. Judge
+                </MenuItem>
+                <MenuItem value={"PHC0000-00-0:Mr. Shakir Ullah"}>
+                  PHC0000-00-0:Mr. Shakir Ullah
+                </MenuItem>
                 <MenuItem value={"PHC0604-81-1:Mr. Shah Nofal"}>
                   PHC0604-81-1:Mr. Shah Nofal
                 </MenuItem>
@@ -775,10 +781,17 @@ const ControlCenter = () => {
                 }
                 label="Court Number"
               >
+                <MenuItem value="DSJ">DSJ</MenuItem>
                 <MenuItem value="DSJ-1">DSJ-1</MenuItem>
+                <MenuItem value="DSJ-2">DSJ-2</MenuItem>
+                <MenuItem value="ASJ">ASJ</MenuItem>
                 <MenuItem value="ASJ-1">ASJ-1</MenuItem>
+                <MenuItem value="ASJ-2">ASJ-2</MenuItem>
+                <MenuItem value="ADJ">ADJ</MenuItem>
                 <MenuItem value="ADJ-1">ADJ-1</MenuItem>
+                <MenuItem value="ADJ-2">ADJ-</MenuItem>
                 <MenuItem value="ADSJ-1">ADSJ-1</MenuItem>
+                <MenuItem value="ADSJ-">ADSJ-2</MenuItem>
                 <MenuItem value="SCJ">SCJ</MenuItem>
                 <MenuItem value="CJ/JM-1">CJ/JM-1</MenuItem>
                 <MenuItem value="CJ/JM-2">CJ/JM-2</MenuItem>

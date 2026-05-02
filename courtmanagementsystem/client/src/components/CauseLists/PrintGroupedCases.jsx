@@ -124,6 +124,52 @@ const PrintGroupedCases = (props) => {
     return array[array.length - 1]; // or any other appropriate value or action
   }
 
+  // for row coloring based on timelines (NJPMC)
+
+const getRowColor = (caseFile) => {
+  const category = caseFile["Category Per PQS"];
+  const institutionDate = caseFile["Date of Institution "];
+
+  if (!category || !institutionDate) return "";
+
+  // Category-wise target age (months)
+  const categoryRules = {
+    "CR-011-Norcotics Substances": 18,
+    "CR-006-Arms & Amunation": 12,
+    "Civil-003-Suits under Order 37 CPC": 12,
+    // add more here
+  };
+
+  const targetMonths = categoryRules[category];
+
+  // If category not found
+  if (!targetMonths) return "";
+
+  const startDate = new Date(institutionDate);
+  const today = new Date();
+
+  const monthsOld =
+    (today.getFullYear() - startDate.getFullYear()) * 12 +
+    (today.getMonth() - startDate.getMonth());
+
+  // Nearing trigger zone (4 months before target)
+  const warningMonths = targetMonths - 4;
+
+  // RED = exceeded target
+  if (monthsOld >= targetMonths) {
+        return "#fd7f89"; // light red
+  }
+
+  // YELLOW = nearing target
+  if (monthsOld >= warningMonths) {
+        return "#ffda62"; // light yellow
+  }
+
+  // GREEN = safe
+  return "#5deb7e"; // light green
+};
+
+
   // function getActionEng(action) {
   //   const str = action?.replace(/(^\s+|\s+$)/g, "");
   //   switch (str) {
@@ -301,7 +347,9 @@ const PrintGroupedCases = (props) => {
                 // caseFile.causeListEntries &&
                 // getSecondToLastElementCategory(caseFile.causeListEntries)
                 //   ?.actionAbstract ? (
-                  <TableRow hover key={caseFile._id}>
+                  <TableRow hover key={caseFile._id} style={{
+          backgroundColor: getRowColor(caseFile),
+        }}>
                     <TableCell
                       className={classes.tableCell}
                       component="th"
