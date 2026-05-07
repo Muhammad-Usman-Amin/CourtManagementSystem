@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) =>
       margin: 0,
       padding: 0,
     },
-  })
+  }),
 );
 
 const PrintGroupedCases = (props) => {
@@ -126,49 +126,69 @@ const PrintGroupedCases = (props) => {
 
   // for row coloring based on timelines (NJPMC)
 
-const getRowColor = (caseFile) => {
-  const category = caseFile["Category Per PQS"];
-  const institutionDate = caseFile["Date of Institution "];
+  const RED = "#fd7f89";
+  const YELLOW = "#ffda62";
+  const GREEN = "#5deb7e";
+  const ORANGE = "#ffb347";
 
-  if (!category || !institutionDate) return "";
+  const getCaseMeta = (caseFile) => {
+    const category = caseFile["Category Per PQS"];
+    const institutionDate = caseFile["Date of Institution "];
 
-  // Category-wise target age (months)
-  const categoryRules = {
-    "CR-011-Norcotics Substances": 18,
-    "CR-006-Arms & Amunation": 12,
-    "Civil-003-Suits under Order 37 CPC": 12,
-    // add more here
+    if (!category || !institutionDate) {
+      return { color: "", ageMonths: null };
+    }
+
+    const categoryRules = {
+      "CR-003 Cases triable u/s 30 Cr.PC": 18,
+      "CR-011-Norcotics Substances": 18,
+      "CR-006-Arms & Amunation": 12,
+      "CR-004 Hurt Cases": 12,
+      "CR-002 Attempt to Murder": 12,
+      "CR-005-Abduction/Kidnapping": 12,
+      "CR-001 Homicide": 24,
+
+      "Civil-003-Suits under Order 37 CPC": 12,
+      "Civil-015-Execution Petitions": 12,
+      "Civil-014-Execution in which periodic payments are made": 12,
+      "Civil-010-Rent Cases": 6,
+      "Civil-009-Land Acquisition Cases": 24,
+      "Civil-008-Guardianship Cases": 6,
+      "Civil-007-Succession Cases": 2,
+      "Civil-006-Family Court Cases": 6,
+      "Civil-004-Custody of Minors": 6,
+      "Civil-002-Civil Suits": 24,
+      "Civil-001-Civil Suits (Original Jurisdiction)": 24,
+    };
+
+    const targetMonths = categoryRules[category];
+    if (!targetMonths) {
+      return { color: "", ageMonths: null };
+    }
+
+    const startDate = new Date(institutionDate);
+    const today = new Date();
+
+    const monthsOld =
+      (today.getFullYear() - startDate.getFullYear()) * 12 +
+      (today.getMonth() - startDate.getMonth());
+
+    const warningMonths = targetMonths - 4;
+
+    let color = GREEN; // green
+
+    if (monthsOld >= targetMonths) {
+      color = RED; // red
+    } else if (monthsOld >= warningMonths) {
+      color = ORANGE; // orange
+    }
+
+    return {
+      color,
+      ageMonths: monthsOld,
+      targetMonths,
+    };
   };
-
-  const targetMonths = categoryRules[category];
-
-  // If category not found
-  if (!targetMonths) return "";
-
-  const startDate = new Date(institutionDate);
-  const today = new Date();
-
-  const monthsOld =
-    (today.getFullYear() - startDate.getFullYear()) * 12 +
-    (today.getMonth() - startDate.getMonth());
-
-  // Nearing trigger zone (4 months before target)
-  const warningMonths = targetMonths - 4;
-
-  // RED = exceeded target
-  if (monthsOld >= targetMonths) {
-        return "#fd7f89"; // light red
-  }
-
-  // YELLOW = nearing target
-  if (monthsOld >= warningMonths) {
-        return "#ffda62"; // light yellow
-  }
-
-  // GREEN = safe
-  return "#5deb7e"; // light green
-};
-
 
   // function getActionEng(action) {
   //   const str = action?.replace(/(^\s+|\s+$)/g, "");
@@ -260,7 +280,7 @@ const getRowColor = (caseFile) => {
   //   );
   // }
 
-  return !selectedCategory.length && !controlPanel.length ? (
+  return !selectedCategory?.length && !controlPanel?.length ? (
     <LinearProgress />
   ) : (
     <div className={classes.centeredDiv} style={{ flexGrow: 1 }}>
@@ -294,7 +314,7 @@ const getRowColor = (caseFile) => {
                     padding: 0,
                   }}
                 >
-                  {controlPanel[0]?.causeListEnglishName}
+                  {controlPanel?.causeListEnglishName}
                   <br />
                   {"CHRONOLOGICAL LIST OF " +
                     name.toUpperCase() +
@@ -344,12 +364,16 @@ const getRowColor = (caseFile) => {
             <TableBody>
               {selectedCategory.map((caseFile) =>
                 caseFile["Case Title"] ? (
-                // caseFile.causeListEntries &&
-                // getSecondToLastElementCategory(caseFile.causeListEntries)
-                //   ?.actionAbstract ? (
-                  <TableRow hover key={caseFile._id} style={{
-          backgroundColor: getRowColor(caseFile),
-        }}>
+                  // caseFile.causeListEntries &&
+                  // getSecondToLastElementCategory(caseFile.causeListEntries)
+                  //   ?.actionAbstract ? (
+                  <TableRow
+                    hover
+                    key={caseFile._id}
+                    style={{
+                      backgroundColor: getCaseMeta(caseFile).color,
+                    }}
+                  >
                     <TableCell
                       className={classes.tableCell}
                       component="th"
@@ -373,7 +397,14 @@ const getRowColor = (caseFile) => {
                       align="left"
                       // style={{ fontSize: 24 }}
                     >
-                      {caseFile["Case Title"]}
+                      {caseFile["Case Title"]}{" "}
+                      {getCaseMeta(caseFile).ageMonths !== null &&
+                        getCaseMeta(caseFile).targetMonths && (
+                          <span style={{ fontSize: "11px", color: "#3d3d3d" }}>
+                            ({getCaseMeta(caseFile).ageMonths}/
+                            {getCaseMeta(caseFile).targetMonths}mo)
+                          </span>
+                        )}
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}
@@ -408,7 +439,7 @@ const getRowColor = (caseFile) => {
                           <span style={{ fontSize: "" }}>
                             {format?.(
                               parseISO(caseFile["Date of Institution "]),
-                              "dd-MM-yyy"
+                              "dd-MM-yyy",
                             )}
                           </span>
                           <br />
@@ -424,14 +455,14 @@ const getRowColor = (caseFile) => {
                       {!caseFile["Date of Transfer In"] ? null : (
                         <>
                           {parseISO(
-                            caseFile["Date of Transfer In"]
+                            caseFile["Date of Transfer In"],
                           ).getFullYear() > 1980 ? (
                             <>
                               <span style={{ fontSize: "" }}>
                                 {caseFile["Date of Transfer In"]
                                   ? format?.(
                                       parseISO(caseFile["Date of Transfer In"]),
-                                      "dd-MM-yyyy"
+                                      "dd-MM-yyyy",
                                     )
                                   : null}
                               </span>
@@ -450,16 +481,16 @@ const getRowColor = (caseFile) => {
                       {!caseFile["Date of Other Institution"] ? null : (
                         <>
                           {parseISO(
-                            caseFile["Date of Other Institution"]
+                            caseFile["Date of Other Institution"],
                           ).getFullYear() > 1980 ? (
                             <>
                               <span style={{ fontSize: "" }}>
                                 {caseFile["Date of Other Institution"]
                                   ? format?.(
                                       parseISO(
-                                        caseFile["Date of Other Institution"]
+                                        caseFile["Date of Other Institution"],
                                       ),
-                                      "dd-MM-yyyy"
+                                      "dd-MM-yyyy",
                                     )
                                   : null}
                               </span>
@@ -477,7 +508,7 @@ const getRowColor = (caseFile) => {
                     </TableCell>
 
                     <TableCell
-                    className={classes.tableCell}
+                      className={classes.tableCell}
                       style={{ minWidth: "fit-content", whiteSpace: "nowrap" }}
                       align="left"
                     >
@@ -494,8 +525,8 @@ const getRowColor = (caseFile) => {
                       {getActionEngFromCommon(
                         caseFile?.actionAbstract?.replace(
                           /(، حاضری|، شہادت|، بحث|، حکم|، حاضری )/g,
-                          ""
-                        )
+                          "",
+                        ),
                       )}
                       {/* {getActionEng(
                         caseFile?.actionAbstract?.replace(
@@ -505,7 +536,7 @@ const getRowColor = (caseFile) => {
                       )} */}
                     </TableCell>
                   </TableRow>
-                ) : null
+                ) : null,
               )}
             </TableBody>
           </Table>

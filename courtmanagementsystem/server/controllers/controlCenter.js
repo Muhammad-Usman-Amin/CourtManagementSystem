@@ -37,20 +37,18 @@ export const createPoData = async (req, res) => {
         { new: true }
       );
 
-      return res.status(200).json({
-        message: "Control Center updated successfully",
-        data: updated,
-      });
+      return res.status(200).json(updated);
+      // return res.status(200).json({
+      //   message: "Control Center updated successfully",
+      //   data: updated,
+      // });
     }
 
     // STEP 3: IF NOT EXISTS → CREATE
     const newRecord = new poData(body);
     await newRecord.save();
 
-    return res.status(201).json({
-      message: "Control Center created successfully",
-      data: newRecord,
-    });
+    return res.status(201).json(newRecord);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

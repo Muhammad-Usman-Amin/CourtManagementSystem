@@ -65,7 +65,7 @@ export default function SimpleDrawer({ title }) {
   };
   // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const controlCenter = useSelector((state) => state.controlCenter[0]);
+  const controlCenter = useSelector((state) => state.controlCenter);
   const [themeMode, setThemeMode] = useState("Light"); // 'day' or 'night'
 
   useEffect(() => {

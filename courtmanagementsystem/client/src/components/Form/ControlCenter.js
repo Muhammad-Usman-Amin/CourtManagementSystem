@@ -256,8 +256,8 @@ const ControlCenter = () => {
       // console.log("update dispatch: ");
       // console.log(poData);
       dispatch(updateControlCenter(currentId, poData));
-      setCurrentId(null);
       dispatch(getControlCenter());
+      setCurrentId(null);
     } else {
       {
         dispatch(createControlCenter(poData));
@@ -557,8 +557,8 @@ const ControlCenter = () => {
                 <MenuItem value={"PHC0000-00-0:Mr. Judge"}>
                   PHC0000-00-0:Mr. Judge
                 </MenuItem>
-                <MenuItem value={"PHC0000-00-0:Mr. Shakir Ullah"}>
-                  PHC0000-00-0:Mr. Shakir Ullah
+                <MenuItem value={"PHC0000-00-0:Mr. Shakir Ullah Khan"}>
+                  PHC0000-00-0:Mr. Shakir Ullah Khan
                 </MenuItem>
                 <MenuItem value={"PHC0604-81-1:Mr. Shah Nofal"}>
                   PHC0604-81-1:Mr. Shah Nofal

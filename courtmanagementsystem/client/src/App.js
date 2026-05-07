@@ -92,7 +92,7 @@ const App = () => {
   //   dispatch(getControlCenter());
   // },[]);
 
-  const controlCenter = useSelector((state) => state.controlCenter[0]);
+  const controlCenter = useSelector((state) => state.controlCenter);
   
 
   return (

@@ -158,7 +158,7 @@ const FormCases = ({ currentId, setCurrentId, onPageChange }) => {
 
   useEffect(() => {
     // judgeCategory = ControlCenter[0]?.designation;
-    setJudgeCategory(ControlCenter[0]?.designation);
+    setJudgeCategory(ControlCenter?.designation);
     // console.log("judgeCategory: " + judgeCategory);
   }, [ControlCenter]);
 
