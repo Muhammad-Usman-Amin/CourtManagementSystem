@@ -115,6 +115,7 @@ export const getCauseList = async (req, res) => {
       // console.log(serialNumbers);
       // console.log("Fetched data length:", result.length);
       // res.status(201).json(result);
+      // console.log(result);
       res.status(200).json({
         cases: result,
         serialNumbers
@@ -194,7 +195,16 @@ export const getCauseList = async (req, res) => {
       };
 
       try {
-        const result = await Case.find(query);
+        // const result = await Case.find(query);
+        const result = await Case.find({
+  ...query,
+  actionAbstract: {
+    $exists: true,
+    $ne: null,
+    $ne: ""
+  }
+});
+// console.log(result);
         let attendance = 0;
         let evidence = 0;
         let argument = 0;
@@ -226,6 +236,8 @@ export const getCauseList = async (req, res) => {
             orderOnApplication: orderOnApplication,
             finalOrder: finalOrder,
           });
+// console.log(results.data);
+
         }
       } catch (error) {
         console.log("Fetched data error:", error);

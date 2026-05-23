@@ -2263,4 +2263,121 @@ export const likeCase = async (req, res) => {
 
   res.json(updatedCase);
 };
+
+export const uploadCSV = async (req, res) => {
+  try {
+    const { courtCode, courtName } = req.body;
+    
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+    
+    if (!courtCode || !courtName) {
+      return res.status(400).json({ message: "Court code and name are required" });
+    }
+
+    // Import CSV parser here to avoid issues with dynamic imports
+    const { parseCSVBuffer, transformCaseData, validateCaseRow, extractCourtCodeFromFilename } = await import("../csvParser.js");
+
+    // Parse CSV
+    const parsed = await parseCSVBuffer(req.file.buffer);
+    const rows = parsed.data;
+
+    let imported = 0;
+    let failed = 0;
+    const failedRows = [];
+
+    // Delete existing cases for this court
+    const deleteResult = await Case.deleteMany({ courtCode: courtCode });
+    console.log(`Deleted ${deleteResult.deletedCount} cases for court ${courtCode}`);
+
+    // Process each row
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      
+      // Skip empty rows
+      if (!row["Case No"] || row["Case No"].trim() === "") {
+        continue;
+      }
+
+      // Validate row
+      const errors = validateCaseRow(row);
+      if (errors.length > 0) {
+        failedRows.push({ rowNumber: i + 2, errors, data: row });
+        failed++;
+        continue;
+      }
+
+      try {
+        const transformedData = transformCaseData(row, null, courtCode, courtName, req.file.originalname);
+        const newCase = new Case(transformedData);
+        await newCase.save();
+        imported++;
+      } catch (error) {
+        failedRows.push({ rowNumber: i + 2, error: error.message, data: row });
+        failed++;
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `CSV upload completed. Imported: ${imported}, Failed: ${failed}`,
+      imported,
+      failed,
+      total: rows.length,
+      failedRows: failedRows.slice(0, 10), // Return first 10 failed rows
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getCourts = async (req, res) => {
+  try {
+    // Get distinct courts from cases collection
+    const courts = await Case.aggregate([
+      {
+        $match: { courtCode: { $ne: null } }
+      },
+      {
+        $group: {
+          _id: "$courtCode",
+          courtName: { $first: "$courtName" },
+          caseCount: { $sum: 1 }
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      }
+    ]);
+
+    res.status(200).json(courts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getCasesByCourtCode = async (req, res) => {
+  try {
+    const { courtCode } = req.params;
+    
+    if (!courtCode) {
+      return res.status(400).json({ message: "Court code is required" });
+    }
+
+    const cases = await Case.find({ courtCode: courtCode }).sort({ ["Date of Institution "]: 1 });
+    
+    res.status(200).json({
+      courtCode,
+      caseCount: cases.length,
+      cases
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export default router;

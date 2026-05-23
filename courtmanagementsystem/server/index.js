@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import multer from "multer";
 
 import postRoutes from "./routes/posts.js";
 // import causeListRoutes from './routes/causeLists.js';
@@ -18,6 +19,18 @@ dotenv.config();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
+// Setup multer for file uploads
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === 'text/csv' || file.originalname.endsWith('.csv')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only CSV files are allowed'), false);
+    }
+  }
+});
+
 app.use(cors());
 app.use("/posts", postRoutes);
 // app.use('/causeLists', causeListRoutes);
@@ -27,6 +40,9 @@ app.use("/pqsp", pqspRoutes);
 app.use("/api/queryData", queryData);
 app.use("/api/causeLists", causeLists);
 app.use("/api/controlCenter", controlCenter);
+
+// Export upload middleware for cases route
+export { upload };
 
 // console.log(new Date());
 // let st = new Date('04-Jun-2004');

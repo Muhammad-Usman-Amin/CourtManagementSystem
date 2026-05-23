@@ -52,6 +52,8 @@ import PrintFortnitely from "./components/CauseLists/PrintFortnitely.jsx";
 import CaseStatistics from "./dashboardExample/CaseStatistics.jsx";
 import PrintGroupedCases from "./components/CauseLists/PrintGroupedCases.jsx";
 import InstVsDispChart from "./dashboardExample/InstVsDispChart.jsx";
+import CourtSelector from './components/CourtSelector';
+import CSVUpload from "./components/CSVUpload.jsx";
 const App = () => {
   // const classes = makeStyles();
   const classes2 = useStyles();
@@ -167,6 +169,14 @@ const App = () => {
                 <Route
                   path="/CourtList"
                   children=<CourtList
+                    currentId={currentId}
+                    setCurrentId={setCurrentId}
+                    onPageChange={handlePageChange}
+                  />
+                />
+                <Route
+                  path="/CSVUpload"
+                  children=<CSVUpload
                     currentId={currentId}
                     setCurrentId={setCurrentId}
                     onPageChange={handlePageChange}

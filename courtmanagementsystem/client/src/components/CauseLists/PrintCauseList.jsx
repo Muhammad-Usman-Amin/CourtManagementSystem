@@ -296,7 +296,7 @@ const PrintCauseList = (props) => {
                     }}
                     className={classes.tableHeaderCell}
                   >
-                    {ControlCenter[0].causeListName}
+                    {ControlCenter?.causeListName}
                     {/* بعدالت جناب زیب النساءعباسی سِول جج /جج فیملی کورٹ/علاقہ
                     قاضی-V دیر پائین بمقام تیمرگرہ */}
                   </TableCell>
@@ -580,12 +580,12 @@ const PrintCauseList = (props) => {
                             }}
                           >
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate) ||
+                              new Date(ControlCenter?.backlogDate) ||
                             (caseFile["Category Per PQS"] ===
                               "Civil-006-Family Court Cases" &&
                               new Date(caseFile["Date of Institution "]) <=
                                 new Date(
-                                  ControlCenter[0]?.familyCasesBacklogDate
+                                  ControlCenter?.familyCasesBacklogDate
                                 ))
                               ? "★"
                               : ""}
@@ -820,12 +820,12 @@ const PrintCauseList = (props) => {
                             }}
                           >
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate) ||
+                              new Date(ControlCenter?.backlogDate) ||
                             (caseFile["Category Per PQS"] ===
                               "Civil-006-Family Court Cases" &&
                               new Date(caseFile["Date of Institution "]) <=
                                 new Date(
-                                  ControlCenter[0]?.familyCasesBacklogDate
+                                  ControlCenter?.familyCasesBacklogDate
                                 ))
                               ? "★"
                               : ""}
@@ -1057,12 +1057,12 @@ const PrintCauseList = (props) => {
                             }}
                           >
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate) ||
+                              new Date(ControlCenter?.backlogDate) ||
                             (caseFile["Category Per PQS"] ===
                               "Civil-006-Family Court Cases" &&
                               new Date(caseFile["Date of Institution "]) <=
                                 new Date(
-                                  ControlCenter[0]?.familyCasesBacklogDate
+                                  ControlCenter?.familyCasesBacklogDate
                                 ))
                               ? "★"
                               : ""}
@@ -1297,12 +1297,12 @@ const PrintCauseList = (props) => {
                             }}
                           >
                             {new Date(caseFile["Date of Institution "]) <=
-                              new Date(ControlCenter[0]?.backlogDate) ||
+                              new Date(ControlCenter?.backlogDate) ||
                             (caseFile["Category Per PQS"] ===
                               "Civil-006-Family Court Cases" &&
                               new Date(caseFile["Date of Institution "]) <=
                                 new Date(
-                                  ControlCenter[0]?.familyCasesBacklogDate
+                                  ControlCenter?.familyCasesBacklogDate
                                 ))
                               ? "★"
                               : ""}
@@ -1528,7 +1528,7 @@ const PrintCauseList = (props) => {
                             }}
                           >
                             {new Date(caseFile["Date of Institution "]) <=
-                            new Date(ControlCenter[0]?.backlogDate)
+                            new Date(ControlCenter?.backlogDate)
                               ? "★"
                               : ""}
                           </span>

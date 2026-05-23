@@ -97,6 +97,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
   // Sync local state with Redux store when the component mounts or reduxCases changes
   useEffect(() => {
     setCasesState(reduxCases);
+    console.log(reduxCases);
     // Create an object where the key is the case ID and the value is the Case No
     const casesNumberMap = reduxCases.reduce((acc, caseFile) => {
       acc[caseFile._id] = caseFile["Case No"];
@@ -276,7 +277,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
     return array[array?.length - 1]; // or any other appropriate value or action
   }
 
-  const sortedCases = reduxCases.slice().sort((a, b) => {
+  const sortedCases = reduxCases?.slice()?.sort((a, b) => {
     const sortingKeywords = [
       "حاضری",
       "حاضری، ریکارڈ",
@@ -292,11 +293,11 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
       // const hasKeywordA = a.abstract?.toLowerCase().startsWith(keyword);
       // const hasKeywordB = b.abstract?.toLowerCase().startsWith(keyword);
       const hasKeywordA = getSecondToLastElement(
-        a.causeListEntries
-      ).actionAbstract?.startsWith(keyword);
+        a?.causeListEntries
+      )?.actionAbstract?.startsWith(keyword);
       const hasKeywordB = getSecondToLastElement(
-        b.causeListEntries
-      ).actionAbstract?.startsWith(keyword);
+        b?.causeListEntries
+      )?.actionAbstract?.startsWith(keyword);
 
       // Prioritize cases with the current keyword at the beginning
       if (hasKeywordA && !hasKeywordB) return -1; // Case A with keyword comes before Case B without
@@ -591,12 +592,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </TableCell>
                 </TableRow>
 
-                {sortedCases.map((caseFile) => (
+                {sortedCases?.map((caseFile) => (
                   <>
-                    {caseFile.causeListEntries &&
+                    {caseFile?.causeListEntries &&
                     getSecondToLastElementCategory(
-                      caseFile.causeListEntries
-                    ).actionAbstract?.includes("حاضری") ? (
+                      caseFile?.causeListEntries
+                    )?.actionAbstract?.includes("حاضری") ? (
                       <TableRow key={caseFile._id.toString()}>
                         {/* <TableCell align="right">{serialNo[index++]}</TableCell> */}
                         <TableCell align="right">
@@ -785,9 +786,9 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                             direction: "rtl",
                           }}
                         >
-                          {caseFile.causeListEntries &&
+                          {caseFile?.causeListEntries &&
                             getSecondToLastElement(caseFile.causeListEntries)
-                              .actionAbstract}
+                              ?.actionAbstract}
                         </TableCell>
 
                         {/* <TableCell align="center">
@@ -1557,12 +1558,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </TableCell>
                 </TableRow>
 
-                {reduxCases.map((caseFile) => (
+                {reduxCases?.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
                     getSecondToLastElementCategory(
                       caseFile.causeListEntries
-                    ).actionAbstract?.includes("شہادت") ? (
+                    )?.actionAbstract?.includes("شہادت") ? (
                       <TableRow key={caseFile._id.toString()}>
                         <TableCell align="right">
                           {serialNumbers[index++]}
@@ -2472,12 +2473,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </TableCell>
                 </TableRow>
 
-                {reduxCases.map((caseFile) => (
+                {reduxCases?.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
                     getSecondToLastElementCategory(
                       caseFile.causeListEntries
-                    ).actionAbstract?.includes("بحث") ? (
+                    )?.actionAbstract?.includes("بحث") ? (
                       <TableRow key={caseFile._id.toString()}>
                         <TableCell align="right">
                           {serialNumbers[index++]}
@@ -3391,12 +3392,12 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </TableCell>
                 </TableRow>
 
-                {reduxCases.map((caseFile) => (
+                {reduxCases?.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
                     getSecondToLastElementCategory(
                       caseFile.causeListEntries
-                    ).actionAbstract?.includes("حکم") ? (
+                    )?.actionAbstract?.includes("حکم") ? (
                       <TableRow key={caseFile._id.toString()}>
                         {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
@@ -4307,11 +4308,11 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                   </TableCell>
                 </TableRow>
 
-                {reduxCases.map((caseFile) => (
+                {reduxCases?.map((caseFile) => (
                   <>
                     {caseFile.causeListEntries &&
                     !getSecondToLastElementCategory(caseFile.causeListEntries)
-                      .actionAbstract ? (
+                      ?.actionAbstract ? (
                       <TableRow key={caseFile._id.toString()}>
                         {/* <TableCell component="th" scope="row" align="right">
                           {serialNo[index++]}
@@ -4363,7 +4364,7 @@ const CauseList = ({ currentId, setCurrentId, onPageChange }) => {
                           }}
                         >
                           {/* {caseFile["Case Title"]} */}
-                          {caseFile.urduTitle}
+                          {caseFile?.urduTitle}
                           <span style={{ float: "left", textAlign: "left" }}>
                             {new Date(caseFile["Date of Institution "]) <=
                             new Date(ControlCenter[0]?.backlogDate)

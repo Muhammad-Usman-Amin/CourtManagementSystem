@@ -58,3 +58,21 @@ export const fetchQueryData = (params) => axios.get(urlQueryData, { params: para
 export const fetchCauseList = (params) => axios.get(urlCauseLists, { params: params });
 
 //export const fetchpqsp = () => axios.get(urlpqsp);
+
+// CSV Upload and Court Management APIs
+export const uploadCasesCSV = (file, courtCode, courtName) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('courtCode', courtCode);
+  formData.append('courtName', courtName);
+  
+  return axios.post(`${urlCases}/upload`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+};
+
+export const fetchCourts = () => axios.get(`${urlCases}/courts`);
+
+export const fetchCasesByCourtCode = (courtCode) => axios.get(`${urlCases}/by-court/${courtCode}`);

@@ -49,6 +49,13 @@ const caseSchema = new mongoose.Schema({
   },
   nature: String,
   isOtherNature: Boolean,
+  
+  // Court reference fields for multi-court support
+  courtId: { type: mongoose.Schema.Types.ObjectId, ref: "Court" },
+  courtCode: String,
+  courtName: String,
+  uploadedAt: { type: Date, default: Date.now },
+  sourceFile: String,
 });
 
 // {
